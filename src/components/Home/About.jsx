@@ -42,8 +42,7 @@ export default function About() {
             You learn how to braze a line set but not how to close a $12,000 job.
           </p>
           <p className={styles.body}>
-            Every article here is written by people who&apos;ve actually done the work — not marketing
-            people recycling generic advice.
+            No fluff. Just what actually works.
           </p>
           <Button to="/about" variant="primary">Learn More</Button>
         </div>

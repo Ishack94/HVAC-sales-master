@@ -68,7 +68,7 @@ export default function Home() {
         viewAllTo="/sales"
         bg="white"
       />
-      <DividerQuote quote="The guys making the most money aren't just good techs. They know how to talk to people too." />
+      <DividerQuote quote="The best technicians never stop learning. The best closers never stop either." />
       <CardGrid
         id="pro-lessons"
         label="Tech & Installer Pro Lessons"
