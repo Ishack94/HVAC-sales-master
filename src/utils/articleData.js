@@ -22,7 +22,7 @@ export const salesArticles = [
   },
   {
     slug: 'selling-through-price-increases',
-    title: 'Selling Through Price Increases and Tariffs',
+    title: 'Selling Through Price Increases',
     description: 'How to have honest conversations about rising costs without losing the sale.',
     readTime: '7 min',
   },
@@ -43,12 +43,6 @@ export const salesArticles = [
     title: "Indoor Air Quality Is the Easiest Upsell You're Not Making",
     description: 'IAQ products add revenue to every job without changing your sales process.',
     readTime: '6 min',
-  },
-  {
-    slug: 'google-reviews-making-losing-money',
-    title: 'Google Reviews Are Making or Losing You Money',
-    description: 'Your online reputation is your first impression now. Here\'s how to manage it.',
-    readTime: '7 min',
   },
   {
     slug: 'building-demand-before-breakdown',
