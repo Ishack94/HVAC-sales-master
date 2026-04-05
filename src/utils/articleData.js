@@ -104,9 +104,9 @@ export const proArticles = [
     readTime: '8 min',
   },
   {
-    slug: 'tariffs-supply-chain-field-employees',
-    title: 'Understanding Tariffs and Supply Chain',
-    description: 'How global supply chain issues affect your daily work and your customers.',
+    slug: 'understanding-supply-chain',
+    title: 'Understanding the Supply Chain',
+    description: 'How supply chain issues affect your daily work and your customers.',
     readTime: '6 min',
   },
   {
@@ -157,11 +157,7 @@ export const proArticles = [
     description: 'Proper evacuation and brazing techniques that protect the system and your reputation.',
     readTime: '8 min',
   },
-]
-
-// ─── Homeowner / Learn Articles ───────────────────────────────────────────────
-
-export const learnArticles = [
+  // ─── Homeowner / Learn Articles (merged into Pro Lessons) ─────────────────
   {
     slug: 'furnace-blowing-cold-air',
     title: 'Why Is My Furnace Blowing Cold Air?',
@@ -263,12 +259,15 @@ export const learnArticles = [
   },
 ]
 
+// ─── Learn Articles (deprecated — merged into proArticles) ────────────────────
+
+export const learnArticles = []
+
 // ─── Slug → Title map (used by ArticlePage) ───────────────────────────────────
 
 export const articleTitles = {
   ...Object.fromEntries(salesArticles.map((a) => [a.slug, a.title])),
   ...Object.fromEntries(proArticles.map((a) => [a.slug, a.title])),
-  ...Object.fromEntries(learnArticles.map((a) => [a.slug, a.title])),
 }
 
 // Convert a slug to a display title. Falls back to a capitalized slug.

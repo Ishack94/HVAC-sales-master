@@ -22,7 +22,6 @@ const proLinks = [
 const companyLinks = [
   { label: 'About', to: '/about' },
   { label: 'Resources', to: '/resources' },
-  { label: 'Homeowner Guide', to: '/learn' },
 ]
 
 export default function Footer() {

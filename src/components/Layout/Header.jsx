@@ -8,7 +8,6 @@ import styles from './Header.module.css'
 const navLinks = [
   { label: 'Sales', to: '/sales' },
   { label: 'Pro Lessons', to: '/pro-lessons' },
-  { label: 'Learn', to: '/learn' },
   { label: 'Resources', to: '/resources' },
   { label: 'About', to: '/about' },
 ]
