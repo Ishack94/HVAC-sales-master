@@ -1,0 +1,108 @@
+.card {
+  background: var(--white);
+  border: 1px solid var(--divider);
+  border-radius: 3px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(0, 47, 73, 0.08);
+}
+
+/* Image area */
+.image {
+  height: 200px;
+  flex-shrink: 0;
+}
+
+.blue .image {
+  background: linear-gradient(135deg, #002f49 0%, #0a3d5c 40%, #2e668f 100%);
+}
+
+.copper .image {
+  background: linear-gradient(135deg, #5c3010 0%, #8a4a1c 40%, #bd6c25 100%);
+}
+
+/* Category tag */
+.category {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.75);
+  background: rgba(0, 0, 0, 0.2);
+  padding: 4px 8px;
+  border-radius: 2px;
+  backdrop-filter: blur(4px);
+}
+
+.body {
+  padding: 28px 28px 32px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--navy);
+  line-height: 1.25;
+  margin-bottom: 12px;
+}
+
+.excerpt {
+  font-size: 0.88rem;
+  font-weight: 300;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  flex: 1;
+  margin-bottom: 20px;
+}
+
+.readMore {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--copper);
+  transition: gap 0.2s ease, color 0.2s ease;
+  margin-top: auto;
+}
+
+.readMore:hover {
+  gap: 12px;
+  color: var(--copper-light);
+}
+
+/* Accent bottom line — gradient, scales in on hover */
+.accentLine {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(to right, var(--copper), var(--blue));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.card:hover .accentLine {
+  transform: scaleX(1);
+}

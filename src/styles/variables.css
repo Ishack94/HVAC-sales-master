@@ -1,0 +1,40 @@
+:root {
+  /* Primary Blues */
+  --navy: #002f49;
+  --navy-light: #0a3d5c;
+  --blue: #2e668f;
+  --blue-light: #6b8eac;
+  --blue-mist: #b8cdd9;
+
+  /* Copper/Bronze */
+  --copper: #bd6c25;
+  --copper-light: #d4883a;
+
+  /* Logo Orange — used ONLY in logo */
+  --logo-orange: #e87722;
+
+  /* Neutrals */
+  --cream: #f6f5f3;
+  --warm-white: #FDFCFB;
+  --white: #ffffff;
+
+  /* Text */
+  --text-primary: #0a1f2e;
+  --text-secondary: #3d5a6e;
+  --text-tertiary: #7a95a8;
+
+  /* Utility */
+  --divider: rgba(0, 47, 73, 0.08);
+
+  /* Spacing */
+  --section-padding: 120px;
+  --container-max: 1200px;
+  --container-padding: 40px;
+}
+
+@media (max-width: 768px) {
+  :root {
+    --section-padding: 80px;
+    --container-padding: 24px;
+  }
+}

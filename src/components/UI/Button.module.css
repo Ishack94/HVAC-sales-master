@@ -1,0 +1,67 @@
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 32px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  border-radius: 2px;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  white-space: nowrap;
+}
+
+/* Primary — navy fill */
+.primary {
+  background-color: var(--navy);
+  color: var(--white);
+  border: 1px solid var(--navy);
+}
+
+.primary:hover {
+  background-color: var(--navy-light);
+  border-color: var(--navy-light);
+}
+
+/* Secondary — outlined */
+.secondary {
+  background-color: transparent;
+  color: var(--navy);
+  border: 1px solid var(--navy);
+}
+
+.secondary:hover {
+  background-color: var(--navy);
+  color: var(--white);
+}
+
+/* Ghost — outlined white, for dark backgrounds */
+.ghost {
+  background-color: transparent;
+  color: var(--white);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.ghost:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.7);
+}
+
+/* Copper */
+.copper {
+  background-color: var(--copper);
+  color: var(--white);
+  border: 1px solid var(--copper);
+}
+
+.copper:hover {
+  background-color: var(--copper-light);
+  border-color: var(--copper-light);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

@@ -1,0 +1,126 @@
+.section {
+  background-color: var(--navy);
+  padding: var(--section-padding) 0;
+}
+
+.container {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 0 var(--container-padding);
+  text-align: center;
+}
+
+.label {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: var(--copper);
+  margin-bottom: 16px;
+}
+
+.heading {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3rem;
+  font-weight: 300;
+  letter-spacing: -0.5px;
+  color: var(--white);
+  margin-bottom: 16px;
+}
+
+.subtitle {
+  font-size: 0.9rem;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.55);
+  line-height: 1.7;
+  margin-bottom: 40px;
+}
+
+.form {
+  display: flex;
+  gap: 0;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.input {
+  flex: 1;
+  padding: 14px 20px;
+  font-size: 0.9rem;
+  font-weight: 300;
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid transparent;
+  border-right: none;
+  border-radius: 2px 0 0 2px;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.input::placeholder {
+  color: var(--text-tertiary);
+}
+
+.input:focus {
+  border-color: var(--copper);
+}
+
+.btn {
+  padding: 14px 28px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--white);
+  background-color: var(--copper);
+  border: 1px solid var(--copper);
+  border-radius: 0 2px 2px 0;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn:hover:not(:disabled) {
+  background-color: var(--copper-light);
+}
+
+.btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.successMsg {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.85);
+  margin-top: 8px;
+}
+
+.errorMsg {
+  font-size: 0.85rem;
+  color: #e87777;
+  margin-top: 12px;
+}
+
+@media (max-width: 480px) {
+  .form {
+    flex-direction: column;
+  }
+
+  .input {
+    border-right: 1px solid transparent;
+    border-bottom: none;
+    border-radius: 2px 2px 0 0;
+  }
+
+  .btn {
+    border-radius: 0 0 2px 2px;
+  }
+
+  .heading {
+    font-size: 2.2rem;
+  }
+}

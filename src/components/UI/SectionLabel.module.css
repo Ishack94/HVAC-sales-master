@@ -1,0 +1,32 @@
+.label {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.line {
+  display: block;
+  height: 1px;
+  width: 40px;
+  background-color: var(--copper);
+  flex-shrink: 0;
+}
+
+.text {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: var(--copper);
+  white-space: nowrap;
+}
+
+.light .line {
+  background-color: rgba(189, 108, 37, 0.6);
+}
+
+.light .text {
+  color: rgba(189, 108, 37, 0.8);
+}

@@ -1,0 +1,150 @@
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 120px var(--container-padding) 80px;
+  background-color: var(--warm-white);
+  position: relative;
+}
+
+.inner {
+  max-width: 800px;
+}
+
+/* Staggered animation targets */
+.label {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: var(--copper);
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.1s,
+              transform 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.1s;
+  margin-bottom: 24px;
+}
+
+.heading {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 5.5rem;
+  font-weight: 300;
+  letter-spacing: -2px;
+  line-height: 1.05;
+  color: var(--navy);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.25s,
+              transform 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.25s;
+  margin-bottom: 28px;
+}
+
+.heading em {
+  font-style: italic;
+  color: var(--blue);
+}
+
+.subtitle {
+  font-size: 1.05rem;
+  font-weight: 300;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  max-width: 520px;
+  margin: 0 auto 44px;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.4s,
+              transform 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.4s;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.55s,
+              transform 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.55s;
+}
+
+/* Activated state */
+.animated .label,
+.animated .heading,
+.animated .subtitle,
+.animated .actions {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Scroll indicator */
+.scrollIndicator {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.6s ease 0.9s;
+}
+
+.animated .scrollIndicator {
+  opacity: 1;
+}
+
+.scrollText {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--copper);
+}
+
+.scrollLine {
+  display: block;
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, var(--copper), transparent);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+
+@keyframes scrollPulse {
+  0%, 100% { opacity: 1; transform: scaleY(1); }
+  50% { opacity: 0.4; transform: scaleY(0.6); }
+}
+
+@media (max-width: 768px) {
+  .heading {
+    font-size: 3.6rem;
+    letter-spacing: -1px;
+  }
+
+  .subtitle {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .heading {
+    font-size: 2.8rem;
+  }
+
+  .actions {
+    flex-direction: column;
+    align-items: stretch;
+    max-width: 280px;
+    margin: 0 auto;
+  }
+}
