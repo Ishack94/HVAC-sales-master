@@ -28,7 +28,7 @@ export default function Newsletter() {
         <p className={styles.label}>Stay Sharp</p>
         <h2 className={styles.heading}>Get better at this stuff</h2>
         <p className={styles.subtitle}>
-          One email a week. Sales tips, tech shortcuts, and real talk about making more money in HVAC. No spam.
+          One email a week. Sales tips, tech shortcuts, and real talk about making more money in HVAC.
         </p>
 
         {status === 'success' ? (

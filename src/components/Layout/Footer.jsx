@@ -34,8 +34,7 @@ export default function Footer() {
           <div className={styles.brand}>
             <Logo />
             <p className={styles.tagline}>
-              Premium training for HVAC sales professionals and technicians.
-              Built for the industry, by the industry.
+              Real-world sales and technical training for HVAC pros.
             </p>
             <div className={styles.social}>
               <a href="https://youtube.com" aria-label="YouTube" className={styles.socialLink} target="_blank" rel="noopener noreferrer">

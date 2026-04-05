@@ -39,11 +39,11 @@ export default function About() {
           </h2>
           <p className={styles.body}>
             This site exists because nobody teaches you the business side in trade school.
-            You learn how to braze a line set but not how to close a $12,000 job. We&apos;re fixing that.
+            You learn how to braze a line set but not how to close a $12,000 job.
           </p>
           <p className={styles.body}>
-            Every article is written by people who&apos;ve actually been in the field — not marketing
-            consultants recycling generic advice.
+            Every article here is written by people who&apos;ve actually done the work — not marketing
+            people recycling generic advice.
           </p>
           <Button to="/about" variant="primary">Learn More</Button>
         </div>

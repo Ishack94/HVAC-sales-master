@@ -62,7 +62,7 @@ export default function Home() {
         id="sales-training"
         label="Sales & Closing"
         title="Stuff That Actually Works"
-        subtitle="Stop winging it at the kitchen table. These are the plays that actually close."
+        subtitle="Stop winging it at the kitchen table."
         cards={salesCards}
         theme="blue"
         viewAllTo="/sales"

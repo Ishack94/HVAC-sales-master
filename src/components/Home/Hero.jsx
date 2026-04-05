@@ -28,9 +28,9 @@ export default function Hero() {
           <em>they should&apos;ve won.</em>
         </h1>
         <p className={styles.subtitle}>
-          This site shows you what actually works when you&apos;re talking to customers, quoting systems, and trying to close jobs in the real world.
+          Most HVAC guys lose jobs they should&apos;ve won. This is what actually works in the field.
         </p>
-        <p className={styles.muted}>No fluff. No corporate training. Just real stuff from the field.</p>
+        <p className={styles.muted}>No fluff. No corporate training. Just real stuff.</p>
         <div className={styles.actions}>
           <Button to="/sales" variant="primary">Start Reading</Button>
           <Button to="/learn" variant="secondary">Browse Topics</Button>
