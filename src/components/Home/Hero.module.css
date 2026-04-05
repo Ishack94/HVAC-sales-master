@@ -143,19 +143,33 @@
 }
 
 @media (max-width: 768px) {
+  .hero {
+    min-height: auto;
+    padding: 80px var(--container-padding) 60px;
+  }
+
   .heading {
-    font-size: 3.6rem;
-    letter-spacing: -1px;
+    font-size: 2.4rem;
+    letter-spacing: -0.5px;
   }
 
   .subtitle {
     font-size: 0.95rem;
+    margin-bottom: 32px;
+  }
+
+  .scrollIndicator {
+    display: none;
   }
 }
 
 @media (max-width: 480px) {
+  .hero {
+    padding: 60px var(--container-padding) 48px;
+  }
+
   .heading {
-    font-size: 2.8rem;
+    font-size: 2.2rem;
   }
 
   .actions {
