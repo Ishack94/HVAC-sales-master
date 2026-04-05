@@ -1,3 +1,4 @@
+import React from 'react'
 import styles from './IndexPage.module.css'
 import SectionLabel from '../components/UI/SectionLabel'
 import Card from '../components/Home/Card'

@@ -1,3 +1,4 @@
+import React from 'react'
 import { useEffect, useRef } from 'react'
 import Button from '../UI/Button'
 import styles from './Hero.module.css'
@@ -23,16 +24,16 @@ export default function Hero() {
       <div className={styles.inner}>
         <p className={styles.label}>For HVAC Professionals</p>
         <h1 className={styles.heading}>
-          Sell Smarter.<br />
-          <em>Master Your Craft.</em>
+          HVAC guys lose jobs every day<br />
+          <em>they should&apos;ve won.</em>
         </h1>
         <p className={styles.subtitle}>
-          Sales training, technical lessons, and industry insights — built for the
-          people who keep America comfortable.
+          This site shows you what actually works when you&apos;re talking to customers, quoting systems, and trying to close jobs in the real world.
         </p>
+        <p className={styles.muted}>No fluff. No corporate training. Just real stuff from the field.</p>
         <div className={styles.actions}>
-          <Button to="/sales" variant="primary">Explore Sales Training</Button>
-          <Button to="/pro-lessons" variant="secondary">Pro Lessons</Button>
+          <Button to="/sales" variant="primary">Start Reading</Button>
+          <Button to="/learn" variant="secondary">Browse Topics</Button>
         </div>
       </div>
 

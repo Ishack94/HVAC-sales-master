@@ -1,3 +1,4 @@
+import React from 'react'
 import styles from './IndexPage.module.css'
 import SectionLabel from '../components/UI/SectionLabel'
 import Card from '../components/Home/Card'
@@ -24,10 +25,10 @@ export default function SalesIndex() {
     <>
       <div className={styles.hero}>
         <div className={styles.heroInner}>
-          <SectionLabel>Sales Training</SectionLabel>
-          <h1 className={styles.heading}>Close More Deals</h1>
+          <SectionLabel>Sales & Closing</SectionLabel>
+          <h1 className={styles.heading}>Sales & Closing</h1>
           <p className={styles.subtitle}>
-            Practical sales strategies built for HVAC professionals who want to win more jobs without feeling like a pushy salesperson.
+            Stuff that actually works when you&apos;re sitting across from a homeowner.
           </p>
         </div>
       </div>

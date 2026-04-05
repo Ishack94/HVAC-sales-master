@@ -1,5 +1,8 @@
+import React from 'react'
 import Hero from '../components/Home/Hero'
-import TrustBar from '../components/Home/TrustBar'
+import Intro from '../components/Home/Intro'
+import WhatYoullLearn from '../components/Home/WhatYoullLearn'
+import HowToUse from '../components/Home/HowToUse'
 import CardGrid from '../components/Home/CardGrid'
 import DividerQuote from '../components/Home/DividerQuote'
 import ResourceGrid from '../components/Home/ResourceGrid'
@@ -52,23 +55,25 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <TrustBar />
+      <Intro />
+      <WhatYoullLearn />
+      <HowToUse />
       <CardGrid
         id="sales-training"
-        label="Sales Training"
-        title="Close More Deals"
-        subtitle="Practical sales strategies built for HVAC professionals who want to win more jobs without feeling like a pushy salesperson."
+        label="Sales & Closing"
+        title="Stuff That Actually Works"
+        subtitle="Stop winging it at the kitchen table. These are the plays that actually close."
         cards={salesCards}
         theme="blue"
         viewAllTo="/sales"
         bg="white"
       />
-      <DividerQuote quote="The best technicians never stop learning." />
+      <DividerQuote quote="The guys making the most money aren't just good techs. They know how to talk to people too." />
       <CardGrid
         id="pro-lessons"
         label="Tech & Installer Pro Lessons"
-        title="Sharpen Your Skills"
-        subtitle="Technical training for service technicians and installers who want to diagnose faster, install better, and come back less."
+        title="Get Better at the Work"
+        subtitle="Diagnose faster. Install cleaner. Come back less."
         cards={proCards}
         theme="copper"
         viewAllTo="/pro-lessons"

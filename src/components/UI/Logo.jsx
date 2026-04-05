@@ -1,3 +1,4 @@
+import React from 'react'
 import { Link } from 'react-router-dom'
 import styles from './Logo.module.css'
 
@@ -20,11 +21,11 @@ export default function Logo({ size = 'default' }) {
         />
 
         {/* 5 ascending bars (left to right, taller each) */}
-        <rect x="18" y="72" width="9" height="18" rx="1" fill="#ffffff" opacity="0.9" />
-        <rect x="30" y="62" width="9" height="28" rx="1" fill="#ffffff" opacity="0.9" />
-        <rect x="42" y="52" width="9" height="38" rx="1" fill="#ffffff" opacity="0.9" />
-        <rect x="54" y="42" width="9" height="48" rx="1" fill="#ffffff" opacity="0.9" />
-        <rect x="66" y="32" width="9" height="58" rx="1" fill="#ffffff" opacity="0.9" />
+        <rect x="18" y="72" width="9" height="18" rx="1" fill="#2d3b4a" />
+        <rect x="30" y="62" width="9" height="28" rx="1" fill="#2d3b4a" />
+        <rect x="42" y="52" width="9" height="38" rx="1" fill="#2d3b4a" />
+        <rect x="54" y="42" width="9" height="48" rx="1" fill="#2d3b4a" />
+        <rect x="66" y="32" width="9" height="58" rx="1" fill="#2d3b4a" />
 
         {/* Arrow — sweeping from lower-left, curving up and out top-right */}
         <path

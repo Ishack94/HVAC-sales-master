@@ -1,3 +1,4 @@
+import React from 'react'
 import styles from './DividerQuote.module.css'
 
 export default function DividerQuote({ quote }) {

@@ -1,3 +1,4 @@
+import React from 'react'
 import ResourceGrid from '../components/Home/ResourceGrid'
 import Newsletter from '../components/Home/Newsletter'
 

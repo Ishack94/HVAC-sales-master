@@ -1,3 +1,4 @@
+import React from 'react'
 import styles from './TrustBar.module.css'
 
 const items = [

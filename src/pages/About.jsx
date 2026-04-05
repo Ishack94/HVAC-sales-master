@@ -1,3 +1,4 @@
+import React from 'react'
 import SectionLabel from '../components/UI/SectionLabel'
 import Newsletter from '../components/Home/Newsletter'
 import styles from './About.module.css'

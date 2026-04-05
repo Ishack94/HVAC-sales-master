@@ -1,3 +1,4 @@
+import React from 'react'
 import { useParams, Link } from 'react-router-dom'
 import Newsletter from '../components/Home/Newsletter'
 import { getArticleTitle } from '../utils/articleData'

@@ -1,3 +1,4 @@
+import React from 'react'
 import { useEffect, useRef } from 'react'
 import SectionLabel from '../UI/SectionLabel'
 import Card from './Card'

@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+  <!-- Rounded square background -->
+  <rect width="120" height="120" rx="24" fill="#FDFCFB"/>
+  <!-- Shield -->
+  <path
+    d="M60 10 L22 24 L22 56 C22 80 38 100 60 108 C82 100 98 80 98 56 L98 24 Z"
+    fill="#3d4f63"
+  />
+  <!-- 5 ascending bars -->
+  <rect x="27" y="78" width="9" height="18" rx="1" fill="#2d3b4a"/>
+  <rect x="39" y="68" width="9" height="28" rx="1" fill="#2d3b4a"/>
+  <rect x="51" y="58" width="9" height="38" rx="1" fill="#2d3b4a"/>
+  <rect x="63" y="48" width="9" height="48" rx="1" fill="#2d3b4a"/>
+  <rect x="75" y="38" width="9" height="58" rx="1" fill="#2d3b4a"/>
+  <!-- Arrow curve -->
+  <path
+    d="M24 84 C30 66, 46 38, 80 14"
+    stroke="#e87722"
+    stroke-width="6"
+    fill="none"
+    stroke-linecap="round"
+  />
+  <!-- Arrowhead -->
+  <path
+    d="M66 12 L82 12 L82 28"
+    stroke="#e87722"
+    stroke-width="6"
+    fill="none"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+</svg>

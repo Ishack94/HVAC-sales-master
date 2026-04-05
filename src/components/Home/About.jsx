@@ -1,3 +1,4 @@
+import React from 'react'
 import { useEffect, useRef } from 'react'
 import SectionLabel from '../UI/SectionLabel'
 import Button from '../UI/Button'
@@ -37,14 +38,12 @@ export default function About() {
             <em>by the Industry.</em>
           </h2>
           <p className={styles.body}>
-            HVAC Sales Master exists because the gap between field experience and business
-            success shouldn&apos;t be a secret. The best technicians and salespeople learn through
-            years of expensive trial and error — we&apos;re here to shortcut that.
+            This site exists because nobody teaches you the business side in trade school.
+            You learn how to braze a line set but not how to close a $12,000 job. We&apos;re fixing that.
           </p>
           <p className={styles.body}>
-            Every article is written from the inside — practical, direct, and grounded in
-            how HVAC businesses actually work. No fluff. No generic advice recycled from
-            other industries. Just the real playbook.
+            Every article is written by people who&apos;ve actually been in the field — not marketing
+            consultants recycling generic advice.
           </p>
           <Button to="/about" variant="primary">Learn More</Button>
         </div>

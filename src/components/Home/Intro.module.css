@@ -1,0 +1,41 @@
+.section {
+  background: var(--white);
+  padding: 90px var(--container-padding);
+}
+
+.container {
+  max-width: 740px;
+  margin: 0 auto;
+}
+
+.pullQuote {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.8rem;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--navy);
+  line-height: 1.5;
+  margin-bottom: 32px;
+}
+
+.body {
+  font-size: 1.05rem;
+  font-weight: 300;
+  color: var(--text-secondary);
+  line-height: 1.9;
+  margin-bottom: 0;
+}
+
+.body + .body {
+  margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+  .pullQuote {
+    font-size: 1.45rem;
+  }
+
+  .body {
+    font-size: 1rem;
+  }
+}

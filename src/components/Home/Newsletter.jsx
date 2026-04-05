@@ -1,3 +1,4 @@
+import React from 'react'
 import { useState } from 'react'
 import styles from './Newsletter.module.css'
 
@@ -25,10 +26,9 @@ export default function Newsletter() {
     <section className={styles.section}>
       <div className={styles.container}>
         <p className={styles.label}>Stay Sharp</p>
-        <h2 className={styles.heading}>Never Miss a Lesson</h2>
+        <h2 className={styles.heading}>Get better at this stuff</h2>
         <p className={styles.subtitle}>
-          New articles, training resources, and industry insights — delivered straight to your inbox.
-          No spam. Unsubscribe anytime.
+          One email a week. Sales tips, tech shortcuts, and real talk about making more money in HVAC. No spam.
         </p>
 
         {status === 'success' ? (
