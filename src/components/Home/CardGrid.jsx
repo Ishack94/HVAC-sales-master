@@ -3,10 +3,12 @@ import { useEffect, useRef } from 'react'
 import SectionLabel from '../UI/SectionLabel'
 import Card from './Card'
 import Button from '../UI/Button'
+import useFadeIn from '../../utils/useFadeIn'
 import styles from './CardGrid.module.css'
 
 export default function CardGrid({ id, label, title, subtitle, cards, theme, viewAllTo, bg }) {
   const ref = useRef(null)
+  useFadeIn(ref)
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -29,7 +31,7 @@ export default function CardGrid({ id, label, title, subtitle, cards, theme, vie
   return (
     <section
       id={id}
-      className={`${styles.section} ${bg === 'cream' ? styles.cream : ''}`}
+      className={`${styles.section} ${bg === 'cream' ? styles.cream : ''} fade-section`}
       ref={ref}
     >
       <div className={styles.container}>
@@ -47,7 +49,7 @@ export default function CardGrid({ id, label, title, subtitle, cards, theme, vie
         </div>
         {viewAllTo && (
           <div className={styles.cta}>
-            <Button to={viewAllTo} variant="secondary">View All Articles</Button>
+            <Button to={viewAllTo} variant="text">View All Articles →</Button>
           </div>
         )}
       </div>

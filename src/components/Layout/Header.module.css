@@ -9,10 +9,23 @@
 }
 
 .header.scrolled {
-  background-color: rgba(253, 252, 251, 0.88);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  box-shadow: 0 1px 0 var(--divider);
+  background-color: rgba(0, 26, 44, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.scrolled .link {
+  color: rgba(246, 245, 243, 0.75);
+}
+
+.scrolled .link:hover,
+.scrolled .link.active {
+  color: #fff;
+}
+
+.scrolled .hamburger span {
+  background-color: rgba(246, 245, 243, 0.9);
 }
 
 .inner {

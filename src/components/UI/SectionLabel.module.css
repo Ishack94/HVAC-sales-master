@@ -6,11 +6,7 @@
 }
 
 .line {
-  display: block;
-  height: 1px;
-  width: 40px;
-  background-color: var(--copper);
-  flex-shrink: 0;
+  display: none;
 }
 
 .text {

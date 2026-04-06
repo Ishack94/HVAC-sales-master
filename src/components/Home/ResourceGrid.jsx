@@ -2,6 +2,7 @@ import React from 'react'
 import { useEffect, useRef } from 'react'
 import SectionLabel from '../UI/SectionLabel'
 import Badge from '../UI/Badge'
+import useFadeIn from '../../utils/useFadeIn'
 import styles from './ResourceGrid.module.css'
 
 const resources = [
@@ -53,6 +54,7 @@ const resources = [
 
 export default function ResourceGrid() {
   const ref = useRef(null)
+  useFadeIn(ref)
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -73,7 +75,7 @@ export default function ResourceGrid() {
   }, [])
 
   return (
-    <section className={styles.section} ref={ref}>
+    <section className={`${styles.section} fade-section`} ref={ref}>
       <div className={styles.container}>
         <div className={styles.header} data-reveal>
           <SectionLabel>Industry Resources</SectionLabel>

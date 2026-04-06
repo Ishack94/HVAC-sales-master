@@ -61,6 +61,32 @@
   border-color: var(--copper-light);
 }
 
+/* Text-only — copper, no border */
+.text {
+  background: transparent;
+  color: var(--copper);
+  border: none;
+  padding: 0;
+  font-size: 0.7rem;
+  letter-spacing: 2.5px;
+  position: relative;
+}
+
+.text::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--copper);
+  transition: width 0.25s ease;
+}
+
+.text:hover::after {
+  width: 100%;
+}
+
 .btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
