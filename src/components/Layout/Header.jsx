@@ -32,7 +32,7 @@ export default function Header() {
     <>
       <header className={`${styles.header} ${scrolled ? styles.scrolled : ''}`}>
         <div className={styles.inner}>
-          <Logo height={141} mobileHeight={36} />
+          <Logo height={141} mobileHeight={72} />
           <nav className={styles.nav} aria-label="Main navigation">
             {navLinks.map(({ label, to }) => (
               <NavLink
