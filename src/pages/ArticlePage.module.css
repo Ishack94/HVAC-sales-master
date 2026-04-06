@@ -165,6 +165,27 @@
   font-style: italic;
 }
 
+.h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.65rem;
+  font-weight: 400;
+  color: var(--navy);
+  letter-spacing: -0.4px;
+  line-height: 1.25;
+  margin-top: 52px;
+  margin-bottom: 14px;
+}
+
+.ul {
+  padding-left: 20px;
+  margin-top: 14px;
+  margin-bottom: 14px;
+}
+
+.li {
+  margin-bottom: 8px;
+}
+
 .link {
   color: var(--copper);
   text-decoration: underline;
