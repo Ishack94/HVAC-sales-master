@@ -6,9 +6,21 @@
   justify-content: center;
   text-align: center;
   padding: 120px var(--container-padding) 80px;
-  background-color: var(--warm-white);
+  background: linear-gradient(165deg, #001a2c 0%, #002f49 35%, #1a4a6b 100%);
   position: relative;
   overflow: hidden;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  background: linear-gradient(to top, #f6f5f3, transparent);
+  pointer-events: none;
+  z-index: 0;
 }
 
 /* Parallax glow — moves with cursor */
@@ -29,7 +41,7 @@
 .inner {
   max-width: 800px;
   position: relative;
-  z-index: 1;
+  z-index: 2;
 }
 
 /* Staggered animation targets */
@@ -53,7 +65,7 @@
   font-weight: 300;
   letter-spacing: -2px;
   line-height: 1.05;
-  color: var(--navy);
+  color: #f6f5f3;
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.25s,
@@ -63,13 +75,13 @@
 
 .heading em {
   font-style: italic;
-  color: var(--blue);
+  color: #f6f5f3;
 }
 
 .subtitle {
   font-size: 1.05rem;
   font-weight: 300;
-  color: var(--text-secondary);
+  color: rgba(246, 245, 243, 0.65);
   line-height: 1.85;
   max-width: 520px;
   margin: 0 auto 44px;

@@ -8,4 +8,11 @@
 .img {
   display: block;
   width: auto;
+  height: var(--logo-h, 40px);
+}
+
+@media (max-width: 768px) {
+  .img {
+    height: var(--logo-h-mobile, var(--logo-h, 40px));
+  }
 }

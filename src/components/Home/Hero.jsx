@@ -38,8 +38,8 @@ export default function Hero() {
           Sales training, technical lessons, and industry insights — built for the people who keep America comfortable.
         </p>
         <div className={styles.actions}>
-          <Button to="/sales" variant="primary">Explore Sales Training</Button>
-          <Button to="/pro-lessons" variant="secondary">Pro Lessons</Button>
+          <Button to="/sales" variant="copper">Explore Sales Training</Button>
+          <Button to="/pro-lessons" variant="ghost">Pro Lessons</Button>
         </div>
       </div>
     </section>
