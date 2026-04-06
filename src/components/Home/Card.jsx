@@ -17,7 +17,6 @@ export default function Card({ title, excerpt, to, category, theme = 'blue' }) {
           </svg>
         </Link>
       </div>
-      <span className={styles.accentLine} aria-hidden="true" />
     </article>
   )
 }

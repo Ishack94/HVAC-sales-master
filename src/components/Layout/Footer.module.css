@@ -1,7 +1,7 @@
 .footer {
   background-color: var(--navy);
   color: rgba(255, 255, 255, 0.7);
-  padding: 56px 0 28px;
+  padding: 60px 0 30px;
 }
 
 .container {
@@ -25,7 +25,7 @@
 }
 
 .tagline {
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   line-height: 1.65;
   color: rgba(255, 255, 255, 0.45);
   max-width: 260px;
@@ -57,14 +57,14 @@
 .links {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 32px;
+  gap: 60px;
 }
 
 .column {}
 
 .colTitle {
   font-family: 'Inter', sans-serif;
-  font-size: 0.64rem;
+  font-size: 0.6rem;
   font-weight: 600;
   letter-spacing: 3.5px;
   text-transform: uppercase;
@@ -88,7 +88,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-top: 24px;
+  padding-top: 20px;
 }
 
 .copy {
@@ -114,6 +114,7 @@
 
   .links {
     grid-template-columns: 1fr 1fr;
+    gap: 32px;
   }
 
   .bottom {

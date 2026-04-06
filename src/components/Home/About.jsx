@@ -2,7 +2,6 @@ import React from 'react'
 import { useRef } from 'react'
 import useFadeIn from '../../utils/useFadeIn'
 import SectionLabel from '../UI/SectionLabel'
-import Button from '../UI/Button'
 import styles from './About.module.css'
 
 export default function About() {
@@ -26,7 +25,6 @@ export default function About() {
           Every article is written from the inside — practical, direct, and grounded in
           how HVAC businesses actually work. No fluff. Just what actually works.
         </p>
-        <Button to="/about" variant="primary">Learn More</Button>
       </div>
     </section>
   )

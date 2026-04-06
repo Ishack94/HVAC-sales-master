@@ -27,9 +27,9 @@ export const salesArticles = [
     readTime: '7 min',
   },
   {
-    slug: 'first-impressions-close-deals',
-    title: 'First Impressions Close More Deals Than Pricing',
-    description: 'What happens in the first 90 seconds at the door determines your close rate.',
+    slug: 'first-90-seconds-at-the-door',
+    title: 'The First 90 Seconds at the Door Matter More Than Your Price',
+    description: 'What happens before you even open your tool bag determines whether you close.',
     readTime: '6 min',
   },
   {
@@ -45,21 +45,21 @@ export const salesArticles = [
     readTime: '6 min',
   },
   {
-    slug: 'building-demand-before-breakdown',
-    title: 'Building Demand Before the Breakdown',
-    description: 'Stop waiting for emergency calls. Create demand with proactive outreach.',
+    slug: 'sell-system-when-ac-still-works',
+    title: 'How to Sell a System When the AC Still Works',
+    description: "You don't have to wait for an emergency to sell a replacement.",
     readTime: '6 min',
   },
   {
-    slug: 'heat-pumps-biggest-sales-opportunity',
-    title: 'Heat Pumps Are Your Biggest Sales Opportunity',
-    description: 'The heat pump market is exploding. Here\'s how to sell them confidently.',
+    slug: 'sell-high-efficiency-systems',
+    title: 'How to Sell High Efficiency Systems Confidently',
+    description: "Heat pumps, variable speed, and high-SEER — how to sell them without confusing the customer.",
     readTime: '8 min',
   },
   {
-    slug: 'selling-to-modern-informed-homeowner',
-    title: 'Selling to the Modern Informed Homeowner',
-    description: "Today's customers show up educated. Adapt your approach or lose the sale.",
+    slug: 'customer-already-googled-everything',
+    title: 'What to Do When the Customer Already Googled Everything',
+    description: "Today's homeowners show up with quotes and opinions. Here's how to work with that.",
     readTime: '7 min',
   },
   {
@@ -73,6 +73,36 @@ export const salesArticles = [
     title: 'Flat Rate Pricing vs Time and Materials',
     description: 'Which pricing model makes more money and delivers better customer experience.',
     readTime: '8 min',
+  },
+  {
+    slug: 'what-to-say-price-too-high',
+    title: 'What to Say When They Say Your Price Is Too High',
+    description: "The most common price objection and exactly how to respond without dropping your numbers.",
+    readTime: '7 min',
+  },
+  {
+    slug: 'husband-wife-disagree',
+    title: 'What to Do When Husband and Wife Disagree',
+    description: "One wants to fix it, one wants to replace it. Here's how to navigate that conversation.",
+    readTime: '6 min',
+  },
+  {
+    slug: 'turn-service-call-into-sale',
+    title: 'How to Turn a Service Call Into a Full System Sale',
+    description: 'The natural transition from diagnosing a problem to recommending a replacement.',
+    readTime: '8 min',
+  },
+  {
+    slug: 'hvac-sales-script-word-for-word',
+    title: 'Exact HVAC Sales Script — Word for Word',
+    description: 'From the door to the close. Every word you need for a complete in-home sales call.',
+    readTime: '12 min',
+  },
+  {
+    slug: 'hvac-tech-to-sales',
+    title: 'From HVAC Tech to $150k Salesman — The Step by Step Path',
+    description: 'How to make the jump from turning wrenches to closing deals and doubling your income.',
+    readTime: '10 min',
   },
 ]
 

@@ -5,17 +5,29 @@ import styles from './Hero.module.css'
 
 export default function Hero() {
   const heroRef = useRef(null)
+  const glowRef = useRef(null)
 
   useEffect(() => {
-    // Trigger animations after mount
     const timer = setTimeout(() => {
       heroRef.current?.classList.add(styles.animated)
     }, 50)
     return () => clearTimeout(timer)
   }, [])
 
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      if (!glowRef.current) return
+      const x = (e.clientX / window.innerWidth - 0.5) * 50
+      const y = (e.clientY / window.innerHeight - 0.5) * 50
+      glowRef.current.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`
+    }
+    window.addEventListener('mousemove', handleMouseMove, { passive: true })
+    return () => window.removeEventListener('mousemove', handleMouseMove)
+  }, [])
+
   return (
     <section className={styles.hero} ref={heroRef}>
+      <div className={styles.heroGlow} ref={glowRef} aria-hidden="true" />
       <div className={styles.inner}>
         <p className={styles.label}>For HVAC Professionals</p>
         <h1 className={styles.heading}>
@@ -30,7 +42,6 @@ export default function Hero() {
           <Button to="/pro-lessons" variant="secondary">Pro Lessons</Button>
         </div>
       </div>
-
     </section>
   )
 }

@@ -25,7 +25,7 @@
   font-family: 'Cormorant Garamond', serif;
   font-size: 3.4rem;
   font-weight: 300;
-  letter-spacing: -1px;
+  letter-spacing: -1.5px;
   color: var(--navy);
   line-height: 1.1;
   margin-bottom: 16px;
@@ -35,7 +35,7 @@
   font-size: 1rem;
   font-weight: 300;
   color: var(--text-secondary);
-  line-height: 1.7;
+  line-height: 1.85;
   max-width: 520px;
   text-align: center;
 }
@@ -61,6 +61,11 @@
 @media (max-width: 768px) {
   .header {
     margin-bottom: 40px;
+  }
+
+  .title {
+    font-size: 2rem;
+    letter-spacing: -0.5px;
   }
 }
 

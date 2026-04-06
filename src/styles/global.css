@@ -1,6 +1,19 @@
 @import './variables.css';
 @import './reset.css';
 
+/* Warm gradient overlay — barely visible, adds subtle warmth at bottom of viewport */
+body::after {
+  content: '';
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 35%;
+  pointer-events: none;
+  background: linear-gradient(to bottom, transparent, rgba(246, 245, 243, 0.12));
+  z-index: 9999;
+}
+
 /* Container */
 .container {
   max-width: var(--container-max);

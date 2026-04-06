@@ -30,7 +30,7 @@ export default function Home() {
         id="sales-training"
         label="Sales Training"
         title="Close More Deals"
-        subtitle="Practical sales strategies built for HVAC professionals who want to win more jobs without feeling like a pushy salesperson."
+        subtitle="Practical strategies that work when you're sitting across from a homeowner."
         cards={salesCards}
         theme="blue"
         viewAllTo="/sales"
@@ -39,9 +39,9 @@ export default function Home() {
       <DividerQuote quote="The best technicians never stop learning. The best closers never stop either." />
       <CardGrid
         id="pro-lessons"
-        label="Tech & Installer Pro Lessons"
+        label="Pro Lessons"
         title="Sharpen Your Skills"
-        subtitle="Technical training for service technicians and installers who want to diagnose faster, install better, and come back less."
+        subtitle="Diagnose faster. Install cleaner. Come back less."
         cards={proCards}
         theme="copper"
         viewAllTo="/pro-lessons"
