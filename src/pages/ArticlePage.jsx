@@ -12,9 +12,6 @@ function getArticleMeta(slug) {
   return allArticles.find((a) => a.slug === slug) || null
 }
 
-// Renders article content.
-// HTML strings go through dangerouslySetInnerHTML.
-// Text-format strings are parsed: ## → h2, ### → h3, - lines → ul, else → p.
 function ArticleBody({ content }) {
   if (!content) return null
 
@@ -82,38 +79,58 @@ export default function ArticlePage({ section }) {
 
   return (
     <div className={styles.page}>
-      <article className={styles.article}>
-        <Link to={`/${section}`} className={styles.backLink}>
-          ← Back to {sectionLabel}
-        </Link>
+      <div className={styles.layout}>
 
-        {meta?.image && (
-          <div className={styles.heroWrap}>
-            <img src={meta.image} alt={title} className={styles.heroImg} />
-          </div>
-        )}
+        {/* ── Main article ── */}
+        <main className={styles.main}>
+          <Link to={`/${section}`} className={styles.backLink}>
+            ← Back to {sectionLabel}
+          </Link>
 
-        <header className={styles.header}>
-          <h1 className={styles.title}>{title}</h1>
-          <div className={styles.metaBar}>
+          <header className={styles.header}>
             <span className={styles.category}>{categoryLabel}</span>
-            {meta?.readTime && <span className={styles.readTime}>{meta.readTime} read</span>}
+            <h1 className={styles.title}>{title}</h1>
+            <div className={styles.divider} />
+          </header>
+
+          <div className={styles.body}>
+            {content ? (
+              <ArticleBody content={content} />
+            ) : (
+              <p className={styles.placeholder}>
+                This article is being prepared. In the meantime, explore more content in the{' '}
+                <Link to={`/${section}`} className={styles.link}>{sectionLabel}</Link> section.
+              </p>
+            )}
           </div>
-          <div className={styles.divider} />
-        </header>
+        </main>
 
-        <div className={styles.body}>
-          {content ? (
-            <ArticleBody content={content} />
-          ) : (
-            <p className={styles.placeholder}>
-              This article is being prepared. In the meantime, explore more content in the{' '}
-              <Link to={`/${section}`} className={styles.link}>{sectionLabel}</Link> section.
-            </p>
+        {/* ── Sidebar ── */}
+        <aside className={styles.sidebar}>
+          <div className={styles.spotlight}>
+            <h3 className={styles.spotlightHeading}>Dino Quote</h3>
+            <p className={styles.spotlightSubtext}>HVAC business tools built for contractors</p>
+            <span className={styles.spotlightBadge}>Coming Soon</span>
+          </div>
+
+          {related.length > 0 && (
+            <div className={styles.sidebarLinks}>
+              <p className={styles.sidebarLinksLabel}>Keep Reading</p>
+              {related.map((a) => (
+                <div key={a.slug} className={styles.sidebarItem}>
+                  <span className={styles.sidebarItemCategory}>{cardCategory}</span>
+                  <Link to={articlePath(a.slug)} className={styles.sidebarItemTitle}>
+                    {a.title}
+                  </Link>
+                </div>
+              ))}
+            </div>
           )}
-        </div>
-      </article>
+        </aside>
 
+      </div>
+
+      {/* ── Bottom related cards ── */}
       {related.length > 0 && (
         <div className={styles.related}>
           <div className={styles.relatedInner}>
