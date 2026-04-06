@@ -10,14 +10,14 @@ export default function DividerQuote({ quote }) {
   return (
     <div className={`${styles.divider} fade-section`} ref={ref}>
       <div className={styles.container}>
-        <span className={styles.mark}>&ldquo;</span>
-        <div className={styles.quoteWrap}>
+        <div className={styles.inner}>
+          <div className={styles.line} />
           <blockquote className={styles.quote}>{quote}</blockquote>
           <p className={styles.secondary}>
             Technical skill and sales ability aren&apos;t separate paths — they&apos;re two sides of the same career.
           </p>
+          <div className={styles.line} />
         </div>
-        <span className={styles.mark}>&rdquo;</span>
       </div>
     </div>
   )

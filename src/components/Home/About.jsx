@@ -17,14 +17,11 @@ export default function About() {
           <em>by the Industry.</em>
         </h2>
         <p className={styles.body}>
-          HVAC Sales Master exists because the gap between field experience and business
-          success shouldn&apos;t be a secret. The best technicians and salespeople learn through
-          years of expensive trial and error — we&apos;re here to shortcut that.
+          HVAC Sales Master was built by someone who&apos;s been in the trades. Every article,
+          every lesson, every guide is written for the people actually doing the work —
+          not sitting in an office reading about it.
         </p>
-        <p className={styles.body}>
-          Every article is written from the inside — practical, direct, and grounded in
-          how HVAC businesses actually work. No fluff. Just what actually works.
-        </p>
+        <p className={styles.tagline}>No fluff. Just what actually works.</p>
       </div>
     </section>
   )

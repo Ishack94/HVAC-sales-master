@@ -1,7 +1,7 @@
 .footer {
   background-color: var(--navy);
   color: rgba(255, 255, 255, 0.7);
-  padding: 60px 0 30px;
+  padding: 48px 0 24px;
 }
 
 .container {
@@ -13,8 +13,8 @@
 .top {
   display: grid;
   grid-template-columns: 1fr 2fr;
-  gap: 60px;
-  padding-bottom: 40px;
+  gap: 48px;
+  padding-bottom: 32px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 

@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState, useRef } from 'react'
 import useFadeIn from '../../utils/useFadeIn'
+import SectionLabel from '../UI/SectionLabel'
 import styles from './Newsletter.module.css'
 
 export default function Newsletter() {
@@ -28,7 +29,7 @@ export default function Newsletter() {
   return (
     <section className={`${styles.section} fade-section`} ref={ref}>
       <div className={styles.container}>
-        <p className={styles.label}>Stay Sharp</p>
+        <SectionLabel>Newsletter</SectionLabel>
         <h2 className={styles.heading}>Stay Sharp</h2>
         <p className={styles.subtitle}>
           New articles, training resources, and industry insights — delivered straight to your inbox. No spam. Unsubscribe anytime.

@@ -4,19 +4,17 @@ import Logo from '../UI/Logo'
 import styles from './Footer.module.css'
 
 const salesLinks = [
-  { label: 'Stop Selling Equipment', to: '/sales/stop-selling-equipment' },
-  { label: 'Handle Objections', to: '/sales/handle-objections' },
-  { label: 'Maintenance Agreements', to: '/sales/maintenance-agreements' },
-  { label: 'First Impressions', to: '/sales/first-impressions' },
-  { label: 'View All Articles', to: '/sales' },
+  { label: 'Stop Selling Equipment', to: '/sales/stop-selling-equipment-start-selling-outcomes' },
+  { label: 'Handle Objections', to: '/sales/handle-i-need-to-think-about-it' },
+  { label: 'Maintenance Agreements', to: '/sales/maintenance-agreements-predictable-revenue' },
+  { label: 'View All Articles →', to: '/sales' },
 ]
 
 const proLinks = [
-  { label: 'Diagnostic Process', to: '/pro-lessons/diagnostic-process' },
-  { label: 'Refrigerant Charging', to: '/pro-lessons/refrigerant-charging' },
-  { label: 'A2L Transition', to: '/pro-lessons/a2l-refrigerant' },
-  { label: 'Superheat & Subcooling', to: '/pro-lessons/superheat-subcooling' },
-  { label: 'View All Lessons', to: '/pro-lessons' },
+  { label: 'Diagnostic Process', to: '/pro-lessons/diagnostic-process-think-like-detective' },
+  { label: 'Refrigerant Charging', to: '/pro-lessons/refrigerant-charging-fundamentals' },
+  { label: 'Static Pressure', to: '/pro-lessons/static-pressure-diagnostics' },
+  { label: 'View All Lessons →', to: '/pro-lessons' },
 ]
 
 const companyLinks = [
