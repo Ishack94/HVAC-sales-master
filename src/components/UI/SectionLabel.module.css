@@ -30,3 +30,9 @@
 .light .text {
   color: rgba(189, 108, 37, 0.8);
 }
+
+@media (max-width: 768px) {
+  .line {
+    display: none;
+  }
+}

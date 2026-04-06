@@ -107,19 +107,25 @@
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .footer {
-    padding: 40px 0 20px;
+    padding: 36px 0 18px;
   }
 
+  .top {
+    padding-bottom: 24px;
+  }
+}
+
+@media (max-width: 600px) {
   .links {
     grid-template-columns: 1fr 1fr;
-    gap: 32px;
+    gap: 28px;
   }
 
   .bottom {
     flex-direction: column;
-    gap: 6px;
+    gap: 4px;
     text-align: center;
   }
 }

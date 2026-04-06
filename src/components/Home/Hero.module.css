@@ -112,9 +112,16 @@
   }
 
   .subtitle {
-    font-size: 0.95rem;
+    font-size: 0.9375rem;
+    max-width: 90%;
     margin-bottom: 32px;
     line-height: 1.7;
+  }
+
+  .actions {
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
   }
 
   .heroGlow {
@@ -128,13 +135,6 @@
   }
 
   .heading {
-    font-size: 1.8rem;
-  }
-
-  .actions {
-    flex-direction: column;
-    align-items: stretch;
-    max-width: 280px;
-    margin: 0 auto;
+    font-size: 2rem;
   }
 }
