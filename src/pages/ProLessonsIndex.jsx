@@ -27,6 +27,7 @@ export default function ProLessonsIndex() {
               to={`/pro-lessons/${article.slug}`}
               theme="copper"
               category="Pro Lesson"
+              image={article.image}
             />
           ))}
         </div>

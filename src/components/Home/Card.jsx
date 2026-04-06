@@ -2,14 +2,23 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import styles from './Card.module.css'
 
+const overlays = {
+  blue: 'linear-gradient(to bottom, rgba(0,0,0,0.15), rgba(0,47,73,0.7))',
+  copper: 'linear-gradient(to bottom, rgba(0,0,0,0.15), rgba(120,60,10,0.7))',
+}
+
 export default function Card({ title, excerpt, to, category, theme = 'blue', image }) {
+  const imageStyle = image
+    ? {
+        backgroundImage: `${overlays[theme] ?? overlays.blue}, url('${image}')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }
+    : undefined
+
   return (
     <article className={`${styles.card} ${styles[theme]}`}>
-      <div
-        className={styles.image}
-        aria-hidden="true"
-        style={image ? { backgroundImage: image, backgroundSize: 'cover', backgroundPosition: 'center' } : undefined}
-      />
+      <div className={styles.image} aria-hidden="true" style={imageStyle} />
       {category && <span className={styles.category}>{category}</span>}
       <div className={styles.body}>
         <h3 className={styles.title}>{title}</h3>

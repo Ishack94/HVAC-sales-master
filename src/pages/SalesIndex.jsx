@@ -27,6 +27,7 @@ export default function SalesIndex() {
               to={`/sales/${article.slug}`}
               theme="blue"
               category="Sales"
+              image={article.image}
             />
           ))}
         </div>
