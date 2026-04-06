@@ -17,9 +17,9 @@
 .heading {
   font-family: 'Cormorant Garamond', serif;
   font-size: 3rem;
-  font-weight: 300;
+  font-weight: 500;
   letter-spacing: -0.5px;
-  color: var(--navy);
+  color: #0a1f2e;
   margin-bottom: 16px;
 }
 

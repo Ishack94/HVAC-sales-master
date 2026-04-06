@@ -49,16 +49,16 @@
   border-color: rgba(255, 255, 255, 0.7);
 }
 
-/* Copper */
+/* Copper — outlined */
 .copper {
-  background-color: var(--copper);
-  color: var(--white);
-  border: 1px solid var(--copper);
+  background-color: transparent;
+  color: #f6f5f3;
+  border: 2px solid #bd6c25;
 }
 
 .copper:hover {
-  background-color: var(--copper-light);
-  border-color: var(--copper-light);
+  background-color: #bd6c25;
+  color: #fff;
 }
 
 /* Text-only — copper, no border */
