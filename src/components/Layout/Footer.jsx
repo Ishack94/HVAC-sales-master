@@ -29,7 +29,7 @@ export default function Footer() {
       <div className={styles.container}>
         <div className={styles.top}>
           <div className={styles.brand}>
-            <Logo height={64} />
+            <Logo height={102} />
             <p className={styles.tagline}>
               Real-world sales and technical training for HVAC pros.
             </p>
