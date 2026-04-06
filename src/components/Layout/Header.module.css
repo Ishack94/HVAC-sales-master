@@ -4,28 +4,10 @@
   left: 0;
   right: 0;
   z-index: 100;
-  transition: background-color 0.3s ease, backdrop-filter 0.3s ease,
-              box-shadow 0.3s ease;
-}
-
-.header.scrolled {
   background-color: rgba(0, 26, 44, 0.95);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06);
-}
-
-.scrolled .link {
-  color: rgba(246, 245, 243, 0.75);
-}
-
-.scrolled .link:hover,
-.scrolled .link.active {
-  color: #fff;
-}
-
-.scrolled .hamburger span {
-  background-color: rgba(246, 245, 243, 0.9);
 }
 
 .inner {
@@ -100,7 +82,7 @@
   display: block;
   width: 22px;
   height: 1.5px;
-  background-color: var(--navy);
+  background-color: rgba(246, 245, 243, 0.9);
   transition: transform 0.2s ease;
 }
 
