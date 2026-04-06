@@ -2,10 +2,14 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import styles from './Card.module.css'
 
-export default function Card({ title, excerpt, to, category, theme = 'blue' }) {
+export default function Card({ title, excerpt, to, category, theme = 'blue', image }) {
   return (
     <article className={`${styles.card} ${styles[theme]}`}>
-      <div className={styles.image} aria-hidden="true" />
+      <div
+        className={styles.image}
+        aria-hidden="true"
+        style={image ? { backgroundImage: image, backgroundSize: 'cover', backgroundPosition: 'center' } : undefined}
+      />
       {category && <span className={styles.category}>{category}</span>}
       <div className={styles.body}>
         <h3 className={styles.title}>{title}</h3>

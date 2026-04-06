@@ -8,18 +8,32 @@ import Newsletter from '../components/Home/Newsletter'
 
 import { salesArticles, proArticles } from '../utils/articleData'
 
-const salesCards = salesArticles.slice(0, 3).map((a) => ({
+const salesImages = [
+  "linear-gradient(to bottom, rgba(0,47,73,0.3), rgba(0,47,73,0.6)), url('https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=600&q=80')",
+  "linear-gradient(to bottom, rgba(0,47,73,0.3), rgba(0,47,73,0.6)), url('https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=600&q=80')",
+  "linear-gradient(to bottom, rgba(0,47,73,0.3), rgba(0,47,73,0.6)), url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&q=80')",
+]
+
+const proImages = [
+  "linear-gradient(to bottom, rgba(189,108,37,0.3), rgba(189,108,37,0.6)), url('https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=600&q=80')",
+  "linear-gradient(to bottom, rgba(189,108,37,0.3), rgba(189,108,37,0.6)), url('https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=600&q=80')",
+  "linear-gradient(to bottom, rgba(189,108,37,0.3), rgba(189,108,37,0.6)), url('https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=600&q=80')",
+]
+
+const salesCards = salesArticles.slice(0, 3).map((a, i) => ({
   title: a.title,
   excerpt: a.description,
   to: `/sales/${a.slug}`,
   category: 'Sales',
+  image: salesImages[i],
 }))
 
-const proCards = proArticles.slice(0, 3).map((a) => ({
+const proCards = proArticles.slice(0, 3).map((a, i) => ({
   title: a.title,
   excerpt: a.description,
   to: `/pro-lessons/${a.slug}`,
   category: 'Tech',
+  image: proImages[i],
 }))
 
 export default function Home() {
