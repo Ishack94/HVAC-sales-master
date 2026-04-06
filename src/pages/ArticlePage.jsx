@@ -1,5 +1,6 @@
 import React from 'react'
 import { useParams, Link } from 'react-router-dom'
+import Card from '../components/Home/Card'
 import Newsletter from '../components/Home/Newsletter'
 import { getArticleTitle, salesArticles, proArticles, learnArticles } from '../utils/articleData'
 import { articleContent } from '../utils/articleContent'
@@ -12,8 +13,8 @@ function getArticleMeta(slug) {
 }
 
 // Renders article content.
-// HTML strings (articles 1–3) go through dangerouslySetInnerHTML.
-// Text-format strings (articles 4+) are parsed: ## → h2, - lines → ul, else → p.
+// HTML strings go through dangerouslySetInnerHTML.
+// Text-format strings are parsed: ## → h2, ### → h3, - lines → ul, else → p.
 function ArticleBody({ content }) {
   if (!content) return null
 
@@ -27,6 +28,10 @@ function ArticleBody({ content }) {
     <>
       {blocks.map((block, i) => {
         const trimmed = block.trim()
+
+        if (trimmed.startsWith('### ')) {
+          return <h3 key={i}>{trimmed.slice(4)}</h3>
+        }
 
         if (trimmed.startsWith('## ')) {
           return <h2 key={i}>{trimmed.slice(3)}</h2>
@@ -54,29 +59,47 @@ export default function ArticlePage({ section }) {
 
   const sectionLabel = {
     sales: 'Sales Training',
-    'pro-lessons': 'Tech & Installer Pro Lessons',
+    'pro-lessons': 'Pro Lessons',
     learn: 'Homeowner Guide',
   }[section] || section
+
+  const categoryLabel = {
+    sales: 'Sales Training',
+    'pro-lessons': 'Pro Lesson',
+    learn: 'Homeowner Guide',
+  }[section] || section
+
+  const cardTheme = section === 'sales' ? 'blue' : 'copper'
+  const cardCategory = section === 'sales' ? 'Sales' : 'Pro Lesson'
+  const articlePath = (s) => section === 'sales' ? `/sales/${s}` : `/pro-lessons/${s}`
 
   const title = getArticleTitle(slug)
   const meta = getArticleMeta(slug)
   const content = articleContent[slug] || null
 
+  const sectionArticles = section === 'sales' ? salesArticles : proArticles
+  const related = sectionArticles.filter((a) => a.slug !== slug).slice(0, 3)
+
   return (
-    <>
+    <div className={styles.page}>
       <article className={styles.article}>
-        <div className={styles.breadcrumb}>
-          <Link to={`/${section}`} className={styles.breadcrumbLink}>{sectionLabel}</Link>
-          <span className={styles.breadcrumbSep}>/</span>
-          <span className={styles.breadcrumbCurrent}>{title}</span>
-        </div>
+        <Link to={`/${section}`} className={styles.backLink}>
+          ← Back to {sectionLabel}
+        </Link>
+
+        {meta?.image && (
+          <div className={styles.heroWrap}>
+            <img src={meta.image} alt={title} className={styles.heroImg} />
+          </div>
+        )}
 
         <header className={styles.header}>
-          <span className={styles.category}>{sectionLabel}</span>
           <h1 className={styles.title}>{title}</h1>
-          <p className={styles.meta}>
+          <div className={styles.metaBar}>
+            <span className={styles.category}>{categoryLabel}</span>
             {meta?.readTime && <span className={styles.readTime}>{meta.readTime} read</span>}
-          </p>
+          </div>
+          <div className={styles.divider} />
         </header>
 
         <div className={styles.body}>
@@ -90,7 +113,29 @@ export default function ArticlePage({ section }) {
           )}
         </div>
       </article>
+
+      {related.length > 0 && (
+        <div className={styles.related}>
+          <div className={styles.relatedInner}>
+            <h2 className={styles.relatedTitle}>Keep Reading</h2>
+            <div className={styles.relatedGrid}>
+              {related.map((a) => (
+                <Card
+                  key={a.slug}
+                  title={a.title}
+                  excerpt={a.description}
+                  to={articlePath(a.slug)}
+                  theme={cardTheme}
+                  category={cardCategory}
+                  image={a.image}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
       <Newsletter />
-    </>
+    </div>
   )
 }
