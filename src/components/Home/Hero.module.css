@@ -115,7 +115,7 @@
 @media (max-width: 768px) {
   .hero {
     min-height: auto;
-    padding: 80px var(--container-padding) 60px;
+    padding: 120px var(--container-padding) 60px;
   }
 
   .heading {
@@ -136,6 +136,10 @@
     justify-content: center;
   }
 
+  .actions > * {
+    width: auto;
+  }
+
   .heroGlow {
     display: none;
   }
@@ -143,7 +147,7 @@
 
 @media (max-width: 480px) {
   .hero {
-    padding: 60px var(--container-padding) 48px;
+    padding: 120px var(--container-padding) 48px;
   }
 
   .heading {
