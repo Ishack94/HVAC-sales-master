@@ -1,6 +1,5 @@
 .card {
-  background: var(--white);
-  border: 1px solid var(--divider);
+  background: transparent;
   border-radius: 3px;
   overflow: hidden;
   display: flex;

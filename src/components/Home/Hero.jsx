@@ -14,11 +14,6 @@ export default function Hero() {
     return () => clearTimeout(timer)
   }, [])
 
-  const scrollToContent = () => {
-    const el = document.getElementById('sales-training')
-    el?.scrollIntoView({ behavior: 'smooth' })
-  }
-
   return (
     <section className={styles.hero} ref={heroRef}>
       <div className={styles.inner}>
@@ -36,10 +31,6 @@ export default function Hero() {
         </div>
       </div>
 
-      <button className={styles.scrollIndicator} onClick={scrollToContent} aria-label="Scroll to content">
-        <span className={styles.scrollText}>Scroll</span>
-        <span className={styles.scrollLine} />
-      </button>
     </section>
   )
 }

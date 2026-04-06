@@ -1,11 +1,14 @@
 import React from 'react'
-import { useState } from 'react'
+import { useState, useRef } from 'react'
+import useFadeIn from '../../utils/useFadeIn'
 import styles from './Newsletter.module.css'
 
 export default function Newsletter() {
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState('idle') // idle | loading | success | error
   const [message, setMessage] = useState('')
+  const ref = useRef(null)
+  useFadeIn(ref)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -23,7 +26,7 @@ export default function Newsletter() {
   }
 
   return (
-    <section className={styles.section}>
+    <section className={`${styles.section} fade-section`} ref={ref}>
       <div className={styles.container}>
         <p className={styles.label}>Stay Sharp</p>
         <h2 className={styles.heading}>Stay Sharp</h2>

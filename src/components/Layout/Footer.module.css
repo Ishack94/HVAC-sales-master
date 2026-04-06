@@ -1,7 +1,7 @@
 .footer {
   background-color: var(--navy);
   color: rgba(255, 255, 255, 0.7);
-  padding: 80px 0 40px;
+  padding: 56px 0 28px;
 }
 
 .container {
@@ -13,93 +13,93 @@
 .top {
   display: grid;
   grid-template-columns: 1fr 2fr;
-  gap: 80px;
-  padding-bottom: 60px;
+  gap: 60px;
+  padding-bottom: 40px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .brand {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 14px;
 }
 
 .tagline {
-  font-size: 0.88rem;
-  line-height: 1.7;
-  color: rgba(255, 255, 255, 0.55);
-  max-width: 280px;
+  font-size: 0.82rem;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.45);
+  max-width: 260px;
 }
 
 .social {
   display: flex;
-  gap: 16px;
-  margin-top: 4px;
+  gap: 12px;
+  margin-top: 2px;
 }
 
 .socialLink {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
-  color: rgba(255, 255, 255, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  width: 32px;
+  height: 32px;
+  color: rgba(255, 255, 255, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 2px;
   transition: color 0.2s ease, border-color 0.2s ease;
 }
 
 .socialLink:hover {
-  color: rgba(255, 255, 255, 0.9);
-  border-color: rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.85);
+  border-color: rgba(255, 255, 255, 0.25);
 }
 
 .links {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 40px;
+  gap: 32px;
 }
 
 .column {}
 
 .colTitle {
   font-family: 'Inter', sans-serif;
-  font-size: 0.68rem;
+  font-size: 0.64rem;
   font-weight: 600;
-  letter-spacing: 4px;
+  letter-spacing: 3.5px;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.4);
-  margin-bottom: 20px;
+  color: rgba(255, 255, 255, 0.35);
+  margin-bottom: 14px;
 }
 
 .link {
   display: block;
-  font-size: 0.85rem;
-  color: rgba(255, 255, 255, 0.6);
-  padding: 6px 0;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.55);
+  padding: 4px 0;
   transition: color 0.2s ease;
 }
 
 .link:hover {
-  color: rgba(255, 255, 255, 0.95);
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .bottom {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-top: 32px;
+  padding-top: 24px;
 }
 
 .copy {
-  font-size: 0.78rem;
-  color: rgba(255, 255, 255, 0.3);
+  font-size: 0.74rem;
+  color: rgba(255, 255, 255, 0.25);
 }
 
 @media (max-width: 900px) {
   .top {
     grid-template-columns: 1fr;
-    gap: 48px;
+    gap: 36px;
   }
 
   .tagline {
@@ -109,7 +109,7 @@
 
 @media (max-width: 600px) {
   .footer {
-    padding: 40px 0 24px;
+    padding: 40px 0 20px;
   }
 
   .links {
@@ -118,7 +118,7 @@
 
   .bottom {
     flex-direction: column;
-    gap: 8px;
+    gap: 6px;
     text-align: center;
   }
 }

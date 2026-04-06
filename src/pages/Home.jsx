@@ -1,6 +1,5 @@
 import React from 'react'
 import Hero from '../components/Home/Hero'
-import TrustBar from '../components/Home/TrustBar'
 import CardGrid from '../components/Home/CardGrid'
 import DividerQuote from '../components/Home/DividerQuote'
 import ResourceGrid from '../components/Home/ResourceGrid'
@@ -27,7 +26,6 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <TrustBar />
       <CardGrid
         id="sales-training"
         label="Sales Training"
