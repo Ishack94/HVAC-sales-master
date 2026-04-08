@@ -128,3 +128,9 @@
 .linkTitle:hover {
   color: #4a9fe5;
 }
+
+@media (max-width: 860px) {
+  .sidebar {
+    display: none;
+  }
+}

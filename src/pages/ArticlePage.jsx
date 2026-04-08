@@ -4,7 +4,6 @@ import Banner from '../components/Layout/Banner'
 import Sidebar from '../components/Layout/Sidebar'
 import Newsletter from '../components/Home/Newsletter'
 import ReadingProgress from '../components/UI/ReadingProgress'
-import useScrollReveal from '../hooks/useScrollReveal'
 import { getArticleTitle, salesArticles, proArticles, learnArticles } from '../utils/articleData'
 import { articleContent } from '../utils/articleContent'
 import styles from './ArticlePage.module.css'
@@ -55,7 +54,6 @@ function ArticleBody({ content }) {
 }
 
 export default function ArticlePage({ section }) {
-  useScrollReveal()
   const { slug } = useParams()
 
   const sectionLabel = {
@@ -99,16 +97,16 @@ export default function ArticlePage({ section }) {
 
       <div className={styles.layout}>
         <main className={styles.main}>
-          <Link to={`/${section}`} className={`${styles.backLink} reveal`}>
+          <Link to={`/${section}`} className={styles.backLink}>
             ← Back to {sectionLabel}
           </Link>
 
-          <div className={`${styles.metaBar} reveal`}>
+          <div className={styles.metaBar}>
             <span className={styles.category}>{categoryLabel}</span>
             {meta?.readTime && <span className={styles.readTime}>{meta.readTime} read</span>}
           </div>
 
-          <div className={`${styles.body} reveal`}>
+          <div className={styles.body}>
             {content ? (
               <ArticleBody content={content} />
             ) : (
