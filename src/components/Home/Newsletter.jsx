@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import styles from './Newsletter.module.css'
+import { trackEvent } from '../../utils/analytics'
 
 export default function Newsletter() {
   const [email, setEmail] = useState('')
@@ -14,6 +15,7 @@ export default function Newsletter() {
       setStatus('success')
       setMessage("You're in. Welcome to the community.")
       setEmail('')
+      trackEvent('newsletter_signup', { method: 'email' })
     }, 800)
   }
 

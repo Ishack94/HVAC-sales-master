@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import Banner from '../components/Layout/Banner'
@@ -8,6 +8,7 @@ import ReadingProgress from '../components/UI/ReadingProgress'
 import headshotSrc from '../assets/headshot.png'
 import { getArticleTitle, salesArticles, proArticles, learnArticles } from '../utils/articleData'
 import { articleContent } from '../utils/articleContent'
+import { trackEvent } from '../utils/analytics'
 import styles from './ArticlePage.module.css'
 
 const allArticles = [...salesArticles, ...proArticles, ...learnArticles]
@@ -127,6 +128,40 @@ export default function ArticlePage({ section }) {
   }))
 
   const pageUrl = `https://hvac-sales-master.vercel.app/${section}/${slug}`
+
+  // Scroll depth tracking
+  useEffect(() => {
+    const milestones = [25, 50, 75, 100]
+    const fired = new Set()
+    const handleScroll = () => {
+      const scrollTop = window.scrollY
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight
+      if (docHeight <= 0) return
+      const percent = Math.round((scrollTop / docHeight) * 100)
+      milestones.forEach((m) => {
+        if (percent >= m && !fired.has(m)) {
+          fired.add(m)
+          trackEvent('scroll_depth', { percent: m, article_title: title })
+        }
+      })
+    }
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [slug])
+
+  // Read time tracking
+  useEffect(() => {
+    const startTime = Date.now()
+    const fire = () => {
+      const seconds = Math.round((Date.now() - startTime) / 1000)
+      trackEvent('time_on_article', { article_title: title, seconds })
+    }
+    window.addEventListener('beforeunload', fire)
+    return () => {
+      window.removeEventListener('beforeunload', fire)
+      fire()
+    }
+  }, [slug])
 
   return (
     <>

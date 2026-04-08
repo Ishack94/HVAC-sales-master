@@ -61,6 +61,15 @@
   line-height: 1.5;
 }
 
+.authorTagline {
+  font-family: 'Figtree', sans-serif;
+  font-size: 13px;
+  color: #4a9fe5;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  margin-top: 2px;
+}
+
 /* Article body */
 .body {
   font-family: 'Figtree', sans-serif;
@@ -95,6 +104,16 @@
   line-height: 1;
   margin-right: 8px;
   padding-top: 4px;
+}
+
+.noDropCap p:first-of-type::first-letter {
+  float: none;
+  font-size: inherit;
+  font-weight: inherit;
+  color: inherit;
+  line-height: inherit;
+  margin-right: 0;
+  padding-top: 0;
 }
 
 .body strong {

@@ -1,9 +1,10 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import Banner from '../components/Layout/Banner'
 import Sidebar from '../components/Layout/Sidebar'
 import { salesArticles, proArticles } from '../utils/articleData'
+import { trackEvent } from '../utils/analytics'
 import headshotSrc from '../assets/headshot.png'
 import styles from './Home.module.css'
 
@@ -61,6 +62,7 @@ export default function Home() {
   const [message, setMessage] = useState('')
   const [search, setSearch] = useState('')
   const [activeCategory, setActiveCategory] = useState('all')
+  const searchTimerRef = useRef(null)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -70,7 +72,24 @@ export default function Home() {
       setStatus('success')
       setMessage("You're in. Welcome to the community.")
       setEmail('')
+      trackEvent('newsletter_signup', { method: 'email' })
     }, 800)
+  }
+
+  const handleSearchChange = (e) => {
+    const val = e.target.value
+    setSearch(val)
+    clearTimeout(searchTimerRef.current)
+    if (val.trim()) {
+      searchTimerRef.current = setTimeout(() => {
+        trackEvent('search', { search_term: val.trim() })
+      }, 800)
+    }
+  }
+
+  const handleFilterClick = (cat) => {
+    setActiveCategory(cat.key)
+    trackEvent('filter_click', { category: cat.label })
   }
 
   const searchLower = search.toLowerCase()
@@ -93,14 +112,13 @@ export default function Home() {
   return (
     <>
       <Helmet>
-        <title>HVAC Sales Master — Close More HVAC Jobs Without Being Pushy</title>
+        <title>HVAC Sales Master — Sell Smarter. Master Your Craft.</title>
         <meta name="description" content="Real-world sales training and technical knowledge for HVAC professionals. Written by people who've actually been in the field." />
       </Helmet>
 
       <Banner
-        title="Close More HVAC Jobs Without Being Pushy"
-        subtitle="Real in-home sales strategies from the field."
-        tagline="Built from real in-home HVAC sales experience"
+        title="Sell Smarter."
+        subtitle="Master Your Craft."
       />
 
       <div className={styles.layout}>
@@ -113,6 +131,7 @@ export default function Home() {
               <p className={styles.authorLabel}>Written by the Founder</p>
               <p className={styles.authorName}>HVAC Sales Master</p>
               <p className={styles.authorBio}>Real-world sales and technical training for HVAC professionals.</p>
+              <p className={styles.authorTagline}>Built from real in-home HVAC sales experience</p>
             </div>
           </div>
 
@@ -121,7 +140,7 @@ export default function Home() {
             <input
               type="search"
               value={search}
-              onChange={(e) => setSearch(e.target.value)}
+              onChange={handleSearchChange}
               placeholder="Find what you need..."
               className={styles.searchInput}
               aria-label="Search articles"
@@ -131,7 +150,7 @@ export default function Home() {
                 <button
                   key={cat.key}
                   className={`${styles.pill} ${activeCategory === cat.key ? styles.pillActive : ''}`}
-                  onClick={() => setActiveCategory(cat.key)}
+                  onClick={() => handleFilterClick(cat)}
                 >
                   {cat.label}
                 </button>
@@ -170,7 +189,13 @@ export default function Home() {
                 <ul className={styles.startHereList}>
                   {startHereArticles.map((a) => (
                     <li key={a.slug} className={styles.startHereItem}>
-                      <Link to={a.to} className={styles.startHereLink}>{a.title}</Link>
+                      <Link
+                        to={a.to}
+                        className={styles.startHereLink}
+                        onClick={() => trackEvent('start_here_click', { article_title: a.title })}
+                      >
+                        {a.title}
+                      </Link>
                       <span className={styles.startHereDesc}>{a.desc}</span>
                     </li>
                   ))}
@@ -193,7 +218,13 @@ export default function Home() {
               <ul className={styles.articleList}>
                 {filteredSales.map((a) => (
                   <li key={a.slug}>
-                    <Link to={`/sales/${a.slug}`} className={styles.articleLink}><strong>{a.title}</strong></Link>
+                    <Link
+                      to={`/sales/${a.slug}`}
+                      className={styles.articleLink}
+                      onClick={() => trackEvent('article_click', { article_title: a.title, source: 'homepage' })}
+                    >
+                      <strong>{a.title}</strong>
+                    </Link>
                     {a.description && <span className={styles.articleDesc}> — {a.description}</span>}
                   </li>
                 ))}
@@ -210,7 +241,13 @@ export default function Home() {
               <ul className={styles.articleList}>
                 {filteredTech.map((a) => (
                   <li key={a.slug}>
-                    <Link to={`/pro-lessons/${a.slug}`} className={styles.articleLink}><strong>{a.title}</strong></Link>
+                    <Link
+                      to={`/pro-lessons/${a.slug}`}
+                      className={styles.articleLink}
+                      onClick={() => trackEvent('article_click', { article_title: a.title, source: 'homepage' })}
+                    >
+                      <strong>{a.title}</strong>
+                    </Link>
                     {a.description && <span className={styles.articleDesc}> — {a.description}</span>}
                   </li>
                 ))}
@@ -227,7 +264,13 @@ export default function Home() {
               <ul className={styles.articleList}>
                 {filteredHomeowner.map((a) => (
                   <li key={a.slug}>
-                    <Link to={`/pro-lessons/${a.slug}`} className={styles.articleLink}><strong>{a.title}</strong></Link>
+                    <Link
+                      to={`/pro-lessons/${a.slug}`}
+                      className={styles.articleLink}
+                      onClick={() => trackEvent('article_click', { article_title: a.title, source: 'homepage' })}
+                    >
+                      <strong>{a.title}</strong>
+                    </Link>
                     {a.description && <span className={styles.articleDesc}> — {a.description}</span>}
                   </li>
                 ))}
@@ -237,15 +280,15 @@ export default function Home() {
 
           {/* Closing content — only when not filtering */}
           {!isFiltering && (
-            <div className={styles.body}>
+            <div className={`${styles.body} ${styles.noDropCap}`}>
               <blockquote>The best technicians never stop learning. The best closers never stop either.</blockquote>
 
               <h2>Who Built This</h2>
               <p>HVAC Sales Master was built by someone who's been in the trades — not a marketing agency, not a content mill. Every article comes from real experience in the field: running service calls, sitting at kitchen tables, handling objections, and training other techs.</p>
               <p><strong>No fluff. Just what actually works.</strong></p>
 
-              <h2>Stay Sharp</h2>
-              <p>New articles drop regularly. Subscribe to get them straight to your inbox — no spam, no filler.</p>
+              <h2>Get Better at HVAC Sales Every Week</h2>
+              <p>Real strategies from the field. No fluff. No spam.</p>
 
               {status === 'success' ? (
                 <p className={styles.successMsg}>{message}</p>
@@ -261,7 +304,7 @@ export default function Home() {
                     aria-label="Email address"
                   />
                   <button type="submit" className={styles.inlineBtn} disabled={status === 'loading'}>
-                    {status === 'loading' ? 'Subscribing...' : 'Subscribe →'}
+                    {status === 'loading' ? 'Subscribing...' : 'Get Weekly Tips →'}
                   </button>
                 </form>
               )}

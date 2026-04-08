@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import logoSrc from '../../assets/logo.png'
 import styles from './Header.module.css'
+import { trackEvent } from '../../utils/analytics'
 
 const navLinks = [
   { label: 'Home', to: '/' },
@@ -33,7 +34,13 @@ export default function Header() {
                 {label}
               </NavLink>
             ))}
-            <Link to="/about" className={styles.contactBtn}>Contact Us</Link>
+            <a
+              href="mailto:contact@hvacsalesmaster.com"
+              className={styles.contactBtn}
+              onClick={() => trackEvent('contact_click')}
+            >
+              Contact Us
+            </a>
           </nav>
 
           <button
@@ -76,9 +83,13 @@ export default function Header() {
             {label}
           </NavLink>
         ))}
-        <Link to="/about" className={styles.mobileContact} onClick={() => setMenuOpen(false)}>
+        <a
+          href="mailto:contact@hvacsalesmaster.com"
+          className={styles.mobileContact}
+          onClick={() => { setMenuOpen(false); trackEvent('contact_click') }}
+        >
           Contact Us
-        </Link>
+        </a>
       </nav>
     </>
   )

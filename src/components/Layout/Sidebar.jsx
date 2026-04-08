@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import styles from './Sidebar.module.css'
+import { trackEvent } from '../../utils/analytics'
 
 const dinoBox = {
   id: 'dino',
@@ -39,7 +40,7 @@ function AdBox({ box }) {
       <div className={styles.boxBody}>
         <h3 className={styles.boxTitle}>{box.title}</h3>
         <p className={styles.boxDesc}>{box.desc}</p>
-        <button className={styles.boxBtn}>{box.btn}</button>
+        <button className={styles.boxBtn} onClick={() => trackEvent('sidebar_click', { item: box.id })}>{box.btn}</button>
       </div>
     </div>
   )
