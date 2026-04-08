@@ -19,14 +19,13 @@ const adBoxes = [
     watermark: 'Your Ad Here',
     height: 120,
   },
-  {
-    id: 'partner2',
-    title: 'Partner Spotlight',
-    desc: 'Your ad here. Reach HVAC professionals across the country.',
-    btn: 'Inquire →',
-    watermark: 'Your Ad Here',
-    height: 120,
-  },
+]
+
+const mostPopular = [
+  { title: 'Stop Selling Equipment, Start Selling Outcomes', to: '/sales/stop-selling-equipment-start-selling-outcomes' },
+  { title: "How to Handle 'I Need to Think About It'", to: '/sales/handle-i-need-to-think-about-it' },
+  { title: 'The First 90 Seconds at the Door', to: '/sales/first-90-seconds-at-the-door' },
+  { title: 'Why Is My Furnace Blowing Cold Air?', to: '/pro-lessons/furnace-blowing-cold-air' },
 ]
 
 export default function Sidebar({ links = [] }) {
@@ -44,6 +43,16 @@ export default function Sidebar({ links = [] }) {
           </div>
         </div>
       ))}
+
+      {/* Most Popular */}
+      <div className={styles.mostPopular}>
+        <p className={styles.mostPopularLabel}>Most Popular</p>
+        {mostPopular.map((item) => (
+          <Link key={item.to} to={item.to} className={styles.popularLink}>
+            {item.title}
+          </Link>
+        ))}
+      </div>
 
       {links.length > 0 && (
         <div className={styles.keepReading}>

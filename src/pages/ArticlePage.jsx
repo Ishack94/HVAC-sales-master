@@ -14,6 +14,10 @@ function getArticleMeta(slug) {
   return allArticles.find((a) => a.slug === slug) || null
 }
 
+function slugify(text) {
+  return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
+}
+
 function ArticleBody({ content }) {
   if (!content) return null
 
@@ -33,7 +37,8 @@ function ArticleBody({ content }) {
         }
 
         if (trimmed.startsWith('## ')) {
-          return <h2 key={i}>{trimmed.slice(3)}</h2>
+          const text = trimmed.slice(3)
+          return <h2 key={i} id={slugify(text)}>{text}</h2>
         }
 
         const lines = trimmed.split('\n')
@@ -50,6 +55,31 @@ function ArticleBody({ content }) {
         return <p key={i}>{trimmed}</p>
       })}
     </>
+  )
+}
+
+function TableOfContents({ content }) {
+  if (!content || content.trim().startsWith('<')) return null
+
+  const blocks = content.trim().split(/\n\n+/)
+  const headings = blocks
+    .map((b) => b.trim())
+    .filter((b) => b.startsWith('## '))
+    .map((b) => b.slice(3))
+
+  if (headings.length < 3) return null
+
+  return (
+    <div className={styles.toc}>
+      <p className={styles.tocLabel}>In This Article</p>
+      <ul className={styles.tocList}>
+        {headings.map((h, i) => (
+          <li key={i}>
+            <a href={`#${slugify(h)}`} className={styles.tocLink}>{h}</a>
+          </li>
+        ))}
+      </ul>
+    </div>
   )
 }
 
@@ -81,6 +111,10 @@ export default function ArticlePage({ section }) {
   const content = articleContent[slug] || null
 
   const sectionArticles = section === 'sales' ? salesArticles : proArticles
+  const currentIndex = sectionArticles.findIndex((a) => a.slug === slug)
+  const prevArticle = currentIndex > 0 ? sectionArticles[currentIndex - 1] : null
+  const nextArticle = currentIndex < sectionArticles.length - 1 ? sectionArticles[currentIndex + 1] : null
+
   const related = sectionArticles.filter((a) => a.slug !== slug).slice(0, 3)
 
   const sidebarLinks = related.map((a) => ({
@@ -118,6 +152,8 @@ export default function ArticlePage({ section }) {
             {meta?.readTime && <span className={styles.readTime}>{meta.readTime} read</span>}
           </div>
 
+          {content && <TableOfContents content={content} />}
+
           <div className={styles.body}>
             {content ? (
               <ArticleBody content={content} />
@@ -139,6 +175,25 @@ export default function ArticlePage({ section }) {
                     <span className={styles.keepReadingTitle}>{a.title}</span>
                   </Link>
                 ))}
+              </div>
+            </div>
+          )}
+
+          {(prevArticle || nextArticle) && (
+            <div className={styles.prevNext}>
+              <div className={styles.prevNextInner}>
+                {prevArticle ? (
+                  <Link to={articlePath(prevArticle.slug)} className={styles.prevLink}>
+                    <span className={styles.prevNextLabel}>← Previous</span>
+                    <span className={styles.prevNextTitle}>{prevArticle.title}</span>
+                  </Link>
+                ) : <div />}
+                {nextArticle ? (
+                  <Link to={articlePath(nextArticle.slug)} className={styles.nextLink}>
+                    <span className={styles.prevNextLabel}>Next →</span>
+                    <span className={styles.prevNextTitle}>{nextArticle.title}</span>
+                  </Link>
+                ) : <div />}
               </div>
             </div>
           )}

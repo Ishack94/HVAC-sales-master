@@ -22,7 +22,7 @@ export default function Newsletter() {
       <div className={styles.inner}>
         <h2 className={styles.heading}>Stay Sharp</h2>
         <p className={styles.subtitle}>
-          New articles, training resources, and industry insights — delivered straight to your inbox. No spam. Unsubscribe anytime.
+          Get practical HVAC sales and field tips delivered weekly — written by someone who's actually been in the trades. No spam, no fluff.
         </p>
         {status === 'success' ? (
           <p className={styles.success}>{message}</p>

@@ -9,6 +9,39 @@ import styles from './Home.module.css'
 const techArticles = proArticles.slice(0, 13)
 const homeownerArticles = proArticles.slice(13)
 
+const startHereArticles = [
+  {
+    slug: 'stop-selling-equipment-start-selling-outcomes',
+    to: '/sales/stop-selling-equipment-start-selling-outcomes',
+    title: 'Stop Selling Equipment, Start Selling Outcomes',
+    desc: "The homeowner doesn't care about the equipment. They care about comfort, savings, and peace of mind.",
+  },
+  {
+    slug: 'handle-i-need-to-think-about-it',
+    to: '/sales/handle-i-need-to-think-about-it',
+    title: "How to Handle 'I Need to Think About It'",
+    desc: 'The most common objection in HVAC sales and exactly how to respond without being pushy.',
+  },
+  {
+    slug: 'first-90-seconds-at-the-door',
+    to: '/sales/first-90-seconds-at-the-door',
+    title: 'The First 90 Seconds at the Door',
+    desc: 'What happens before you even open your tool bag determines whether you close.',
+  },
+  {
+    slug: 'diagnostic-process-think-like-detective',
+    to: '/pro-lessons/diagnostic-process-think-like-detective',
+    title: 'The Diagnostic Process: Think Like a Detective',
+    desc: 'Stop guessing and start diagnosing systematically on every service call.',
+  },
+  {
+    slug: 'superheat-subcooling-practical-guide',
+    to: '/pro-lessons/superheat-subcooling-practical-guide',
+    title: 'Superheat and Subcooling Practical Guide',
+    desc: 'The hands-on guide to charging by superheat and subcooling in the field.',
+  },
+]
+
 const sidebarLinks = [
   ...salesArticles.slice(0, 2).map((a) => ({ title: a.title, to: `/sales/${a.slug}`, category: 'Sales', color: '#4a9fe5' })),
   ...techArticles.slice(0, 2).map((a) => ({ title: a.title, to: `/pro-lessons/${a.slug}`, category: 'Pro Lesson', color: '#d97706' })),
@@ -71,8 +104,24 @@ export default function Home() {
 
             <p>That's the kind of real-world strategy you'll find on this site. Not theory. Not motivational fluff. <strong>Just what actually works when you're sitting across from a homeowner.</strong></p>
 
+            {/* Start Here */}
+            <div className={styles.startHere}>
+              <h3 className={styles.startHereTitle}>New Here? Start With These</h3>
+              <ul className={styles.startHereList}>
+                {startHereArticles.map((a) => (
+                  <li key={a.slug} className={styles.startHereItem}>
+                    <Link to={a.to} className={styles.startHereLink}>{a.title}</Link>
+                    <span className={styles.startHereDesc}>{a.desc}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <hr className={styles.divider} />
+
             <h2>Sales Training</h2>
             <p>These aren't generic sales tips from someone who's never set foot in a crawl space. This is <strong>real-world HVAC sales strategy</strong> — written by people who've actually sat across from homeowners, handled objections, and closed jobs in the field.</p>
+            <p className={styles.sectionIntro}>For comfort advisors and salespeople who close in the home.</p>
             <ul className={styles.articleList}>
               {salesArticles.map((a) => (
                 <li key={a.slug}>
@@ -82,8 +131,11 @@ export default function Home() {
               ))}
             </ul>
 
+            <hr className={styles.divider} />
+
             <h2>Pro Lessons for Techs &amp; Installers</h2>
             <p>Technical training that goes beyond the textbook. These lessons are written for working technicians who want to diagnose faster, install cleaner, and get fewer callbacks.</p>
+            <p className={styles.sectionIntro}>For service technicians and installers.</p>
             <ul className={styles.articleList}>
               {techArticles.map((a) => (
                 <li key={a.slug}>
@@ -93,8 +145,11 @@ export default function Home() {
               ))}
             </ul>
 
+            <hr className={styles.divider} />
+
             <h2>Homeowner Troubleshooting</h2>
             <p>Straightforward answers written by technicians, not content farms. These articles help homeowners understand what's going on so they can make smart decisions — and they help you close more jobs.</p>
+            <p className={styles.sectionIntro}>For homeowners trying to understand their system.</p>
             <ul className={styles.articleList}>
               {homeownerArticles.map((a) => (
                 <li key={a.slug}>

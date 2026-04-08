@@ -128,6 +128,76 @@
   pointer-events: none;
 }
 
+/* Start Here box */
+.startHere {
+  background: rgba(74, 159, 229, 0.06);
+  border-radius: 8px;
+  padding: 32px;
+  margin: 36px 0;
+}
+
+.startHereTitle {
+  font-family: 'Figtree', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #1b3a5c;
+  margin-bottom: 20px;
+}
+
+.startHereList {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.startHereItem {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.startHereLink {
+  font-family: 'Figtree', sans-serif;
+  font-weight: 700;
+  color: #4a9fe5;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  display: inline-block;
+  padding-left: 0;
+  transition: color 0.2s ease, padding-left 0.2s ease;
+}
+
+.startHereLink:hover {
+  color: #3a8cd0;
+  padding-left: 8px;
+}
+
+.startHereDesc {
+  font-family: 'Figtree', sans-serif;
+  font-size: 14px;
+  color: #666;
+  line-height: 1.5;
+}
+
+/* Section intro tag line */
+.sectionIntro {
+  font-family: 'Figtree', sans-serif;
+  font-size: 14px;
+  font-style: italic;
+  color: #999;
+  margin-top: -8px;
+  margin-bottom: 16px;
+}
+
+/* Section divider */
+.divider {
+  border: none;
+  border-top: 1px solid #e5e5e5;
+  margin: 48px 0;
+}
+
 /* Article list */
 .articleList {
   list-style: disc;
