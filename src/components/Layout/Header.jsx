@@ -20,7 +20,6 @@ export default function Header() {
         <div className={styles.inner}>
           <Link to="/" className={styles.brand}>
             <img src={logoSrc} alt="HVAC Sales Master" className={styles.logo} />
-            <span className={styles.brandName}>HVAC Sales Master</span>
           </Link>
 
           <nav className={styles.nav} aria-label="Main navigation">
