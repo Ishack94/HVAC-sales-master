@@ -87,6 +87,16 @@
   margin-bottom: 24px;
 }
 
+.body p:first-of-type::first-letter {
+  float: left;
+  font-size: 4rem;
+  font-weight: 800;
+  color: #1b3a5c;
+  line-height: 1;
+  margin-right: 8px;
+  padding-top: 4px;
+}
+
 .body strong {
   font-weight: 700;
   color: #1a1a1a;
@@ -100,6 +110,20 @@
   color: #555;
   font-size: 20px;
   line-height: 1.55;
+  position: relative;
+}
+
+.body blockquote::before {
+  content: '\201C';
+  position: absolute;
+  top: -10px;
+  left: -5px;
+  font-size: 80px;
+  color: rgba(74, 159, 229, 0.15);
+  font-family: Georgia, serif;
+  font-style: normal;
+  line-height: 1;
+  pointer-events: none;
 }
 
 /* Article list */

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Banner from '../components/Layout/Banner'
 import Sidebar from '../components/Layout/Sidebar'
+import useScrollReveal from '../hooks/useScrollReveal'
 import { salesArticles, proArticles } from '../utils/articleData'
 import headshotSrc from '../assets/headshot.png'
 import styles from './Home.module.css'
@@ -15,6 +16,7 @@ const sidebarLinks = [
 ]
 
 export default function Home() {
+  useScrollReveal()
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState('idle')
   const [message, setMessage] = useState('')
@@ -38,7 +40,7 @@ export default function Home() {
         <main className={styles.main}>
 
           {/* Author row */}
-          <div className={styles.authorRow}>
+          <div className={`${styles.authorRow} reveal`}>
             <img src={headshotSrc} alt="HVAC Sales Master founder" className={styles.headshot} />
             <div className={styles.authorText}>
               <p className={styles.authorLabel}>Written by the Founder</p>
@@ -48,7 +50,7 @@ export default function Home() {
           </div>
 
           {/* Body content */}
-          <div className={styles.body}>
+          <div className={`${styles.body} reveal`}>
             <h2>The Power of Leaving Your Cards in the Van</h2>
 
             <p>After I've gone through everything — <strong>explained the options, answered all their questions, handled every concern</strong> — I stop talking. I turn it over to them.</p>
