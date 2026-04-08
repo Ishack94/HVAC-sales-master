@@ -116,6 +116,20 @@ export default function ArticlePage({ section }) {
               </p>
             )}
           </div>
+
+          {related.length > 0 && (
+            <div className={styles.keepReading}>
+              <p className={styles.keepReadingLabel}>Keep Reading</p>
+              <div className={styles.keepReadingGrid}>
+                {related.map((a) => (
+                  <Link key={a.slug} to={articlePath(a.slug)} className={styles.keepReadingItem}>
+                    <span className={styles.keepReadingCat}>{categoryLabel}</span>
+                    <span className={styles.keepReadingTitle}>{a.title}</span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
         </main>
 
         <Sidebar links={sidebarLinks} />
