@@ -1,5 +1,5 @@
 .page {
-  padding: 64px var(--content-padding) 80px;
+  padding: 64px 32px 80px;
 }
 
 .inner {

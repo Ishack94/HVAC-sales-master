@@ -1,9 +1,9 @@
 .page {
-  padding: 64px var(--content-padding) 80px;
+  padding: 64px 32px 80px;
 }
 
 .inner {
-  max-width: 900px;
+  max-width: 1400px;
   margin: 0 auto;
 }
 
