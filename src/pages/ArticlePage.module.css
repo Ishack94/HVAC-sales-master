@@ -211,6 +211,45 @@
   font-style: italic;
 }
 
+/* Author box */
+.authorBox {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: #f4f6f9;
+  border-radius: 8px;
+  padding: 24px;
+  margin-top: 48px;
+}
+
+.authorBoxHeadshot {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.authorBoxText {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.authorBoxName {
+  font-family: 'Figtree', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: #1b3a5c;
+}
+
+.authorBoxBio {
+  font-family: 'Figtree', sans-serif;
+  font-size: 14px;
+  color: #666;
+  line-height: 1.6;
+}
+
 /* Prev / Next navigation */
 .prevNext {
   margin-top: 40px;

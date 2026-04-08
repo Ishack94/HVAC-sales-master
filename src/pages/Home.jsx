@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useMemo } from 'react'
 import { Link } from 'react-router-dom'
+import { Helmet } from 'react-helmet-async'
 import Banner from '../components/Layout/Banner'
 import Sidebar from '../components/Layout/Sidebar'
 import { salesArticles, proArticles } from '../utils/articleData'
@@ -42,6 +43,13 @@ const startHereArticles = [
   },
 ]
 
+const CATEGORIES = [
+  { key: 'all', label: 'All' },
+  { key: 'sales', label: 'Sales Training' },
+  { key: 'pro', label: 'Pro Lessons' },
+  { key: 'homeowner', label: 'Homeowner' },
+]
+
 const sidebarLinks = [
   ...salesArticles.slice(0, 2).map((a) => ({ title: a.title, to: `/sales/${a.slug}`, category: 'Sales', color: '#4a9fe5' })),
   ...techArticles.slice(0, 2).map((a) => ({ title: a.title, to: `/pro-lessons/${a.slug}`, category: 'Pro Lesson', color: '#d97706' })),
@@ -51,6 +59,8 @@ export default function Home() {
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState('idle')
   const [message, setMessage] = useState('')
+  const [search, setSearch] = useState('')
+  const [activeCategory, setActiveCategory] = useState('all')
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -63,8 +73,30 @@ export default function Home() {
     }, 800)
   }
 
+  const searchLower = search.toLowerCase()
+  const matchesSearch = (a) =>
+    !searchLower ||
+    a.title.toLowerCase().includes(searchLower) ||
+    (a.description && a.description.toLowerCase().includes(searchLower))
+
+  const showSales = activeCategory === 'all' || activeCategory === 'sales'
+  const showPro = activeCategory === 'all' || activeCategory === 'pro'
+  const showHomeowner = activeCategory === 'all' || activeCategory === 'homeowner'
+
+  const filteredSales = useMemo(() => showSales ? salesArticles.filter(matchesSearch) : [], [search, showSales])
+  const filteredTech = useMemo(() => showPro ? techArticles.filter(matchesSearch) : [], [search, showPro])
+  const filteredHomeowner = useMemo(() => showHomeowner ? homeownerArticles.filter(matchesSearch) : [], [search, showHomeowner])
+
+  const isFiltering = search || activeCategory !== 'all'
+  const noResults = isFiltering && filteredSales.length === 0 && filteredTech.length === 0 && filteredHomeowner.length === 0
+
   return (
     <>
+      <Helmet>
+        <title>HVAC Sales Master — Sell Smarter. Master Your Craft.</title>
+        <meta name="description" content="Real-world sales training and technical knowledge for HVAC professionals. Written by people who've actually been in the field." />
+      </Helmet>
+
       <Banner title="Sell Smarter." subtitle="Master Your Craft." />
 
       <div className={styles.layout}>
@@ -80,113 +112,160 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Body content */}
-          <div className={styles.body}>
-            <h2>The Power of Leaving Your Cards in the Van</h2>
+          {/* Search + Filter */}
+          <div className={styles.searchArea}>
+            <input
+              type="search"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search articles..."
+              className={styles.searchInput}
+              aria-label="Search articles"
+            />
+            <div className={styles.filterPills}>
+              {CATEGORIES.map((cat) => (
+                <button
+                  key={cat.key}
+                  className={`${styles.pill} ${activeCategory === cat.key ? styles.pillActive : ''}`}
+                  onClick={() => setActiveCategory(cat.key)}
+                >
+                  {cat.label}
+                </button>
+              ))}
+            </div>
+          </div>
 
-            <p>After I've gone through everything — <strong>explained the options, answered all their questions, handled every concern</strong> — I stop talking. I turn it over to them.</p>
+          {/* Body content — always visible intro */}
+          {!isFiltering && (
+            <div className={styles.body}>
+              <h2>The Power of Leaving Your Cards in the Van</h2>
 
-            <p>I'll say something like, <strong>"Do you have any questions, or is there anything I didn't cover that would help you make a decision?"</strong></p>
+              <p>After I've gone through everything — <strong>explained the options, answered all their questions, handled every concern</strong> — I stop talking. I turn it over to them.</p>
 
-            <p>Then I just let it sit.</p>
+              <p>I'll say something like, <strong>"Do you have any questions, or is there anything I didn't cover that would help you make a decision?"</strong></p>
 
-            <p>I'm totally comfortable with the silence. That's usually when they're <strong>actually thinking things through</strong>. Most comfort advisors panic in the quiet and start rambling about features nobody asked about. That's where you lose them.</p>
+              <p>Then I just let it sit.</p>
 
-            <p>If it starts to drag on a bit, I'll give them some space. I'll say, <strong>"Hey, I'm going to run out to my truck and grab my card real quick — take your time looking this over."</strong></p>
+              <p>I'm totally comfortable with the silence. That's usually when they're <strong>actually thinking things through</strong>. Most comfort advisors panic in the quiet and start rambling about features nobody asked about. That's where you lose them.</p>
 
-            <p>That little break changes everything.</p>
+              <p>If it starts to drag on a bit, I'll give them some space. I'll say, <strong>"Hey, I'm going to run out to my truck and grab my card real quick — take your time looking this over."</strong></p>
 
-            <p>It gives them a chance to <strong>talk privately, make a quick call, or just think without you hovering</strong>. A lot of times, when I come back in, they're either ready to move forward or they've got a real question to go over — not an excuse to stall.</p>
+              <p>That little break changes everything.</p>
 
-            <p>The close doesn't happen because you pushed harder. It happens because <strong>you gave them the space to decide</strong>.</p>
+              <p>It gives them a chance to <strong>talk privately, make a quick call, or just think without you hovering</strong>. A lot of times, when I come back in, they're either ready to move forward or they've got a real question to go over — not an excuse to stall.</p>
 
-            <blockquote>The best closers aren't the ones who talk the most. They're the ones who know when to stop.</blockquote>
+              <p>The close doesn't happen because you pushed harder. It happens because <strong>you gave them the space to decide</strong>.</p>
 
-            <p>That's the kind of real-world strategy you'll find on this site. Not theory. Not motivational fluff. <strong>Just what actually works when you're sitting across from a homeowner.</strong></p>
+              <blockquote>The best closers aren't the ones who talk the most. They're the ones who know when to stop.</blockquote>
 
-            {/* Start Here */}
-            <div className={styles.startHere}>
-              <h3 className={styles.startHereTitle}>New Here? Start With These</h3>
-              <ul className={styles.startHereList}>
-                {startHereArticles.map((a) => (
-                  <li key={a.slug} className={styles.startHereItem}>
-                    <Link to={a.to} className={styles.startHereLink}>{a.title}</Link>
-                    <span className={styles.startHereDesc}>{a.desc}</span>
+              <p>That's the kind of real-world strategy you'll find on this site. Not theory. Not motivational fluff. <strong>Just what actually works when you're sitting across from a homeowner.</strong></p>
+
+              {/* Start Here */}
+              <div className={styles.startHere}>
+                <h3 className={styles.startHereTitle}>New Here? Start With These</h3>
+                <ul className={styles.startHereList}>
+                  {startHereArticles.map((a) => (
+                    <li key={a.slug} className={styles.startHereItem}>
+                      <Link to={a.to} className={styles.startHereLink}>{a.title}</Link>
+                      <span className={styles.startHereDesc}>{a.desc}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          )}
+
+          {/* No results */}
+          {noResults && (
+            <p className={styles.noResults}>No articles found for "{search}".</p>
+          )}
+
+          {/* Sales Training */}
+          {showSales && filteredSales.length > 0 && (
+            <div className={styles.section}>
+              <hr className={styles.divider} />
+              <h2 className={styles.sectionH2}>Sales Training</h2>
+              {!isFiltering && <p>These aren't generic sales tips from someone who's never set foot in a crawl space. This is <strong>real-world HVAC sales strategy</strong> — written by people who've actually sat across from homeowners, handled objections, and closed jobs in the field.</p>}
+              <p className={styles.sectionIntro}>For comfort advisors and salespeople who close in the home.</p>
+              <ul className={styles.articleList}>
+                {filteredSales.map((a) => (
+                  <li key={a.slug}>
+                    <Link to={`/sales/${a.slug}`} className={styles.articleLink}><strong>{a.title}</strong></Link>
+                    {a.description && <span className={styles.articleDesc}> — {a.description}</span>}
                   </li>
                 ))}
               </ul>
             </div>
+          )}
 
-            <hr className={styles.divider} />
+          {/* Pro Lessons */}
+          {showPro && filteredTech.length > 0 && (
+            <div className={styles.section}>
+              <hr className={styles.divider} />
+              <h2 className={styles.sectionH2}>Pro Lessons for Techs &amp; Installers</h2>
+              {!isFiltering && <p>Technical training that goes beyond the textbook. These lessons are written for working technicians who want to diagnose faster, install cleaner, and get fewer callbacks.</p>}
+              <p className={styles.sectionIntro}>For service technicians and installers.</p>
+              <ul className={styles.articleList}>
+                {filteredTech.map((a) => (
+                  <li key={a.slug}>
+                    <Link to={`/pro-lessons/${a.slug}`} className={styles.articleLink}><strong>{a.title}</strong></Link>
+                    {a.description && <span className={styles.articleDesc}> — {a.description}</span>}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
 
-            <h2>Sales Training</h2>
-            <p>These aren't generic sales tips from someone who's never set foot in a crawl space. This is <strong>real-world HVAC sales strategy</strong> — written by people who've actually sat across from homeowners, handled objections, and closed jobs in the field.</p>
-            <p className={styles.sectionIntro}>For comfort advisors and salespeople who close in the home.</p>
-            <ul className={styles.articleList}>
-              {salesArticles.map((a) => (
-                <li key={a.slug}>
-                  <Link to={`/sales/${a.slug}`} className={styles.articleLink}><strong>{a.title}</strong></Link>
-                  {a.description && <span className={styles.articleDesc}> — {a.description}</span>}
-                </li>
-              ))}
-            </ul>
+          {/* Homeowner */}
+          {showHomeowner && filteredHomeowner.length > 0 && (
+            <div className={styles.section}>
+              <hr className={styles.divider} />
+              <h2 className={styles.sectionH2}>Homeowner Troubleshooting</h2>
+              {!isFiltering && <p>Straightforward answers written by technicians, not content farms. These articles help homeowners understand what's going on so they can make smart decisions — and they help you close more jobs.</p>}
+              <p className={styles.sectionIntro}>For homeowners trying to understand their system.</p>
+              <ul className={styles.articleList}>
+                {filteredHomeowner.map((a) => (
+                  <li key={a.slug}>
+                    <Link to={`/pro-lessons/${a.slug}`} className={styles.articleLink}><strong>{a.title}</strong></Link>
+                    {a.description && <span className={styles.articleDesc}> — {a.description}</span>}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
 
-            <hr className={styles.divider} />
+          {/* Closing content — only when not filtering */}
+          {!isFiltering && (
+            <div className={styles.body}>
+              <blockquote>The best technicians never stop learning. The best closers never stop either.</blockquote>
 
-            <h2>Pro Lessons for Techs &amp; Installers</h2>
-            <p>Technical training that goes beyond the textbook. These lessons are written for working technicians who want to diagnose faster, install cleaner, and get fewer callbacks.</p>
-            <p className={styles.sectionIntro}>For service technicians and installers.</p>
-            <ul className={styles.articleList}>
-              {techArticles.map((a) => (
-                <li key={a.slug}>
-                  <Link to={`/pro-lessons/${a.slug}`} className={styles.articleLink}><strong>{a.title}</strong></Link>
-                  {a.description && <span className={styles.articleDesc}> — {a.description}</span>}
-                </li>
-              ))}
-            </ul>
+              <h2>Who Built This</h2>
+              <p>HVAC Sales Master was built by someone who's been in the trades — not a marketing agency, not a content mill. Every article comes from real experience in the field: running service calls, sitting at kitchen tables, handling objections, and training other techs.</p>
+              <p><strong>No fluff. Just what actually works.</strong></p>
 
-            <hr className={styles.divider} />
+              <h2>Stay Sharp</h2>
+              <p>New articles drop regularly. Subscribe to get them straight to your inbox — no spam, no filler.</p>
 
-            <h2>Homeowner Troubleshooting</h2>
-            <p>Straightforward answers written by technicians, not content farms. These articles help homeowners understand what's going on so they can make smart decisions — and they help you close more jobs.</p>
-            <p className={styles.sectionIntro}>For homeowners trying to understand their system.</p>
-            <ul className={styles.articleList}>
-              {homeownerArticles.map((a) => (
-                <li key={a.slug}>
-                  <Link to={`/pro-lessons/${a.slug}`} className={styles.articleLink}><strong>{a.title}</strong></Link>
-                  {a.description && <span className={styles.articleDesc}> — {a.description}</span>}
-                </li>
-              ))}
-            </ul>
-
-            <blockquote>The best technicians never stop learning. The best closers never stop either.</blockquote>
-
-            <h2>Who Built This</h2>
-            <p>HVAC Sales Master was built by someone who's been in the trades — not a marketing agency, not a content mill. Every article comes from real experience in the field: running service calls, sitting at kitchen tables, handling objections, and training other techs.</p>
-            <p><strong>No fluff. Just what actually works.</strong></p>
-
-            <h2>Stay Sharp</h2>
-            <p>New articles drop regularly. Subscribe to get them straight to your inbox — no spam, no filler.</p>
-
-            {status === 'success' ? (
-              <p className={styles.successMsg}>{message}</p>
-            ) : (
-              <form className={styles.inlineForm} onSubmit={handleSubmit}>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Your email address"
-                  className={styles.inlineInput}
-                  required
-                  aria-label="Email address"
-                />
-                <button type="submit" className={styles.inlineBtn} disabled={status === 'loading'}>
-                  {status === 'loading' ? 'Subscribing...' : 'Subscribe →'}
-                </button>
-              </form>
-            )}
-          </div>
+              {status === 'success' ? (
+                <p className={styles.successMsg}>{message}</p>
+              ) : (
+                <form className={styles.inlineForm} onSubmit={handleSubmit}>
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Your email address"
+                    className={styles.inlineInput}
+                    required
+                    aria-label="Email address"
+                  />
+                  <button type="submit" className={styles.inlineBtn} disabled={status === 'loading'}>
+                    {status === 'loading' ? 'Subscribing...' : 'Subscribe →'}
+                  </button>
+                </form>
+              )}
+            </div>
+          )}
         </main>
 
         <Sidebar links={sidebarLinks} />

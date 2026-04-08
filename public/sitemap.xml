@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Static pages -->
+  <url><loc>https://hvac-sales-master.vercel.app/</loc><priority>1.0</priority></url>
+  <url><loc>https://hvac-sales-master.vercel.app/sales</loc><priority>0.9</priority></url>
+  <url><loc>https://hvac-sales-master.vercel.app/pro-lessons</loc><priority>0.9</priority></url>
+  <url><loc>https://hvac-sales-master.vercel.app/about</loc><priority>0.6</priority></url>
+  <url><loc>https://hvac-sales-master.vercel.app/resources</loc><priority>0.6</priority></url>
+
+  <!-- Sales Training articles -->
+  <url><loc>https://hvac-sales-master.vercel.app/sales/stop-selling-equipment-start-selling-outcomes</loc><priority>0.8</priority></url>
+  <url><loc>https://hvac-sales-master.vercel.app/sales/handle-i-need-to-think-about-it</loc><priority>0.8</priority></url>
+  <url><loc>https://hvac-sales-master.vercel.app/sales/maintenance-agreements-predictable-revenue</loc><priority>0.8</priority></url>
+  <url><loc>https://hvac-sales-master.vercel.app/sales/selling-through-price-increases</loc><priority>0.8</priority></url>
+  <url><loc>https://hvac-sales-master.vercel.app/sales/first-90-seconds-at-the-door</loc><priority>0.8</priority></url>
+  <url><loc>https://hvac-sales-master.vercel.app/sales/competing-against-private-equity</loc><priority>0.8</priority></url>
+  <url><loc>https://hvac-sales-master.vercel.app/sales/indoor-air-quality-easiest-upsell</loc><priority>0.8</priority></url>
+  <url><loc>https://hvac-sales-master.vercel.app/sales/sell-system-when-ac-still-works</loc><priority>0.8</priority></url>
+  <url><loc>https://hvac-sales-master.vercel.app/sales/sell-high-efficiency-systems</loc><priority>0.8</priority></url>
+  <url><loc>https://hvac-sales-master.vercel.app/sales/customer-already-googled-everything</loc><priority>0.8</priority></url>
+  <url><loc>https://hvac-sales-master.vercel.app/sales/csr-phone-skills-losing-money</loc><priority>0.8</priority></url>
+  <url><loc>https://hvac-sales-master.vercel.app/sales/flat-rate-pricing-vs-time-materials</loc><priority>0.8</priority></url>
+  <url><loc>https://hvac-sales-master.vercel.app/sales/what-to-say-price-too-high</loc><priority>0.8</priority></url>
+  <url><loc>https://hvac-sales-master.vercel.app/sales/husband-wife-disagree</loc><priority>0.8</priority></url>
+  <url><loc>https://hvac-sales-master.vercel.app/sales/turn-service-call-into-sale</loc><priority>0.8</priority></url>
+  <url><loc>https://hvac-sales-master.vercel.app/sales/hvac-sales-script-word-for-word</loc><priority>0.8</priority></url>
+  <url><loc>https://hvac-sales-master.vercel.app/sales/hvac-tech-to-sales</loc><priority>0.8</priority></url>
+
+  <!-- Pro / Tech Lessons -->
+  <url><loc>https://hvac-sales-master.vercel.app/pro-lessons/diagnostic-process-think-like-detective</loc><priority>0.8</priority></url>
+  <url><loc>https://hvac-sales-master.vercel.app/pro-lessons/installation-basics-prevent-callbacks</loc><priority>0.8</priority></url>
+  <url><loc>https://hvac-sales-master.vercel.app/pro-lessons/refrigerant-charging-fundamentals</loc><priority>0.8</priority></url>
+  <url><loc>https://hvac-sales-master.vercel.app/pro-lessons/a2l-refrigerant-transition</loc><priority>0.8</priority></url>
+  <url><loc>https://hvac-sales-master.vercel.app/pro-lessons/understanding-supply-chain</loc><priority>0.8</priority></url>
+  <url><loc>https://hvac-sales-master.vercel.app/pro-lessons/customer-service-job-site</loc><priority>0.8</priority></url>
+  <url><loc>https://hvac-sales-master.vercel.app/pro-lessons/building-hvac-career-path</loc><priority>0.8</priority></url>
+  <url><loc>https://hvac-sales-master.vercel.app/pro-lessons/static-pressure-diagnostics</loc><priority>0.8</priority></url>
+  <url><loc>https://hvac-sales-master.vercel.app/pro-lessons/ductless-mini-split-systems</loc><priority>0.8</priority></url>
+  <url><loc>https://hvac-sales-master.vercel.app/pro-lessons/electrical-fundamentals-hvac-techs</loc><priority>0.8</priority></url>
+  <url><loc>https://hvac-sales-master.vercel.app/pro-lessons/superheat-subcooling-practical-guide</loc><priority>0.8</priority></url>
+  <url><loc>https://hvac-sales-master.vercel.app/pro-lessons/combustion-analysis-gas-furnaces</loc><priority>0.8</priority></url>
+  <url><loc>https://hvac-sales-master.vercel.app/pro-lessons/evacuation-procedures-nitrogen-purging</loc><priority>0.8</priority></url>
+
+  <!-- Homeowner articles -->
+  <url><loc>https://hvac-sales-master.vercel.app/pro-lessons/furnace-blowing-cold-air</loc><priority>0.8</priority></url>
+  <url><loc>https://hvac-sales-master.vercel.app/pro-lessons/furnace-not-turning-on</loc><priority>0.8</priority></url>
+  <url><loc>https://hvac-sales-master.vercel.app/pro-lessons/furnace-short-cycling</loc><priority>0.8</priority></url>
+  <url><loc>https://hvac-sales-master.vercel.app/pro-lessons/furnace-making-strange-noises</loc><priority>0.8</priority></url>
+  <url><loc>https://hvac-sales-master.vercel.app/pro-lessons/furnace-leaking-water</loc><priority>0.8</priority></url>
+  <url><loc>https://hvac-sales-master.vercel.app/pro-lessons/how-to-clean-flame-sensor</loc><priority>0.8</priority></url>
+  <url><loc>https://hvac-sales-master.vercel.app/pro-lessons/ac-not-blowing-cold-air</loc><priority>0.8</priority></url>
+  <url><loc>https://hvac-sales-master.vercel.app/pro-lessons/80-vs-90-efficiency-furnace</loc><priority>0.8</priority></url>
+  <url><loc>https://hvac-sales-master.vercel.app/pro-lessons/single-stage-vs-two-stage-vs-modulating</loc><priority>0.8</priority></url>
+  <url><loc>https://hvac-sales-master.vercel.app/pro-lessons/best-gas-furnace-brands</loc><priority>0.8</priority></url>
+  <url><loc>https://hvac-sales-master.vercel.app/pro-lessons/how-long-does-furnace-last</loc><priority>0.8</priority></url>
+  <url><loc>https://hvac-sales-master.vercel.app/pro-lessons/what-is-afue-rating</loc><priority>0.8</priority></url>
+  <url><loc>https://hvac-sales-master.vercel.app/pro-lessons/how-often-change-furnace-filter</loc><priority>0.8</priority></url>
+  <url><loc>https://hvac-sales-master.vercel.app/pro-lessons/furnace-parts-homeowners-should-know</loc><priority>0.8</priority></url>
+  <url><loc>https://hvac-sales-master.vercel.app/pro-lessons/furnace-tune-up-guide</loc><priority>0.8</priority></url>
+  <url><loc>https://hvac-sales-master.vercel.app/pro-lessons/ac-tune-up-guide</loc><priority>0.8</priority></url>
+</urlset>

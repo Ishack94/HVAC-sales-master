@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { Helmet } from 'react-helmet-async'
 import Banner from '../components/Layout/Banner'
 import Sidebar from '../components/Layout/Sidebar'
 import Newsletter from '../components/Home/Newsletter'
@@ -18,6 +19,10 @@ const sidebarLinks = salesArticles.slice(0, 3).map((a) => ({
 export default function ProLessonsIndex() {
   return (
     <>
+      <Helmet>
+        <title>Pro Lessons | HVAC Sales Master</title>
+        <meta name="description" content="Technical training for HVAC service technicians and installers. Diagnose faster, install cleaner, get fewer callbacks." />
+      </Helmet>
       <Banner
         title="Pro Lessons"
         breadcrumbs={[

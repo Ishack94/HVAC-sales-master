@@ -1,4 +1,5 @@
 import React from 'react'
+import { Helmet } from 'react-helmet-async'
 import Banner from '../components/Layout/Banner'
 import Newsletter from '../components/Home/Newsletter'
 import styles from './Resources.module.css'
@@ -52,6 +53,10 @@ const resources = [
 export default function Resources() {
   return (
     <>
+      <Helmet>
+        <title>Resources | HVAC Sales Master</title>
+        <meta name="description" content="Vetted HVAC resources — load calculators, training platforms, manufacturer docs, and industry associations for professionals." />
+      </Helmet>
       <Banner
         title="Resources"
         breadcrumbs={[

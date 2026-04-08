@@ -1,4 +1,5 @@
 import React from 'react'
+import { Helmet } from 'react-helmet-async'
 import Banner from '../components/Layout/Banner'
 import Newsletter from '../components/Home/Newsletter'
 import styles from './AboutPage.module.css'
@@ -6,6 +7,10 @@ import styles from './AboutPage.module.css'
 export default function About() {
   return (
     <>
+      <Helmet>
+        <title>About | HVAC Sales Master</title>
+        <meta name="description" content="HVAC Sales Master exists to close the gap between field experience and business success. Real training written from the inside." />
+      </Helmet>
       <Banner
         title="About HVAC Sales Master"
         breadcrumbs={[

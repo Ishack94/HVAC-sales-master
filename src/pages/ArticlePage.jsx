@@ -1,9 +1,11 @@
 import React from 'react'
 import { useParams, Link } from 'react-router-dom'
+import { Helmet } from 'react-helmet-async'
 import Banner from '../components/Layout/Banner'
 import Sidebar from '../components/Layout/Sidebar'
 import Newsletter from '../components/Home/Newsletter'
 import ReadingProgress from '../components/UI/ReadingProgress'
+import headshotSrc from '../assets/headshot.png'
 import { getArticleTitle, salesArticles, proArticles, learnArticles } from '../utils/articleData'
 import { articleContent } from '../utils/articleContent'
 import styles from './ArticlePage.module.css'
@@ -124,8 +126,18 @@ export default function ArticlePage({ section }) {
     color: categoryColor,
   }))
 
+  const pageUrl = `https://hvac-sales-master.vercel.app/${section}/${slug}`
+
   return (
     <>
+      <Helmet>
+        <title>{title} | HVAC Sales Master</title>
+        <meta name="description" content={meta?.description || `${title} — HVAC Sales Master`} />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={meta?.description || `${title} — HVAC Sales Master`} />
+        <meta property="og:url" content={pageUrl} />
+        <meta property="og:type" content="article" />
+      </Helmet>
       <ReadingProgress />
       <Banner
         title={title}
@@ -178,6 +190,15 @@ export default function ArticlePage({ section }) {
               </div>
             </div>
           )}
+
+          {/* Author box */}
+          <div className={styles.authorBox}>
+            <img src={headshotSrc} alt="HVAC Sales Master founder" className={styles.authorBoxHeadshot} />
+            <div className={styles.authorBoxText}>
+              <p className={styles.authorBoxName}>Written by HVAC Sales Master</p>
+              <p className={styles.authorBoxBio}>Every article is written from real experience in the field — running service calls, sitting at kitchen tables, and training other techs.</p>
+            </div>
+          </div>
 
           {(prevArticle || nextArticle) && (
             <div className={styles.prevNext}>
