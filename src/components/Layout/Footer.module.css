@@ -25,7 +25,10 @@
 .logo {
   height: 40px;
   width: auto;
+  object-fit: contain;
+  align-self: flex-start;
   margin-bottom: 16px;
+  background: none;
 }
 
 .tagline {
