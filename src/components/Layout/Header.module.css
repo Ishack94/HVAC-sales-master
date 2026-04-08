@@ -4,69 +4,78 @@
   left: 0;
   right: 0;
   z-index: 100;
-  background-color: rgba(0, 26, 44, 0.95);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06);
+  background: #0e2340;
+  height: 80px;
 }
 
 .inner {
-  max-width: var(--container-max);
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 0 var(--container-padding);
-  height: 157px;
+  padding: 0 48px;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 24px;
 }
 
-@media (max-width: 768px) {
-  .inner {
-    height: 110px;
-  }
+/* Brand */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+  text-decoration: none;
 }
 
+.logo {
+  height: 46px;
+  width: auto;
+}
+
+.brandName {
+  font-family: 'Figtree', sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  color: #ffffff;
+  white-space: nowrap;
+}
+
+/* Desktop nav */
 .nav {
   display: flex;
   align-items: center;
-  gap: 36px;
+  gap: 28px;
 }
 
 .link {
-  font-family: 'Inter', sans-serif;
-  font-size: 0.78rem;
+  font-family: 'Figtree', sans-serif;
+  font-size: 16px;
   font-weight: 500;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: rgba(246, 245, 243, 0.75);
+  color: rgba(255, 255, 255, 0.85);
   transition: color 0.2s ease;
-  position: relative;
 }
 
-.link::after {
-  content: '';
-  position: absolute;
-  bottom: -3px;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background-color: var(--copper);
-  transform: scaleX(0);
-  transition: transform 0.2s ease;
-  transform-origin: left;
-}
-
-.link:hover {
-  color: #f6f5f3;
-}
-
-.link:hover::after,
-.link.active::after {
-  transform: scaleX(1);
-}
-
+.link:hover,
 .link.active {
-  color: #f6f5f3;
+  color: #4a9fe5;
+}
+
+.contactBtn {
+  font-family: 'Figtree', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+  border: 2px solid rgba(255, 255, 255, 0.7);
+  border-radius: 50px;
+  padding: 7px 20px;
+  white-space: nowrap;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.contactBtn:hover {
+  color: #4a9fe5;
+  border-color: #4a9fe5;
 }
 
 /* Hamburger */
@@ -74,24 +83,117 @@
   display: none;
   flex-direction: column;
   gap: 5px;
-  padding: 8px;
+  padding: 6px;
   cursor: pointer;
+  flex-shrink: 0;
 }
 
 .hamburger span {
   display: block;
-  width: 22px;
-  height: 1.5px;
-  background-color: rgba(246, 245, 243, 0.9);
-  transition: transform 0.2s ease;
+  width: 24px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 2px;
 }
 
-@media (max-width: 768px) {
+/* Mobile overlay */
+.mobileOverlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 200;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.mobileOverlay.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* Mobile menu (full-screen) */
+.mobileMenu {
+  position: fixed;
+  inset: 0;
+  background: #0e2340;
+  z-index: 250;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  transform: translateY(-100%);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.mobileMenu.open {
+  transform: translateY(0);
+}
+
+.closeBtn {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  padding: 8px;
+  cursor: pointer;
+  color: white;
+}
+
+.mobileLink {
+  font-family: 'Figtree', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.7);
+  padding: 12px 40px;
+  transition: color 0.2s ease;
+}
+
+.mobileLink:hover,
+.mobileLinkActive {
+  color: #4a9fe5;
+}
+
+.mobileContact {
+  margin-top: 20px;
+  font-family: 'Figtree', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  border-radius: 50px;
+  padding: 10px 32px;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.mobileContact:hover {
+  color: #4a9fe5;
+  border-color: #4a9fe5;
+}
+
+@media (max-width: 860px) {
+  .inner {
+    padding: 0 20px;
+  }
+
   .nav {
     display: none;
   }
 
   .hamburger {
     display: flex;
+  }
+
+  .mobileOverlay {
+    display: block;
+  }
+
+  .brandName {
+    font-size: 17px;
+  }
+
+  .logo {
+    height: 38px;
   }
 }

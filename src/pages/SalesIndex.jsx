@@ -1,37 +1,50 @@
 import React from 'react'
-import styles from './IndexPage.module.css'
-import SectionLabel from '../components/UI/SectionLabel'
-import Card from '../components/Home/Card'
+import { Link } from 'react-router-dom'
+import Banner from '../components/Layout/Banner'
+import Sidebar from '../components/Layout/Sidebar'
 import Newsletter from '../components/Home/Newsletter'
-import { salesArticles } from '../utils/articleData'
+import { salesArticles, proArticles } from '../utils/articleData'
+import styles from './ListingPage.module.css'
+
+const sidebarLinks = proArticles.slice(0, 3).map((a) => ({
+  title: a.title,
+  to: `/pro-lessons/${a.slug}`,
+  category: 'Pro Lesson',
+}))
 
 export default function SalesIndex() {
   return (
     <>
-      <div className={styles.hero}>
-        <div className={styles.heroInner}>
-          <SectionLabel>Sales & Closing</SectionLabel>
-          <h1 className={styles.heading}>Sales & Closing</h1>
-          <p className={styles.subtitle}>
-            Stuff that actually works when you&apos;re sitting across from a homeowner.
-          </p>
-        </div>
+      <Banner
+        title="Sales Training"
+        breadcrumbs={[
+          { label: 'Home', to: '/' },
+          { label: 'Sales Training' },
+        ]}
+      />
+
+      <div className={styles.layout}>
+        <main className={styles.main}>
+          <div className={styles.body}>
+            <p className={styles.intro}>
+              These aren't generic sales tips from someone who's never set foot in a crawl space. This is <strong>real-world HVAC sales strategy</strong> — written by people who've actually sat across from homeowners, handled objections, and closed jobs in the field.
+            </p>
+
+            <ul className={styles.articleList}>
+              {salesArticles.map((a) => (
+                <li key={a.slug} className={styles.articleItem}>
+                  <Link to={`/sales/${a.slug}`} className={styles.articleTitle}>{a.title}</Link>
+                  {a.readTime && <span className={styles.readTime}>{a.readTime} read</span>}
+                  {a.description && <p className={styles.articleDesc}>{a.description}</p>}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </main>
+
+        <Sidebar links={sidebarLinks} />
       </div>
-      <div className={styles.grid}>
-        <div className={styles.gridInner}>
-          {salesArticles.map((article) => (
-            <Card
-              key={article.slug}
-              title={article.title}
-              excerpt={article.description}
-              to={`/sales/${article.slug}`}
-              theme="blue"
-              category="Sales"
-              image={article.image}
-            />
-          ))}
-        </div>
-      </div>
+
       <Newsletter />
     </>
   )

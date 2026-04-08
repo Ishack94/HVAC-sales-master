@@ -1,37 +1,67 @@
 import React from 'react'
-import styles from './IndexPage.module.css'
-import SectionLabel from '../components/UI/SectionLabel'
-import Card from '../components/Home/Card'
+import { Link } from 'react-router-dom'
+import Banner from '../components/Layout/Banner'
+import Sidebar from '../components/Layout/Sidebar'
 import Newsletter from '../components/Home/Newsletter'
-import { proArticles } from '../utils/articleData'
+import { salesArticles, proArticles } from '../utils/articleData'
+import styles from './ListingPage.module.css'
+
+const techArticles = proArticles.slice(0, 13)
+const homeownerArticles = proArticles.slice(13)
+
+const sidebarLinks = salesArticles.slice(0, 3).map((a) => ({
+  title: a.title,
+  to: `/sales/${a.slug}`,
+  category: 'Sales',
+}))
 
 export default function ProLessonsIndex() {
   return (
     <>
-      <div className={styles.hero}>
-        <div className={styles.heroInner}>
-          <SectionLabel>Tech & Installer Pro Lessons</SectionLabel>
-          <h1 className={styles.heading}>Sharpen Your Skills</h1>
-          <p className={styles.subtitle}>
-            Technical training for service technicians and installers who want to diagnose faster, install better, and come back less.
-          </p>
-        </div>
+      <Banner
+        title="Pro Lessons"
+        breadcrumbs={[
+          { label: 'Home', to: '/' },
+          { label: 'Pro Lessons' },
+        ]}
+      />
+
+      <div className={styles.layout}>
+        <main className={styles.main}>
+          <div className={styles.body}>
+            <h2 className={styles.sectionHeading}>Tech &amp; Installer Lessons</h2>
+            <p className={styles.intro}>
+              Technical training for service technicians and installers who want to diagnose faster, install better, and come back less.
+            </p>
+            <ul className={styles.articleList}>
+              {techArticles.map((a) => (
+                <li key={a.slug} className={styles.articleItem}>
+                  <Link to={`/pro-lessons/${a.slug}`} className={styles.articleTitle}>{a.title}</Link>
+                  {a.readTime && <span className={styles.readTime}>{a.readTime} read</span>}
+                  {a.description && <p className={styles.articleDesc}>{a.description}</p>}
+                </li>
+              ))}
+            </ul>
+
+            <h2 className={styles.sectionHeading}>Homeowner Troubleshooting</h2>
+            <p className={styles.intro}>
+              Straightforward answers written by technicians, not content farms. These articles help homeowners understand what's happening with their system.
+            </p>
+            <ul className={styles.articleList}>
+              {homeownerArticles.map((a) => (
+                <li key={a.slug} className={styles.articleItem}>
+                  <Link to={`/pro-lessons/${a.slug}`} className={styles.articleTitle}>{a.title}</Link>
+                  {a.readTime && <span className={styles.readTime}>{a.readTime} read</span>}
+                  {a.description && <p className={styles.articleDesc}>{a.description}</p>}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </main>
+
+        <Sidebar links={sidebarLinks} />
       </div>
-      <div className={styles.grid}>
-        <div className={styles.gridInner}>
-          {proArticles.map((article) => (
-            <Card
-              key={article.slug}
-              title={article.title}
-              excerpt={article.description}
-              to={`/pro-lessons/${article.slug}`}
-              theme="copper"
-              category="Pro Lesson"
-              image={article.image}
-            />
-          ))}
-        </div>
-      </div>
+
       <Newsletter />
     </>
   )

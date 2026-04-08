@@ -1,0 +1,97 @@
+.layout {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 48px var(--content-padding) 80px;
+  display: flex;
+  gap: 56px;
+  align-items: flex-start;
+}
+
+.main {
+  flex: 1;
+  min-width: 0;
+}
+
+.body {
+  font-family: 'Figtree', sans-serif;
+}
+
+.sectionHeading {
+  font-size: 26px;
+  font-weight: 800;
+  color: #1b3a5c;
+  margin-top: 48px;
+  margin-bottom: 16px;
+}
+
+.sectionHeading:first-child {
+  margin-top: 0;
+}
+
+.intro {
+  font-size: 17px;
+  color: #555;
+  line-height: 1.7;
+  margin-bottom: 28px;
+}
+
+.intro strong {
+  font-weight: 700;
+  color: #333;
+}
+
+/* Article list */
+.articleList {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid #e5e5e5;
+}
+
+.articleItem {
+  padding: 20px 0;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.articleTitle {
+  font-family: 'Figtree', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #1b3a5c;
+  line-height: 1.35;
+  display: block;
+  margin-bottom: 4px;
+  transition: color 0.2s ease;
+}
+
+.articleTitle:hover {
+  color: #4a9fe5;
+}
+
+.readTime {
+  font-family: 'Figtree', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.articleDesc {
+  font-family: 'Figtree', sans-serif;
+  font-size: 15px;
+  color: #666;
+  line-height: 1.6;
+  margin-top: 4px;
+}
+
+@media (max-width: 860px) {
+  .layout {
+    flex-direction: column;
+    padding: 32px 20px 60px;
+    gap: 0;
+  }
+
+  /* Sidebar is hidden on mobile via its own CSS */
+}
