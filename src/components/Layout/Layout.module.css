@@ -1,0 +1,6 @@
+.topBar {
+  height: 4px;
+  width: 100%;
+  background: linear-gradient(to right, #4a9fe5, #1b3a5c, #4a9fe5);
+  flex-shrink: 0;
+}

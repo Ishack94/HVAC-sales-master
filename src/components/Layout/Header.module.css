@@ -1,21 +1,11 @@
 .header {
   position: fixed;
-  top: 0;
+  top: 4px;
   left: 0;
   right: 0;
   z-index: 100;
   background: #0e2340;
   height: 80px;
-}
-
-.topAccent {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(to right, #4a9fe5, #1b3a5c, #4a9fe5);
-  pointer-events: none;
 }
 
 .inner {

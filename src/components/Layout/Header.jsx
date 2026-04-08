@@ -17,7 +17,6 @@ export default function Header() {
   return (
     <>
       <header className={styles.header}>
-        <div className={styles.topAccent} aria-hidden="true" />
         <div className={styles.inner}>
           <Link to="/" className={styles.brand}>
             <img src={logoSrc} alt="HVAC Sales Master" className={styles.logo} />
