@@ -76,6 +76,17 @@
   display: block;
 }
 
+/* Homepage tagline below the two-line title */
+.tagline {
+  font-family: 'Figtree', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.45);
+  margin-top: 16px;
+  display: block;
+  letter-spacing: 0.3px;
+}
+
 /* Section/article title */
 .title {
   font-family: 'Figtree', sans-serif;

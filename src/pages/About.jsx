@@ -20,6 +20,7 @@ export default function About() {
       />
       <div className={styles.page}>
         <div className={styles.inner}>
+          <p className={styles.authorityLine}>Built from real in-home HVAC sales experience — not a marketing agency.</p>
           <p>
             HVAC Sales Master exists because the gap between field experience and business success shouldn't be a secret. The best technicians and salespeople learn through years of expensive trial and error — we're here to shortcut that.
           </p>

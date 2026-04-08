@@ -69,12 +69,22 @@
 
 .bottom {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
 .bottom p {
   font-family: 'Figtree', sans-serif;
   font-size: 13px;
   color: rgba(255, 255, 255, 0.2);
+}
+
+.bottomTagline {
+  font-family: 'Figtree', sans-serif;
+  font-size: 12px;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.15);
 }
 
 @media (max-width: 860px) {

@@ -20,9 +20,9 @@ export default function Newsletter() {
   return (
     <section className={styles.section}>
       <div className={styles.inner}>
-        <h2 className={styles.heading}>Stay Sharp</h2>
+        <h2 className={styles.heading}>Get Better at HVAC Sales Every Week</h2>
         <p className={styles.subtitle}>
-          Get practical HVAC sales and field tips delivered weekly — written by someone who's actually been in the trades. No spam, no fluff.
+          Real strategies from the field. No fluff. No spam.
         </p>
         {status === 'success' ? (
           <p className={styles.success}>{message}</p>
@@ -38,7 +38,7 @@ export default function Newsletter() {
               aria-label="Email address"
             />
             <button type="submit" className={styles.btn} disabled={status === 'loading'}>
-              {status === 'loading' ? 'Subscribing...' : 'Subscribe'}
+              {status === 'loading' ? 'Subscribing...' : 'Get Weekly Tips →'}
             </button>
           </form>
         )}

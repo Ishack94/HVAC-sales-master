@@ -93,11 +93,15 @@ export default function Home() {
   return (
     <>
       <Helmet>
-        <title>HVAC Sales Master — Sell Smarter. Master Your Craft.</title>
+        <title>HVAC Sales Master — Close More HVAC Jobs Without Being Pushy</title>
         <meta name="description" content="Real-world sales training and technical knowledge for HVAC professionals. Written by people who've actually been in the field." />
       </Helmet>
 
-      <Banner title="Sell Smarter." subtitle="Master Your Craft." />
+      <Banner
+        title="Close More HVAC Jobs Without Being Pushy"
+        subtitle="Real in-home sales strategies from the field."
+        tagline="Built from real in-home HVAC sales experience"
+      />
 
       <div className={styles.layout}>
         <main className={styles.main}>
@@ -118,7 +122,7 @@ export default function Home() {
               type="search"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search articles..."
+              placeholder="Find what you need..."
               className={styles.searchInput}
               aria-label="Search articles"
             />
@@ -162,7 +166,7 @@ export default function Home() {
 
               {/* Start Here */}
               <div className={styles.startHere}>
-                <h3 className={styles.startHereTitle}>New Here? Start With These</h3>
+                <h3 className={styles.startHereTitle}>If you're new to HVAC sales, start with these. They'll change how you run calls.</h3>
                 <ul className={styles.startHereList}>
                   {startHereArticles.map((a) => (
                     <li key={a.slug} className={styles.startHereItem}>
@@ -182,8 +186,7 @@ export default function Home() {
 
           {/* Sales Training */}
           {showSales && filteredSales.length > 0 && (
-            <div className={styles.section}>
-              <hr className={styles.divider} />
+            <div className={`${styles.section} ${styles.sectionWhite}`}>
               <h2 className={styles.sectionH2}>Sales Training</h2>
               {!isFiltering && <p>These aren't generic sales tips from someone who's never set foot in a crawl space. This is <strong>real-world HVAC sales strategy</strong> — written by people who've actually sat across from homeowners, handled objections, and closed jobs in the field.</p>}
               <p className={styles.sectionIntro}>For comfort advisors and salespeople who close in the home.</p>
@@ -200,8 +203,7 @@ export default function Home() {
 
           {/* Pro Lessons */}
           {showPro && filteredTech.length > 0 && (
-            <div className={styles.section}>
-              <hr className={styles.divider} />
+            <div className={`${styles.section} ${styles.sectionBlueGray}`}>
               <h2 className={styles.sectionH2}>Pro Lessons for Techs &amp; Installers</h2>
               {!isFiltering && <p>Technical training that goes beyond the textbook. These lessons are written for working technicians who want to diagnose faster, install cleaner, and get fewer callbacks.</p>}
               <p className={styles.sectionIntro}>For service technicians and installers.</p>
@@ -218,8 +220,7 @@ export default function Home() {
 
           {/* Homeowner */}
           {showHomeowner && filteredHomeowner.length > 0 && (
-            <div className={styles.section}>
-              <hr className={styles.divider} />
+            <div className={`${styles.section} ${styles.sectionWhite}`}>
               <h2 className={styles.sectionH2}>Homeowner Troubleshooting</h2>
               {!isFiltering && <p>Straightforward answers written by technicians, not content farms. These articles help homeowners understand what's going on so they can make smart decisions — and they help you close more jobs.</p>}
               <p className={styles.sectionIntro}>For homeowners trying to understand their system.</p>
@@ -268,7 +269,7 @@ export default function Home() {
           )}
         </main>
 
-        <Sidebar links={sidebarLinks} />
+        <Sidebar variant="home" links={sidebarLinks} />
       </div>
     </>
   )

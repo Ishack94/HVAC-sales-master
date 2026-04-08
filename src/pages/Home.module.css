@@ -202,16 +202,25 @@
 }
 
 .section {
-  /* wrapper for each filtered section */
+  margin: 0 -32px;
+  padding: 40px 32px 48px;
+}
+
+.sectionWhite {
+  background: #ffffff;
+}
+
+.sectionBlueGray {
+  background: #f4f6f9;
 }
 
 .sectionH2 {
-  font-size: 30px;
+  font-size: 40px;
   font-weight: 800;
   color: #1b3a5c;
   margin-top: 0;
   margin-bottom: 16px;
-  line-height: 1.2;
+  line-height: 1.15;
 }
 
 /* Start Here box */
@@ -409,6 +418,15 @@
 
   .body {
     font-size: 16px;
+  }
+
+  .section {
+    margin: 0 -20px;
+    padding: 32px 20px 40px;
+  }
+
+  .sectionH2 {
+    font-size: 28px;
   }
 
   .body h2 {

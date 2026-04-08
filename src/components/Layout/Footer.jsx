@@ -73,6 +73,7 @@ export default function Footer() {
 
         <div className={styles.bottom}>
           <p>© {year} HVAC Sales Master. All rights reserved.</p>
+          <p className={styles.bottomTagline}>Written by someone actually working in the trade.</p>
         </div>
       </div>
     </footer>

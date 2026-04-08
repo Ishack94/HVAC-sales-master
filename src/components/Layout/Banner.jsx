@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import styles from './Banner.module.css'
 
-export default function Banner({ title, subtitle, breadcrumbs }) {
+export default function Banner({ title, subtitle, tagline, breadcrumbs }) {
   return (
     <div className={styles.banner}>
       <div className={styles.inner}>
@@ -24,6 +24,7 @@ export default function Banner({ title, subtitle, breadcrumbs }) {
           <div className={styles.homeTitle}>
             <span className={styles.line1}>{title}</span>
             <span className={styles.line2}>{subtitle}</span>
+            {tagline && <span className={styles.tagline}>{tagline}</span>}
           </div>
         ) : (
           <h1 className={styles.title}>{title}</h1>
