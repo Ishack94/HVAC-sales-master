@@ -142,7 +142,7 @@ export default function Home() {
           {/* Body content — always visible intro */}
           {!isFiltering && (
             <div className={styles.body}>
-              <h2>The Power of Leaving Your Cards in the Van</h2>
+              <h2>Why I Leave My Cards in the Van (And Close More Deals Because of It)</h2>
 
               <p>After I've gone through everything — <strong>explained the options, answered all their questions, handled every concern</strong> — I stop talking. I turn it over to them.</p>
 
