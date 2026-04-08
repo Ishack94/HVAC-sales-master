@@ -8,6 +8,16 @@
   height: 80px;
 }
 
+.topAccent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(to right, #4a9fe5, #1b3a5c, #4a9fe5);
+  pointer-events: none;
+}
+
 .inner {
   max-width: 1200px;
   margin: 0 auto;

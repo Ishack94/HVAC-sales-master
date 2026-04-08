@@ -70,6 +70,12 @@ export default function ArticlePage({ section }) {
 
   const articlePath = (s) => section === 'sales' ? `/sales/${s}` : `/pro-lessons/${s}`
 
+  const categoryColor = {
+    sales: '#4a9fe5',
+    'pro-lessons': '#d97706',
+    learn: '#059669',
+  }[section] || '#4a9fe5'
+
   const title = getArticleTitle(slug)
   const meta = getArticleMeta(slug)
   const content = articleContent[slug] || null
@@ -81,6 +87,7 @@ export default function ArticlePage({ section }) {
     title: a.title,
     to: articlePath(a.slug),
     category: categoryLabel,
+    color: categoryColor,
   }))
 
   return (
@@ -102,7 +109,12 @@ export default function ArticlePage({ section }) {
           </Link>
 
           <div className={styles.metaBar}>
-            <span className={styles.category}>{categoryLabel}</span>
+            <span
+              className={styles.category}
+              style={{ color: categoryColor, background: `${categoryColor}1a` }}
+            >
+              {categoryLabel}
+            </span>
             {meta?.readTime && <span className={styles.readTime}>{meta.readTime} read</span>}
           </div>
 
@@ -123,7 +135,7 @@ export default function ArticlePage({ section }) {
               <div className={styles.keepReadingGrid}>
                 {related.map((a) => (
                   <Link key={a.slug} to={articlePath(a.slug)} className={styles.keepReadingItem}>
-                    <span className={styles.keepReadingCat}>{categoryLabel}</span>
+                    <span className={styles.keepReadingCat} style={{ color: categoryColor }}>{categoryLabel}</span>
                     <span className={styles.keepReadingTitle}>{a.title}</span>
                   </Link>
                 ))}

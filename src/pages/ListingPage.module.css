@@ -60,11 +60,13 @@
   line-height: 1.35;
   display: block;
   margin-bottom: 4px;
-  transition: color 0.2s ease;
+  padding-left: 0;
+  transition: color 0.2s ease, padding-left 0.2s ease;
 }
 
 .articleTitle:hover {
   color: #4a9fe5;
+  padding-left: 8px;
 }
 
 .readTime {

@@ -1,6 +1,12 @@
 @import './variables.css';
 @import './reset.css';
 
+/* Dot texture on content areas */
+body {
+  background-image: radial-gradient(circle, #e5e5e5 0.5px, transparent 0.5px);
+  background-size: 24px 24px;
+}
+
 /* Text selection */
 ::selection {
   background-color: #4a9fe5;

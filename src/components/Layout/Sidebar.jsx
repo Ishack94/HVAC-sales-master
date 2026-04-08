@@ -50,7 +50,7 @@ export default function Sidebar({ links = [] }) {
           <p className={styles.keepLabel}>Keep Reading</p>
           {links.map((item) => (
             <div key={item.to} className={styles.linkItem}>
-              <span className={styles.linkCat}>{item.category}</span>
+              <span className={styles.linkCat} style={item.color ? { color: item.color } : {}}>{item.category}</span>
               <Link to={item.to} className={styles.linkTitle}>{item.title}</Link>
             </div>
           ))}

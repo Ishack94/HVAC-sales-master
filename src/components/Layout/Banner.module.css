@@ -1,5 +1,13 @@
+@keyframes bannerShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
 .banner {
-  background: linear-gradient(#1b3a5c 0%, #0e2340 100%);
+  background: linear-gradient(135deg, #1b3a5c, #0e2340, #2a4a6a, #0e2340);
+  background-size: 300% 300%;
+  animation: bannerShift 12s ease infinite;
   padding: 60px 32px 50px;
   margin-top: 80px;
 }
