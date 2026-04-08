@@ -80,15 +80,21 @@
 
 @media (max-width: 860px) {
   .banner {
-    padding: 36px 20px 32px;
+    padding: 28px 20px 24px;
+  }
+
+  .breadcrumb {
+    font-size: 12px;
+    margin-bottom: 10px;
   }
 
   .line1,
   .line2 {
-    font-size: 28px;
+    font-size: 22px;
   }
 
   .title {
-    font-size: 26px;
+    font-size: 22px;
+    margin-bottom: 4px;
   }
 }
