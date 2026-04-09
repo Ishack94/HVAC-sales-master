@@ -154,7 +154,6 @@ export default function Home() {
             <div className={styles.authorText}>
               <p className={styles.authorLabel}>Written by the Founder</p>
               <p className={styles.authorName}>HVAC Sales Master</p>
-              <p className={styles.authorBio}>Real-world sales and technical training for HVAC professionals.</p>
               <p className={styles.authorTagline}>Real in-home sales strategies that actually work.</p>
               <p className={styles.authorTagline}>Built from real HVAC field experience.</p>
             </div>
