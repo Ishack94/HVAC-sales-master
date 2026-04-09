@@ -119,6 +119,10 @@ export default function Home() {
       <Banner
         title="Sell Smarter."
         subtitle="Master Your Craft."
+        taglines={[
+          "Real in-home sales strategies that actually work.",
+          "Built from real HVAC field experience."
+        ]}
       />
 
       <div className={styles.layout}>

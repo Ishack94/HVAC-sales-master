@@ -8,7 +8,7 @@
   background: linear-gradient(135deg, #1b3a5c, #0e2340, #2a4a6a, #0e2340);
   background-size: 300% 300%;
   animation: bannerShift 12s ease infinite;
-  padding: 40px 48px 36px;
+  padding: 32px 48px 28px;
   margin-top: 124px;
 }
 
@@ -82,7 +82,7 @@
   font-size: 13px;
   font-weight: 400;
   color: rgba(255, 255, 255, 0.45);
-  margin-top: 16px;
+  margin-top: 10px;
   display: block;
   letter-spacing: 0.3px;
 }

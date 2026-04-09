@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import styles from './Banner.module.css'
 
-export default function Banner({ title, subtitle, tagline, breadcrumbs }) {
+export default function Banner({ title, subtitle, tagline, taglines, breadcrumbs }) {
   return (
     <div className={styles.banner}>
       <div className={styles.inner}>
@@ -25,6 +25,9 @@ export default function Banner({ title, subtitle, tagline, breadcrumbs }) {
             <span className={styles.line1}>{title}</span>
             <span className={styles.line2}>{subtitle}</span>
             {tagline && <span className={styles.tagline}>{tagline}</span>}
+            {taglines && taglines.map((t, i) => (
+              <span key={i} className={styles.tagline}>{t}</span>
+            ))}
           </div>
         ) : (
           <h1 className={styles.title}>{title}</h1>
