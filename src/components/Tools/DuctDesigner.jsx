@@ -74,26 +74,24 @@ function makeRoom(overrides = {}) {
   }
 }
 
-function roundDuctSize(cfm) {
-  if (cfm <= 80) return '5"'
-  if (cfm <= 110) return '6"'
-  if (cfm <= 160) return '7"'
-  if (cfm <= 225) return '8"'
-  if (cfm <= 300) return '9"'
-  if (cfm <= 400) return '10"'
-  if (cfm <= 550) return '12"'
-  return '14"'
-}
+/* Supply duct tiers — round + rectangular equivalents.
+ * Index lookup so flex duct can bump every size up one increment. */
+const SUPPLY_TIERS = [
+  { max: 80,  round: '5"',  rect: '3¼×10' },
+  { max: 110, round: '6"',  rect: '3¼×12' },
+  { max: 160, round: '7"',  rect: '3¼×14' },
+  { max: 225, round: '8"',  rect: '8×8' },
+  { max: 300, round: '9"',  rect: '8×10' },
+  { max: 400, round: '10"', rect: '8×12' },
+  { max: 550, round: '12"', rect: '10×12 or 8×14' },
+  { max: Infinity, round: '14"', rect: '12×12 or 8×18' },
+]
 
-function rectDuctSize(cfm) {
-  if (cfm <= 80) return '3¼×10'
-  if (cfm <= 110) return '3¼×12'
-  if (cfm <= 160) return '3¼×14'
-  if (cfm <= 225) return '8×8'
-  if (cfm <= 300) return '8×10'
-  if (cfm <= 400) return '8×12'
-  if (cfm <= 550) return '10×12 or 8×14'
-  return '12×12 or 8×18'
+function ductSizes(cfm, isFlex) {
+  let idx = SUPPLY_TIERS.findIndex((t) => cfm <= t.max)
+  if (idx < 0) idx = SUPPLY_TIERS.length - 1
+  if (isFlex) idx = Math.min(idx + 1, SUPPLY_TIERS.length - 1)
+  return { round: SUPPLY_TIERS[idx].round, rect: SUPPLY_TIERS[idx].rect }
 }
 
 function registerSize(cfm) {
@@ -104,14 +102,21 @@ function registerSize(cfm) {
   return '12×12'
 }
 
-function trunkSizeLabel(cfm) {
-  if (cfm < 400) return '8×8 / 10" rd'
-  if (cfm <= 600) return '10×8 / 12" rd'
-  if (cfm <= 800) return '12×8 / 14" rd'
-  if (cfm <= 1000) return '14×8 / 16" rd'
-  if (cfm <= 1200) return '16×10 / 18" rd'
-  if (cfm <= 1600) return '20×10 / 20" rd'
-  return '20×12 / 22" rd'
+const TRUNK_TIERS = [
+  { max: 399,  label: '8×8 / 10" rd' },
+  { max: 600,  label: '10×8 / 12" rd' },
+  { max: 800,  label: '12×8 / 14" rd' },
+  { max: 1000, label: '14×8 / 16" rd' },
+  { max: 1200, label: '16×10 / 18" rd' },
+  { max: 1600, label: '20×10 / 20" rd' },
+  { max: Infinity, label: '20×12 / 22" rd' },
+]
+
+function trunkSizeLabel(cfm, isFlex) {
+  let idx = TRUNK_TIERS.findIndex((t) => cfm <= t.max)
+  if (idx < 0) idx = TRUNK_TIERS.length - 1
+  if (isFlex) idx = Math.min(idx + 1, TRUNK_TIERS.length - 1)
+  return TRUNK_TIERS[idx].label
 }
 
 function returnSizeLabel(cfm) {
@@ -399,6 +404,8 @@ export default function DuctDesigner() {
   const [furnaceBTU, setFurnaceBTU] = useState(80000)
   const [tempRise, setTempRise] = useState(55)
   const [tonnage, setTonnage] = useState(3.0)
+  const [material, setMaterial] = useState('rigid') // 'rigid' | 'flex'
+  const isFlex = material === 'flex'
 
   // AI property lookup state
   const [pasteText, setPasteText] = useState('')
@@ -431,6 +438,7 @@ export default function DuctDesigner() {
     setFurnaceBTU(80000)
     setTempRise(55)
     setTonnage(3.0)
+    setMaterial('rigid')
     setPasteText('')
     setAiError(null)
     setAiSuccess(null)
@@ -471,18 +479,19 @@ export default function DuctDesigner() {
     return sorted.map((room, i) => {
       const sqft = Number(room.sqft)
       const cfm = Math.round(designCFM * (sqft / totalSqft))
+      const sizes = ductSizes(cfm, isFlex)
       return {
         id: room.id,
         name: room.name || `Room ${i + 1}`,
         type: room.type,
         sqft,
         cfm,
-        round: roundDuctSize(cfm),
-        rect: rectDuctSize(cfm),
+        round: sizes.round,
+        rect: sizes.rect,
         register: registerSize(cfm),
       }
     })
-  }, [step, validRooms, totalSqft, designCFM])
+  }, [step, validRooms, totalSqft, designCFM, isFlex])
 
   const trunkSegments = useMemo(() => {
     if (step !== 3 || !supplySchedule.length) return []
@@ -492,12 +501,12 @@ export default function DuctDesigner() {
         room: room.name,
         roomCFM: room.cfm,
         trunkCFM: remaining,
-        trunkSize: trunkSizeLabel(remaining),
+        trunkSize: trunkSizeLabel(remaining, isFlex),
       }
       remaining = Math.max(0, remaining - room.cfm)
       return seg
     })
-  }, [step, supplySchedule, designCFM])
+  }, [step, supplySchedule, designCFM, isFlex])
 
   const returnInfo = useMemo(() => {
     if (step !== 3) return null
@@ -720,6 +729,35 @@ export default function DuctDesigner() {
             </div>
           </div>
 
+          <div className={styles.materialSection}>
+            <span className={styles.materialLabel}>Duct Material</span>
+            <div className={styles.segmentedControl} role="radiogroup" aria-label="Duct material">
+              <button
+                type="button"
+                role="radio"
+                aria-checked={material === 'rigid'}
+                onClick={() => setMaterial('rigid')}
+                className={`${styles.segmentBtn} ${material === 'rigid' ? styles.segmentBtnActive : ''}`}
+              >
+                Sheet Metal
+              </button>
+              <button
+                type="button"
+                role="radio"
+                aria-checked={material === 'flex'}
+                onClick={() => setMaterial('flex')}
+                className={`${styles.segmentBtn} ${material === 'flex' ? styles.segmentBtnActive : ''}`}
+              >
+                Flex Duct
+              </button>
+            </div>
+            {isFlex && (
+              <p className={styles.materialNote}>
+                Flex duct has ~3× the friction loss of sheet metal. Duct sizes are increased one increment to compensate.
+              </p>
+            )}
+          </div>
+
           <div className={styles.designCfm}>
             <span className={styles.designCfmLabel}>Design CFM</span>
             <span className={styles.designCfmValue}>{designCFM.toLocaleString()}</span>
@@ -761,7 +799,9 @@ export default function DuctDesigner() {
 
           {/* Section A: Supply duct schedule */}
           <div className={styles.resultBlock}>
-            <h5 className={styles.resultBlockTitle}>Supply Duct Schedule</h5>
+            <h5 className={styles.resultBlockTitle}>
+              Supply Duct Schedule — {isFlex ? 'Flex Duct' : 'Sheet Metal'}
+            </h5>
             <div className={styles.tableWrap}>
               <table className={styles.scheduleTable}>
                 <thead>
@@ -824,6 +864,29 @@ export default function DuctDesigner() {
             </div>
             <p className={styles.returnNote}>
               Return air sizing follows the rule of 1 sq inch of duct area per CFM. Distribute returns to balance airflow — high returns favor cooling, low returns favor heating, or use a single central return sized for full system flow.
+            </p>
+          </div>
+
+          {/* Common mistakes callout */}
+          <div className={styles.callout}>
+            <h5 className={styles.calloutTitle}>Common Duct Design Mistakes</h5>
+            <p className={styles.calloutText}>
+              <strong>Undersized returns are the #1 problem.</strong> In roughly 80% of residential installs, the return duct system is too small. If your system is noisy or your rooms aren't getting enough air, check the return first.
+            </p>
+            <p className={styles.calloutText}>
+              <strong>Flex duct must be pulled taut.</strong> Sagging, kinked, or loosely hung flex duct can add 30% or more friction loss. A 10-foot run of saggy flex can perform like 15+ feet of straight duct. Stretch it tight and support it every 4 feet.
+            </p>
+            <p className={styles.calloutText}>
+              <strong>Every 90° elbow adds resistance.</strong> A single 90° elbow is equivalent to about 15 feet of straight duct. Two 45° elbows create a smoother turn with less pressure drop than one sharp 90°. Plan your routing to minimize turns.
+            </p>
+            <p className={styles.calloutText}>
+              <strong>Don't forget the filter.</strong> A dirty or restrictive filter eats into your static pressure budget fast. A standard 1-inch filter adds ~0.10" WC of resistance. A 4-inch media filter adds ~0.20" WC. Size your ducts assuming the filter is partially loaded.
+            </p>
+            <p className={styles.calloutText}>
+              <strong>Bigger isn't always better.</strong> Oversized ducts reduce air velocity, which sounds good until you realize low velocity means poor air mixing in the room. The air dumps out of the register and falls straight to the floor instead of mixing. Hit the target CFM with the right size — not bigger.
+            </p>
+            <p className={styles.calloutText}>
+              <strong>Seal every joint.</strong> Duct leakage wastes 20-30% of conditioned air in a typical home. Use mastic (not duct tape) on every connection, especially in unconditioned spaces like attics and crawlspaces.
             </p>
           </div>
 
