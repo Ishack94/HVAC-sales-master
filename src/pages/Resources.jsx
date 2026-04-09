@@ -328,17 +328,14 @@ function SoftwareToolsSection() {
         Most HVAC design tools are either expensive desktop software or overly simplified calculators that don't help with real jobs. We're building the tools we wish we had — free, web-based, and designed for techs who actually work in the field.
       </p>
 
-      <h3 className={styles.sectionH3}>Recommended Resources</h3>
-      <p>
-        <a href="https://coolcalc.com" target="_blank" rel="noopener noreferrer" className={styles.extLink}><strong>CoolCalc</strong></a> — Free web-based Manual J, S, and D design software. More detailed than a basic calculator — includes equipment selection with manufacturer data and full duct design. Good for new construction projects that need code-compliant documentation. Requires a free account.
-      </p>
+      <h3 className={styles.sectionH3}>Training</h3>
       <p>
         <a href="https://skillcatapp.com" target="_blank" rel="noopener noreferrer" className={styles.extLink}><strong>SkillCat</strong></a> — Mobile-first trade training platform with EPA 608 certification, OSHA-10, and 200+ HVAC courses. $10/month. Legit accredited training you can do from your phone between calls.
       </p>
 
       <h3 className={styles.sectionH3}>Built right here</h3>
       <p>
-        We're building our own suite of free HVAC design tools — no signup, no paywall, no desktop software required. Check out the HVAC Load Calculator and Duct Design Calculator above. More tools are coming.
+        We're building our own suite of free HVAC design tools — no signup, no paywall, no desktop software required. Use the HVAC Load Calculator, Duct Design Calculator, and Quick Ductulator above. More tools are coming.
       </p>
     </section>
   )
