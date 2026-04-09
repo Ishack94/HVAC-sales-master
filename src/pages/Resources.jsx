@@ -324,10 +324,7 @@ function SoftwareToolsSection() {
         <a href="https://loadcalc.net" target="_blank" rel="noopener noreferrer" className={styles.extLink}><strong>LoadCalc.net</strong></a> — Free Manual J-based whole-house load calculator. Enter your location, insulation, windows, and structure details. Great for quick block load estimates.
       </p>
       <p>
-        <a href="https://www.servicetitan.com/tools/hvac-duct-calculator" target="_blank" rel="noopener noreferrer" className={styles.extLink}><strong>ServiceTitan Ductulator</strong></a> — Free single-duct sizing calculator. Enter CFM, friction rate, and duct shape to get dimensions. Simple but useful for quick checks on individual runs.
-      </p>
-      <p>
-        <a href="https://ductulator.com" target="_blank" rel="noopener noreferrer" className={styles.extLink}><strong>Ductulator.com</strong></a> — The original web-based ductulator since 2017. No frills, no signup. Enter CFM, get duct size. Built by an engineer who wanted a faster alternative to carrying a physical duct wheel.
+        <a href="https://ductulator.com" target="_blank" rel="noopener noreferrer" className={styles.extLink}><strong>Ductulator.com</strong></a> — The original free web-based ductulator. Enter CFM and get duct size instantly. No signup, no frills. Built by an engineer who wanted something faster than a physical duct wheel.
       </p>
       <p>
         <a href="https://coolcalc.com" target="_blank" rel="noopener noreferrer" className={styles.extLink}><strong>CoolCalc</strong></a> — Free residential HVAC design software with Manual J calculations. More detailed than LoadCalc, includes equipment selection. Requires free account.
