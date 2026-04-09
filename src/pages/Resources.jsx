@@ -307,9 +307,6 @@ export default function Resources() {
             <p>
               <a href="https://www.ahrinet.org" target="_blank" rel="noopener noreferrer" className={styles.extLink}><strong>AHRI</strong></a> — Represents equipment manufacturers and maintains the certified product directories you'll use for every install.
             </p>
-            <p>
-              <a href="https://www.womeninhvacr.org" target="_blank" rel="noopener noreferrer" className={styles.extLink}><strong>Women in HVACR</strong></a> — Networking, mentoring, and scholarships for women in the trade.
-            </p>
           </section>
 
           <p className={styles.closing}>
