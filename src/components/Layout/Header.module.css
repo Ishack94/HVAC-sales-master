@@ -191,11 +191,11 @@
 
 @media (max-width: 860px) {
   .header {
-    height: 100px;
+    height: 76px;
   }
 
   .inner {
-    padding: 0 20px;
+    padding: 10px 16px;
   }
 
   .nav {
@@ -211,6 +211,6 @@
   }
 
   .logo {
-    height: 84px;
+    height: 56px;
   }
 }
