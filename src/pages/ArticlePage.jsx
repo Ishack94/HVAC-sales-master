@@ -198,6 +198,7 @@ export default function ArticlePage({ section }) {
 
   return (
     <>
+      <ReadingProgress />
       <Helmet>
         <title>{title} | HVAC Sales Master</title>
         <meta name="description" content={articleDescription} />
@@ -216,7 +217,6 @@ export default function ArticlePage({ section }) {
           {JSON.stringify(articleSchema)}
         </script>
       </Helmet>
-      <ReadingProgress />
       <Banner
         title={title}
         breadcrumbs={[
