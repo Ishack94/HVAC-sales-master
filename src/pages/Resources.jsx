@@ -316,52 +316,20 @@ function SoftwareToolsSection() {
     <section className={styles.section}>
       <h2 className={styles.sectionH2}>Software &amp; Tools</h2>
       <p>
-        Whether you're sizing ductwork on a napkin or running a full Manual J/D design, having the right tools matters. Here's what the pros actually use — from free web calculators to full design suites.
+        Most HVAC design tools are either expensive desktop software or overly simplified calculators that don't help with real jobs. We're building the tools we wish we had — free, web-based, and designed for techs who actually work in the field.
       </p>
 
-      <h3 className={styles.sectionH3}>Free Calculators &amp; Web Tools</h3>
+      <h3 className={styles.sectionH3}>Recommended Resources</h3>
       <p>
-        <a href="https://loadcalc.net" target="_blank" rel="noopener noreferrer" className={styles.extLink}><strong>LoadCalc.net</strong></a> — Free Manual J-based whole-house load calculator. Enter your location, insulation, windows, and structure details. Great for quick block load estimates.
+        <a href="https://coolcalc.com" target="_blank" rel="noopener noreferrer" className={styles.extLink}><strong>CoolCalc</strong></a> — Free web-based Manual J, S, and D design software. More detailed than a basic calculator — includes equipment selection with manufacturer data and full duct design. Good for new construction projects that need code-compliant documentation. Requires a free account.
       </p>
       <p>
-        <a href="https://ductulator.com" target="_blank" rel="noopener noreferrer" className={styles.extLink}><strong>Ductulator.com</strong></a> — The original free web-based ductulator. Enter CFM and get duct size instantly. No signup, no frills. Built by an engineer who wanted something faster than a physical duct wheel.
-      </p>
-      <p>
-        <a href="https://coolcalc.com" target="_blank" rel="noopener noreferrer" className={styles.extLink}><strong>CoolCalc</strong></a> — Free residential HVAC design software with Manual J calculations. More detailed than LoadCalc, includes equipment selection. Requires free account.
-      </p>
-      <p>
-        <a href="https://hvac-calc.com" target="_blank" rel="noopener noreferrer" className={styles.extLink}><strong>HVAC-Calc</strong></a> — Free residential and light commercial load calculation software. Windows desktop app.
+        <a href="https://skillcatapp.com" target="_blank" rel="noopener noreferrer" className={styles.extLink}><strong>SkillCat</strong></a> — Mobile-first trade training platform with EPA 608 certification, OSHA-10, and 200+ HVAC courses. $10/month. Legit accredited training you can do from your phone between calls.
       </p>
 
-      <h3 className={styles.sectionH3}>Mobile Apps</h3>
+      <h3 className={styles.sectionH3}>Built right here</h3>
       <p>
-        <strong>ACCA DuctWheel</strong> (iPad, $4.99) — The only duct sizing app powered by the official Manual D standard. Digital version of the physical ductulator wheel. If you're doing residential duct design by the book, this is what ACCA built for you.
-      </p>
-      <p>
-        <a href="https://hvacexammaster.com" target="_blank" rel="noopener noreferrer" className={styles.extLink}><strong>HVAC Exam Master</strong></a> — 1,000+ practice questions for EPA 608 and NATE exams. Not a design tool, but essential for techs studying for certification.
-      </p>
-      <p>
-        <a href="https://skillcatapp.com" target="_blank" rel="noopener noreferrer" className={styles.extLink}><strong>SkillCat</strong></a> — Mobile-first trade training platform. EPA 608 certification, OSHA-10, and full HVAC courses from your phone.
-      </p>
-
-      <h3 className={styles.sectionH3}>Professional Design Software</h3>
-      <p>
-        <a href="https://elitesoft.com" target="_blank" rel="noopener noreferrer" className={styles.extLink}><strong>Ductsize by Elite Software</strong></a> ($600+) — The gold standard for professional duct design. Handles static regain, equal friction, and constant velocity methods. Library of 190+ ASHRAE fittings, noise calculations, and connection tree diagrams. Used by HVAC engineers on commercial and complex residential projects.
-      </p>
-      <p>
-        <a href="https://www.wrightsoft.com" target="_blank" rel="noopener noreferrer" className={styles.extLink}><strong>Wrightsoft Right-Suite Universal</strong></a> — Comprehensive HVAC design suite. Full Manual J, S, D, and T calculations in one platform. Integrates load calculation with equipment selection and duct design. Industry standard for many engineering firms.
-      </p>
-      <p>
-        <a href="https://www.acca.org/standards/technical-manuals" target="_blank" rel="noopener noreferrer" className={styles.extLink}><strong>Manual J / Manual D Reference</strong></a> — The actual ACCA manuals that define how residential HVAC systems should be designed. Not software, but the source documents that every tool above is based on. Worth owning if you're serious about the craft.
-      </p>
-
-      <h3 className={styles.sectionH3}>When to use what</h3>
-      <p>
-        For most residential replacement jobs, our free Load Calculator and Duct Design Calculator above will get you 80% of the way there. For new construction or complex layouts, invest in Wrightsoft or Ductsize. And if you're just checking a single duct run on the fly, the free ductulators work fine.
-      </p>
-
-      <p className={styles.closing}>
-        Using a tool that should be on this list? <a href="mailto:contact@hvacsalesmaster.com" className={styles.mailto}>Let me know.</a>
+        We're building our own suite of free HVAC design tools — no signup, no paywall, no desktop software required. Check out the HVAC Load Calculator and Duct Design Calculator above. More tools are coming.
       </p>
     </section>
   )
