@@ -7,9 +7,10 @@ const dinoBox = {
   id: 'dino',
   title: 'Dino Quote',
   desc: 'HVAC business tools built for contractors who want to win more jobs.',
-  btn: 'Learn More →',
+  btn: 'Coming Soon',
   watermark: 'DINO QUOTE',
   height: 140,
+  disabled: true,
 }
 
 const mostPopular = [
@@ -40,7 +41,11 @@ function AdBox({ box }) {
       <div className={styles.boxBody}>
         <h3 className={styles.boxTitle}>{box.title}</h3>
         <p className={styles.boxDesc}>{box.desc}</p>
-        <button className={styles.boxBtn} onClick={() => trackEvent('sidebar_click', { item: box.id })}>{box.btn}</button>
+        {box.disabled ? (
+          <span className={styles.boxBtn} style={{ opacity: 0.5, cursor: 'default' }}>{box.btn}</span>
+        ) : (
+          <button className={styles.boxBtn} onClick={() => trackEvent('sidebar_click', { item: box.id })}>{box.btn}</button>
+        )}
       </div>
     </div>
   )

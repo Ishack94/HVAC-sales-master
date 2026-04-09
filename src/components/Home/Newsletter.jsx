@@ -11,22 +11,36 @@ export default function Newsletter() {
     e.preventDefault()
     if (!email) return
     setStatus('loading')
-    setTimeout(() => {
-      // TODO: Replace with Supabase insert when ready
-      try {
-        const stored = JSON.parse(localStorage.getItem('hvac_newsletter_emails') || '[]')
-        stored.push({ email, ts: new Date().toISOString() })
-        localStorage.setItem('hvac_newsletter_emails', JSON.stringify(stored))
-      } catch (err) {
-        console.warn('localStorage unavailable', err)
-      }
-      console.log('[newsletter signup]', email)
 
-      setStatus('success')
-      setMessage("Thanks! You're on the list. Watch your inbox.")
-      setEmail('')
-      trackEvent('newsletter_signup', { method: 'email' })
-    }, 800)
+    // localStorage backup so we never lose a signup
+    try {
+      const stored = JSON.parse(localStorage.getItem('hvac_newsletter_emails') || '[]')
+      stored.push(email)
+      localStorage.setItem('hvac_newsletter_emails', JSON.stringify(stored))
+    } catch (err) {
+      console.warn('localStorage unavailable', err)
+    }
+
+    try {
+      // TODO: Replace xyzgobdl with your real Formspree form ID from https://formspree.io
+      const res = await fetch('https://formspree.io/f/xyzgobdl', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      })
+      if (res.ok) {
+        setStatus('success')
+        setMessage("You're in! Watch your inbox.")
+        setEmail('')
+        trackEvent('newsletter_signup', { method: 'email' })
+      } else {
+        setStatus('error')
+        setMessage('Something went wrong. Try again.')
+      }
+    } catch {
+      setStatus('error')
+      setMessage('Something went wrong. Try again.')
+    }
   }
 
   return (

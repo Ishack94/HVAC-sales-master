@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import styles from './ReadingProgress.module.css'
 
 export default function ReadingProgress() {
   const [width, setWidth] = useState(0)
@@ -13,8 +12,23 @@ export default function ReadingProgress() {
       }
     }
     window.addEventListener('scroll', handleScroll, { passive: true })
+    handleScroll()
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  return <div className={styles.bar} style={{ width: `${width}%` }} />
+  return (
+    <div
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        height: '3px',
+        width: `${width}%`,
+        background: '#4a9fe5',
+        zIndex: 999999,
+        transition: 'width 0.15s linear',
+        pointerEvents: 'none'
+      }}
+    />
+  )
 }

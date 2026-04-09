@@ -22,6 +22,7 @@ const proLinks = [
 const companyLinks = [
   { label: 'About', to: '/about' },
   { label: 'Resources', to: '/resources' },
+  { label: 'Contact', to: 'mailto:contact@hvacsalesmaster.com' },
 ]
 
 export default function Footer() {
@@ -64,7 +65,11 @@ export default function Footer() {
             <ul>
               {companyLinks.map(({ label, to }) => (
                 <li key={to}>
-                  <Link to={to} className={styles.link}>{label}</Link>
+                  {to.startsWith('mailto:') ? (
+                    <a href={to} className={styles.link}>{label}</a>
+                  ) : (
+                    <Link to={to} className={styles.link}>{label}</Link>
+                  )}
                 </li>
               ))}
             </ul>
