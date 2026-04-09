@@ -143,10 +143,6 @@ export default function Home() {
       <Banner
         title="Sell Smarter."
         subtitle="Master Your Craft."
-        taglines={[
-          "Real in-home sales strategies that actually work.",
-          "Built from real HVAC field experience."
-        ]}
       />
 
       <div className={styles.layout}>
@@ -159,7 +155,8 @@ export default function Home() {
               <p className={styles.authorLabel}>Written by the Founder</p>
               <p className={styles.authorName}>HVAC Sales Master</p>
               <p className={styles.authorBio}>Real-world sales and technical training for HVAC professionals.</p>
-              <p className={styles.authorTagline}>Built from real in-home HVAC sales experience</p>
+              <p className={styles.authorTagline}>Real in-home sales strategies that actually work.</p>
+              <p className={styles.authorTagline}>Built from real HVAC field experience.</p>
             </div>
           </div>
 
