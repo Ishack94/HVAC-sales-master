@@ -726,6 +726,235 @@ select.input {
   .secondaryBtn {
     width: 100%;
   }
+
+  .aiSection {
+    padding: 22px 20px;
+  }
+
+  .aiActions {
+    justify-content: stretch;
+  }
+
+  .aiBtn {
+    width: 100%;
+  }
+}
+
+/* === AI property lookup === */
+.aiSection {
+  background: white;
+  border: 1px solid #ddd;
+  border-left: 4px solid #4a9fe5;
+  border-radius: 12px;
+  padding: 26px 28px;
+  margin-bottom: 22px;
+  box-shadow: 0 4px 18px rgba(14, 35, 64, 0.06);
+}
+
+.aiHeader {
+  margin-bottom: 14px;
+}
+
+.aiBadge {
+  display: inline-block;
+  background: linear-gradient(135deg, #0e2340 0%, #1b3a5c 100%);
+  color: white;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 50px;
+  margin-bottom: 10px;
+}
+
+.aiTitle {
+  font-size: 19px;
+  font-weight: 800;
+  color: #0e2340;
+  margin: 4px 0 4px;
+  line-height: 1.2;
+}
+
+.aiSubtitle {
+  font-size: 13px;
+  color: #777;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.aiTextarea {
+  width: 100%;
+  padding: 14px 16px;
+  font-family: 'Figtree', sans-serif;
+  font-size: 14px;
+  color: #1b3a5c;
+  background: #f0f4f8;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  outline: none;
+  resize: vertical;
+  min-height: 110px;
+  line-height: 1.55;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.aiTextarea::placeholder {
+  color: #999;
+}
+
+.aiTextarea:focus {
+  border-color: #4a9fe5;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(74, 159, 229, 0.12);
+}
+
+.aiTextarea:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.aiActions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 14px;
+}
+
+.aiBtn {
+  background: #0e2340;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 13px 24px;
+  font-family: 'Figtree', sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.aiBtn:hover:not(:disabled) {
+  background: #1b3a5c;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(14, 35, 64, 0.28);
+}
+
+.aiBtn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.aiBtnLoading {
+  animation: aiPulse 1.4s ease-in-out infinite;
+}
+
+@keyframes aiPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
+}
+
+.aiSkeleton {
+  margin-top: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.skeletonBar {
+  height: 38px;
+  background: linear-gradient(90deg, #f0f4f8 0%, #e3ebf3 50%, #f0f4f8 100%);
+  background-size: 200% 100%;
+  border-radius: 8px;
+  animation: skeletonPulse 1.5s ease-in-out infinite, skeletonShimmer 1.8s linear infinite;
+}
+
+@keyframes skeletonPulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.75; }
+}
+
+@keyframes skeletonShimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.aiSuccess {
+  margin-top: 16px;
+  padding: 12px 16px;
+  background: #f0f4f8;
+  border: 1px solid #4a9fe5;
+  border-left: 4px solid #4a9fe5;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #0e2340;
+  animation: aiSlideIn 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.aiError {
+  margin-top: 16px;
+  padding: 12px 16px;
+  background: #fff5f5;
+  border: 1px solid #ddd;
+  border-left: 4px solid #c0392b;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #1b3a5c;
+  animation: aiSlideIn 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes aiSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* AI / template divider */
+.aiDivider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 6px 0 22px;
+  position: relative;
+}
+
+.aiDivider::before,
+.aiDivider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #e5e5e5;
+}
+
+.aiDivider span {
+  padding: 0 18px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: #999;
+}
+
+/* === Floor plan === */
+.floorPlanWrap {
+  background: #f0f4f8;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  padding: 16px;
+  overflow-x: auto;
+}
+
+.floorPlanSvg {
+  display: block;
+  width: 100%;
+  height: auto;
+  min-width: 560px;
 }
 
 /* === Print styles === */
