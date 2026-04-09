@@ -821,7 +821,7 @@ select.input {
 }
 
 .aiBtn {
-  background: #0e2340;
+  background: #4a9fe5;
   color: white;
   border: none;
   border-radius: 8px;
@@ -835,9 +835,9 @@ select.input {
 }
 
 .aiBtn:hover:not(:disabled) {
-  background: #1b3a5c;
+  background: #0e2340;
   transform: translateY(-2px);
-  box-shadow: 0 8px 22px rgba(14, 35, 64, 0.28);
+  box-shadow: 0 8px 22px rgba(74, 159, 229, 0.28);
 }
 
 .aiBtn:disabled {

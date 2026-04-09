@@ -123,71 +123,43 @@ function returnSizeLabel(cfm) {
   return '20×14 or 24×12'
 }
 
-/* === AI property lookup === */
-async function analyzeProperty(text) {
-  const apiKey = import.meta.env.VITE_ANTHROPIC_API_KEY
-  if (!apiKey) {
-    throw new Error('Anthropic API key not configured (VITE_ANTHROPIC_API_KEY).')
+/* === Smart parse — client-side property description parser === */
+function parseDescription(text) {
+  const rooms = []
+  const sqftMatch = text.match(/(\d[\d,.]*)\s*(?:sq\.?\s*ft|square\s*feet|sqft)/i)
+  const totalSqFt = sqftMatch ? parseInt(sqftMatch[1].replace(/[,.]/g, ''), 10) : 2000
+
+  const bedMatch = text.match(/(\d+)\s*(?:bed(?:room)?s?|br\b)/i)
+  const bathMatch = text.match(/(\d+\.?\d*)\s*(?:bath(?:room)?s?|ba\b)/i)
+  const beds = bedMatch ? parseInt(bedMatch[1], 10) : 3
+  const baths = bathMatch ? parseFloat(bathMatch[1]) : 2
+
+  const hasDining = /dining/i.test(text)
+  const hasLaundry = /laundry/i.test(text)
+  const hasOffice = /office|den|study/i.test(text)
+
+  rooms.push({ name: 'Living Room', sqFt: Math.round(totalSqFt * 0.18), type: 'Living/Family Room' })
+  rooms.push({ name: 'Kitchen', sqFt: Math.round(totalSqFt * 0.12), type: 'Kitchen' })
+  rooms.push({ name: 'Master Bedroom', sqFt: Math.round(totalSqFt * 0.14), type: 'Bedroom' })
+  for (let i = 2; i <= beds; i++) {
+    rooms.push({ name: `Bedroom ${i}`, sqFt: Math.round(totalSqFt * 0.09), type: 'Bedroom' })
   }
+  rooms.push({ name: 'Master Bath', sqFt: Math.round(totalSqFt * 0.05), type: 'Bathroom' })
+  if (baths >= 2) rooms.push({ name: 'Hall Bath', sqFt: Math.round(totalSqFt * 0.04), type: 'Bathroom' })
+  if (baths >= 2.5) rooms.push({ name: 'Half Bath', sqFt: Math.round(totalSqFt * 0.025), type: 'Bathroom' })
+  if (hasDining) rooms.push({ name: 'Dining Room', sqFt: Math.round(totalSqFt * 0.08), type: 'Dining Room' })
+  if (hasLaundry) rooms.push({ name: 'Laundry', sqFt: Math.round(totalSqFt * 0.03), type: 'Laundry' })
+  if (hasOffice) rooms.push({ name: 'Office', sqFt: Math.round(totalSqFt * 0.07), type: 'Office' })
+  rooms.push({ name: 'Hallway', sqFt: Math.round(totalSqFt * 0.04), type: 'Hallway' })
 
-  const systemPrompt = `You are an HVAC duct design assistant. The user will provide either a real estate listing URL or a property description. Extract the following and respond ONLY with valid JSON, no markdown or backticks:
-{
-  "totalSqFt": number,
-  "rooms": [
-    { "name": string, "sqFt": number, "type": string }
-  ]
-}
+  // Adjust to match total — bump the living room
+  const sum = rooms.reduce((s, r) => s + r.sqFt, 0)
+  const diff = totalSqFt - sum
+  rooms[0].sqFt += diff
 
-Room types must be one of: Living/Family Room, Bedroom, Kitchen, Bathroom, Dining Room, Office, Hallway, Laundry, Garage, Bonus Room.
-
-If the listing mentions specific room dimensions, calculate sq ft from those. If only total sq ft and room count are given, estimate room sizes proportionally using these typical ratios for a home:
-- Living/Family Room: 18-22% of total
-- Kitchen: 10-14%
-- Master Bedroom: 12-16%
-- Other Bedrooms: 8-11% each
-- Bathrooms: 4-6% each
-- Dining Room: 8-10%
-- Hallway: 4-5%
-- Laundry: 3-4%
-
-Always include a Hallway. Round sq ft to nearest 10. The rooms should add up to approximately the total sq ft.`
-
-  const isUrl = /^https?:\/\//i.test(text)
-  const userContent = isUrl
-    ? `${text}\n\nThis is a property listing URL. Based on common listings at this type of URL, estimate a typical 3bed/2bath ~1800 sqft home if you cannot access the URL directly. The user can adjust the values after.`
-    : text
-
-  const response = await fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST',
-    headers: {
-      'content-type': 'application/json',
-      'x-api-key': apiKey,
-      'anthropic-version': '2023-06-01',
-      'anthropic-dangerous-direct-browser-access': 'true',
-    },
-    body: JSON.stringify({
-      model: 'claude-sonnet-4-20250514',
-      max_tokens: 2000,
-      system: systemPrompt,
-      messages: [{ role: 'user', content: userContent }],
-      tools: [{ type: 'web_search_20250305', name: 'web_search' }],
-    }),
-  })
-
-  if (!response.ok) {
-    throw new Error(`API request failed (${response.status})`)
-  }
-
-  const data = await response.json()
-  const textBlocks = (data.content || []).filter((b) => b.type === 'text')
-  if (!textBlocks.length) throw new Error('No text content in response')
-  const lastText = textBlocks[textBlocks.length - 1].text || ''
-
-  // Strip markdown fences if present and extract the JSON object
-  const stripped = lastText.trim().replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/, '')
-  const match = stripped.match(/\{[\s\S]*\}/)
-  if (!match) throw new Error('No JSON object in response')
-  return JSON.parse(match[0])
+  const matchedSqFt = !!sqftMatch
+  const matchedBeds = !!bedMatch
+  return { totalSqFt, rooms, matchedSqFt, matchedBeds }
 }
 
 /* === Floor plan === */
@@ -464,15 +436,15 @@ export default function DuctDesigner() {
     setAiSuccess(null)
   }
 
-  const handleAnalyze = async () => {
+  const handleAnalyze = () => {
     if (!pasteText.trim() || aiLoading) return
     setAiLoading(true)
     setAiError(null)
     setAiSuccess(null)
     try {
-      const data = await analyzeProperty(pasteText.trim())
-      if (!data.rooms || !Array.isArray(data.rooms) || data.rooms.length === 0) {
-        throw new Error('No rooms returned')
+      const data = parseDescription(pasteText.trim())
+      if (!data.matchedSqFt && !data.matchedBeds) {
+        throw new Error('No sq ft or bedroom count found')
       }
       const newRooms = data.rooms.map((r) =>
         makeRoom({
@@ -482,14 +454,11 @@ export default function DuctDesigner() {
         })
       )
       setRooms(newRooms)
-      const totalSqFt =
-        Number(data.totalSqFt) ||
-        newRooms.reduce((s, r) => s + Number(r.sqft || 0), 0)
-      setAiSuccess({ count: newRooms.length, totalSqFt })
+      setAiSuccess({ count: newRooms.length, totalSqFt: data.totalSqFt })
     } catch (err) {
-      console.error('AI lookup failed:', err)
+      console.error('Smart parse failed:', err)
       setAiError(
-        "Couldn't parse that listing. Try pasting the property description text directly, or use Quick Fill below."
+        "Couldn't find sq ft or bedroom count. Include something like '1800 sq ft, 3 bed, 2 bath' and try again, or use Quick Fill below."
       )
     } finally {
       setAiLoading(false)
@@ -555,20 +524,20 @@ export default function DuctDesigner() {
       {/* === STEP 1: ROOMS === */}
       {step === 1 && (
         <div className={styles.stepPanel} key="step1">
-          {/* AI property lookup */}
+          {/* Smart parse property lookup */}
           <div className={styles.aiSection}>
             <div className={styles.aiHeader}>
-              <span className={styles.aiBadge}>AI Powered</span>
-              <h4 className={styles.aiTitle}>Import from a Listing</h4>
+              <span className={styles.aiBadge}>Smart Parse</span>
+              <h4 className={styles.aiTitle}>Paste Property Description</h4>
               <p className={styles.aiSubtitle}>
-                Paste a property URL or description and we'll auto-fill the room layout for you.
+                Drop in a property description with sq ft and bedroom count and we'll auto-fill the room layout for you.
               </p>
             </div>
 
             <textarea
               value={pasteText}
               onChange={(e) => setPasteText(e.target.value)}
-              placeholder="Paste a Redfin or Zillow listing URL, or paste the property description text directly..."
+              placeholder="e.g. 'Beautiful 4 bed, 2.5 bath ranch with 2,200 sq ft. Open dining room, laundry, attached garage.'"
               className={styles.aiTextarea}
               rows={4}
               disabled={aiLoading}
