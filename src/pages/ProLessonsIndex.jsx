@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import Banner from '../components/Layout/Banner'
 import Sidebar from '../components/Layout/Sidebar'
@@ -17,11 +17,14 @@ const sidebarLinks = salesArticles.slice(0, 3).map((a) => ({
 }))
 
 export default function ProLessonsIndex() {
+  const location = useLocation()
+  const canonicalUrl = `https://hvac-sales-master.vercel.app${location.pathname}`
   return (
     <>
       <Helmet>
         <title>Pro Lessons | HVAC Sales Master</title>
         <meta name="description" content="Technical training for HVAC service technicians and installers. Diagnose faster, install cleaner, get fewer callbacks." />
+        <link rel="canonical" href={canonicalUrl} />
       </Helmet>
       <Banner
         title="Pro Lessons"

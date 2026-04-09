@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useRef, useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import Banner from '../components/Layout/Banner'
 import Sidebar from '../components/Layout/Sidebar'
@@ -329,6 +330,8 @@ const SECTIONS = [
 ]
 
 export default function Resources() {
+  const location = useLocation()
+  const canonicalUrl = `https://hvac-sales-master.vercel.app${location.pathname}`
   const [openKey, setOpenKey] = useState(null)
   const expandedRef = useRef(null)
 
@@ -353,6 +356,7 @@ export default function Resources() {
       <Helmet>
         <title>Resources | HVAC Sales Master</title>
         <meta name="description" content="Vetted HVAC resources — load calculator, training and certification, manufacturer technical libraries, and industry associations." />
+        <link rel="canonical" href={canonicalUrl} />
       </Helmet>
       <Banner
         title="Resources"

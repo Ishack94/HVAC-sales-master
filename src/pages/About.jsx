@@ -1,4 +1,5 @@
 import React from 'react'
+import { useLocation } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import Banner from '../components/Layout/Banner'
 import Sidebar from '../components/Layout/Sidebar'
@@ -7,11 +8,14 @@ import headshotSrc from '../assets/headshot.png'
 import styles from './AboutPage.module.css'
 
 export default function About() {
+  const location = useLocation()
+  const canonicalUrl = `https://hvac-sales-master.vercel.app${location.pathname}`
   return (
     <>
       <Helmet>
         <title>About | HVAC Sales Master</title>
         <meta name="description" content="HVAC Sales Master exists to close the gap between field experience and business success. Real training written from the inside." />
+        <link rel="canonical" href={canonicalUrl} />
       </Helmet>
       <Banner
         title="About HVAC Sales Master"

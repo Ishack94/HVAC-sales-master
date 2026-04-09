@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useRef } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import Banner from '../components/Layout/Banner'
 import Sidebar from '../components/Layout/Sidebar'
@@ -56,7 +56,17 @@ const sidebarLinks = [
   ...techArticles.slice(0, 2).map((a) => ({ title: a.title, to: `/pro-lessons/${a.slug}`, category: 'Pro Lesson', color: '#d97706' })),
 ]
 
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'HVAC Sales Master',
+  url: 'https://hvac-sales-master.vercel.app',
+  description: 'Real-world sales training and technical knowledge for HVAC professionals.',
+}
+
 export default function Home() {
+  const location = useLocation()
+  const canonicalUrl = `https://hvac-sales-master.vercel.app${location.pathname}`
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState('idle')
   const [message, setMessage] = useState('')
@@ -124,6 +134,10 @@ export default function Home() {
       <Helmet>
         <title>HVAC Sales Master — Sell Smarter. Master Your Craft.</title>
         <meta name="description" content="Real-world sales training and technical knowledge for HVAC professionals. Written by people who've actually been in the field." />
+        <link rel="canonical" href={canonicalUrl} />
+        <script type="application/ld+json">
+          {JSON.stringify(websiteSchema)}
+        </script>
       </Helmet>
 
       <Banner

@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, useLocation, Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import Banner from '../components/Layout/Banner'
 import Sidebar from '../components/Layout/Sidebar'
@@ -88,6 +88,7 @@ function TableOfContents({ content }) {
 
 export default function ArticlePage({ section }) {
   const { slug } = useParams()
+  const location = useLocation()
 
   const sectionLabel = {
     sales: 'Sales Training',
@@ -134,7 +135,32 @@ export default function ArticlePage({ section }) {
     color: categoryColor,
   }))
 
-  const pageUrl = `https://hvac-sales-master.vercel.app/${section}/${slug}`
+  const canonicalUrl = `https://hvac-sales-master.vercel.app${location.pathname}`
+  const pageUrl = canonicalUrl
+  const articleDescription = meta?.description || `${title} — HVAC Sales Master`
+  const ogTitle = `${title} | HVAC Sales Master`
+
+  const articleSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: title,
+    description: articleDescription,
+    author: {
+      '@type': 'Person',
+      name: 'HVAC Sales Master',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'HVAC Sales Master',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://hvac-sales-master.vercel.app/og-image.png',
+      },
+    },
+    url: canonicalUrl,
+    mainEntityOfPage: canonicalUrl,
+    image: 'https://hvac-sales-master.vercel.app/og-image.png',
+  }
 
   // Scroll depth tracking
   useEffect(() => {
@@ -174,11 +200,21 @@ export default function ArticlePage({ section }) {
     <>
       <Helmet>
         <title>{title} | HVAC Sales Master</title>
-        <meta name="description" content={meta?.description || `${title} — HVAC Sales Master`} />
-        <meta property="og:title" content={title} />
-        <meta property="og:description" content={meta?.description || `${title} — HVAC Sales Master`} />
-        <meta property="og:url" content={pageUrl} />
+        <meta name="description" content={articleDescription} />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href={canonicalUrl} />
+        <meta property="og:title" content={ogTitle} />
+        <meta property="og:description" content={articleDescription} />
+        <meta property="og:url" content={canonicalUrl} />
         <meta property="og:type" content="article" />
+        <meta property="og:image" content="https://hvac-sales-master.vercel.app/og-image.png" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={ogTitle} />
+        <meta name="twitter:description" content={articleDescription} />
+        <meta name="twitter:image" content="https://hvac-sales-master.vercel.app/og-image.png" />
+        <script type="application/ld+json">
+          {JSON.stringify(articleSchema)}
+        </script>
       </Helmet>
       <ReadingProgress />
       <Banner
