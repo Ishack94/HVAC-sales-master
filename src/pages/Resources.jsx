@@ -320,27 +320,6 @@ function DuctulatorSection() {
   )
 }
 
-function SoftwareToolsSection() {
-  return (
-    <section className={styles.section}>
-      <h2 className={styles.sectionH2}>Software &amp; Tools</h2>
-      <p>
-        Most HVAC design tools are either expensive desktop software or overly simplified calculators that don't help with real jobs. We're building the tools we wish we had — free, web-based, and designed for techs who actually work in the field.
-      </p>
-
-      <h3 className={styles.sectionH3}>Training</h3>
-      <p>
-        <a href="https://skillcatapp.com" target="_blank" rel="noopener noreferrer" className={styles.extLink}><strong>SkillCat</strong></a> — Mobile-first trade training platform with EPA 608 certification, OSHA-10, and 200+ HVAC courses. $10/month. Legit accredited training you can do from your phone between calls.
-      </p>
-
-      <h3 className={styles.sectionH3}>Built right here</h3>
-      <p>
-        We're building our own suite of free HVAC design tools — no signup, no paywall, no desktop software required. Use the HVAC Load Calculator, Duct Design Calculator, and Quick Ductulator above. More tools are coming.
-      </p>
-    </section>
-  )
-}
-
 const SECTIONS = [
   {
     key: 'calculator',
@@ -371,12 +350,6 @@ const SECTIONS = [
     title: 'Duct Design Calculator',
     desc: 'Size supply and return ductwork for any house',
     Component: DuctDesignerSection,
-  },
-  {
-    key: 'software',
-    title: 'Software & Tools',
-    desc: 'Pro-grade design software and field apps',
-    Component: SoftwareToolsSection,
   },
   {
     key: 'ductulator',
@@ -429,25 +402,7 @@ export default function Resources() {
           </p>
 
           <div className={styles.boxGrid}>
-            {SECTIONS.slice(0, 6).map((s) => {
-              const isActive = openKey === s.key
-              return (
-                <button
-                  key={s.key}
-                  type="button"
-                  className={`${styles.box} ${isActive ? styles.boxActive : ''}`}
-                  onClick={() => handleBoxClick(s.key)}
-                  aria-expanded={isActive}
-                >
-                  <span className={styles.boxTitle}>{s.title}</span>
-                  <span className={styles.boxDesc}>{s.desc}</span>
-                </button>
-              )
-            })}
-          </div>
-
-          <div className={styles.boxGridLastRow}>
-            {SECTIONS.slice(6).map((s) => {
+            {SECTIONS.map((s) => {
               const isActive = openKey === s.key
               return (
                 <button

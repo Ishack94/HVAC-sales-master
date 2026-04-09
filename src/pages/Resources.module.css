@@ -36,15 +36,6 @@
   margin-bottom: 16px;
 }
 
-/* Last row — single box centered, sized to one column of the 3-col grid above */
-.boxGridLastRow {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px;
-  margin: 0 auto 16px;
-  max-width: calc((100% - 32px) / 3);
-}
-
 .box {
   background: #f0f4f8;
   border: 1px solid #ddd;
@@ -301,10 +292,6 @@
 
   .boxGrid {
     grid-template-columns: 1fr;
-  }
-
-  .boxGridLastRow {
-    max-width: none;
   }
 
   .calcGrid {
