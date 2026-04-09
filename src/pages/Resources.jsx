@@ -5,6 +5,7 @@ import Banner from '../components/Layout/Banner'
 import Sidebar from '../components/Layout/Sidebar'
 import Newsletter from '../components/Home/Newsletter'
 import DuctDesigner from '../components/Tools/DuctDesigner'
+import Ductulator from '../components/Tools/Ductulator'
 import styles from './Resources.module.css'
 
 const CEILING_OPTIONS = [
@@ -311,6 +312,14 @@ function DuctDesignerSection() {
   )
 }
 
+function DuctulatorSection() {
+  return (
+    <section className={styles.sectionFlush}>
+      <Ductulator />
+    </section>
+  )
+}
+
 function SoftwareToolsSection() {
   return (
     <section className={styles.section}>
@@ -372,6 +381,12 @@ const SECTIONS = [
     desc: 'Pro-grade design software and field apps',
     Component: SoftwareToolsSection,
   },
+  {
+    key: 'ductulator',
+    title: 'Quick Ductulator',
+    desc: 'Size any duct in seconds — round, rectangular, and velocity',
+    Component: DuctulatorSection,
+  },
 ]
 
 export default function Resources() {
@@ -417,7 +432,25 @@ export default function Resources() {
           </p>
 
           <div className={styles.boxGrid}>
-            {SECTIONS.map((s) => {
+            {SECTIONS.slice(0, 6).map((s) => {
+              const isActive = openKey === s.key
+              return (
+                <button
+                  key={s.key}
+                  type="button"
+                  className={`${styles.box} ${isActive ? styles.boxActive : ''}`}
+                  onClick={() => handleBoxClick(s.key)}
+                  aria-expanded={isActive}
+                >
+                  <span className={styles.boxTitle}>{s.title}</span>
+                  <span className={styles.boxDesc}>{s.desc}</span>
+                </button>
+              )
+            })}
+          </div>
+
+          <div className={styles.boxGridLastRow}>
+            {SECTIONS.slice(6).map((s) => {
               const isActive = openKey === s.key
               return (
                 <button

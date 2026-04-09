@@ -1,0 +1,337 @@
+/* === Wrapper === */
+.tool {
+  font-family: 'Figtree', sans-serif;
+  color: #1b3a5c;
+}
+
+.header {
+  margin-bottom: 18px;
+}
+
+.toolTitle {
+  font-size: 26px;
+  font-weight: 800;
+  color: #0e2340;
+  margin: 0 0 6px;
+  line-height: 1.15;
+}
+
+.toolSubtitle {
+  font-size: 14px;
+  color: #555;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* === Inputs === */
+.inputRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.fieldLabel {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #1b3a5c;
+}
+
+.input {
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 16px;
+  font-family: 'Figtree', sans-serif;
+  font-size: 16px;
+  color: #1b3a5c;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.input:focus {
+  border-color: #4a9fe5;
+  box-shadow: 0 0 0 3px rgba(74, 159, 229, 0.12);
+}
+
+select.input {
+  appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'><path d='M2 4l4 4 4-4' stroke='%231b3a5c' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 38px;
+}
+
+/* === Material toggle === */
+.materialSection {
+  margin-bottom: 22px;
+}
+
+.materialLabel {
+  display: block;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #1b3a5c;
+  margin-bottom: 10px;
+}
+
+.segmentedControl {
+  display: inline-flex;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.segmentBtn {
+  background: white;
+  color: #0e2340;
+  border: none;
+  padding: 10px 24px;
+  font-family: 'Figtree', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.segmentBtn + .segmentBtn {
+  border-left: 1px solid #ddd;
+}
+
+.segmentBtn:hover:not(.segmentBtnActive) {
+  background: #f0f4f8;
+}
+
+.segmentBtnActive {
+  background: #0e2340;
+  color: white;
+}
+
+.materialNote {
+  margin: 12px 0 0;
+  padding: 12px 16px;
+  background: #f0f4f8;
+  border-left: 3px solid #4a9fe5;
+  border-radius: 0 6px 6px 0;
+  font-size: 13px;
+  color: #555;
+  line-height: 1.55;
+  font-style: italic;
+}
+
+/* === Results === */
+.resultsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 28px;
+  animation: fadeIn 0.25s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.resultCard {
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 22px 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.resultBig {
+  font-size: 36px;
+  font-weight: 800;
+  color: #0e2340;
+  line-height: 1;
+  letter-spacing: -0.5px;
+}
+
+.resultMid {
+  font-size: 24px;
+  font-weight: 800;
+  color: #0e2340;
+  line-height: 1.15;
+}
+
+.resultMidBlue {
+  font-size: 24px;
+  font-weight: 800;
+  color: #4a9fe5;
+  line-height: 1.15;
+}
+
+.resultSubtitle {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: #777;
+}
+
+/* Velocity status — colored left accent + matching number color */
+.velGreen {
+  border-left: 4px solid #2e7d32;
+}
+
+.velGreen .resultMid {
+  color: #2e7d32;
+}
+
+.velAmber {
+  border-left: 4px solid #d97706;
+}
+
+.velAmber .resultMid {
+  color: #d97706;
+}
+
+.velRed {
+  border-left: 4px solid #c0392b;
+}
+
+.velRed .resultMid {
+  color: #c0392b;
+}
+
+/* Placeholder when no input yet */
+.placeholder {
+  background: #f0f4f8;
+  border: 1px dashed #cbd5e1;
+  border-radius: 8px;
+  padding: 48px 24px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+  color: #777;
+  margin-bottom: 28px;
+  letter-spacing: 0.3px;
+}
+
+/* === Reference table === */
+.refBlock {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 2px 14px rgba(14, 35, 64, 0.05);
+}
+
+.refTitle {
+  font-size: 13px;
+  font-weight: 800;
+  color: #0e2340;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  margin: 0 0 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.tableWrap {
+  overflow-x: auto;
+  border-radius: 8px;
+  border: 1px solid #e5e5e5;
+}
+
+.refTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  min-width: 360px;
+}
+
+.refTable th {
+  background: #0e2340;
+  color: white;
+  text-align: left;
+  padding: 13px 16px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+
+.refTable td {
+  padding: 12px 16px;
+  font-size: 14px;
+  color: #1b3a5c;
+  font-weight: 600;
+}
+
+.refTable tbody tr:nth-child(odd) {
+  background: #f0f4f8;
+}
+
+.refTable tbody tr:nth-child(even) {
+  background: white;
+}
+
+.refRoom {
+  font-weight: 700 !important;
+  color: #0e2340 !important;
+}
+
+.refNote {
+  margin: 16px 0 0;
+  font-size: 13px;
+  color: #555;
+  font-style: italic;
+  line-height: 1.6;
+}
+
+/* === Mobile === */
+@media (max-width: 860px) {
+  .inputRow {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .resultsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .segmentedControl {
+    display: flex;
+    width: 100%;
+  }
+
+  .segmentBtn {
+    flex: 1;
+    padding: 12px 8px;
+  }
+
+  .resultBig {
+    font-size: 30px;
+  }
+
+  .resultMid,
+  .resultMidBlue {
+    font-size: 22px;
+  }
+
+  .toolTitle {
+    font-size: 22px;
+  }
+
+  .refBlock {
+    padding: 20px;
+  }
+}
