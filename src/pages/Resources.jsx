@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet-async'
 import Banner from '../components/Layout/Banner'
 import Sidebar from '../components/Layout/Sidebar'
 import Newsletter from '../components/Home/Newsletter'
+import DuctDesigner from '../components/Tools/DuctDesigner'
 import styles from './Resources.module.css'
 
 const CEILING_OPTIONS = [
@@ -302,6 +303,14 @@ function AssociationSection() {
   )
 }
 
+function DuctDesignerSection() {
+  return (
+    <section className={styles.sectionFlush}>
+      <DuctDesigner />
+    </section>
+  )
+}
+
 const SECTIONS = [
   {
     key: 'calculator',
@@ -326,6 +335,12 @@ const SECTIONS = [
     title: 'Industry Associations',
     desc: 'Professional organizations worth joining',
     Component: AssociationSection,
+  },
+  {
+    key: 'duct-designer',
+    title: 'Duct Design Calculator',
+    desc: 'Size supply and return ductwork for any house',
+    Component: DuctDesignerSection,
   },
 ]
 
@@ -372,7 +387,25 @@ export default function Resources() {
           </p>
 
           <div className={styles.boxGrid}>
-            {SECTIONS.map((s) => {
+            {SECTIONS.slice(0, 3).map((s) => {
+              const isActive = openKey === s.key
+              return (
+                <button
+                  key={s.key}
+                  type="button"
+                  className={`${styles.box} ${isActive ? styles.boxActive : ''}`}
+                  onClick={() => handleBoxClick(s.key)}
+                  aria-expanded={isActive}
+                >
+                  <span className={styles.boxTitle}>{s.title}</span>
+                  <span className={styles.boxDesc}>{s.desc}</span>
+                </button>
+              )
+            })}
+          </div>
+
+          <div className={styles.boxGridSecondRow}>
+            {SECTIONS.slice(3).map((s) => {
               const isActive = openKey === s.key
               return (
                 <button
