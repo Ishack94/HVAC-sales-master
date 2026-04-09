@@ -28,9 +28,90 @@
   font-style: italic;
 }
 
+/* 2x2 accordion box grid */
+.boxGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.box {
+  background: #f0f4f8;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 24px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: left;
+  font-family: 'Figtree', sans-serif;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, transform 0.2s ease;
+}
+
+.box:hover {
+  border-color: #4a9fe5;
+  box-shadow: 0 4px 14px rgba(74, 159, 229, 0.12);
+  transform: translateY(-2px);
+}
+
+.boxActive {
+  border-left: 4px solid #4a9fe5;
+  background: #e7f0fa;
+  padding-left: 21px;
+}
+
+.boxActive:hover {
+  border-color: #4a9fe5;
+  border-left-color: #4a9fe5;
+}
+
+.boxTitle {
+  font-family: 'Figtree', sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  color: #1b3a5c;
+  line-height: 1.25;
+}
+
+.boxDesc {
+  font-family: 'Figtree', sans-serif;
+  font-size: 14px;
+  color: #777;
+  line-height: 1.5;
+}
+
+/* Expanded section content (rendered below grid) */
+.expanded {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid #e5e5e5;
+}
+
+.backLink {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: 'Figtree', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #4a9fe5;
+  margin-bottom: 8px;
+  display: inline-block;
+  transition: opacity 0.2s ease;
+}
+
+.backLink:hover {
+  opacity: 0.7;
+}
+
 /* Section blocks */
 .section {
-  margin-top: 36px;
+  margin-top: 16px;
 }
 
 .sectionH2 {
@@ -202,6 +283,10 @@
 
   .sectionH3 {
     font-size: 18px;
+  }
+
+  .boxGrid {
+    grid-template-columns: 1fr;
   }
 
   .calcGrid {
