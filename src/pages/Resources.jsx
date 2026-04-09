@@ -1,61 +1,186 @@
-import React from 'react'
+import React, { useState, useMemo } from 'react'
 import { Helmet } from 'react-helmet-async'
 import Banner from '../components/Layout/Banner'
+import Sidebar from '../components/Layout/Sidebar'
 import Newsletter from '../components/Home/Newsletter'
 import styles from './Resources.module.css'
 
-const resources = [
-  {
-    icon: (
-      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-        <polyline points="14,2 14,8 20,8" />
-        <line x1="16" y1="13" x2="8" y2="13" />
-        <line x1="16" y1="17" x2="8" y2="17" />
-      </svg>
-    ),
-    title: 'HVAC Load Calculators',
-    desc: 'Manual J and equipment sizing tools for accurate load calculations on every job.',
-  },
-  {
-    icon: (
-      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
-        <line x1="8" y1="21" x2="16" y2="21" />
-        <line x1="12" y1="17" x2="12" y2="21" />
-      </svg>
-    ),
-    title: 'Training Platforms',
-    desc: 'The best online platforms for HVAC certification prep and continuing education.',
-  },
-  {
-    icon: (
-      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-      </svg>
-    ),
-    title: 'Manufacturer Docs',
-    desc: 'Direct links to technical documentation, spec sheets, and warranty registration.',
-  },
-  {
-    icon: (
-      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="12" cy="12" r="10" />
-        <line x1="2" y1="12" x2="22" y2="12" />
-        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-      </svg>
-    ),
-    title: 'Industry Associations',
-    desc: 'ACCA, AHRI, ASHRAE, and RSES — your professional home in the HVAC industry.',
-  },
+const CEILING_OPTIONS = [
+  { label: '8 ft', value: 1.0 },
+  { label: '9 ft', value: 1.12 },
+  { label: '10 ft', value: 1.25 },
+  { label: '12 ft', value: 1.5 },
 ]
+
+const INSULATION_OPTIONS = [
+  { label: 'Poor', value: 1.15 },
+  { label: 'Average', value: 1.0 },
+  { label: 'Good', value: 0.85 },
+  { label: 'Excellent', value: 0.75 },
+]
+
+const CLIMATE_OPTIONS = [
+  { label: 'Cool / Mild', value: 0.85 },
+  { label: 'Average', value: 1.0 },
+  { label: 'Hot / Humid', value: 1.15 },
+  { label: 'Very Hot', value: 1.3 },
+  { label: 'Very Cold', value: 1.25 },
+]
+
+const SUN_OPTIONS = [
+  { label: 'Low / Shaded', value: 0.9 },
+  { label: 'Average', value: 1.0 },
+  { label: 'High / Direct Sun', value: 1.1 },
+]
+
+function LoadCalculator() {
+  const [sqft, setSqft] = useState(2000)
+  const [ceiling, setCeiling] = useState(1.0)
+  const [windows, setWindows] = useState(8)
+  const [doors, setDoors] = useState(2)
+  const [occupants, setOccupants] = useState(4)
+  const [insulation, setInsulation] = useState(1.0)
+  const [climate, setClimate] = useState(1.0)
+  const [sun, setSun] = useState(1.0)
+
+  const result = useMemo(() => {
+    const sq = Number(sqft) || 0
+    const w = Number(windows) || 0
+    const d = Number(doors) || 0
+    const occ = Number(occupants) || 0
+
+    const baseBTU = sq * ceiling * 25
+    const windowBTU = w * 1000
+    const doorBTU = d * 1000
+    const occupantBTU = occ * 400
+    const subtotal = baseBTU + windowBTU + doorBTU + occupantBTU
+    const totalBTU = subtotal * insulation * climate * sun
+    const tonnage = Math.round((totalBTU / 12000) * 2) / 2
+
+    return { totalBTU: Math.round(totalBTU), tonnage }
+  }, [sqft, ceiling, windows, doors, occupants, insulation, climate, sun])
+
+  return (
+    <div className={styles.calculator}>
+      <div className={styles.calcGrid}>
+        <label className={styles.calcField}>
+          <span className={styles.calcLabel}>Square Footage</span>
+          <input
+            type="number"
+            value={sqft}
+            onChange={(e) => setSqft(e.target.value)}
+            min="100"
+            className={styles.calcInput}
+          />
+        </label>
+
+        <label className={styles.calcField}>
+          <span className={styles.calcLabel}>Ceiling Height</span>
+          <select
+            value={ceiling}
+            onChange={(e) => setCeiling(Number(e.target.value))}
+            className={styles.calcInput}
+          >
+            {CEILING_OPTIONS.map((o) => (
+              <option key={o.label} value={o.value}>{o.label}</option>
+            ))}
+          </select>
+        </label>
+
+        <label className={styles.calcField}>
+          <span className={styles.calcLabel}>Number of Windows</span>
+          <input
+            type="number"
+            value={windows}
+            onChange={(e) => setWindows(e.target.value)}
+            min="0"
+            className={styles.calcInput}
+          />
+        </label>
+
+        <label className={styles.calcField}>
+          <span className={styles.calcLabel}>Number of Exterior Doors</span>
+          <input
+            type="number"
+            value={doors}
+            onChange={(e) => setDoors(e.target.value)}
+            min="0"
+            className={styles.calcInput}
+          />
+        </label>
+
+        <label className={styles.calcField}>
+          <span className={styles.calcLabel}>Number of Occupants</span>
+          <input
+            type="number"
+            value={occupants}
+            onChange={(e) => setOccupants(e.target.value)}
+            min="0"
+            className={styles.calcInput}
+          />
+        </label>
+
+        <label className={styles.calcField}>
+          <span className={styles.calcLabel}>Insulation Quality</span>
+          <select
+            value={insulation}
+            onChange={(e) => setInsulation(Number(e.target.value))}
+            className={styles.calcInput}
+          >
+            {INSULATION_OPTIONS.map((o) => (
+              <option key={o.label} value={o.value}>{o.label}</option>
+            ))}
+          </select>
+        </label>
+
+        <label className={styles.calcField}>
+          <span className={styles.calcLabel}>Climate Zone</span>
+          <select
+            value={climate}
+            onChange={(e) => setClimate(Number(e.target.value))}
+            className={styles.calcInput}
+          >
+            {CLIMATE_OPTIONS.map((o) => (
+              <option key={o.label} value={o.value}>{o.label}</option>
+            ))}
+          </select>
+        </label>
+
+        <label className={styles.calcField}>
+          <span className={styles.calcLabel}>Sun Exposure</span>
+          <select
+            value={sun}
+            onChange={(e) => setSun(Number(e.target.value))}
+            className={styles.calcInput}
+          >
+            {SUN_OPTIONS.map((o) => (
+              <option key={o.label} value={o.value}>{o.label}</option>
+            ))}
+          </select>
+        </label>
+      </div>
+
+      <div className={styles.calcResult}>
+        <p className={styles.calcResultLine}>
+          Estimated Cooling Load: <strong>{result.totalBTU.toLocaleString()} BTU/hr ({result.tonnage.toFixed(1)} tons)</strong>
+        </p>
+        <p className={styles.calcRecommendation}>
+          Based on this estimate, a <strong>{result.tonnage.toFixed(1)}-ton</strong> system would be appropriate for this space.
+        </p>
+        <p className={styles.calcDisclaimer}>
+          This is a simplified estimate based on rule-of-thumb calculations. For accurate equipment sizing, a full Manual J load calculation by a licensed HVAC professional is recommended.
+        </p>
+      </div>
+    </div>
+  )
+}
 
 export default function Resources() {
   return (
     <>
       <Helmet>
         <title>Resources | HVAC Sales Master</title>
-        <meta name="description" content="Vetted HVAC resources — load calculators, training platforms, manufacturer docs, and industry associations for professionals." />
+        <meta name="description" content="Vetted HVAC resources — load calculator, training and certification, manufacturer technical libraries, and industry associations." />
       </Helmet>
       <Banner
         title="Resources"
@@ -64,22 +189,135 @@ export default function Resources() {
           { label: 'Resources' },
         ]}
       />
-      <div className={styles.page}>
-        <div className={styles.inner}>
+      <div className={styles.layout}>
+        <main className={styles.main}>
           <p className={styles.intro}>
-            Vetted resources from across the industry — curated for professionals who take their craft seriously.
+            A working list of the tools, training, and references I actually reach for in the field. Bookmark what's useful — and let me know what's missing.
           </p>
-          <div className={styles.grid}>
-            {resources.map(({ icon, title, desc }) => (
-              <div key={title} className={styles.card}>
-                <div className={styles.iconWrap}>{icon}</div>
-                <h3 className={styles.cardTitle}>{title}</h3>
-                <p className={styles.cardDesc}>{desc}</p>
-                <span className={styles.badge}>Coming Soon</span>
-              </div>
-            ))}
-          </div>
-        </div>
+
+          {/* SECTION 1: Load Calculator */}
+          <section className={styles.section}>
+            <h2 className={styles.sectionH2}>HVAC Load Calculator</h2>
+            <p>
+              A quick rule-of-thumb cooling load estimator. Plug in the basics about a home and get a ballpark BTU and tonnage figure. It's not a replacement for a real Manual J — but it's a fast sanity check before you walk into a sales call or quote a replacement.
+            </p>
+            <LoadCalculator />
+          </section>
+
+          {/* SECTION 2: Training & Certification */}
+          <section className={styles.section}>
+            <h2 className={styles.sectionH2}>Training &amp; Certification Resources</h2>
+            <p>
+              Whether you're prepping for your EPA 608 card, chasing NATE certification, or just trying to keep your skills sharp, these are the platforms worth your time. None of this is sponsored — it's just where I'd send a new tech who asked.
+            </p>
+
+            <h3 className={styles.sectionH3}>EPA 608 Certification</h3>
+            <p>
+              <a href="https://skillcatapp.com/epa-608-certification-online" target="_blank" rel="noopener noreferrer" className={styles.extLink}><strong>SkillCat</strong></a> — Online EPA 608 for $10, 98% pass rate, proctored remotely. The cheapest legitimate path to your card.
+            </p>
+            <p>
+              <a href="https://epatest.com" target="_blank" rel="noopener noreferrer" className={styles.extLink}><strong>Mainstream Engineering</strong></a> — Free Type I training software and official testing since 2002. A trusted name in the industry.
+            </p>
+            <p>
+              <a href="https://acca.org" target="_blank" rel="noopener noreferrer" className={styles.extLink}><strong>ACCA EPA 608 Course</strong></a> — Affordable online prep from the industry's own contractor association.
+            </p>
+
+            <h3 className={styles.sectionH3}>NATE Certification</h3>
+            <p>
+              <a href="https://natex.org" target="_blank" rel="noopener noreferrer" className={styles.extLink}><strong>NATE Official</strong></a> — The gold standard field technician certification, recognized by every major manufacturer. If you want your résumé to stand out, this is the one.
+            </p>
+            <p>
+              <a href="https://hvacr.elearn.network" target="_blank" rel="noopener noreferrer" className={styles.extLink}><strong>HVACR Learning Network</strong></a> — CEU credits, NATE prep, and manufacturer-partnered courses all under one roof.
+            </p>
+            <p>
+              <a href="https://hvacexammaster.com" target="_blank" rel="noopener noreferrer" className={styles.extLink}><strong>HVAC Exam Master</strong></a> — 1,000+ practice questions for EPA 608 and NATE. Worth running through before test day.
+            </p>
+
+            <h3 className={styles.sectionH3}>Continuing Education</h3>
+            <p>
+              <a href="https://ashrae.org/education" target="_blank" rel="noopener noreferrer" className={styles.extLink}><strong>ASHRAE eLearning</strong></a> — Research-backed courses on energy efficiency, indoor air quality, and building systems. The nerdy-but-essential stuff.
+            </p>
+            <p>
+              <a href="https://acca.org" target="_blank" rel="noopener noreferrer" className={styles.extLink}><strong>ACCA ComfortU</strong></a> — On-demand training for contractors covering Manual J, sales, and business management.
+            </p>
+            <p>
+              <a href="https://skillcatapp.com" target="_blank" rel="noopener noreferrer" className={styles.extLink}><strong>SkillCat Trade School Diploma</strong></a> — A full HVAC program online, 200+ courses, IACET accredited. Solid for techs who want a structured curriculum.
+            </p>
+          </section>
+
+          {/* SECTION 3: Manufacturer Technical Resources */}
+          <section className={styles.section}>
+            <h2 className={styles.sectionH2}>Manufacturer Technical Resources</h2>
+            <p>
+              Bookmark these. When you're standing in front of a 12-year-old condenser at 4 PM trying to figure out a wiring change, the manufacturer's own documentation is faster and more accurate than any forum thread. Every tech should have a folder of these in their phone.
+            </p>
+            <p>
+              <a href="https://www.carrier.com/residential/en/us/for-professionals/" target="_blank" rel="noopener noreferrer" className={styles.extLink}><strong>Carrier</strong></a> — Product literature, warranty lookup, technical support.
+            </p>
+            <p>
+              <a href="https://www.trane.com/residential/en/for-contractors/" target="_blank" rel="noopener noreferrer" className={styles.extLink}><strong>Trane</strong></a> — Manuals, registration, contractor resources.
+            </p>
+            <p>
+              <a href="https://www.goodmanmfg.com/resources" target="_blank" rel="noopener noreferrer" className={styles.extLink}><strong>Goodman</strong></a> — Literature library, warranty info, wiring diagrams.
+            </p>
+            <p>
+              <a href="https://www.lennox.com/contractors" target="_blank" rel="noopener noreferrer" className={styles.extLink}><strong>Lennox</strong></a> — Manuals, parts catalogs, technical bulletins.
+            </p>
+            <p>
+              <a href="https://www.rheem.com/support" target="_blank" rel="noopener noreferrer" className={styles.extLink}><strong>Rheem</strong></a> — Product support, installation guides, troubleshooting.
+            </p>
+            <p>
+              <a href="https://www.yorkhvac.com/support" target="_blank" rel="noopener noreferrer" className={styles.extLink}><strong>York</strong></a> — Product documents, warranty registration.
+            </p>
+            <p>
+              <a href="https://www.ahridirectory.org" target="_blank" rel="noopener noreferrer" className={styles.extLink}><strong>AHRI Directory</strong></a> — Certified equipment ratings and performance verification for any brand.
+            </p>
+            <p>
+              <strong>Why AHRI matters:</strong> When you're matching a condenser to an air handler, the AHRI Directory is the only place you can verify the SEER, HSPF, and EER ratings of the actual <em>system match</em> — not just the individual components. If you're quoting efficiency to a homeowner or filing for a utility rebate, this is the source of truth.
+            </p>
+          </section>
+
+          {/* SECTION 4: Industry Associations */}
+          <section className={styles.section}>
+            <h2 className={styles.sectionH2}>Industry Associations</h2>
+            <p>
+              Joining an association sounds boring until the day you need a code answer, a legal opinion, a continuing-ed credit, or a contact in another market. These groups are where the standards get written, the training gets built, and the people who run this industry actually meet each other. If you want to grow past just turning wrenches, get involved.
+            </p>
+            <p>
+              <a href="https://www.ashrae.org" target="_blank" rel="noopener noreferrer" className={styles.extLink}><strong>ASHRAE</strong></a> — 57,000+ members across 132 countries. Sets the standards for energy efficiency and IAQ, and publishes the ASHRAE Journal.
+            </p>
+            <p>
+              <a href="https://www.acca.org" target="_blank" rel="noopener noreferrer" className={styles.extLink}><strong>ACCA</strong></a> — 60,000+ professionals. Publishes the Manual J / S / D / T standards, runs a Find-A-Contractor service, and offers serious business resources for owners.
+            </p>
+            <p>
+              <a href="https://www.natex.org" target="_blank" rel="noopener noreferrer" className={styles.extLink}><strong>NATE</strong></a> — The leading field technician certification body, recognized by every major manufacturer and contractor.
+            </p>
+            <p>
+              <a href="https://www.rses.org" target="_blank" rel="noopener noreferrer" className={styles.extLink}><strong>RSES</strong></a> — The refrigeration training authority since 1933. Publishes the monthly RSES Journal and runs solid certification prep.
+            </p>
+            <p>
+              <a href="https://www.smacna.org" target="_blank" rel="noopener noreferrer" className={styles.extLink}><strong>SMACNA</strong></a> — Duct construction and HVAC system standards, adopted in building codes nationwide.
+            </p>
+            <p>
+              <a href="https://nationalcomfortinstitute.com" target="_blank" rel="noopener noreferrer" className={styles.extLink}><strong>NCI (National Comfort Institute)</strong></a> — Performance-based testing and balancing. The best airflow diagnostics training in the industry.
+            </p>
+            <p>
+              <a href="https://www.phccweb.org" target="_blank" rel="noopener noreferrer" className={styles.extLink}><strong>PHCC</strong></a> — Plumbing, Heating, Cooling Contractors Association. Strong on legislative advocacy and contractor support.
+            </p>
+            <p>
+              <a href="https://www.ahrinet.org" target="_blank" rel="noopener noreferrer" className={styles.extLink}><strong>AHRI</strong></a> — Represents equipment manufacturers and maintains the certified product directories you'll use for every install.
+            </p>
+            <p>
+              <a href="https://www.womeninhvacr.org" target="_blank" rel="noopener noreferrer" className={styles.extLink}><strong>Women in HVACR</strong></a> — Networking, mentoring, and scholarships for women in the trade.
+            </p>
+          </section>
+
+          <p className={styles.closing}>
+            Know a resource that should be on this list? <a href="mailto:contact@hvacsalesmaster.com" className={styles.mailto}>Let me know.</a>
+          </p>
+        </main>
+
+        <Sidebar />
       </div>
       <Newsletter />
     </>

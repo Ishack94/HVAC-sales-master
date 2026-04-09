@@ -47,7 +47,24 @@ export default function About() {
             <p>
               Everything here is free. No courses, no upsells, no paywall. Just the real playbook.
             </p>
+
+            <h2 className={styles.h2}>What You'll Find Here</h2>
+
+            <p>
+              <strong>Sales Training.</strong> The in-home playbook — how to open the call, walk the house, present options, handle objections, and close without ever feeling like a pushy salesperson. Every article is written from the seat across the kitchen table.
+            </p>
+            <p>
+              <strong>Pro Lessons for Techs &amp; Installers.</strong> Diagnostics, charging, electrical, airflow, and the field-tested habits that separate the techs who get callbacks from the ones who don't. Written for working technicians, not classroom students.
+            </p>
+            <p>
+              <strong>Homeowner Troubleshooting.</strong> Plain-language answers that help homeowners understand what's going on with their system. They rank in search, they earn trust, and they make the sales call easier when you walk in the door.
+            </p>
+
             <p><strong>No fluff. Just what actually works.</strong></p>
+
+            <p className={styles.closing}>
+              Got a question or want to share a win from the field? <a href="mailto:contact@hvacsalesmaster.com" className={styles.mailto}>I'd love to hear it.</a>
+            </p>
           </div>
         </main>
 

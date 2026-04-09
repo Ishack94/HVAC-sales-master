@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import Banner from '../components/Layout/Banner'
@@ -120,6 +120,13 @@ export default function ArticlePage({ section }) {
 
   const related = sectionArticles.filter((a) => a.slug !== slug).slice(0, 3)
 
+  // Randomized "Related Topics" — 3 articles from same section, reshuffled per article
+  const relatedTopics = useMemo(() => {
+    const pool = sectionArticles.filter((a) => a.slug !== slug)
+    const shuffled = [...pool].sort(() => Math.random() - 0.5)
+    return shuffled.slice(0, 3)
+  }, [slug, section])
+
   const sidebarLinks = related.map((a) => ({
     title: a.title,
     to: articlePath(a.slug),
@@ -211,6 +218,21 @@ export default function ArticlePage({ section }) {
               </p>
             )}
           </div>
+
+          {relatedTopics.length > 0 && (
+            <div className={styles.relatedTopics}>
+              <p className={styles.relatedTopicsLabel}>Related Topics</p>
+              <ul className={styles.relatedTopicsList}>
+                {relatedTopics.map((a) => (
+                  <li key={a.slug}>
+                    <Link to={articlePath(a.slug)} className={styles.relatedTopicsLink}>
+                      {a.title}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
 
           {related.length > 0 && (
             <div className={styles.keepReading}>

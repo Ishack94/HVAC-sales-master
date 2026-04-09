@@ -1,80 +1,215 @@
-.page {
-  padding: 64px 32px 80px;
-}
-
-.inner {
+/* Two-column layout */
+.layout {
   max-width: 1400px;
   margin: 0 auto;
+  padding: 32px 32px 80px;
+  display: flex;
+  gap: 56px;
+  align-items: flex-start;
+}
+
+.main {
+  flex: 1;
+  min-width: 0;
+  font-family: 'Figtree', sans-serif;
+  font-size: 18px;
+  color: #333;
+  line-height: 1.85;
 }
 
 .intro {
   font-family: 'Figtree', sans-serif;
-  font-size: 17px;
+  font-size: 19px;
   color: #555;
   line-height: 1.7;
-  margin-bottom: 48px;
-  text-align: center;
+  padding-bottom: 24px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid #e5e5e5;
+  font-style: italic;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 28px;
+/* Section blocks */
+.section {
+  margin-top: 36px;
 }
 
-.card {
-  background: #f4f6f9;
-  border-radius: 12px;
-  padding: 32px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.iconWrap {
-  width: 52px;
-  height: 52px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(74, 159, 229, 0.1);
-  border-radius: 10px;
-  color: #4a9fe5;
-  flex-shrink: 0;
-}
-
-.cardTitle {
+.sectionH2 {
   font-family: 'Figtree', sans-serif;
-  font-size: 18px;
+  font-size: 32px;
+  font-weight: 800;
+  color: #1b3a5c;
+  line-height: 1.2;
+  margin-bottom: 18px;
+}
+
+.sectionH3 {
+  font-family: 'Figtree', sans-serif;
+  font-size: 20px;
   font-weight: 700;
   color: #1b3a5c;
-  line-height: 1.3;
+  margin-top: 28px;
+  margin-bottom: 8px;
 }
 
-.cardDesc {
+.main p {
+  margin-bottom: 18px;
+}
+
+.main strong {
+  color: #1b3a5c;
+  font-weight: 700;
+}
+
+.extLink {
+  color: #4a9fe5;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.2s ease;
+}
+
+.extLink:hover {
+  color: #1b3a5c;
+}
+
+/* Calculator */
+.calculator {
+  background: #f0f4f8;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 24px;
+  margin: 24px 0 8px;
+}
+
+.calcGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px 24px;
+  margin-bottom: 24px;
+}
+
+.calcField {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.calcLabel {
+  font-family: 'Figtree', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #1b3a5c;
+}
+
+.calcInput {
+  padding: 11px 14px;
   font-family: 'Figtree', sans-serif;
   font-size: 15px;
-  color: #666;
-  line-height: 1.6;
-  flex: 1;
+  color: #1b3a5c;
+  background: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.2s ease;
+  width: 100%;
 }
 
-.badge {
-  display: inline-block;
+.calcInput:focus {
+  border-color: #4a9fe5;
+}
+
+.calcResult {
+  background: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px 22px;
+}
+
+.calcResultLine {
   font-family: 'Figtree', sans-serif;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: #4a9fe5;
-  background: rgba(74, 159, 229, 0.1);
-  border-radius: 4px;
-  padding: 4px 10px;
-  align-self: flex-start;
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 8px !important;
 }
 
-@media (max-width: 640px) {
-  .grid {
+.calcResultLine strong {
+  color: #0e2340;
+  font-weight: 800;
+}
+
+.calcRecommendation {
+  font-family: 'Figtree', sans-serif;
+  font-size: 16px;
+  color: #1b3a5c;
+  margin-bottom: 14px !important;
+}
+
+.calcRecommendation strong {
+  color: #0e2340;
+  font-weight: 800;
+}
+
+.calcDisclaimer {
+  font-family: 'Figtree', sans-serif;
+  font-size: 13px;
+  font-style: italic;
+  color: #777;
+  line-height: 1.6;
+  margin-bottom: 0 !important;
+}
+
+/* Closing */
+.closing {
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 1px solid #e5e5e5;
+  font-style: italic;
+  color: #555;
+  font-size: 17px;
+}
+
+.mailto {
+  color: #4a9fe5;
+  font-weight: 600;
+  font-style: normal;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.mailto:hover {
+  color: #1b3a5c;
+}
+
+@media (max-width: 860px) {
+  .layout {
+    flex-direction: column;
+    padding: 16px 20px 60px;
+    gap: 0;
+  }
+
+  .main {
+    font-size: 16px;
+  }
+
+  .intro {
+    font-size: 16px;
+  }
+
+  .sectionH2 {
+    font-size: 24px;
+  }
+
+  .sectionH3 {
+    font-size: 18px;
+  }
+
+  .calcGrid {
     grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .calculator {
+    padding: 20px;
   }
 }

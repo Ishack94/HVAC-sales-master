@@ -69,8 +69,18 @@ export default function Home() {
     if (!email) return
     setStatus('loading')
     setTimeout(() => {
+      // TODO: Replace with Supabase insert when ready
+      try {
+        const stored = JSON.parse(localStorage.getItem('hvac_newsletter_emails') || '[]')
+        stored.push({ email, ts: new Date().toISOString() })
+        localStorage.setItem('hvac_newsletter_emails', JSON.stringify(stored))
+      } catch (err) {
+        console.warn('localStorage unavailable', err)
+      }
+      console.log('[newsletter signup]', email)
+
       setStatus('success')
-      setMessage("You're in. Welcome to the community.")
+      setMessage("Thanks! You're on the list. Watch your inbox.")
       setEmail('')
       trackEvent('newsletter_signup', { method: 'email' })
     }, 800)

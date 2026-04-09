@@ -82,6 +82,36 @@
   color: #1b3a5c;
 }
 
+.h2 {
+  font-family: 'Figtree', sans-serif;
+  font-size: 28px;
+  font-weight: 800;
+  color: #1b3a5c;
+  line-height: 1.2;
+  margin-top: 16px;
+  margin-bottom: 0;
+}
+
+.closing {
+  margin-top: 12px;
+  padding-top: 24px;
+  border-top: 1px solid #e5e5e5;
+  color: #555;
+  font-style: italic;
+}
+
+.mailto {
+  color: #4a9fe5;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-style: normal;
+}
+
+.mailto:hover {
+  color: #1b3a5c;
+}
+
 @media (max-width: 860px) {
   .layout {
     flex-direction: column;
@@ -109,5 +139,9 @@
 
   .inner {
     font-size: 16px;
+  }
+
+  .h2 {
+    font-size: 22px;
   }
 }
