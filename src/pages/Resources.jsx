@@ -311,6 +311,65 @@ function DuctDesignerSection() {
   )
 }
 
+function SoftwareToolsSection() {
+  return (
+    <section className={styles.section}>
+      <h2 className={styles.sectionH2}>Software &amp; Tools</h2>
+      <p>
+        Whether you're sizing ductwork on a napkin or running a full Manual J/D design, having the right tools matters. Here's what the pros actually use — from free web calculators to full design suites.
+      </p>
+
+      <h3 className={styles.sectionH3}>Free Calculators &amp; Web Tools</h3>
+      <p>
+        <a href="https://loadcalc.net" target="_blank" rel="noopener noreferrer" className={styles.extLink}><strong>LoadCalc.net</strong></a> — Free Manual J-based whole-house load calculator. Enter your location, insulation, windows, and structure details. Great for quick block load estimates.
+      </p>
+      <p>
+        <a href="https://www.servicetitan.com/tools/hvac-duct-calculator" target="_blank" rel="noopener noreferrer" className={styles.extLink}><strong>ServiceTitan Ductulator</strong></a> — Free single-duct sizing calculator. Enter CFM, friction rate, and duct shape to get dimensions. Simple but useful for quick checks on individual runs.
+      </p>
+      <p>
+        <a href="https://ductulator.com" target="_blank" rel="noopener noreferrer" className={styles.extLink}><strong>Ductulator.com</strong></a> — The original web-based ductulator since 2017. No frills, no signup. Enter CFM, get duct size. Built by an engineer who wanted a faster alternative to carrying a physical duct wheel.
+      </p>
+      <p>
+        <a href="https://coolcalc.com" target="_blank" rel="noopener noreferrer" className={styles.extLink}><strong>CoolCalc</strong></a> — Free residential HVAC design software with Manual J calculations. More detailed than LoadCalc, includes equipment selection. Requires free account.
+      </p>
+      <p>
+        <a href="https://hvac-calc.com" target="_blank" rel="noopener noreferrer" className={styles.extLink}><strong>HVAC-Calc</strong></a> — Free residential and light commercial load calculation software. Windows desktop app.
+      </p>
+
+      <h3 className={styles.sectionH3}>Mobile Apps</h3>
+      <p>
+        <strong>ACCA DuctWheel</strong> (iPad, $4.99) — The only duct sizing app powered by the official Manual D standard. Digital version of the physical ductulator wheel. If you're doing residential duct design by the book, this is what ACCA built for you.
+      </p>
+      <p>
+        <a href="https://hvacexammaster.com" target="_blank" rel="noopener noreferrer" className={styles.extLink}><strong>HVAC Exam Master</strong></a> — 1,000+ practice questions for EPA 608 and NATE exams. Not a design tool, but essential for techs studying for certification.
+      </p>
+      <p>
+        <a href="https://skillcatapp.com" target="_blank" rel="noopener noreferrer" className={styles.extLink}><strong>SkillCat</strong></a> — Mobile-first trade training platform. EPA 608 certification, OSHA-10, and full HVAC courses from your phone.
+      </p>
+
+      <h3 className={styles.sectionH3}>Professional Design Software</h3>
+      <p>
+        <a href="https://elitesoft.com" target="_blank" rel="noopener noreferrer" className={styles.extLink}><strong>Ductsize by Elite Software</strong></a> ($600+) — The gold standard for professional duct design. Handles static regain, equal friction, and constant velocity methods. Library of 190+ ASHRAE fittings, noise calculations, and connection tree diagrams. Used by HVAC engineers on commercial and complex residential projects.
+      </p>
+      <p>
+        <a href="https://www.wrightsoft.com" target="_blank" rel="noopener noreferrer" className={styles.extLink}><strong>Wrightsoft Right-Suite Universal</strong></a> — Comprehensive HVAC design suite. Full Manual J, S, D, and T calculations in one platform. Integrates load calculation with equipment selection and duct design. Industry standard for many engineering firms.
+      </p>
+      <p>
+        <a href="https://www.acca.org/standards/technical-manuals" target="_blank" rel="noopener noreferrer" className={styles.extLink}><strong>Manual J / Manual D Reference</strong></a> — The actual ACCA manuals that define how residential HVAC systems should be designed. Not software, but the source documents that every tool above is based on. Worth owning if you're serious about the craft.
+      </p>
+
+      <h3 className={styles.sectionH3}>When to use what</h3>
+      <p>
+        For most residential replacement jobs, our free Load Calculator and Duct Design Calculator above will get you 80% of the way there. For new construction or complex layouts, invest in Wrightsoft or Ductsize. And if you're just checking a single duct run on the fly, the free ductulators work fine.
+      </p>
+
+      <p className={styles.closing}>
+        Using a tool that should be on this list? <a href="mailto:contact@hvacsalesmaster.com" className={styles.mailto}>Let me know.</a>
+      </p>
+    </section>
+  )
+}
+
 const SECTIONS = [
   {
     key: 'calculator',
@@ -341,6 +400,12 @@ const SECTIONS = [
     title: 'Duct Design Calculator',
     desc: 'Size supply and return ductwork for any house',
     Component: DuctDesignerSection,
+  },
+  {
+    key: 'software',
+    title: 'Software & Tools',
+    desc: 'Pro-grade design software and field apps',
+    Component: SoftwareToolsSection,
   },
 ]
 
@@ -387,25 +452,7 @@ export default function Resources() {
           </p>
 
           <div className={styles.boxGrid}>
-            {SECTIONS.slice(0, 3).map((s) => {
-              const isActive = openKey === s.key
-              return (
-                <button
-                  key={s.key}
-                  type="button"
-                  className={`${styles.box} ${isActive ? styles.boxActive : ''}`}
-                  onClick={() => handleBoxClick(s.key)}
-                  aria-expanded={isActive}
-                >
-                  <span className={styles.boxTitle}>{s.title}</span>
-                  <span className={styles.boxDesc}>{s.desc}</span>
-                </button>
-              )
-            })}
-          </div>
-
-          <div className={styles.boxGridSecondRow}>
-            {SECTIONS.slice(3).map((s) => {
+            {SECTIONS.map((s) => {
               const isActive = openKey === s.key
               return (
                 <button

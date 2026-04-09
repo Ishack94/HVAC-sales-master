@@ -28,21 +28,12 @@
   font-style: italic;
 }
 
-/* Accordion box grid — 3 across top, 2 centered below */
+/* Accordion box grid — 3 columns × 2 rows */
 .boxGrid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 16px;
   margin-bottom: 16px;
-}
-
-.boxGridSecondRow {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  margin: 0 auto 16px;
-  /* Match the column width of the 3-col top row: 2 cols + 1 gap */
-  max-width: calc((100% * 2 - 16px) / 3);
 }
 
 .box {
@@ -299,10 +290,8 @@
     font-size: 18px;
   }
 
-  .boxGrid,
-  .boxGridSecondRow {
+  .boxGrid {
     grid-template-columns: 1fr;
-    max-width: none;
   }
 
   .calcGrid {
