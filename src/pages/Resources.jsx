@@ -302,7 +302,7 @@ export default function Resources() {
           )}
 
           <p className={styles.dinoRec}>
-            One more thing — we use <a href="https://www.dinoquote.com" target="_blank" rel="noopener noreferrer" className={styles.dinoLink}>Dino Quote</a> for online quoting and it's been one of the better moves we've made. Homeowners can get a ballpark number before you even show up and it's actually helped us quite a bit. Worth a look if you're trying to grow.
+            One more thing — if your website still has a "contact us for a free estimate" form, check out <a href="https://www.dinoquote.com" target="_blank" rel="noopener noreferrer" className={styles.dinoLink}>Dino Quote</a>. Here's how it works: instead of a contact form, you embed their quoting tool right on your site. A homeowner shows up, answers a few quick questions — square footage, what system they have now, what they care about — and Dino Quote instantly generates three good-better-best options with your actual products, your pricing, and installed costs. They can see energy savings, compare systems side by side, and basically sell themselves before you ever pick up the phone. The leads come straight to you through email, text, or right into your CRM if you're running ServiceTitan, Housecall Pro, Jobber, whatever. And it tracks where every lead came from and whether it turned into an actual job, so you can see what's making you money and what's not. It's plug-and-play — works on any website. We've been using it and it's been one of the better moves we've made.
           </p>
 
           <p className={styles.closing}>
