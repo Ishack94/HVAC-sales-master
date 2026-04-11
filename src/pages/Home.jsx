@@ -268,12 +268,14 @@ export default function Home() {
                   <Link to="/resources" className={styles.articleLink}><strong>Duct Design Calculator</strong></Link>
                   <span className={styles.articleDesc}> — Size every supply and return duct run for a full house. Includes trunk line sizing, register selection, and a flex vs. rigid comparison.</span>
                 </li>
-                <li>
-                  <span className={styles.mutedLink}><strong>Dino Quote</strong> <span className={styles.comingSoon}>(Coming Soon)</span></span>
-                  <span className={styles.articleDesc}> — HVAC business tools built for contractors who want to win more jobs.</span>
-                </li>
               </ul>
             </div>
+          )}
+
+          {!isFiltering && (
+            <p className={styles.dinoRec}>
+              Looking for a professional quoting tool? Check out <a href="https://www.dinoquote.com" target="_blank" rel="noopener noreferrer" className={styles.dinoLink}>Dino Quote</a> — built for HVAC contractors who want to close more jobs.
+            </p>
           )}
 
           {/* Sales Training */}

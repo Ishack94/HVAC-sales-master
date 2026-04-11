@@ -380,15 +380,24 @@
   font-size: 16px;
 }
 
-.mutedLink {
-  color: rgba(0, 0, 0, 0.4);
-  font-size: 17px;
+.dinoRec {
+  font-family: 'Figtree', sans-serif;
+  font-size: 15px;
+  color: rgba(0, 0, 0, 0.5);
+  margin-top: 16px;
+  line-height: 1.6;
 }
 
-.comingSoon {
-  font-weight: 400;
-  font-size: 14px;
-  color: rgba(0, 0, 0, 0.3);
+.dinoLink {
+  color: #4a9fe5;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.2s ease;
+}
+
+.dinoLink:hover {
+  color: #0e2340;
 }
 
 /* Inline newsletter form */
