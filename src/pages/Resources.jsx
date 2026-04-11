@@ -6,7 +6,7 @@ import Sidebar from '../components/Layout/Sidebar'
 import Newsletter from '../components/Home/Newsletter'
 import DuctDesigner from '../components/Tools/DuctDesigner'
 import ReverseDuct from '../components/Tools/ReverseDuct'
-import atticImg from '../assets/attic-ductwork.svg'
+import atticImg from '../assets/attic-ductwork.jpg'
 import styles from './Resources.module.css'
 
 const CEILING_OPTIONS = [
