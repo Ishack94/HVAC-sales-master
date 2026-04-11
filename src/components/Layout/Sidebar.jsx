@@ -2,16 +2,9 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import styles from './Sidebar.module.css'
 import { trackEvent } from '../../utils/analytics'
+import milwaukeeImg from '../../assets/milwaukee-ad.svg'
 
-const milwaukeeBox = {
-  id: 'milwaukee',
-  title: 'Milwaukee Tool',
-  desc: 'Nothing but heavy duty. The tools HVAC pros actually trust on the job.',
-  btn: 'Shop Now →',
-  watermark: 'MILWAUKEE TOOL',
-  height: 140,
-  href: 'https://www.milwaukeetool.com',
-}
+const HD_LINK = 'https://www.homedepot.com/p/Milwaukee-M18-18-Volt-Lithium-Ion-Cordless-Rocket-Dual-Power-Tower-Light-Tool-Only-2131-20/304984170'
 
 const mostPopular = [
   { title: 'Stop Selling Equipment, Start Selling Outcomes', to: '/sales/stop-selling-equipment-start-selling-outcomes' },
@@ -32,28 +25,25 @@ const techToSales = [
   { title: 'Maintenance Agreements: Predictable Revenue', to: '/sales/maintenance-agreements-predictable-revenue' },
 ]
 
-function AdBox({ box }) {
+function MilwaukeeAdCard() {
   return (
     <div className={styles.box}>
-      <div className={styles.imgArea} style={{ height: box.height }}>
-        <span className={styles.watermark}>{box.watermark}</span>
-      </div>
-      <div className={styles.boxBody}>
-        <h3 className={styles.boxTitle}>{box.title}</h3>
-        <p className={styles.boxDesc}>{box.desc}</p>
-        {box.href ? (
-          <a
-            href={box.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.boxBtn}
-            onClick={() => trackEvent('sidebar_click', { item: box.id })}
-          >
-            {box.btn}
-          </a>
-        ) : (
-          <button className={styles.boxBtn} onClick={() => trackEvent('sidebar_click', { item: box.id })}>{box.btn}</button>
-        )}
+      <a href={HD_LINK} target="_blank" rel="noopener noreferrer" onClick={() => trackEvent('sidebar_click', { item: 'milwaukee_img' })}>
+        <img src={milwaukeeImg} alt="Milwaukee M18 ROCKET Tower Light" className={styles.adImg} />
+      </a>
+      <div className={styles.adBody}>
+        <span className={styles.adLabel}>MILWAUKEE TOOL</span>
+        <h3 className={styles.adTitle}>M18 ROCKET™ Tower Light</h3>
+        <p className={styles.adDesc}>5-second setup. 4' to 7' adjustable height. The jobsite light every HVAC tech needs.</p>
+        <a
+          href={HD_LINK}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={styles.adBtn}
+          onClick={() => trackEvent('sidebar_click', { item: 'milwaukee_btn' })}
+        >
+          Shop at Home Depot →
+        </a>
       </div>
     </div>
   )
@@ -75,7 +65,7 @@ function CuratedBox({ label, items }) {
 export default function Sidebar({ links = [], variant }) {
   return (
     <aside className={styles.sidebar}>
-      <AdBox box={milwaukeeBox} />
+      <MilwaukeeAdCard />
 
       {variant === 'home' ? (
         <>

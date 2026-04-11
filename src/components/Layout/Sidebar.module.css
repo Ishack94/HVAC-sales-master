@@ -22,59 +22,64 @@
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
 }
 
-.imgArea {
-  background: linear-gradient(135deg, #1b3a5c 0%, #0a1829 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/* Ad image card */
+.adImg {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 12px 12px 0 0;
 }
 
-.watermark {
+.adBody {
+  padding: 20px;
+}
+
+.adLabel {
+  display: block;
   font-family: 'Figtree', sans-serif;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 800;
-  letter-spacing: 3px;
+  letter-spacing: 2px;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.12);
-  user-select: none;
+  color: rgba(255, 255, 255, 0.4);
+  margin-bottom: 8px;
 }
 
-.boxBody {
-  padding: 20px 24px 24px;
-}
-
-.boxTitle {
+.adTitle {
   font-family: 'Figtree', sans-serif;
   font-size: 18px;
   font-weight: 800;
   color: #ffffff;
-  margin-bottom: 8px;
+  margin: 0 0 8px;
   line-height: 1.3;
 }
 
-.boxDesc {
+.adDesc {
   font-family: 'Figtree', sans-serif;
   font-size: 13px;
   font-weight: 400;
-  color: rgba(255, 255, 255, 0.5);
-  line-height: 1.55;
-  margin-bottom: 16px;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.5;
+  margin: 0 0 16px;
 }
 
-.boxBtn {
-  background: #4a9fe5;
+.adBtn {
+  display: inline-block;
+  background: #f96302;
   color: white;
   font-family: 'Figtree', sans-serif;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
-  padding: 8px 16px;
-  border-radius: 8px;
+  padding: 10px 20px;
+  border-radius: 6px;
+  border: none;
   cursor: pointer;
+  text-decoration: none;
   transition: background 0.2s ease;
 }
 
-.boxBtn:hover {
-  background: #3a8cd0;
+.adBtn:hover {
+  background: #e05500;
 }
 
 /* Curated link boxes (homepage variant) */
