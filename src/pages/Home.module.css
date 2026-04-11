@@ -268,42 +268,25 @@
   margin-bottom: 20px;
 }
 
+.startHereIntro {
+  font-family: 'Figtree', sans-serif;
+  font-size: 15px;
+  color: rgba(0, 0, 0, 0.5);
+  margin-bottom: 16px;
+}
+
 .startHereList {
   list-style: none;
   padding: 0;
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 18px;
-  counter-reset: none;
+  gap: 12px;
 }
 
 .startHereItem {
   display: flex;
-  align-items: flex-start;
-  gap: 14px;
-}
-
-.stepCircle {
-  width: 24px;
-  height: 24px;
-  min-width: 24px;
-  background: #4a9fe5;
-  color: white;
-  border-radius: 50%;
-  font-family: 'Figtree', sans-serif;
-  font-size: 12px;
-  font-weight: 800;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 2px;
-}
-
-.stepContent {
-  display: flex;
   flex-direction: column;
-  gap: 4px;
 }
 
 .startHereLink {

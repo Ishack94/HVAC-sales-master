@@ -224,26 +224,23 @@ export default function Home() {
 
               <p>That's the kind of real-world strategy you'll find on this site. Not theory. Not motivational fluff. <strong>Just what actually works when you're sitting across from a homeowner.</strong></p>
 
-              {/* Start Here — Learning Path */}
+              {/* Start Here */}
               <div className={styles.startHere}>
-                <h3 className={styles.startHereTitle}>New to HVAC sales? Follow these in order.</h3>
-                <ol className={styles.startHereList}>
-                  {startHereArticles.map((a, i) => (
+                <h3 className={styles.startHereTitle}>Start Here</h3>
+                <p className={styles.startHereIntro}>If you're new to this, these are the ones I'd read first.</p>
+                <ul className={styles.startHereList}>
+                  {startHereArticles.map((a) => (
                     <li key={a.slug} className={styles.startHereItem}>
-                      <span className={styles.stepCircle}>{i + 1}</span>
-                      <div className={styles.stepContent}>
-                        <Link
-                          to={a.to}
-                          className={styles.startHereLink}
-                          onClick={() => trackEvent('start_here_click', { article_title: a.title })}
-                        >
-                          {a.title}
-                        </Link>
-                        <span className={styles.startHereDesc}>{a.subtitle}</span>
-                      </div>
+                      <Link
+                        to={a.to}
+                        className={styles.startHereLink}
+                        onClick={() => trackEvent('start_here_click', { article_title: a.title })}
+                      >
+                        {a.title}
+                      </Link>
                     </li>
                   ))}
-                </ol>
+                </ul>
               </div>
             </div>
           )}
