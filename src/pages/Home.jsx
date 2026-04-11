@@ -160,7 +160,7 @@ export default function Home() {
         alt="HVAC technician diagnosing a residential furnace with a clamp meter"
         loading="eager"
         decoding="async"
-        style={{ width: '100%', maxHeight: '340px', objectFit: 'cover', objectPosition: 'center 30%', display: 'block' }}
+        style={{ width: '100%', maxHeight: '180px', objectFit: 'cover', objectPosition: 'center 30%', display: 'block' }}
       />
 
       <div className={styles.layout}>
@@ -235,7 +235,7 @@ export default function Home() {
               alt="Kitchen counter with laptop and paperwork during an HVAC sales consultation"
               loading="lazy"
               decoding="async"
-              style={{ width: '100%', maxHeight: '400px', objectFit: 'cover', objectPosition: 'center', display: 'block', margin: '2.5rem 0' }}
+              style={{ width: '100%', maxHeight: '200px', objectFit: 'cover', objectPosition: 'center', display: 'block', margin: '2.5rem 0' }}
             />
           )}
 
@@ -276,7 +276,7 @@ export default function Home() {
               alt="Inside an organized HVAC service van with tools and refrigerant gauges"
               loading="lazy"
               decoding="async"
-              style={{ width: '100%', maxHeight: '400px', objectFit: 'cover', objectPosition: 'center', display: 'block', margin: '2.5rem 0' }}
+              style={{ width: '100%', maxHeight: '200px', objectFit: 'cover', objectPosition: 'center', display: 'block', margin: '2.5rem 0' }}
             />
           )}
 
@@ -340,7 +340,7 @@ export default function Home() {
               alt="Workbench with laptop, notebook, and tools — building a website after hours"
               loading="lazy"
               decoding="async"
-              style={{ width: '100%', maxHeight: '400px', objectFit: 'cover', objectPosition: 'center', display: 'block', margin: '2.5rem 0' }}
+              style={{ width: '100%', maxHeight: '200px', objectFit: 'cover', objectPosition: 'center', display: 'block', margin: '2.5rem 0' }}
             />
           )}
 

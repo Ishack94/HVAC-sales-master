@@ -276,7 +276,7 @@ export default function Resources() {
             alt="Residential attic with flex ductwork running between roof trusses"
             loading="lazy"
             decoding="async"
-            style={{ width: '100%', maxHeight: '400px', objectFit: 'cover', objectPosition: 'center', display: 'block', margin: '0 0 2.5rem 0' }}
+            style={{ width: '100%', maxHeight: '220px', objectFit: 'cover', objectPosition: 'center', display: 'block', margin: '0 0 2.5rem 0' }}
           />
 
           <div className={styles.boxGrid}>
