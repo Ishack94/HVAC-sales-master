@@ -29,7 +29,7 @@ export default function About() {
           <div className={styles.authorRow}>
             <img src={headshotSrc} alt="HVAC Sales Master founder" className={styles.headshot} />
             <div className={styles.authorText}>
-              <p className={styles.authorLabel}>Written by the Founder</p>
+              <p className={styles.authorLabel}>Written from the Field</p>
               <p className={styles.authorName}>HVAC Sales Master</p>
               <p className={styles.authorBio}>Built from real in-home HVAC sales experience — not a marketing agency.</p>
             </div>

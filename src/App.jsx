@@ -7,6 +7,7 @@ import ProLessonsIndex from './pages/ProLessonsIndex'
 import ArticlePage from './pages/ArticlePage'
 import About from './pages/About'
 import Resources from './pages/Resources'
+import NotFound from './pages/NotFound'
 import { trackPageView } from './utils/analytics'
 
 function RouteTracker() {
@@ -30,6 +31,7 @@ export default function App() {
           <Route path="pro-lessons/:slug" element={<ArticlePage section="pro-lessons" />} />
           <Route path="about" element={<About />} />
           <Route path="resources" element={<Resources />} />
+          <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
     </BrowserRouter>
