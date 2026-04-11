@@ -106,11 +106,12 @@
   font-size: 18px;
   font-weight: 400;
   color: #2a2a2a;
-  line-height: 1.9;
+  line-height: 1.78;
+  max-width: 72ch;
 }
 
 .body p {
-  margin-bottom: 24px;
+  margin-bottom: 1.15rem;
 }
 
 .body p:last-child {
@@ -121,8 +122,8 @@
   font-size: 36px;
   font-weight: 800;
   color: #1b3a5c;
-  margin-top: 52px;
-  margin-bottom: 20px;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
   line-height: 1.15;
 }
 
@@ -134,8 +135,8 @@
   font-size: 26px;
   font-weight: 700;
   color: #1b3a5c;
-  margin-top: 40px;
-  margin-bottom: 16px;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
   line-height: 1.2;
 }
 
@@ -153,7 +154,7 @@
   background: rgba(74, 159, 229, 0.06);
   border-left: 4px solid #4a9fe5;
   border-radius: 0 8px 8px 0;
-  margin: 36px 0;
+  margin: 2.5rem 0;
   padding: 20px 24px;
   font-style: italic;
   color: #555;
@@ -433,14 +434,18 @@
     line-height: 1.75;
   }
 
+  .body p {
+    margin-bottom: 1rem;
+  }
+
   .body h2 {
-    font-size: 26px;
-    margin-top: 40px;
+    font-size: 22px;
+    margin-top: 2rem;
   }
 
   .body h3 {
-    font-size: 22px;
-    margin-top: 32px;
+    font-size: 18px;
+    margin-top: 1.5rem;
   }
 
   .body blockquote {

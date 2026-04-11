@@ -1,10 +1,20 @@
 @import './variables.css';
 @import './reset.css';
 
-/* Dot texture on content areas */
+/* Global typography */
 body {
+  font-size: 18px;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
   background-image: radial-gradient(circle, #e5e5e5 0.5px, transparent 0.5px);
   background-size: 24px 24px;
+}
+
+h1, h2, h3, h4 {
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #0e2340;
 }
 
 /* Text selection */

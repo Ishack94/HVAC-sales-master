@@ -59,20 +59,22 @@
 
 .line1 {
   font-family: 'Figtree', sans-serif;
-  font-size: 52px;
+  font-size: 60px;
   font-weight: 800;
   color: #ffffff;
-  line-height: 1.1;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
   display: block;
 }
 
 .line2 {
   font-family: 'Figtree', sans-serif;
-  font-size: 52px;
+  font-size: 60px;
   font-weight: 500;
   font-style: italic;
   color: rgba(255, 255, 255, 0.85);
-  line-height: 1.15;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
   display: block;
 }
 
@@ -110,7 +112,7 @@
 
   .line1,
   .line2 {
-    font-size: 22px;
+    font-size: 28px;
   }
 
   .title {

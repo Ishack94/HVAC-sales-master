@@ -1,6 +1,6 @@
 .footer {
   background: #0e2340;
-  padding: 56px 48px 24px;
+  padding: 48px 48px 20px;
 }
 
 .inner {
@@ -11,7 +11,7 @@
 .columns {
   display: grid;
   grid-template-columns: 2fr 1fr 1fr 1fr;
-  gap: 48px;
+  gap: 40px;
   padding-bottom: 40px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   margin-bottom: 24px;
@@ -43,7 +43,7 @@
   font-family: 'Figtree', sans-serif;
   font-size: 12px;
   font-weight: 700;
-  letter-spacing: 1.5px;
+  letter-spacing: 0.5px;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.3);
   margin-bottom: 16px;
@@ -57,7 +57,7 @@
 
 .link {
   font-family: 'Figtree', sans-serif;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 400;
   color: rgba(255, 255, 255, 0.55);
   transition: color 0.2s ease;

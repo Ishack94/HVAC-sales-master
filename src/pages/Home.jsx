@@ -248,6 +248,8 @@ export default function Home() {
             </div>
           )}
 
+          {!isFiltering && <hr className={styles.sectionDivider} />}
+
           {/* No results */}
           {noResults && (
             <p className={styles.noResults}>No articles found for "{search}".</p>
@@ -297,6 +299,8 @@ export default function Home() {
             </div>
           )}
 
+          {!isFiltering && <hr className={styles.sectionDivider} />}
+
           {/* Pro Lessons */}
           {showPro && filteredTech.length > 0 && (
             <div className={`${styles.section} ${styles.sectionBlueGray}`}>
@@ -320,6 +324,8 @@ export default function Home() {
             </div>
           )}
 
+          {!isFiltering && <hr className={styles.sectionDivider} />}
+
           {/* Homeowner */}
           {showHomeowner && filteredHomeowner.length > 0 && (
             <div className={`${styles.section} ${styles.sectionWhite}`}>
@@ -342,6 +348,8 @@ export default function Home() {
               </ul>
             </div>
           )}
+
+          {!isFiltering && <hr className={styles.sectionDivider} />}
 
           {/* Closing content — only when not filtering */}
           {!isFiltering && (
