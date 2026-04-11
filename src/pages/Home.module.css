@@ -306,6 +306,22 @@
   font-size: 16px;
 }
 
+.viewAllLink {
+  display: inline-block;
+  margin-top: 20px;
+  font-family: 'Figtree', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: #4a9fe5;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.2s ease;
+}
+
+.viewAllLink:hover {
+  color: #0e2340;
+}
+
 
 /* Inline newsletter form */
 .inlineForm {

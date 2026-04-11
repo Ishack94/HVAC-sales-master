@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600">
+  <!-- Background -->
+  <rect width="1200" height="600" fill="#1a1a1a"/>
+
+  <!-- Workbench surface -->
+  <rect x="150" y="320" width="900" height="20" rx="2" fill="#555"/>
+  <!-- Workbench legs -->
+  <rect x="170" y="340" width="20" height="130" fill="#444"/>
+  <rect x="1010" y="340" width="20" height="130" fill="#444"/>
+  <!-- Bench cross bar -->
+  <rect x="170" y="420" width="860" height="10" fill="#3a3a3a"/>
+
+  <!-- Laptop base -->
+  <path d="M 400 320 L 420 230 L 680 230 L 700 320 Z" fill="#333" stroke="#555" stroke-width="2"/>
+  <!-- Laptop screen -->
+  <rect x="430" y="120" width="240" height="110" rx="5" fill="#222" stroke="#555" stroke-width="2"/>
+  <!-- Screen content - code lines -->
+  <line x1="450" y1="145" x2="560" y2="145" stroke="#555" stroke-width="2"/>
+  <line x1="460" y1="162" x2="620" y2="162" stroke="#555" stroke-width="1.5"/>
+  <line x1="460" y1="177" x2="580" y2="177" stroke="#555" stroke-width="1.5"/>
+  <line x1="470" y1="192" x2="600" y2="192" stroke="#555" stroke-width="1.5"/>
+  <line x1="450" y1="207" x2="540" y2="207" stroke="#555" stroke-width="2"/>
+  <!-- Laptop hinge -->
+  <line x1="420" y1="230" x2="680" y2="230" stroke="#555" stroke-width="3"/>
+  <!-- Screen glow effect -->
+  <rect x="430" y="120" width="240" height="110" rx="5" fill="#555" opacity="0.05"/>
+
+  <!-- Wrench -->
+  <line x1="780" y1="260" x2="780" y2="315" stroke="#555" stroke-width="4"/>
+  <path d="M 770 260 Q 780 240 790 260" fill="none" stroke="#555" stroke-width="3"/>
+  <!-- Wrench jaw opening -->
+  <line x1="773" y1="260" x2="773" y2="248" stroke="#555" stroke-width="2"/>
+  <line x1="787" y1="260" x2="787" y2="248" stroke="#555" stroke-width="2"/>
+
+  <!-- Socket set -->
+  <rect x="840" y="285" width="100" height="35" rx="4" fill="none" stroke="#555" stroke-width="2"/>
+  <circle cx="862" cy="302" r="8" fill="none" stroke="#555" stroke-width="1.5"/>
+  <circle cx="888" cy="302" r="8" fill="none" stroke="#555" stroke-width="1.5"/>
+  <circle cx="914" cy="302" r="8" fill="none" stroke="#555" stroke-width="1.5"/>
+
+  <!-- Coffee mug -->
+  <rect x="290" y="278" width="40" height="42" rx="4" fill="none" stroke="#555" stroke-width="2"/>
+  <path d="M 330 288 Q 350 288 350 300 Q 350 312 330 312" fill="none" stroke="#555" stroke-width="2"/>
+  <!-- Steam -->
+  <path d="M 302 275 Q 306 262 302 250" fill="none" stroke="#555" stroke-width="1.5"/>
+  <path d="M 315 275 Q 319 260 315 248" fill="none" stroke="#555" stroke-width="1.5"/>
+
+  <!-- Clock on wall -->
+  <circle cx="900" cy="100" r="35" fill="none" stroke="#555" stroke-width="2"/>
+  <line x1="900" y1="100" x2="900" y2="78" stroke="#555" stroke-width="2"/>
+  <line x1="900" y1="100" x2="918" y2="108" stroke="#555" stroke-width="2"/>
+  <circle cx="900" cy="100" r="3" fill="#555"/>
+  <!-- Clock showing late time (11 PM) -->
+  <text x="900" y="155" text-anchor="middle" font-family="monospace" font-size="12" fill="#555">11:47 PM</text>
+
+  <!-- Label -->
+  <text x="600" y="540" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" fill="#ffffff">Building the Site After Hours</text>
+</svg>

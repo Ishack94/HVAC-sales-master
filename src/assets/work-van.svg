@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600">
+  <!-- Background -->
+  <rect width="1200" height="600" fill="#1a1a1a"/>
+
+  <!-- Van interior walls -->
+  <path d="M 100 100 L 100 450 L 1100 450 L 1100 100 Q 600 60 100 100 Z" fill="#222" stroke="#555" stroke-width="2"/>
+  <!-- Van floor -->
+  <rect x="100" y="450" width="1000" height="30" fill="#333" stroke="#555" stroke-width="2"/>
+
+  <!-- Left shelf unit -->
+  <rect x="140" y="140" width="200" height="300" fill="none" stroke="#555" stroke-width="2"/>
+  <line x1="140" y1="220" x2="340" y2="220" stroke="#555" stroke-width="2"/>
+  <line x1="140" y1="300" x2="340" y2="300" stroke="#555" stroke-width="2"/>
+  <line x1="140" y1="380" x2="340" y2="380" stroke="#555" stroke-width="2"/>
+
+  <!-- Right shelf unit -->
+  <rect x="860" y="140" width="200" height="300" fill="none" stroke="#555" stroke-width="2"/>
+  <line x1="860" y1="220" x2="1060" y2="220" stroke="#555" stroke-width="2"/>
+  <line x1="860" y1="300" x2="1060" y2="300" stroke="#555" stroke-width="2"/>
+  <line x1="860" y1="380" x2="1060" y2="380" stroke="#555" stroke-width="2"/>
+
+  <!-- Wrench on left shelf -->
+  <line x1="170" y1="260" x2="230" y2="260" stroke="#555" stroke-width="4"/>
+  <circle cx="170" cy="260" r="10" fill="none" stroke="#555" stroke-width="2"/>
+  <circle cx="230" cy="260" r="8" fill="none" stroke="#555" stroke-width="2"/>
+
+  <!-- Screwdriver on left shelf -->
+  <line x1="180" y1="340" x2="280" y2="340" stroke="#555" stroke-width="3"/>
+  <rect x="270" y="334" width="40" height="12" rx="2" fill="none" stroke="#555" stroke-width="2"/>
+
+  <!-- Pipe pieces on right shelf -->
+  <rect x="890" y="230" width="80" height="20" rx="10" fill="none" stroke="#555" stroke-width="2"/>
+  <rect x="890" y="260" width="60" height="20" rx="10" fill="none" stroke="#555" stroke-width="2"/>
+
+  <!-- Drill on right shelf -->
+  <rect x="900" y="320" width="50" height="30" rx="4" fill="none" stroke="#555" stroke-width="2"/>
+  <line x1="950" y1="335" x2="990" y2="335" stroke="#555" stroke-width="3"/>
+
+  <!-- Toolbox on floor center -->
+  <rect x="480" y="380" width="240" height="70" rx="4" fill="#333" stroke="#555" stroke-width="2"/>
+  <line x1="480" y1="400" x2="720" y2="400" stroke="#555" stroke-width="2"/>
+  <rect x="575" y="385" width="50" height="10" rx="3" fill="none" stroke="#555" stroke-width="2"/>
+
+  <!-- Coiled hose/wire on floor -->
+  <ellipse cx="420" cy="430" rx="40" ry="20" fill="none" stroke="#555" stroke-width="2"/>
+  <ellipse cx="420" cy="425" rx="35" ry="17" fill="none" stroke="#555" stroke-width="1.5"/>
+
+  <!-- Copper fittings box on shelf -->
+  <rect x="160" y="160" width="60" height="40" rx="3" fill="none" stroke="#555" stroke-width="2"/>
+  <text x="190" y="185" text-anchor="middle" font-family="monospace" font-size="10" fill="#555">PARTS</text>
+
+  <!-- Label -->
+  <text x="600" y="540" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" fill="#ffffff">Inside HVAC Service Van</text>
+</svg>

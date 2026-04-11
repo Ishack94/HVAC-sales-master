@@ -6,6 +6,7 @@ import Sidebar from '../components/Layout/Sidebar'
 import Newsletter from '../components/Home/Newsletter'
 import DuctDesigner from '../components/Tools/DuctDesigner'
 import ReverseDuct from '../components/Tools/ReverseDuct'
+import atticImg from '../assets/attic-ductwork.svg'
 import styles from './Resources.module.css'
 
 const CEILING_OPTIONS = [
@@ -269,6 +270,14 @@ export default function Resources() {
           <p className={styles.intro}>
             A working list of the tools, training, and references I actually reach for in the field. Bookmark what's useful — and let me know what's missing.
           </p>
+
+          <img
+            src={atticImg}
+            alt="Residential attic with flex ductwork running between roof trusses"
+            loading="lazy"
+            decoding="async"
+            style={{ width: '100%', maxHeight: '400px', objectFit: 'cover', objectPosition: 'center', display: 'block', margin: '0 0 2.5rem 0' }}
+          />
 
           <div className={styles.boxGrid}>
             {[

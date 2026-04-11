@@ -7,7 +7,32 @@ import { salesArticles, proArticles } from '../utils/articleData'
 import { trackEvent } from '../utils/analytics'
 import MilwaukeeAd from '../components/UI/MilwaukeeAd'
 import headshotSrc from '../assets/headshot.png'
+import heroImg from '../assets/homepage-hero.svg'
+import kitchenImg from '../assets/kitchen-table.svg'
+import vanImg from '../assets/work-van.svg'
+import behindImg from '../assets/behind-the-site.svg'
 import styles from './Home.module.css'
+
+const FEATURED_SALES_SLUGS = [
+  'stop-selling-equipment-start-selling-outcomes',
+  'handle-i-need-to-think-about-it',
+  'first-90-seconds-at-the-door',
+  'maintenance-agreements-predictable-revenue',
+]
+
+const FEATURED_PRO_SLUGS = [
+  'diagnostic-process-think-like-detective',
+  'refrigerant-charging-fundamentals',
+  'static-pressure-diagnostics',
+  'installation-basics-prevent-callbacks',
+]
+
+const FEATURED_HOMEOWNER_SLUGS = [
+  'furnace-blowing-cold-air',
+  'ac-not-blowing-cold-air',
+  'furnace-short-cycling',
+  '80-vs-90-efficiency-furnace',
+]
 
 const techArticles = proArticles.slice(0, 13)
 const homeownerArticles = proArticles.slice(13)
@@ -129,6 +154,15 @@ export default function Home() {
         subtitle="Master Your Craft."
       />
 
+      {/* Hero image */}
+      <img
+        src={heroImg}
+        alt="HVAC technician diagnosing a residential furnace with a clamp meter"
+        loading="eager"
+        decoding="async"
+        style={{ width: '100%', maxHeight: '340px', objectFit: 'cover', objectPosition: 'center 30%', display: 'block' }}
+      />
+
       <div className={styles.layout}>
         <main className={styles.main}>
 
@@ -195,7 +229,15 @@ export default function Home() {
             </div>
           )}
 
-          {!isFiltering && <hr className={styles.sectionDivider} />}
+          {!isFiltering && (
+            <img
+              src={kitchenImg}
+              alt="Kitchen counter with laptop and paperwork during an HVAC sales consultation"
+              loading="lazy"
+              decoding="async"
+              style={{ width: '100%', maxHeight: '400px', objectFit: 'cover', objectPosition: 'center', display: 'block', margin: '2.5rem 0' }}
+            />
+          )}
 
           {/* No results */}
           {noResults && (
@@ -209,7 +251,7 @@ export default function Home() {
               {!isFiltering && <p>These aren't generic sales tips from someone who's never set foot in a crawl space. This is <strong>real-world HVAC sales strategy</strong> — written by people who've actually sat across from homeowners, handled objections, and closed jobs in the field.</p>}
               <p className={styles.sectionIntro}>For comfort advisors and salespeople who close in the home.</p>
               <ul className={styles.articleList}>
-                {filteredSales.map((a) => (
+                {(isFiltering ? filteredSales : salesArticles.filter((a) => FEATURED_SALES_SLUGS.includes(a.slug))).map((a) => (
                   <li key={a.slug}>
                     <Link
                       to={`/sales/${a.slug}`}
@@ -222,10 +264,21 @@ export default function Home() {
                   </li>
                 ))}
               </ul>
+              {!isFiltering && (
+                <Link to="/sales" className={styles.viewAllLink}>View All Sales Training →</Link>
+              )}
             </div>
           )}
 
-          {!isFiltering && <hr className={styles.sectionDivider} />}
+          {!isFiltering && (
+            <img
+              src={vanImg}
+              alt="Inside an organized HVAC service van with tools and refrigerant gauges"
+              loading="lazy"
+              decoding="async"
+              style={{ width: '100%', maxHeight: '400px', objectFit: 'cover', objectPosition: 'center', display: 'block', margin: '2.5rem 0' }}
+            />
+          )}
 
           {/* Pro Lessons */}
           {showPro && filteredTech.length > 0 && (
@@ -234,7 +287,7 @@ export default function Home() {
               {!isFiltering && <p>Technical training that goes beyond the textbook. These lessons are written for working technicians who want to diagnose faster, install cleaner, and get fewer callbacks.</p>}
               <p className={styles.sectionIntro}>For service technicians and installers.</p>
               <ul className={styles.articleList}>
-                {filteredTech.map((a) => (
+                {(isFiltering ? filteredTech : techArticles.filter((a) => FEATURED_PRO_SLUGS.includes(a.slug))).map((a) => (
                   <li key={a.slug}>
                     <Link
                       to={`/pro-lessons/${a.slug}`}
@@ -247,6 +300,9 @@ export default function Home() {
                   </li>
                 ))}
               </ul>
+              {!isFiltering && (
+                <Link to="/pro-lessons" className={styles.viewAllLink}>View All Pro Lessons →</Link>
+              )}
             </div>
           )}
 
@@ -259,7 +315,7 @@ export default function Home() {
               {!isFiltering && <p>Straightforward answers written by technicians, not content farms. These articles help homeowners understand what's going on so they can make smart decisions — and they help you close more jobs.</p>}
               <p className={styles.sectionIntro}>For homeowners trying to understand their system.</p>
               <ul className={styles.articleList}>
-                {filteredHomeowner.map((a) => (
+                {(isFiltering ? filteredHomeowner : homeownerArticles.filter((a) => FEATURED_HOMEOWNER_SLUGS.includes(a.slug))).map((a) => (
                   <li key={a.slug}>
                     <Link
                       to={`/pro-lessons/${a.slug}`}
@@ -272,10 +328,21 @@ export default function Home() {
                   </li>
                 ))}
               </ul>
+              {!isFiltering && (
+                <Link to="/pro-lessons" className={styles.viewAllLink}>View All Homeowner Articles →</Link>
+              )}
             </div>
           )}
 
-          {!isFiltering && <hr className={styles.sectionDivider} />}
+          {!isFiltering && (
+            <img
+              src={behindImg}
+              alt="Workbench with laptop, notebook, and tools — building a website after hours"
+              loading="lazy"
+              decoding="async"
+              style={{ width: '100%', maxHeight: '400px', objectFit: 'cover', objectPosition: 'center', display: 'block', margin: '2.5rem 0' }}
+            />
+          )}
 
           {/* Closing content — only when not filtering */}
           {!isFiltering && (
