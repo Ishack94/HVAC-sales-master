@@ -17,31 +17,31 @@ const startHereArticles = [
     slug: 'stop-selling-equipment-start-selling-outcomes',
     to: '/sales/stop-selling-equipment-start-selling-outcomes',
     title: 'Stop Selling Equipment, Start Selling Outcomes',
-    desc: "The homeowner doesn't care about the equipment. They care about comfort, savings, and peace of mind.",
-  },
-  {
-    slug: 'handle-i-need-to-think-about-it',
-    to: '/sales/handle-i-need-to-think-about-it',
-    title: "How to Handle 'I Need to Think About It'",
-    desc: 'The most common objection in HVAC sales and exactly how to respond without being pushy.',
+    subtitle: 'The mindset shift that changes everything',
   },
   {
     slug: 'first-90-seconds-at-the-door',
     to: '/sales/first-90-seconds-at-the-door',
     title: 'The First 90 Seconds at the Door',
-    desc: 'What happens before you even open your tool bag determines whether you close.',
+    subtitle: 'How to build trust before you even open your tool bag',
   },
   {
     slug: 'diagnostic-process-think-like-detective',
     to: '/pro-lessons/diagnostic-process-think-like-detective',
     title: 'The Diagnostic Process: Think Like a Detective',
-    desc: 'Stop guessing and start diagnosing systematically on every service call.',
+    subtitle: 'How to run the call so the close feels natural',
+  },
+  {
+    slug: 'handle-i-need-to-think-about-it',
+    to: '/sales/handle-i-need-to-think-about-it',
+    title: "How to Handle 'I Need to Think About It'",
+    subtitle: 'The most common objection and exactly how to respond',
   },
   {
     slug: 'superheat-subcooling-practical-guide',
     to: '/pro-lessons/superheat-subcooling-practical-guide',
     title: 'Superheat and Subcooling Practical Guide',
-    desc: 'The hands-on guide to charging by superheat and subcooling in the field.',
+    subtitle: 'Sharpen your technical edge so you can sell with confidence',
   },
 ]
 
@@ -169,7 +169,7 @@ export default function Home() {
           <div className={styles.authorRow}>
             <img src={headshotSrc} alt="HVAC Sales Master founder" className={styles.headshot} />
             <div className={styles.authorText}>
-              <p className={styles.authorLabel}>Written by the Founder</p>
+              <p className={styles.authorLabel}>Written from the Field</p>
               <p className={styles.authorName}>HVAC Sales Master</p>
               <p className={styles.authorTagline}>Real in-home sales strategies that actually work.</p>
               <p className={styles.authorTagline}>Built from real HVAC field experience.</p>
@@ -224,23 +224,26 @@ export default function Home() {
 
               <p>That's the kind of real-world strategy you'll find on this site. Not theory. Not motivational fluff. <strong>Just what actually works when you're sitting across from a homeowner.</strong></p>
 
-              {/* Start Here */}
+              {/* Start Here — Learning Path */}
               <div className={styles.startHere}>
-                <h3 className={styles.startHereTitle}>If you're new to HVAC sales, start with these. They'll change how you run calls.</h3>
-                <ul className={styles.startHereList}>
-                  {startHereArticles.map((a) => (
+                <h3 className={styles.startHereTitle}>New to HVAC sales? Follow these in order.</h3>
+                <ol className={styles.startHereList}>
+                  {startHereArticles.map((a, i) => (
                     <li key={a.slug} className={styles.startHereItem}>
-                      <Link
-                        to={a.to}
-                        className={styles.startHereLink}
-                        onClick={() => trackEvent('start_here_click', { article_title: a.title })}
-                      >
-                        {a.title}
-                      </Link>
-                      <span className={styles.startHereDesc}>{a.desc}</span>
+                      <span className={styles.stepCircle}>{i + 1}</span>
+                      <div className={styles.stepContent}>
+                        <Link
+                          to={a.to}
+                          className={styles.startHereLink}
+                          onClick={() => trackEvent('start_here_click', { article_title: a.title })}
+                        >
+                          {a.title}
+                        </Link>
+                        <span className={styles.startHereDesc}>{a.subtitle}</span>
+                      </div>
                     </li>
                   ))}
-                </ul>
+                </ol>
               </div>
             </div>
           )}
@@ -248,6 +251,27 @@ export default function Home() {
           {/* No results */}
           {noResults && (
             <p className={styles.noResults}>No articles found for "{search}".</p>
+          )}
+
+          {/* Free HVAC Tools */}
+          {!isFiltering && (
+            <div className={`${styles.section} ${styles.sectionBlueGray}`}>
+              <h2 className={styles.sectionH2}>Free HVAC Tools</h2>
+              <ul className={styles.articleList}>
+                <li>
+                  <Link to="/resources" className={styles.articleLink}><strong>HVAC Load Calculator</strong></Link>
+                  <span className={styles.articleDesc}> — Estimate cooling load and equipment size for any house. Plug in the basics and get a ballpark BTU and tonnage figure.</span>
+                </li>
+                <li>
+                  <Link to="/resources" className={styles.articleLink}><strong>Duct Design Calculator</strong></Link>
+                  <span className={styles.articleDesc}> — Size every supply and return duct run for a full house. Includes trunk line sizing, register selection, and a flex vs. rigid comparison.</span>
+                </li>
+                <li>
+                  <span className={styles.mutedLink}><strong>Dino Quote</strong> <span className={styles.comingSoon}>(Coming Soon)</span></span>
+                  <span className={styles.articleDesc}> — HVAC business tools built for contractors who want to win more jobs.</span>
+                </li>
+              </ul>
+            </div>
           )}
 
           {/* Sales Training */}

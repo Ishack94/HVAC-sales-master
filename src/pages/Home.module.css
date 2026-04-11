@@ -261,12 +261,36 @@
 .startHereList {
   list-style: none;
   padding: 0;
+  margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 18px;
+  counter-reset: none;
 }
 
 .startHereItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.stepCircle {
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+  background: #4a9fe5;
+  color: white;
+  border-radius: 50%;
+  font-family: 'Figtree', sans-serif;
+  font-size: 12px;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px;
+}
+
+.stepContent {
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -275,23 +299,21 @@
 .startHereLink {
   font-family: 'Figtree', sans-serif;
   font-weight: 700;
-  color: #4a9fe5;
+  color: #0e2340;
   text-decoration: underline;
   text-underline-offset: 3px;
   display: inline-block;
-  padding-left: 0;
-  transition: color 0.2s ease, padding-left 0.2s ease;
+  transition: color 0.2s ease;
 }
 
 .startHereLink:hover {
-  color: #3a8cd0;
-  padding-left: 8px;
+  color: #4a9fe5;
 }
 
 .startHereDesc {
   font-family: 'Figtree', sans-serif;
   font-size: 14px;
-  color: #666;
+  color: rgba(0, 0, 0, 0.5);
   line-height: 1.5;
 }
 
@@ -346,6 +368,17 @@
 .articleDesc {
   color: #666;
   font-size: 16px;
+}
+
+.mutedLink {
+  color: rgba(0, 0, 0, 0.4);
+  font-size: 17px;
+}
+
+.comingSoon {
+  font-weight: 400;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.3);
 }
 
 /* Inline newsletter form */
