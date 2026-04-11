@@ -282,7 +282,7 @@ export default function Resources() {
           )}
 
           <p className={styles.dinoRec}>
-            One more thing — we use <a href="https://www.dinoquote.com" target="_blank" rel="noopener noreferrer" className={styles.dinoLink}>Dino Quote</a> for online quoting and it's been one of the better moves we've made. Homeowners can get a ballpark number before you even show up, and it's helped us close more jobs. Worth a look if you're trying to grow.
+            One more thing — we use <a href="https://www.dinoquote.com" target="_blank" rel="noopener noreferrer" className={styles.dinoLink}>Dino Quote</a> for online quoting and it's been one of the better moves we've made. Homeowners can get a ballpark number before you even show up and it's actually helped us quite a bit. Worth a look if you're trying to grow.
           </p>
 
           <p className={styles.closing}>
