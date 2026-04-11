@@ -9,7 +9,7 @@
   background-size: 300% 300%;
   animation: bannerShift 12s ease infinite;
   padding: 32px 48px 28px;
-  margin-top: 132px;
+  margin-top: 112px;
 }
 
 .inner {
@@ -100,7 +100,7 @@
 @media (max-width: 860px) {
   .banner {
     padding: 28px 20px 24px;
-    margin-top: 100px;
+    margin-top: 88px;
   }
 
   .breadcrumb {
