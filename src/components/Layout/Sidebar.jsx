@@ -3,14 +3,14 @@ import { Link } from 'react-router-dom'
 import styles from './Sidebar.module.css'
 import { trackEvent } from '../../utils/analytics'
 
-const dinoBox = {
-  id: 'dino',
-  title: 'Dino Quote',
-  desc: 'HVAC business tools built for contractors who want to win more jobs.',
-  btn: 'Coming Soon',
-  watermark: 'DINO QUOTE',
+const milwaukeeBox = {
+  id: 'milwaukee',
+  title: 'Milwaukee Tool',
+  desc: 'Nothing but heavy duty. The tools HVAC pros actually trust on the job.',
+  btn: 'Learn More →',
+  watermark: 'MILWAUKEE TOOL',
   height: 140,
-  disabled: true,
+  href: 'https://www.milwaukeetool.com',
 }
 
 const mostPopular = [
@@ -41,8 +41,16 @@ function AdBox({ box }) {
       <div className={styles.boxBody}>
         <h3 className={styles.boxTitle}>{box.title}</h3>
         <p className={styles.boxDesc}>{box.desc}</p>
-        {box.disabled ? (
-          <span className={styles.boxBtn} style={{ opacity: 0.5, cursor: 'default' }}>{box.btn}</span>
+        {box.href ? (
+          <a
+            href={box.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.boxBtn}
+            onClick={() => trackEvent('sidebar_click', { item: box.id })}
+          >
+            {box.btn}
+          </a>
         ) : (
           <button className={styles.boxBtn} onClick={() => trackEvent('sidebar_click', { item: box.id })}>{box.btn}</button>
         )}
@@ -67,7 +75,7 @@ function CuratedBox({ label, items }) {
 export default function Sidebar({ links = [], variant }) {
   return (
     <aside className={styles.sidebar}>
-      <AdBox box={dinoBox} />
+      <AdBox box={milwaukeeBox} />
 
       {variant === 'home' ? (
         <>
