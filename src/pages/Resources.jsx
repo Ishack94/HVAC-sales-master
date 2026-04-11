@@ -5,6 +5,7 @@ import Banner from '../components/Layout/Banner'
 import Sidebar from '../components/Layout/Sidebar'
 import Newsletter from '../components/Home/Newsletter'
 import DuctDesigner from '../components/Tools/DuctDesigner'
+import ReverseDuct from '../components/Tools/ReverseDuct'
 import styles from './Resources.module.css'
 
 const CEILING_OPTIONS = [
@@ -202,6 +203,14 @@ function DuctDesignerSection({ initialEquipment }) {
   )
 }
 
+function ReverseDuctSection() {
+  return (
+    <section className={styles.sectionFlush}>
+      <ReverseDuct />
+    </section>
+  )
+}
+
 export default function Resources() {
   const location = useLocation()
   const canonicalUrl = `https://hvac-sales-master.vercel.app${location.pathname}`
@@ -235,6 +244,9 @@ export default function Resources() {
     if (openKey === 'duct-designer') {
       return <DuctDesignerSection initialEquipment={ductEquipment} />
     }
+    if (openKey === 'reverse-duct') {
+      return <ReverseDuctSection />
+    }
     return null
   }
 
@@ -262,6 +274,7 @@ export default function Resources() {
             {[
               { key: 'calculator', title: 'HVAC Load Calculator', desc: 'Estimate cooling load and equipment size' },
               { key: 'duct-designer', title: 'Duct Design Calculator', desc: 'Size supply and return ductwork for any house' },
+              { key: 'reverse-duct', title: 'Reverse Duct Calculator', desc: 'Already have ducts? Find out how much airflow they can handle' },
             ].map((s) => {
               const isActive = openKey === s.key
               return (

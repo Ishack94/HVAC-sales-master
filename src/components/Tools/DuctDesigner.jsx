@@ -91,7 +91,23 @@ function ductSizes(cfm, isFlex) {
   let idx = SUPPLY_TIERS.findIndex((t) => cfm <= t.max)
   if (idx < 0) idx = SUPPLY_TIERS.length - 1
   if (isFlex) idx = Math.min(idx + 1, SUPPLY_TIERS.length - 1)
-  return { round: SUPPLY_TIERS[idx].round, rect: SUPPLY_TIERS[idx].rect }
+  return { round: SUPPLY_TIERS[idx].round, rect: SUPPLY_TIERS[idx].rect, idx }
+}
+
+function altSizes(cfm, mainIdx) {
+  const smaller = mainIdx > 0 ? SUPPLY_TIERS[mainIdx - 1] : null
+  const larger = mainIdx < SUPPLY_TIERS.length - 1 ? SUPPLY_TIERS[mainIdx + 1] : null
+  const alt = []
+  if (smaller) {
+    const d = ductDiameterInches(smaller.round)
+    const fpm = calcVelocity(cfm, smaller.round)
+    alt.push({ label: smaller.round, fpm, dir: '↓' })
+  }
+  if (larger) {
+    const fpm = calcVelocity(cfm, larger.round)
+    alt.push({ label: larger.round, fpm, dir: '↑' })
+  }
+  return alt
 }
 
 function registerSize(cfm) {
@@ -499,6 +515,7 @@ export default function DuctDesigner({ initialEquipment }) {
       const cfm = Math.round(designCFM * (sqft / totalSqft))
       const sizes = ductSizes(cfm, isFlex)
       const fpm = calcVelocity(cfm, sizes.round)
+      const alts = altSizes(cfm, sizes.idx)
       return {
         id: room.id,
         name: room.name || `Room ${i + 1}`,
@@ -509,6 +526,7 @@ export default function DuctDesigner({ initialEquipment }) {
         rect: sizes.rect,
         register: registerSize(cfm),
         fpm,
+        alts,
       }
     })
   }, [step, validRooms, totalSqft, designCFM, isFlex])
@@ -845,7 +863,19 @@ export default function DuctDesigner({ initialEquipment }) {
                       <td className={styles.roomCell}>{row.name}</td>
                       <td>{row.sqft}</td>
                       <td>{row.cfm}</td>
-                      <td className={styles.duct}>{row.round}</td>
+                      <td className={styles.duct}>
+                        {row.round}
+                        {row.alts.length > 0 && (
+                          <span className={styles.altSizes}>
+                            {row.alts.map((a, i) => (
+                              <span key={i}>
+                                {i > 0 && ' · '}
+                                {a.dir} {a.label} = <span style={{ color: a.fpm < 700 ? '#059669' : a.fpm > 900 ? '#dc2626' : '#d97706' }}>{a.fpm} FPM</span>
+                              </span>
+                            ))}
+                          </span>
+                        )}
+                      </td>
                       <td className={styles.duct}>{row.rect}</td>
                       <td>{row.register}</td>
                       <td style={{ color: row.fpm < 600 ? '#059669' : row.fpm > 900 ? '#dc2626' : '#0e2340', fontWeight: 700 }}>
