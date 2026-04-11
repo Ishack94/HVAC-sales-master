@@ -7,7 +7,7 @@ const milwaukeeBox = {
   id: 'milwaukee',
   title: 'Milwaukee Tool',
   desc: 'Nothing but heavy duty. The tools HVAC pros actually trust on the job.',
-  btn: 'Learn More →',
+  btn: 'Shop Now →',
   watermark: 'MILWAUKEE TOOL',
   height: 140,
   href: 'https://www.milwaukeetool.com',

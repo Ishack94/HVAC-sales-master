@@ -5,6 +5,7 @@ import Banner from '../components/Layout/Banner'
 import Sidebar from '../components/Layout/Sidebar'
 import { salesArticles, proArticles } from '../utils/articleData'
 import { trackEvent } from '../utils/analytics'
+import MilwaukeeAd from '../components/UI/MilwaukeeAd'
 import headshotSrc from '../assets/headshot.png'
 import styles from './Home.module.css'
 
@@ -324,6 +325,8 @@ export default function Home() {
               <h2>Who Built This</h2>
               <p>HVAC Sales Master was built by someone who's been in the trades — not a marketing agency, not a content mill. Every article comes from real experience in the field: running service calls, sitting at kitchen tables, handling objections, and training other techs.</p>
               <p><strong>No fluff. Just what actually works.</strong></p>
+
+              <MilwaukeeAd className={styles.milwaukeeAd} />
 
               <h2>Get Better at HVAC Sales Every Week</h2>
               <p>Real strategies from the field. No fluff. No spam.</p>

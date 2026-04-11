@@ -408,6 +408,10 @@
   margin-top: 16px;
 }
 
+.milwaukeeAd {
+  display: none;
+}
+
 @media (max-width: 860px) {
   .layout {
     flex-direction: column;
@@ -468,5 +472,9 @@
 
   .inlineBtn {
     width: 100%;
+  }
+
+  .milwaukeeAd {
+    display: block;
   }
 }

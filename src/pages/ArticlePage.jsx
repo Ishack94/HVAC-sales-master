@@ -5,6 +5,7 @@ import Banner from '../components/Layout/Banner'
 import Sidebar from '../components/Layout/Sidebar'
 import Newsletter from '../components/Home/Newsletter'
 import ReadingProgress from '../components/UI/ReadingProgress'
+import MilwaukeeAd from '../components/UI/MilwaukeeAd'
 import headshotSrc from '../assets/headshot.png'
 import { getArticleTitle, salesArticles, proArticles, learnArticles } from '../utils/articleData'
 import { articleContent } from '../utils/articleContent'
@@ -254,6 +255,8 @@ export default function ArticlePage({ section }) {
               </p>
             )}
           </div>
+
+          <MilwaukeeAd className={styles.milwaukeeAd} />
 
           {relatedTopics.length > 0 && (
             <div className={styles.relatedTopics}>

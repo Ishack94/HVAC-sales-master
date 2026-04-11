@@ -412,6 +412,10 @@
   text-decoration: underline;
 }
 
+.milwaukeeAd {
+  display: none;
+}
+
 /* Mobile */
 @media (max-width: 860px) {
   .layout {
@@ -442,6 +446,10 @@
   .body blockquote {
     font-size: 17px;
     padding-left: 18px;
+  }
+
+  .milwaukeeAd {
+    display: block;
   }
 }
 
