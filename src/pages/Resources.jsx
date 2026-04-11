@@ -202,12 +202,6 @@ function TrainingSection() {
       <p>
         <a href="https://skillcatapp.com/epa-608-certification-online" target="_blank" rel="noopener noreferrer" className={styles.extLink}><strong>SkillCat</strong></a> — Online EPA 608 for $10, 98% pass rate, proctored remotely. The cheapest legitimate path to your card.
       </p>
-      <p>
-        <a href="https://epatest.com" target="_blank" rel="noopener noreferrer" className={styles.extLink}><strong>Mainstream Engineering</strong></a> — Free Type I training software and official testing since 2002. A trusted name in the industry.
-      </p>
-      <p>
-        <a href="https://acca.org" target="_blank" rel="noopener noreferrer" className={styles.extLink}><strong>ACCA EPA 608 Course</strong></a> — Affordable online prep from the industry's own contractor association.
-      </p>
 
       <h3 className={styles.sectionH3}>NATE Certification</h3>
       <p>
