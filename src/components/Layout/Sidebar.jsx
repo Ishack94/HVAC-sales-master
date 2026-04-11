@@ -2,9 +2,10 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import styles from './Sidebar.module.css'
 import { trackEvent } from '../../utils/analytics'
-import milwaukeeImg from '../../assets/milwaukee-ad.svg'
 
 const HD_LINK = 'https://www.homedepot.com/p/Milwaukee-M18-18-Volt-Lithium-Ion-Cordless-Rocket-Dual-Power-Tower-Light-Tool-Only-2131-20/304984170'
+// Product image served from THD CDN — browsers load it fine; replace with a local file if preferred
+const MILWAUKEE_IMG = 'https://images.thdstatic.com/productImages/0b03b8ae-6f36-4c5f-a5a3-d5caa1b79f47/svn/milwaukee-work-lights-2131-20-64_600.jpg'
 
 const mostPopular = [
   { title: 'Stop Selling Equipment, Start Selling Outcomes', to: '/sales/stop-selling-equipment-start-selling-outcomes' },
@@ -29,7 +30,7 @@ function MilwaukeeAdCard() {
   return (
     <div className={styles.box}>
       <a href={HD_LINK} target="_blank" rel="noopener noreferrer" onClick={() => trackEvent('sidebar_click', { item: 'milwaukee_img' })}>
-        <img src={milwaukeeImg} alt="Milwaukee M18 ROCKET Tower Light" className={styles.adImg} />
+        <img src={MILWAUKEE_IMG} alt="Milwaukee M18 ROCKET Tower Light" style={{ width: '100%', borderRadius: '12px 12px 0 0', display: 'block' }} />
       </a>
       <div className={styles.adBody}>
         <span className={styles.adLabel}>MILWAUKEE TOOL</span>
