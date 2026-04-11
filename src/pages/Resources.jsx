@@ -35,7 +35,17 @@ const SUN_OPTIONS = [
   { label: 'High / Direct Sun', value: 1.1 },
 ]
 
-function LoadCalculator() {
+const TONNAGE_OPTIONS = [1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 5.0]
+const BTU_OPTIONS = [40000, 60000, 80000, 100000, 120000]
+
+function nearestTonnage(t) {
+  return TONNAGE_OPTIONS.reduce((prev, curr) => Math.abs(curr - t) < Math.abs(prev - t) ? curr : prev)
+}
+function nearestBTU(b) {
+  return BTU_OPTIONS.reduce((prev, curr) => Math.abs(curr - b) < Math.abs(prev - b) ? curr : prev)
+}
+
+function LoadCalculator({ onTransfer }) {
   const [sqft, setSqft] = useState(2000)
   const [ceiling, setCeiling] = useState(1.0)
   const [windows, setWindows] = useState(8)
@@ -44,6 +54,7 @@ function LoadCalculator() {
   const [insulation, setInsulation] = useState(1.0)
   const [climate, setClimate] = useState(1.0)
   const [sun, setSun] = useState(1.0)
+  const [copied, setCopied] = useState(false)
 
   const result = useMemo(() => {
     const sq = Number(sqft) || 0
@@ -58,106 +69,71 @@ function LoadCalculator() {
     const subtotal = baseBTU + windowBTU + doorBTU + occupantBTU
     const totalBTU = subtotal * insulation * climate * sun
     const tonnage = Math.round((totalBTU / 12000) * 2) / 2
+    const rangeLow = Math.floor(tonnage * 2) / 2
+    const rangeHigh = Math.ceil(tonnage * 2) / 2
 
-    return { totalBTU: Math.round(totalBTU), tonnage }
+    return { totalBTU: Math.round(totalBTU), tonnage, rangeLow, rangeHigh }
   }, [sqft, ceiling, windows, doors, occupants, insulation, climate, sun])
+
+  const customerText = `Based on the size and characteristics of your home, you'd need approximately a ${result.tonnage.toFixed(1)}-ton system to keep it comfortable year-round. That's a ${result.totalBTU.toLocaleString()} BTU system.`
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(customerText).then(() => {
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    })
+  }
+
+  const handleTransfer = () => {
+    if (onTransfer) {
+      onTransfer({
+        tonnage: nearestTonnage(result.tonnage),
+        btu: nearestBTU(result.tonnage * 20000),
+      })
+    }
+  }
 
   return (
     <div className={styles.calculator}>
       <div className={styles.calcGrid}>
         <label className={styles.calcField}>
           <span className={styles.calcLabel}>Square Footage</span>
-          <input
-            type="number"
-            value={sqft}
-            onChange={(e) => setSqft(e.target.value)}
-            min="100"
-            className={styles.calcInput}
-          />
+          <input type="number" value={sqft} onChange={(e) => setSqft(e.target.value)} min="100" className={styles.calcInput} />
         </label>
-
         <label className={styles.calcField}>
           <span className={styles.calcLabel}>Ceiling Height</span>
-          <select
-            value={ceiling}
-            onChange={(e) => setCeiling(Number(e.target.value))}
-            className={styles.calcInput}
-          >
-            {CEILING_OPTIONS.map((o) => (
-              <option key={o.label} value={o.value}>{o.label}</option>
-            ))}
+          <select value={ceiling} onChange={(e) => setCeiling(Number(e.target.value))} className={styles.calcInput}>
+            {CEILING_OPTIONS.map((o) => <option key={o.label} value={o.value}>{o.label}</option>)}
           </select>
         </label>
-
         <label className={styles.calcField}>
           <span className={styles.calcLabel}>Number of Windows</span>
-          <input
-            type="number"
-            value={windows}
-            onChange={(e) => setWindows(e.target.value)}
-            min="0"
-            className={styles.calcInput}
-          />
+          <input type="number" value={windows} onChange={(e) => setWindows(e.target.value)} min="0" className={styles.calcInput} />
         </label>
-
         <label className={styles.calcField}>
           <span className={styles.calcLabel}>Number of Exterior Doors</span>
-          <input
-            type="number"
-            value={doors}
-            onChange={(e) => setDoors(e.target.value)}
-            min="0"
-            className={styles.calcInput}
-          />
+          <input type="number" value={doors} onChange={(e) => setDoors(e.target.value)} min="0" className={styles.calcInput} />
         </label>
-
         <label className={styles.calcField}>
           <span className={styles.calcLabel}>Number of Occupants</span>
-          <input
-            type="number"
-            value={occupants}
-            onChange={(e) => setOccupants(e.target.value)}
-            min="0"
-            className={styles.calcInput}
-          />
+          <input type="number" value={occupants} onChange={(e) => setOccupants(e.target.value)} min="0" className={styles.calcInput} />
         </label>
-
         <label className={styles.calcField}>
           <span className={styles.calcLabel}>Insulation Quality</span>
-          <select
-            value={insulation}
-            onChange={(e) => setInsulation(Number(e.target.value))}
-            className={styles.calcInput}
-          >
-            {INSULATION_OPTIONS.map((o) => (
-              <option key={o.label} value={o.value}>{o.label}</option>
-            ))}
+          <select value={insulation} onChange={(e) => setInsulation(Number(e.target.value))} className={styles.calcInput}>
+            {INSULATION_OPTIONS.map((o) => <option key={o.label} value={o.value}>{o.label}</option>)}
           </select>
         </label>
-
         <label className={styles.calcField}>
           <span className={styles.calcLabel}>Climate Zone</span>
-          <select
-            value={climate}
-            onChange={(e) => setClimate(Number(e.target.value))}
-            className={styles.calcInput}
-          >
-            {CLIMATE_OPTIONS.map((o) => (
-              <option key={o.label} value={o.value}>{o.label}</option>
-            ))}
+          <select value={climate} onChange={(e) => setClimate(Number(e.target.value))} className={styles.calcInput}>
+            {CLIMATE_OPTIONS.map((o) => <option key={o.label} value={o.value}>{o.label}</option>)}
           </select>
         </label>
-
         <label className={styles.calcField}>
           <span className={styles.calcLabel}>Sun Exposure</span>
-          <select
-            value={sun}
-            onChange={(e) => setSun(Number(e.target.value))}
-            className={styles.calcInput}
-          >
-            {SUN_OPTIONS.map((o) => (
-              <option key={o.label} value={o.value}>{o.label}</option>
-            ))}
+          <select value={sun} onChange={(e) => setSun(Number(e.target.value))} className={styles.calcInput}>
+            {SUN_OPTIONS.map((o) => <option key={o.label} value={o.value}>{o.label}</option>)}
           </select>
         </label>
       </div>
@@ -167,56 +143,71 @@ function LoadCalculator() {
           Estimated Cooling Load: <strong>{result.totalBTU.toLocaleString()} BTU/hr ({result.tonnage.toFixed(1)} tons)</strong>
         </p>
         <p className={styles.calcRecommendation}>
-          Based on this estimate, a <strong>{result.tonnage.toFixed(1)}-ton</strong> system would be appropriate for this space.
+          Recommended system: <strong>{result.tonnage.toFixed(1)} tons</strong>
         </p>
+        <p className={styles.calcRange}>
+          Acceptable range: {result.rangeLow.toFixed(1)} – {result.rangeHigh.toFixed(1)} tons
+        </p>
+
+        <div className={styles.riskNotes}>
+          <p className={styles.riskNote}>
+            <strong>Undersizing risk:</strong> System may struggle on the hottest/coldest days. Rooms farthest from the unit may not reach temperature.
+          </p>
+          <p className={styles.riskNote}>
+            <strong>Oversizing risk:</strong> System will short-cycle — turning on and off too frequently. This wastes energy, wears out the compressor faster, and leaves humidity problems in cooling mode.
+          </p>
+        </div>
+
+        <div className={styles.customerBox}>
+          <p className={styles.customerBoxLabel}>Explain to Customer</p>
+          <p className={styles.customerBoxText}>{customerText}</p>
+          <button type="button" onClick={handleCopy} className={styles.copyBtn}>
+            {copied ? 'Copied!' : 'Copy'}
+          </button>
+        </div>
+
+        <p className={styles.ductWarning}>
+          Keep in mind — even a properly sized system won't perform right if the ductwork is undersized. Use the Duct Design Calculator to make sure your ducts can actually deliver the airflow this system needs.
+        </p>
+
         <p className={styles.calcDisclaimer}>
           This is a simplified estimate based on rule-of-thumb calculations. For accurate equipment sizing, a full Manual J load calculation by a licensed HVAC professional is recommended.
         </p>
+
+        <button type="button" onClick={handleTransfer} className={styles.transferBtn}>
+          Size the Ductwork for This System →
+        </button>
       </div>
     </div>
   )
 }
 
-function CalculatorSection() {
+function CalculatorSection({ onTransfer }) {
   return (
     <section className={styles.section}>
       <h2 className={styles.sectionH2}>HVAC Load Calculator</h2>
       <p>
         A quick rule-of-thumb cooling load estimator. Plug in the basics about a home and get a ballpark BTU and tonnage figure. It's not a replacement for a real Manual J — but it's a fast sanity check before you walk into a sales call or quote a replacement.
       </p>
-      <LoadCalculator />
+      <LoadCalculator onTransfer={onTransfer} />
     </section>
   )
 }
 
-function DuctDesignerSection() {
+function DuctDesignerSection({ initialEquipment }) {
   return (
     <section className={styles.sectionFlush}>
-      <DuctDesigner />
+      <DuctDesigner initialEquipment={initialEquipment} />
     </section>
   )
 }
-
-const SECTIONS = [
-  {
-    key: 'calculator',
-    title: 'HVAC Load Calculator',
-    desc: 'Estimate cooling load and equipment size',
-    Component: CalculatorSection,
-  },
-  {
-    key: 'duct-designer',
-    title: 'Duct Design Calculator',
-    desc: 'Size supply and return ductwork for any house',
-    Component: DuctDesignerSection,
-  },
-]
 
 export default function Resources() {
   const location = useLocation()
   const canonicalUrl = `https://hvac-sales-master.vercel.app${location.pathname}`
   const [openKey, setOpenKey] = useState(null)
   const expandedRef = useRef(null)
+  const [ductEquipment, setDuctEquipment] = useState(null)
 
   const handleBoxClick = (key) => {
     setOpenKey((current) => (current === key ? null : key))
@@ -226,13 +217,26 @@ export default function Resources() {
     setOpenKey(null)
   }
 
+  const handleTransferToDuct = (equipment) => {
+    setDuctEquipment(equipment)
+    setOpenKey('duct-designer')
+  }
+
   useEffect(() => {
     if (openKey && expandedRef.current) {
       expandedRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
     }
   }, [openKey])
 
-  const ActiveSection = SECTIONS.find((s) => s.key === openKey)?.Component || null
+  const renderSection = () => {
+    if (openKey === 'calculator') {
+      return <CalculatorSection onTransfer={handleTransferToDuct} />
+    }
+    if (openKey === 'duct-designer') {
+      return <DuctDesignerSection initialEquipment={ductEquipment} />
+    }
+    return null
+  }
 
   return (
     <>
@@ -255,7 +259,10 @@ export default function Resources() {
           </p>
 
           <div className={styles.boxGrid}>
-            {SECTIONS.map((s) => {
+            {[
+              { key: 'calculator', title: 'HVAC Load Calculator', desc: 'Estimate cooling load and equipment size' },
+              { key: 'duct-designer', title: 'Duct Design Calculator', desc: 'Size supply and return ductwork for any house' },
+            ].map((s) => {
               const isActive = openKey === s.key
               return (
                 <button
@@ -272,12 +279,12 @@ export default function Resources() {
             })}
           </div>
 
-          {ActiveSection && (
+          {openKey && (
             <div className={styles.expanded} ref={expandedRef}>
               <button type="button" onClick={handleClose} className={styles.backLink}>
                 ← Back to Resources
               </button>
-              <ActiveSection />
+              {renderSection()}
             </div>
           )}
 

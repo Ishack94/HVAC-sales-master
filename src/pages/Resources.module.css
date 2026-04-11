@@ -236,6 +236,101 @@
   font-weight: 800;
 }
 
+.calcRange {
+  font-family: 'Figtree', sans-serif;
+  font-size: 15px;
+  color: #555;
+  margin-bottom: 18px !important;
+}
+
+.riskNotes {
+  border-top: 1px solid #e5e5e5;
+  padding-top: 16px;
+  margin-bottom: 18px;
+}
+
+.riskNote {
+  font-family: 'Figtree', sans-serif;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.5);
+  line-height: 1.6;
+  margin-bottom: 10px !important;
+}
+
+.riskNote strong {
+  color: #1b3a5c;
+}
+
+.customerBox {
+  background: #f0f4f8;
+  border-radius: 8px;
+  padding: 18px 20px;
+  margin-bottom: 18px;
+  position: relative;
+}
+
+.customerBoxLabel {
+  font-family: 'Figtree', sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #777;
+  margin-bottom: 8px !important;
+}
+
+.customerBoxText {
+  font-family: 'Figtree', sans-serif;
+  font-size: 15px;
+  color: #1b3a5c;
+  line-height: 1.6;
+  margin-bottom: 0 !important;
+}
+
+.copyBtn {
+  background: none;
+  border: none;
+  font-family: 'Figtree', sans-serif;
+  font-size: 13px;
+  color: #4a9fe5;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+  margin-top: 8px;
+}
+
+.copyBtn:hover {
+  color: #0e2340;
+}
+
+.ductWarning {
+  font-family: 'Figtree', sans-serif;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.5);
+  font-style: italic;
+  margin-bottom: 18px !important;
+}
+
+.transferBtn {
+  background: #0e2340;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-family: 'Figtree', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.transferBtn:hover {
+  background: #1b3a5c;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(14, 35, 64, 0.22);
+}
+
 .calcDisclaimer {
   font-family: 'Figtree', sans-serif;
   font-size: 13px;

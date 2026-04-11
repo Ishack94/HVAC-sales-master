@@ -119,6 +119,16 @@ function trunkSizeLabel(cfm, isFlex) {
   return TRUNK_TIERS[idx].label
 }
 
+function ductDiameterInches(roundLabel) {
+  return parseInt(roundLabel, 10) || 8
+}
+
+function calcVelocity(cfm, roundLabel) {
+  const d = ductDiameterInches(roundLabel)
+  const areaSqft = Math.PI * Math.pow(d / 24, 2)
+  return areaSqft > 0 ? Math.round(cfm / areaSqft) : 0
+}
+
 function returnSizeLabel(cfm) {
   if (cfm <= 150) return '14×6'
   if (cfm <= 200) return '14×8 or 16×8'
@@ -398,7 +408,7 @@ function TrunkDiagram({ segments, designCFM }) {
   )
 }
 
-export default function DuctDesigner() {
+export default function DuctDesigner({ initialEquipment }) {
   const [step, setStep] = useState(1)
   const [rooms, setRooms] = useState([makeRoom()])
   const [furnaceBTU, setFurnaceBTU] = useState(80000)
@@ -412,6 +422,14 @@ export default function DuctDesigner() {
   const [aiLoading, setAiLoading] = useState(false)
   const [aiError, setAiError] = useState(null)
   const [aiSuccess, setAiSuccess] = useState(null)
+
+  // Accept pre-filled equipment from Load Calculator
+  useEffect(() => {
+    if (initialEquipment) {
+      setTonnage(initialEquipment.tonnage)
+      setFurnaceBTU(initialEquipment.btu)
+    }
+  }, [initialEquipment])
 
   const totalSqft = rooms.reduce((sum, r) => sum + (Number(r.sqft) || 0), 0)
   const validRooms = rooms.filter((r) => Number(r.sqft) > 0)
@@ -480,6 +498,7 @@ export default function DuctDesigner() {
       const sqft = Number(room.sqft)
       const cfm = Math.round(designCFM * (sqft / totalSqft))
       const sizes = ductSizes(cfm, isFlex)
+      const fpm = calcVelocity(cfm, sizes.round)
       return {
         id: room.id,
         name: room.name || `Room ${i + 1}`,
@@ -489,6 +508,7 @@ export default function DuctDesigner() {
         round: sizes.round,
         rect: sizes.rect,
         register: registerSize(cfm),
+        fpm,
       }
     })
   }, [step, validRooms, totalSqft, designCFM, isFlex])
@@ -497,11 +517,15 @@ export default function DuctDesigner() {
     if (step !== 3 || !supplySchedule.length) return []
     let remaining = designCFM
     return supplySchedule.map((room) => {
+      const tSize = trunkSizeLabel(remaining, isFlex)
+      const tRound = tSize.match(/(\d+)"\s*rd/)?.[1]
+      const tFPM = tRound ? calcVelocity(remaining, tRound + '"') : 0
       const seg = {
         room: room.name,
         roomCFM: room.cfm,
         trunkCFM: remaining,
-        trunkSize: trunkSizeLabel(remaining, isFlex),
+        trunkSize: tSize,
+        trunkFPM: tFPM,
       }
       remaining = Math.max(0, remaining - room.cfm)
       return seg
@@ -812,6 +836,7 @@ export default function DuctDesigner() {
                     <th>Round</th>
                     <th>Rectangular</th>
                     <th>Register</th>
+                    <th>Velocity</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -823,6 +848,9 @@ export default function DuctDesigner() {
                       <td className={styles.duct}>{row.round}</td>
                       <td className={styles.duct}>{row.rect}</td>
                       <td>{row.register}</td>
+                      <td style={{ color: row.fpm < 600 ? '#059669' : row.fpm > 900 ? '#dc2626' : '#0e2340', fontWeight: 700 }}>
+                        {row.fpm} {row.fpm < 600 ? 'Quiet' : row.fpm > 900 ? '⚠ Noisy' : 'FPM'}
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -839,6 +867,11 @@ export default function DuctDesigner() {
             <div className={styles.svgWrap}>
               <TrunkDiagram segments={trunkSegments} designCFM={designCFM} />
             </div>
+            {trunkSegments.some((s) => s.trunkFPM > 900) && (
+              <p style={{ fontSize: '13px', color: '#dc2626', fontStyle: 'italic', marginTop: '12px' }}>
+                One or more trunk sections exceed 900 FPM. Consider upsizing the trunk to reduce noise.
+              </p>
+            )}
           </div>
 
           {/* Section C: Return air */}
