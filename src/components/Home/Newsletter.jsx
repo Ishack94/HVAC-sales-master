@@ -4,6 +4,7 @@ import { trackEvent } from '../../utils/analytics'
 
 export default function Newsletter() {
   const [email, setEmail] = useState('')
+  const [messageText, setMessageText] = useState('')
   const [status, setStatus] = useState('idle')
   const [message, setMessage] = useState('')
 
@@ -26,12 +27,13 @@ export default function Newsletter() {
       const res = await fetch('https://formspree.io/f/xyzgobdl', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, message: messageText }),
       })
       if (res.ok) {
         setStatus('success')
         setMessage("You're in! Watch your inbox.")
         setEmail('')
+        setMessageText('')
         trackEvent('newsletter_signup', { method: 'email' })
       } else {
         setStatus('error')
@@ -46,26 +48,36 @@ export default function Newsletter() {
   return (
     <section className={styles.section}>
       <div className={styles.inner}>
-        <h2 className={styles.heading}>Get Better at HVAC Sales Every Week</h2>
+        <h2 className={styles.heading}>Got a question? A story? A win from the field?</h2>
         <p className={styles.subtitle}>
-          Real strategies from the field. No fluff. No spam.
+          Drop your email and share what's on your mind. Best questions become articles.
         </p>
         {status === 'success' ? (
           <p className={styles.success}>{message}</p>
         ) : (
           <form className={styles.form} onSubmit={handleSubmit}>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Your email address"
-              className={styles.input}
-              required
-              aria-label="Email address"
+            <textarea
+              value={messageText}
+              onChange={(e) => setMessageText(e.target.value)}
+              placeholder="What's your question, story, or suggestion?"
+              className={styles.textarea}
+              rows={3}
+              aria-label="Your message"
             />
-            <button type="submit" className={styles.btn} disabled={status === 'loading'}>
-              {status === 'loading' ? 'Subscribing...' : 'Get Weekly Tips →'}
-            </button>
+            <div className={styles.row}>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Your email address"
+                className={styles.input}
+                required
+                aria-label="Email address"
+              />
+              <button type="submit" className={styles.btn} disabled={status === 'loading'}>
+                {status === 'loading' ? 'Sending...' : 'Send It →'}
+              </button>
+            </div>
           </form>
         )}
         {status === 'error' && <p className={styles.error}>{message}</p>}

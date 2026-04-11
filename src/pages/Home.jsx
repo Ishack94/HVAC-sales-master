@@ -69,6 +69,7 @@ export default function Home() {
   const location = useLocation()
   const canonicalUrl = `https://hvac-sales-master.vercel.app${location.pathname}`
   const [email, setEmail] = useState('')
+  const [messageText, setMessageText] = useState('')
   const [status, setStatus] = useState('idle')
   const [message, setMessage] = useState('')
   const [search, setSearch] = useState('')
@@ -94,12 +95,13 @@ export default function Home() {
       const res = await fetch('https://formspree.io/f/xyzgobdl', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, message: messageText }),
       })
       if (res.ok) {
         setStatus('success')
         setMessage("You're in! Watch your inbox.")
         setEmail('')
+        setMessageText('')
         trackEvent('newsletter_signup', { method: 'email' })
       } else {
         setStatus('error')
@@ -328,25 +330,35 @@ export default function Home() {
 
               <MilwaukeeAd className={styles.milwaukeeAd} />
 
-              <h2>Get Better at HVAC Sales Every Week</h2>
-              <p>Real strategies from the field. No fluff. No spam.</p>
+              <h2>Got a question? A story? A win from the field?</h2>
+              <p>Drop your email and share what's on your mind. Best questions become articles.</p>
 
               {status === 'success' ? (
                 <p className={styles.successMsg}>{message}</p>
               ) : (
                 <form className={styles.inlineForm} onSubmit={handleSubmit}>
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Your email address"
-                    className={styles.inlineInput}
-                    required
-                    aria-label="Email address"
+                  <textarea
+                    value={messageText}
+                    onChange={(e) => setMessageText(e.target.value)}
+                    placeholder="What's your question, story, or suggestion?"
+                    className={styles.inlineTextarea}
+                    rows={3}
+                    aria-label="Your message"
                   />
-                  <button type="submit" className={styles.inlineBtn} disabled={status === 'loading'}>
-                    {status === 'loading' ? 'Subscribing...' : 'Get Weekly Tips →'}
-                  </button>
+                  <div className={styles.inlineRow}>
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="Your email address"
+                      className={styles.inlineInput}
+                      required
+                      aria-label="Email address"
+                    />
+                    <button type="submit" className={styles.inlineBtn} disabled={status === 'loading'}>
+                      {status === 'loading' ? 'Sending...' : 'Send It →'}
+                    </button>
+                  </div>
                 </form>
               )}
             </div>
