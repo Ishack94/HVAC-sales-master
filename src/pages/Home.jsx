@@ -177,13 +177,13 @@ export default function Home() {
 
               <p>Then I just let it sit.</p>
 
-              <p>I'm totally comfortable with the silence. That's usually when they're <strong>actually thinking things through</strong>. Most comfort advisors panic in the quiet and start rambling about features nobody asked about. That's where you lose them.</p>
+              <p>I'm totally comfortable with the silence. That's usually when they're actually thinking things through. Most comfort advisors panic in the quiet and start rambling about features nobody asked about. That's where you lose them.</p>
 
               <p>If it starts to drag on a bit, I'll give them some space. I'll say, <strong>"Hey, I'm going to run out to my truck and grab my card real quick — take your time looking this over."</strong></p>
 
               <p>That little break changes everything.</p>
 
-              <p>It gives them a chance to <strong>talk privately, make a quick call, or just think without you hovering</strong>. A lot of times, when I come back in, they're either ready to move forward or they've got a real question to go over — not an excuse to stall.</p>
+              <p>It gives them a chance to talk privately, make a quick call, or just think without you hovering. A lot of times, when I come back in, they're either ready to move forward or they've got a real question to go over — not an excuse to stall.</p>
 
               <p>The close doesn't happen because you pushed harder. It happens because <strong>you gave them the space to decide</strong>.</p>
 
