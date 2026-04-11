@@ -1,5 +1,4 @@
-import React from 'react'
-import { useEffect, useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import SectionLabel from '../UI/SectionLabel'
 import Badge from '../UI/Badge'
 import useFadeIn from '../../utils/useFadeIn'

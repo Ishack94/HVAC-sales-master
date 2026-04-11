@@ -1,5 +1,4 @@
-import React from 'react'
-import { useEffect, useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import Button from '../UI/Button'
 import styles from './Hero.module.css'
 

@@ -1,6 +1,5 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
-import { useEffect } from 'react'
 import Header from './Header'
 import Footer from './Footer'
 import styles from './Layout.module.css'
