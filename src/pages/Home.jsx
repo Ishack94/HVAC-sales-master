@@ -202,29 +202,6 @@ export default function Home() {
             <p className={styles.noResults}>No articles found for "{search}".</p>
           )}
 
-          {/* Free HVAC Tools */}
-          {!isFiltering && (
-            <div className={`${styles.section} ${styles.sectionBlueGray}`}>
-              <h2 className={styles.sectionH2}>Free HVAC Tools</h2>
-              <ul className={styles.articleList}>
-                <li>
-                  <Link to="/resources" className={styles.articleLink}><strong>HVAC Load Calculator</strong></Link>
-                  <span className={styles.articleDesc}> — Estimate cooling load and equipment size for any house. Plug in the basics and get a ballpark BTU and tonnage figure.</span>
-                </li>
-                <li>
-                  <Link to="/resources" className={styles.articleLink}><strong>Duct Design Calculator</strong></Link>
-                  <span className={styles.articleDesc}> — Size every supply and return duct run for a full house. Includes trunk line sizing, register selection, and a flex vs. rigid comparison.</span>
-                </li>
-              </ul>
-            </div>
-          )}
-
-          {!isFiltering && (
-            <p className={styles.dinoRec}>
-              Looking for a professional quoting tool? Check out <a href="https://www.dinoquote.com" target="_blank" rel="noopener noreferrer" className={styles.dinoLink}>Dino Quote</a> — built for HVAC contractors who want to close more jobs.
-            </p>
-          )}
-
           {/* Sales Training */}
           {showSales && filteredSales.length > 0 && (
             <div className={`${styles.section} ${styles.sectionWhite}`}>
