@@ -5,13 +5,12 @@
   right: 0;
   z-index: 100;
   background: #0e2340;
-  height: 120px;
 }
 
 .inner {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 48px;
+  padding: 12px 48px;
   height: 100%;
   display: flex;
   align-items: center;
@@ -29,7 +28,7 @@
 }
 
 .logo {
-  height: 120px;
+  height: 48px;
   width: auto;
 }
 
@@ -190,12 +189,8 @@
 }
 
 @media (max-width: 860px) {
-  .header {
-    height: 76px;
-  }
-
   .inner {
-    padding: 10px 16px;
+    padding: 8px 16px;
   }
 
   .nav {
@@ -211,6 +206,6 @@
   }
 
   .logo {
-    height: 56px;
+    height: 36px;
   }
 }
