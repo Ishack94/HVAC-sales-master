@@ -245,6 +245,28 @@
   margin-bottom: 0 !important;
 }
 
+/* Dino Quote recommendation */
+.dinoRec {
+  font-family: 'Figtree', sans-serif;
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.6);
+  line-height: 1.7;
+  margin-top: 32px;
+  max-width: 72ch;
+}
+
+.dinoLink {
+  color: #4a9fe5;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.2s ease;
+}
+
+.dinoLink:hover {
+  color: #0e2340;
+}
+
 /* Closing */
 .closing {
   margin-top: 48px;
