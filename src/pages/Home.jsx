@@ -12,39 +12,6 @@ import styles from './Home.module.css'
 const techArticles = proArticles.slice(0, 13)
 const homeownerArticles = proArticles.slice(13)
 
-const startHereArticles = [
-  {
-    slug: 'stop-selling-equipment-start-selling-outcomes',
-    to: '/sales/stop-selling-equipment-start-selling-outcomes',
-    title: 'Stop Selling Equipment, Start Selling Outcomes',
-    subtitle: 'The mindset shift that changes everything',
-  },
-  {
-    slug: 'first-90-seconds-at-the-door',
-    to: '/sales/first-90-seconds-at-the-door',
-    title: 'The First 90 Seconds at the Door',
-    subtitle: 'How to build trust before you even open your tool bag',
-  },
-  {
-    slug: 'diagnostic-process-think-like-detective',
-    to: '/pro-lessons/diagnostic-process-think-like-detective',
-    title: 'The Diagnostic Process: Think Like a Detective',
-    subtitle: 'How to run the call so the close feels natural',
-  },
-  {
-    slug: 'handle-i-need-to-think-about-it',
-    to: '/sales/handle-i-need-to-think-about-it',
-    title: "How to Handle 'I Need to Think About It'",
-    subtitle: 'The most common objection and exactly how to respond',
-  },
-  {
-    slug: 'superheat-subcooling-practical-guide',
-    to: '/pro-lessons/superheat-subcooling-practical-guide',
-    title: 'Superheat and Subcooling Practical Guide',
-    subtitle: 'Sharpen your technical edge so you can sell with confidence',
-  },
-]
-
 const CATEGORIES = [
   { key: 'all', label: 'All' },
   { key: 'sales', label: 'Sales Training' },
@@ -224,24 +191,7 @@ export default function Home() {
 
               <p>That's the kind of real-world strategy you'll find on this site. Not theory. Not motivational fluff. <strong>Just what actually works when you're sitting across from a homeowner.</strong></p>
 
-              {/* Start Here */}
-              <div className={styles.startHere}>
-                <h3 className={styles.startHereTitle}>Start Here</h3>
-                <p className={styles.startHereIntro}>If you're new to this, these are the ones I'd read first.</p>
-                <ul className={styles.startHereList}>
-                  {startHereArticles.map((a) => (
-                    <li key={a.slug} className={styles.startHereItem}>
-                      <Link
-                        to={a.to}
-                        className={styles.startHereLink}
-                        onClick={() => trackEvent('start_here_click', { article_title: a.title })}
-                      >
-                        {a.title}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              <p>If you're just getting started, I'd read <Link to="/sales/stop-selling-equipment-start-selling-outcomes" onClick={() => trackEvent('start_here_click', { article_title: 'Stop Selling Equipment' })}>Stop Selling Equipment</Link> first, then <Link to="/sales/first-90-seconds-at-the-door" onClick={() => trackEvent('start_here_click', { article_title: 'First 90 Seconds' })}>The First 90 Seconds at the Door</Link>. Everything else builds from there.</p>
             </div>
           )}
 
