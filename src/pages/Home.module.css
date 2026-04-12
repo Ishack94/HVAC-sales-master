@@ -98,24 +98,14 @@
   margin-bottom: 24px;
 }
 
-.body p:first-of-type::first-letter {
-  float: left;
-  font-size: 4rem;
-  font-weight: 800;
-  color: #1b3a5c;
-  line-height: 1;
-  margin-right: 8px;
-  padding-top: 4px;
-}
-
-.noDropCap p:first-of-type::first-letter {
-  float: none;
-  font-size: inherit;
-  font-weight: inherit;
-  color: inherit;
-  line-height: inherit;
-  margin-right: 0;
-  padding-top: 0;
+.body p::first-letter {
+  float: none !important;
+  font-size: inherit !important;
+  font-weight: inherit !important;
+  color: inherit !important;
+  line-height: inherit !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 .body strong {
