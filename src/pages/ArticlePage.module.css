@@ -63,7 +63,9 @@
   background: #f4f6f9;
   border-radius: 8px;
   padding: 20px 24px;
-  margin-bottom: 32px;
+  padding-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #e0e0e0;
 }
 
 .tocLabel {

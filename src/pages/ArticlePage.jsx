@@ -22,11 +22,20 @@ function slugify(text) {
   return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
 }
 
+function addIdsToHtml(html) {
+  return html.replace(/<h2([^>]*)>(.*?)<\/h2>/gi, (match, attrs, text) => {
+    const plain = text.replace(/<[^>]+>/g, '')
+    const id = slugify(plain)
+    if (attrs.includes('id=')) return match
+    return `<h2${attrs} id="${id}">${text}</h2>`
+  })
+}
+
 function ArticleBody({ content }) {
   if (!content) return null
 
   if (content.trim().startsWith('<')) {
-    return <div dangerouslySetInnerHTML={{ __html: content }} />
+    return <div dangerouslySetInnerHTML={{ __html: addIdsToHtml(content) }} />
   }
 
   const blocks = content.trim().split(/\n\n+/)
@@ -90,13 +99,22 @@ function SummaryBox({ content }) {
 }
 
 function TableOfContents({ content }) {
-  if (!content || content.trim().startsWith('<')) return null
+  if (!content) return null
 
-  const blocks = content.trim().split(/\n\n+/)
-  const headings = blocks
-    .map((b) => b.trim())
-    .filter((b) => b.startsWith('## '))
-    .map((b) => b.slice(3))
+  let headings = []
+  if (content.trim().startsWith('<')) {
+    const re = /<h2[^>]*>(.*?)<\/h2>/gi
+    let m
+    while ((m = re.exec(content)) !== null) {
+      headings.push(m[1].replace(/<[^>]+>/g, ''))
+    }
+  } else {
+    const blocks = content.trim().split(/\n\n+/)
+    headings = blocks
+      .map((b) => b.trim())
+      .filter((b) => b.startsWith('## '))
+      .map((b) => b.slice(3))
+  }
 
   if (headings.length < 2) return null
 

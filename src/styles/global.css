@@ -1,6 +1,10 @@
 @import './variables.css';
 @import './reset.css';
 
+html {
+  scroll-behavior: smooth;
+}
+
 /* Global typography */
 body {
   font-size: 18px;
