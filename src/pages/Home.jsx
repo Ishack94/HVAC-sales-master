@@ -7,10 +7,6 @@ import { salesArticles, proArticles } from '../utils/articleData'
 import { trackEvent } from '../utils/analytics'
 import MilwaukeeAd from '../components/UI/MilwaukeeAd'
 import headshotSrc from '../assets/headshot.png'
-import heroImg from '../assets/homepage-hero.jpg'
-import kitchenImg from '../assets/kitchen-table.jpg'
-import vanImg from '../assets/work-van.jpg'
-import behindImg from '../assets/behind-the-site.jpg'
 import styles from './Home.module.css'
 
 const FEATURED_SALES_SLUGS = [
@@ -239,16 +235,6 @@ export default function Home() {
             </div>
           )}
 
-          {!isFiltering && (
-            <img
-              src={kitchenImg}
-              alt="Kitchen counter with laptop and paperwork during an HVAC sales consultation"
-              loading="lazy"
-              decoding="async"
-              className="reveal"
-              style={{ width: '100%', maxHeight: '200px', objectFit: 'cover', objectPosition: 'center', display: 'block', margin: '2.5rem 0', borderRadius: '6px' }}
-            />
-          )}
 
           {/* No results */}
           {noResults && (
@@ -281,16 +267,6 @@ export default function Home() {
             </div>
           )}
 
-          {!isFiltering && (
-            <img
-              src={vanImg}
-              alt="Inside an organized HVAC service van with tools and refrigerant gauges"
-              loading="lazy"
-              decoding="async"
-              className="reveal"
-              style={{ width: '100%', maxHeight: '200px', objectFit: 'cover', objectPosition: 'center', display: 'block', margin: '2.5rem 0', borderRadius: '6px' }}
-            />
-          )}
 
           {/* Pro Lessons */}
           {showPro && filteredTech.length > 0 && (
@@ -320,16 +296,6 @@ export default function Home() {
 
           {!isFiltering && <hr className={styles.sectionDivider} />}
 
-          {!isFiltering && (
-            <img
-              src={heroImg}
-              alt="HVAC technician diagnosing a residential furnace with a clamp meter"
-              loading="lazy"
-              decoding="async"
-              className="reveal"
-              style={{ width: '100%', maxHeight: '200px', objectFit: 'cover', objectPosition: 'center 30%', display: 'block', margin: '2.5rem 0', borderRadius: '6px' }}
-            />
-          )}
 
           {/* Homeowner */}
           {showHomeowner && filteredHomeowner.length > 0 && (
@@ -355,17 +321,6 @@ export default function Home() {
                 <Link to="/pro-lessons" className={styles.viewAllLink}>View All Homeowner Articles →</Link>
               )}
             </div>
-          )}
-
-          {!isFiltering && (
-            <img
-              src={behindImg}
-              alt="Workbench with laptop, notebook, and tools — building a website after hours"
-              loading="lazy"
-              decoding="async"
-              className="reveal"
-              style={{ width: '100%', maxHeight: '200px', objectFit: 'cover', objectPosition: 'center', display: 'block', margin: '2.5rem 0', borderRadius: '6px' }}
-            />
           )}
 
           {/* Closing content — only when not filtering */}

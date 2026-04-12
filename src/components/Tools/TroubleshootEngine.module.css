@@ -115,10 +115,11 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 12px;
+  font-size: 0.8rem;
   font-weight: 600;
-  color: rgba(14, 35, 64, 0.4);
-  margin-bottom: 20px;
+  color: rgba(14, 35, 64, 0.45);
+  letter-spacing: 0.04em;
+  margin-bottom: 1rem;
   flex-wrap: wrap;
 }
 
@@ -128,10 +129,10 @@
 
 /* Question */
 .questionText {
-  font-size: 20px;
+  font-size: 1.35rem;
   font-weight: 700;
   color: #0e2340;
-  line-height: 1.35;
+  line-height: 1.4;
   margin: 0 0 10px;
 }
 
@@ -145,13 +146,13 @@
 
 .yesBtn,
 .noBtn {
-  min-height: 48px;
+  min-height: 52px;
   font-family: 'Figtree', sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 700;
-  border-radius: 8px;
+  border-radius: 4px;
   cursor: pointer;
-  transition: background 160ms ease, transform 100ms ease;
+  transition: background 160ms ease;
 }
 
 .yesBtn {
@@ -162,18 +163,16 @@
 
 .yesBtn:hover {
   background: #1b3a5c;
-  transform: translateY(-1px);
 }
 
 .noBtn {
   background: #ffffff;
   color: #0e2340;
-  border: 1px solid rgba(14, 35, 64, 0.15);
+  border: 2px solid #0e2340;
 }
 
 .noBtn:hover {
   background: #f4f6f9;
-  transform: translateY(-1px);
 }
 
 /* Back link */
@@ -183,17 +182,17 @@
   padding: 0;
   cursor: pointer;
   font-family: 'Figtree', sans-serif;
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
+  font-size: 0.85rem;
+  font-weight: 600;
   color: #4a9fe5;
+  text-decoration: none;
   margin-bottom: 20px;
   display: inline-block;
-  transition: opacity 0.2s ease;
+  transition: text-decoration 0.2s ease;
 }
 
 .backLink:hover {
-  opacity: 0.7;
+  text-decoration: underline;
 }
 
 /* Diagnosis actions */

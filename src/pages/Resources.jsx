@@ -9,7 +9,6 @@ import ReverseDuct from '../components/Tools/ReverseDuct'
 import SuperheatCalc from '../components/Tools/SuperheatCalc'
 import EnergySavingsCalc from '../components/Tools/EnergySavingsCalc'
 import ResultsPanel from '../components/Tools/ResultsPanel'
-import atticImg from '../assets/attic-ductwork.jpg'
 import styles from './Resources.module.css'
 
 const CEILING_OPTIONS = [
@@ -281,14 +280,6 @@ export default function Resources() {
           <p className={styles.intro}>
             A working list of the tools, training, and references I actually reach for in the field. Bookmark what's useful — and let me know what's missing.
           </p>
-
-          <img
-            src={atticImg}
-            alt="Residential attic with flex ductwork running between roof trusses"
-            loading="lazy"
-            decoding="async"
-            style={{ width: '100%', maxHeight: '220px', objectFit: 'cover', objectPosition: 'center', display: 'block', margin: '0 0 2.5rem 0' }}
-          />
 
           <div className={styles.boxGrid}>
             {[

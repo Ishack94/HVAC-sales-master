@@ -160,15 +160,15 @@ select.input {
   font-size: 16px;
   font-weight: 700;
   color: #ffffff;
-  background: #0e2340;
+  background: #4a9fe5;
   border: none;
-  border-radius: 8px;
+  border-radius: 4px;
   cursor: pointer;
   transition: background 160ms ease, transform 100ms ease;
 }
 
 .calcBtn:hover:not(:disabled) {
-  background: #1b3a5c;
+  background: #3d8fd4;
   transform: translateY(-1px);
 }
 
