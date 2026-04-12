@@ -90,46 +90,54 @@ function LoadCalculator({ onTransfer }) {
   return (
     <div className={styles.calculator}>
       <div className={styles.calcGrid}>
-        <label className={styles.calcField}>
-          <span className={styles.calcLabel}>Square Footage</span>
-          <input type="number" value={sqft} onChange={(e) => setSqft(e.target.value)} min="100" className={styles.calcInput} />
-        </label>
-        <label className={styles.calcField}>
-          <span className={styles.calcLabel}>Ceiling Height</span>
-          <select value={ceiling} onChange={(e) => setCeiling(Number(e.target.value))} className={styles.calcInput}>
-            {CEILING_OPTIONS.map((o) => <option key={o.label} value={o.value}>{o.label}</option>)}
-          </select>
-        </label>
-        <label className={styles.calcField}>
-          <span className={styles.calcLabel}>Number of Windows</span>
-          <input type="number" value={windows} onChange={(e) => setWindows(e.target.value)} min="0" className={styles.calcInput} />
-        </label>
-        <label className={styles.calcField}>
-          <span className={styles.calcLabel}>Number of Exterior Doors</span>
-          <input type="number" value={doors} onChange={(e) => setDoors(e.target.value)} min="0" className={styles.calcInput} />
-        </label>
-        <label className={styles.calcField}>
-          <span className={styles.calcLabel}>Number of Occupants</span>
-          <input type="number" value={occupants} onChange={(e) => setOccupants(e.target.value)} min="0" className={styles.calcInput} />
-        </label>
-        <label className={styles.calcField}>
-          <span className={styles.calcLabel}>Insulation Quality</span>
-          <select value={insulation} onChange={(e) => setInsulation(Number(e.target.value))} className={styles.calcInput}>
-            {INSULATION_OPTIONS.map((o) => <option key={o.label} value={o.value}>{o.label}</option>)}
-          </select>
-        </label>
-        <label className={styles.calcField}>
-          <span className={styles.calcLabel}>Climate Zone</span>
-          <select value={climate} onChange={(e) => setClimate(Number(e.target.value))} className={styles.calcInput}>
-            {CLIMATE_OPTIONS.map((o) => <option key={o.label} value={o.value}>{o.label}</option>)}
-          </select>
-        </label>
-        <label className={styles.calcField}>
-          <span className={styles.calcLabel}>Sun Exposure</span>
-          <select value={sun} onChange={(e) => setSun(Number(e.target.value))} className={styles.calcInput}>
-            {SUN_OPTIONS.map((o) => <option key={o.label} value={o.value}>{o.label}</option>)}
-          </select>
-        </label>
+        <div className={styles.calcGroup}>
+          <label className={styles.calcField}>
+            <span className={styles.calcLabel}>Square Footage</span>
+            <input type="number" value={sqft} onChange={(e) => setSqft(e.target.value)} min="100" className={styles.calcInput} />
+          </label>
+          <label className={styles.calcField}>
+            <span className={styles.calcLabel}>Ceiling Height</span>
+            <select value={ceiling} onChange={(e) => setCeiling(Number(e.target.value))} className={styles.calcInput}>
+              {CEILING_OPTIONS.map((o) => <option key={o.label} value={o.value}>{o.label}</option>)}
+            </select>
+          </label>
+        </div>
+        <div className={styles.calcGroup}>
+          <label className={styles.calcField}>
+            <span className={styles.calcLabel}>Number of Windows</span>
+            <input type="number" value={windows} onChange={(e) => setWindows(e.target.value)} min="0" className={styles.calcInput} />
+          </label>
+          <label className={styles.calcField}>
+            <span className={styles.calcLabel}>Number of Exterior Doors</span>
+            <input type="number" value={doors} onChange={(e) => setDoors(e.target.value)} min="0" className={styles.calcInput} />
+          </label>
+        </div>
+        <div className={styles.calcGroup}>
+          <label className={styles.calcField}>
+            <span className={styles.calcLabel}>Number of Occupants</span>
+            <input type="number" value={occupants} onChange={(e) => setOccupants(e.target.value)} min="0" className={styles.calcInput} />
+          </label>
+          <label className={styles.calcField}>
+            <span className={styles.calcLabel}>Insulation Quality</span>
+            <select value={insulation} onChange={(e) => setInsulation(Number(e.target.value))} className={styles.calcInput}>
+              {INSULATION_OPTIONS.map((o) => <option key={o.label} value={o.value}>{o.label}</option>)}
+            </select>
+          </label>
+        </div>
+        <div className={styles.calcGroup}>
+          <label className={styles.calcField}>
+            <span className={styles.calcLabel}>Climate Zone</span>
+            <select value={climate} onChange={(e) => setClimate(Number(e.target.value))} className={styles.calcInput}>
+              {CLIMATE_OPTIONS.map((o) => <option key={o.label} value={o.value}>{o.label}</option>)}
+            </select>
+          </label>
+          <label className={styles.calcField}>
+            <span className={styles.calcLabel}>Sun Exposure</span>
+            <select value={sun} onChange={(e) => setSun(Number(e.target.value))} className={styles.calcInput}>
+              {SUN_OPTIONS.map((o) => <option key={o.label} value={o.value}>{o.label}</option>)}
+            </select>
+          </label>
+        </div>
       </div>
 
       <ResultsPanel

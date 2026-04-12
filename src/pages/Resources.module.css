@@ -37,34 +37,32 @@
 }
 
 .box {
-  background: #f0f4f8;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 24px;
+  background: #f4f6f9;
+  border: none;
+  border-left: 3px solid #4a9fe5;
+  border-radius: 0;
+  padding: 1.25rem 1.25rem 1.25rem 1.5rem;
   cursor: pointer;
   display: flex;
   flex-direction: column;
   gap: 6px;
   text-align: left;
   font-family: 'Figtree', sans-serif;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, transform 0.2s ease;
+  transition: background 160ms ease;
 }
 
 .box:hover {
-  border-color: #4a9fe5;
-  box-shadow: 0 4px 14px rgba(74, 159, 229, 0.12);
-  transform: translateY(-2px);
+  background: #edf1f5;
 }
 
 .boxActive {
-  border-left: 4px solid #4a9fe5;
   background: #e7f0fa;
-  padding-left: 21px;
+  border-left-width: 4px;
+  padding-left: calc(1.5rem - 1px);
 }
 
 .boxActive:hover {
-  border-color: #4a9fe5;
-  border-left-color: #4a9fe5;
+  background: #e0ebf5;
 }
 
 .boxTitle {
@@ -167,18 +165,47 @@
 
 /* Calculator */
 .calculator {
-  background: #f0f4f8;
-  border: 1px solid #ddd;
+  background-color: #f4f6f9;
+  background-image: radial-gradient(circle, rgba(14, 35, 64, 0.04) 0.5px, transparent 0.5px);
+  background-size: 20px 20px;
+  border: 1px solid rgba(14, 35, 64, 0.06);
   border-radius: 12px;
-  padding: 24px;
+  padding: 2rem;
   margin: 24px 0 8px;
+  position: relative;
+}
+
+.calculator::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100px;
+  height: 2px;
+  background: linear-gradient(90deg, #4a9fe5 0%, rgba(74, 159, 229, 0) 100%);
+  border-radius: 0 1px 1px 0;
 }
 
 .calcGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-bottom: 28px;
+}
+
+.calcGroup {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 20px 24px;
-  margin-bottom: 28px;
+  gap: 1rem;
+  padding-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(14, 35, 64, 0.06);
+}
+
+.calcGroup:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
 }
 
 .calcField {
@@ -420,12 +447,23 @@
     grid-template-columns: 1fr;
   }
 
-  .calcGrid {
+  .calcGroup {
     grid-template-columns: 1fr;
-    gap: 14px;
   }
 
   .calculator {
-    padding: 20px;
+    padding: 1.25rem;
+  }
+}
+
+@media print {
+  .calculator {
+    background: #ffffff !important;
+    background-image: none !important;
+    border: 1px solid #e5e5e5 !important;
+  }
+
+  .calcGroup {
+    border-bottom-color: #e5e5e5 !important;
   }
 }

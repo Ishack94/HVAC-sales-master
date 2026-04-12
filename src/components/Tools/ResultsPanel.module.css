@@ -55,6 +55,7 @@
   line-height: 1;
   color: #ffffff;
   letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
 }
 
 .primaryUnit {
@@ -102,6 +103,8 @@
   font-size: 15px;
   font-weight: 700;
   color: #ffffff;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
 }
 
 .metricUnit {
@@ -119,9 +122,11 @@
 
 .note {
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.45);
-  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.55);
+  line-height: 1.7;
   margin: 0 0 10px;
+  padding-left: 1rem;
+  border-left: 2px solid rgba(74, 159, 229, 0.3);
 }
 
 .note:last-child {
@@ -130,11 +135,22 @@
 
 /* Explain to Customer */
 .explain {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 8px;
-  padding: 18px 20px;
+  padding: 1.25rem;
   margin-bottom: 20px;
+  position: relative;
+}
+
+.explain::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 80px;
+  height: 2px;
+  background: linear-gradient(90deg, #4a9fe5 0%, rgba(74, 159, 229, 0) 100%);
 }
 
 .explainLabel {
@@ -180,21 +196,22 @@
 
 .actionBtn {
   flex: 1;
-  background: #4a9fe5;
-  color: #ffffff;
-  border: none;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 8px;
   padding: 14px 24px;
   font-family: 'Figtree', sans-serif;
-  font-size: 15px;
+  font-size: 0.95rem;
   font-weight: 700;
   cursor: pointer;
-  transition: background 0.2s ease, transform 0.15s ease;
+  letter-spacing: 0.01em;
+  transition: background 160ms ease, border-color 160ms ease;
 }
 
 .actionBtn:hover {
-  background: #3a8cd0;
-  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.35);
 }
 
 .printBtn {
