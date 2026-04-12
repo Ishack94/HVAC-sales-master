@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react'
+import StepProgress from './StepProgress'
 import styles from './DuctDesigner.module.css'
 
 const ROOM_TYPES = [
@@ -570,7 +571,7 @@ export default function DuctDesigner({ initialEquipment }) {
         </p>
       </div>
 
-      <StepIndicator step={step} />
+      <StepProgress steps={['Rooms', 'Equipment', 'Results']} currentStep={step} />
 
       {/* === STEP 1: ROOMS === */}
       {step === 1 && (

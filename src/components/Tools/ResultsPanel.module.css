@@ -1,0 +1,204 @@
+.panel {
+  position: relative;
+  background: linear-gradient(180deg, #0b1c33, #0e2340, #102846);
+  background-image: radial-gradient(circle at top left, rgba(74, 159, 229, 0.08), transparent 30%),
+    linear-gradient(180deg, #0b1c33, #0e2340, #102846);
+  border-radius: 12px;
+  padding: 32px 28px 28px;
+  color: #ffffff;
+  font-family: 'Figtree', sans-serif;
+  overflow: hidden;
+}
+
+.accent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 140px;
+  height: 2px;
+  background: linear-gradient(to right, #4a9fe5, transparent);
+}
+
+.eyebrow {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+  margin: 0 0 8px;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0 0 20px;
+  line-height: 1.25;
+}
+
+.primaryRow {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.primaryValue {
+  font-size: clamp(2.6rem, 5vw, 3.5rem);
+  font-weight: 800;
+  line-height: 1;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+}
+
+.primaryUnit {
+  font-size: 16px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.summary {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.55;
+  margin: 0 0 24px;
+}
+
+/* Metrics */
+.metrics {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-bottom: 24px;
+}
+
+.metricRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.metricRow:last-child {
+  border-bottom: none;
+}
+
+.metricLabel {
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.metricValue {
+  font-size: 15px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.metricUnit {
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 12px;
+}
+
+/* Notes */
+.notes {
+  margin-bottom: 24px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.note {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.45);
+  line-height: 1.6;
+  margin: 0 0 10px;
+}
+
+.note:last-child {
+  margin-bottom: 0;
+}
+
+/* Explain to Customer */
+.explain {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 18px 20px;
+  margin-bottom: 20px;
+}
+
+.explainLabel {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.35);
+  margin: 0 0 10px;
+}
+
+.explainText {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.6;
+  margin: 0 0 12px;
+}
+
+.copyBtn {
+  background: none;
+  border: none;
+  font-family: 'Figtree', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: #4a9fe5;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 0.2s ease;
+}
+
+.copyBtn:hover {
+  color: #ffffff;
+}
+
+/* Action button */
+.actionBtn {
+  width: 100%;
+  background: #4a9fe5;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 14px 24px;
+  font-family: 'Figtree', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.15s ease;
+  margin-top: 4px;
+}
+
+.actionBtn:hover {
+  background: #3a8cd0;
+  transform: translateY(-1px);
+}
+
+@media (max-width: 720px) {
+  .panel {
+    padding: 28px 22px 24px;
+  }
+
+  .primaryValue {
+    font-size: 2.4rem;
+  }
+
+  .metricRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    padding: 10px 0;
+  }
+}

@@ -1,0 +1,110 @@
+.wrapper {
+  padding: 20px 0 28px;
+  margin-bottom: 28px;
+  border-bottom: 1px solid rgba(14, 35, 64, 0.08);
+  font-family: 'Figtree', sans-serif;
+}
+
+.track {
+  height: 2px;
+  background: rgba(14, 35, 64, 0.08);
+  border-radius: 1px;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.fill {
+  height: 100%;
+  background: linear-gradient(to right, #0e2340, #4a9fe5);
+  border-radius: 1px;
+  transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.badges {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  text-align: center;
+}
+
+.badgeNum {
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 13px;
+  font-weight: 800;
+  background: rgba(14, 35, 64, 0.06);
+  color: rgba(14, 35, 64, 0.35);
+  transition: all 0.3s ease;
+  margin-bottom: 2px;
+}
+
+.badgeEyebrow {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: rgba(14, 35, 64, 0.3);
+}
+
+.badgeLabel {
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(14, 35, 64, 0.4);
+  transition: color 0.3s ease;
+}
+
+/* Active */
+.active .badgeNum {
+  background: #4a9fe5;
+  color: #ffffff;
+  box-shadow: 0 0 0 4px rgba(74, 159, 229, 0.15);
+}
+
+.active .badgeEyebrow {
+  color: #4a9fe5;
+}
+
+.active .badgeLabel {
+  color: #0e2340;
+}
+
+/* Complete */
+.complete .badgeNum {
+  background: #0e2340;
+  color: #ffffff;
+}
+
+.complete .badgeLabel {
+  color: rgba(14, 35, 64, 0.6);
+}
+
+@media (max-width: 720px) {
+  .badges {
+    gap: 8px;
+  }
+
+  .badgeNum {
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
+  }
+
+  .badgeLabel {
+    font-size: 11px;
+  }
+
+  .badgeEyebrow {
+    display: none;
+  }
+}

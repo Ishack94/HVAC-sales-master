@@ -169,8 +169,8 @@
 .calcGrid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16px 24px;
-  margin-bottom: 24px;
+  gap: 20px 24px;
+  margin-bottom: 28px;
 }
 
 .calcField {
@@ -190,11 +190,12 @@
 
 .calcInput {
   padding: 11px 14px;
+  min-height: 48px;
   font-family: 'Figtree', sans-serif;
   font-size: 15px;
   color: #1b3a5c;
   background: #ffffff;
-  border: 1px solid #ddd;
+  border: 1px solid rgba(14, 35, 64, 0.12);
   border-radius: 8px;
   outline: none;
   transition: border-color 0.2s ease;

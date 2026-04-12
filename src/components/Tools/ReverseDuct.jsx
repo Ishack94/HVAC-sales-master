@@ -1,4 +1,6 @@
 import React, { useState, useMemo } from 'react'
+import ResultsPanel from './ResultsPanel'
+import ExplainBlock from './ExplainBlock'
 import styles from './ReverseDuct.module.css'
 
 const ROUND_SIZES = [4, 5, 6, 7, 8, 9, 10, 12, 14, 16, 18, 20]
@@ -132,6 +134,22 @@ export default function ReverseDuct() {
         </div>
       </div>
 
+      <ResultsPanel
+        eyebrow="REVERSE CALCULATOR"
+        title={`Capacity for ${sizeLabel}`}
+        primaryValue={recCFM.toString()}
+        primaryUnit="CFM"
+        summary={`This duct can comfortably handle ${minCFM}–${maxCFM} CFM. Recommended: ${recCFM} CFM at 600 FPM.`}
+        metrics={[
+          { label: 'Minimum (400 FPM)', value: minCFM.toString(), unit: 'CFM' },
+          { label: 'Recommended (600 FPM)', value: recCFM.toString(), unit: 'CFM' },
+          { label: 'Maximum (900 FPM)', value: maxCFM.toString(), unit: 'CFM' },
+          { label: 'Duct Area', value: (area * 144).toFixed(1), unit: 'sq in' },
+          { label: 'Best For', value: bestFor(area) },
+        ]}
+        notes={recCFM > 0 && fpmAt(maxCFM) > 900 ? ['At maximum CFM, velocity exceeds 900 FPM — expect noticeable noise.'] : []}
+      />
+
       <div className={styles.resultsGrid}>
         {/* Card 1: CFM Capacity */}
         <div className={styles.card}>
@@ -185,6 +203,10 @@ export default function ReverseDuct() {
           </p>
         </div>
       </div>
+
+      <ExplainBlock
+        text={`This ${sizeLabel} duct is best used for ${recCFM} CFM or less. At that airflow, air moves at about 600 feet per minute — quiet and efficient. Push it past ${maxCFM} CFM and you'll start hearing it.`}
+      />
     </div>
   )
 }

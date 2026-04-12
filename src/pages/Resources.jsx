@@ -6,6 +6,7 @@ import Sidebar from '../components/Layout/Sidebar'
 import Newsletter from '../components/Home/Newsletter'
 import DuctDesigner from '../components/Tools/DuctDesigner'
 import ReverseDuct from '../components/Tools/ReverseDuct'
+import ResultsPanel from '../components/Tools/ResultsPanel'
 import atticImg from '../assets/attic-ductwork.jpg'
 import styles from './Resources.module.css'
 
@@ -56,8 +57,6 @@ function LoadCalculator({ onTransfer }) {
   const [insulation, setInsulation] = useState(1.0)
   const [climate, setClimate] = useState(1.0)
   const [sun, setSun] = useState(1.0)
-  const [copied, setCopied] = useState(false)
-
   const result = useMemo(() => {
     const sq = Number(sqft) || 0
     const w = Number(windows) || 0
@@ -78,13 +77,6 @@ function LoadCalculator({ onTransfer }) {
   }, [sqft, ceiling, windows, doors, occupants, insulation, climate, sun])
 
   const customerText = `Based on the size and characteristics of your home, you'd need approximately a ${result.tonnage.toFixed(1)}-ton system to keep it comfortable year-round. That's a ${result.totalBTU.toLocaleString()} BTU system.`
-
-  const handleCopy = () => {
-    navigator.clipboard.writeText(customerText).then(() => {
-      setCopied(true)
-      setTimeout(() => setCopied(false), 2000)
-    })
-  }
 
   const handleTransfer = () => {
     if (onTransfer) {
@@ -140,46 +132,29 @@ function LoadCalculator({ onTransfer }) {
         </label>
       </div>
 
-      <div className={styles.calcResult}>
-        <p className={styles.calcResultLine}>
-          Estimated Cooling Load: <strong>{result.totalBTU.toLocaleString()} BTU/hr ({result.tonnage.toFixed(1)} tons)</strong>
-        </p>
-        <p className={styles.calcRecommendation}>
-          Recommended system: <strong>{result.tonnage.toFixed(1)} tons</strong>
-        </p>
-        <p className={styles.calcRange}>
-          Acceptable range: {result.rangeLow.toFixed(1)} – {result.rangeHigh.toFixed(1)} tons
-        </p>
-
-        <div className={styles.riskNotes}>
-          <p className={styles.riskNote}>
-            <strong>Undersizing risk:</strong> System may struggle on the hottest/coldest days. Rooms farthest from the unit may not reach temperature.
-          </p>
-          <p className={styles.riskNote}>
-            <strong>Oversizing risk:</strong> System will short-cycle — turning on and off too frequently. This wastes energy, wears out the compressor faster, and leaves humidity problems in cooling mode.
-          </p>
-        </div>
-
-        <div className={styles.customerBox}>
-          <p className={styles.customerBoxLabel}>Explain to Customer</p>
-          <p className={styles.customerBoxText}>{customerText}</p>
-          <button type="button" onClick={handleCopy} className={styles.copyBtn}>
-            {copied ? 'Copied!' : 'Copy'}
-          </button>
-        </div>
-
-        <p className={styles.ductWarning}>
-          Keep in mind — even a properly sized system won't perform right if the ductwork is undersized. Use the Duct Design Calculator to make sure your ducts can actually deliver the airflow this system needs.
-        </p>
-
-        <p className={styles.calcDisclaimer}>
-          This is a simplified estimate based on rule-of-thumb calculations. For accurate equipment sizing, a full Manual J load calculation by a licensed HVAC professional is recommended.
-        </p>
-
-        <button type="button" onClick={handleTransfer} className={styles.transferBtn}>
-          Size the Ductwork for This System →
-        </button>
-      </div>
+      <ResultsPanel
+        eyebrow="LOAD CALCULATOR"
+        title="Recommended System Size"
+        primaryValue={result.tonnage.toFixed(1)}
+        primaryUnit="Tons"
+        summary={`A ${result.tonnage.toFixed(1)}-ton system should keep this home comfortable year-round.`}
+        metrics={[
+          { label: 'Estimated Cooling Load', value: result.totalBTU.toLocaleString(), unit: 'BTU/hr' },
+          { label: 'Recommended Airflow', value: Math.round(result.tonnage * 400).toLocaleString(), unit: 'CFM' },
+          { label: 'Acceptable Range', value: `${result.rangeLow.toFixed(1)} – ${result.rangeHigh.toFixed(1)}`, unit: 'Tons' },
+        ]}
+        notes={[
+          'Undersizing risk: System may struggle on the hottest/coldest days. Rooms farthest from the unit may not reach temperature.',
+          'Oversizing risk: System will short-cycle — turning on and off too frequently. This wastes energy, wears out the compressor faster, and leaves humidity problems in cooling mode.',
+          'Keep in mind — even a properly sized system won\'t perform right if the ductwork is undersized.',
+        ]}
+        customerText={customerText}
+        actionLabel="Size the Ductwork for This System →"
+        onAction={handleTransfer}
+      />
+      <p className={styles.calcDisclaimer}>
+        This is a simplified estimate based on rule-of-thumb calculations. For accurate equipment sizing, a full Manual J load calculation by a licensed HVAC professional is recommended.
+      </p>
     </div>
   )
 }
