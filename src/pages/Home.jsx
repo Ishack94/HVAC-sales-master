@@ -99,8 +99,8 @@ export default function Home() {
     }
 
     try {
-      // TODO: Replace xyzgobdl with your real Formspree form ID from https://formspree.io
-      const res = await fetch('https://formspree.io/f/xyzgobdl', {
+      // TODO: Replace mvzdpbqo with your real Formspree form ID from https://formspree.io
+      const res = await fetch('https://formspree.io/f/mvzdpbqo', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, message: messageText }),
