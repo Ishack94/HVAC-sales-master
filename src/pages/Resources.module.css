@@ -75,6 +75,14 @@
   line-height: 1.25;
 }
 
+.boxSubtitle {
+  font-family: 'Figtree', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(14, 35, 64, 0.5);
+  margin-top: 4px;
+}
+
 .boxDesc {
   font-family: 'Figtree', sans-serif;
   font-size: 14px;

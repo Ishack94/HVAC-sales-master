@@ -17,7 +17,7 @@ export default function ResultsPanel({
 
   const handleCopy = () => {
     if (!customerText) return
-    navigator.clipboard.writeText(customerText).then(() => {
+    navigator.clipboard?.writeText(customerText).then(() => {
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
     })
@@ -63,7 +63,7 @@ export default function ResultsPanel({
           <p className={styles.explainLabel}>Explain to Customer</p>
           <p className={styles.explainText}>{customerText}</p>
           <button type="button" onClick={handleCopy} className={styles.copyBtn}>
-            {copied ? 'Copied!' : 'Copy Text'}
+            {copied ? 'Copied ✓' : 'Copy Text'}
           </button>
         </div>
       )}

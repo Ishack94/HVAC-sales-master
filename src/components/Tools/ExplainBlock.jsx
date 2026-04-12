@@ -6,7 +6,7 @@ export default function ExplainBlock({ text }) {
 
   const handleCopy = () => {
     if (!text) return
-    navigator.clipboard.writeText(text).then(() => {
+    navigator.clipboard?.writeText(text).then(() => {
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
     })
@@ -20,7 +20,7 @@ export default function ExplainBlock({ text }) {
       <p className={styles.label}>Explain to Customer</p>
       <p className={styles.text}>{text}</p>
       <button type="button" onClick={handleCopy} className={styles.copyBtn}>
-        {copied ? 'Copied!' : 'Copy Text'}
+        {copied ? 'Copied ✓' : 'Copy Text'}
       </button>
     </div>
   )

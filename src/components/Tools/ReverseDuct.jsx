@@ -147,7 +147,10 @@ export default function ReverseDuct() {
           { label: 'Duct Area', value: (area * 144).toFixed(1), unit: 'sq in' },
           { label: 'Best For', value: bestFor(area) },
         ]}
-        notes={recCFM > 0 && fpmAt(maxCFM) > 900 ? ['At maximum CFM, velocity exceeds 900 FPM — expect noticeable noise.'] : []}
+        notes={[
+          ...(fpmAt(maxCFM) > 900 ? ['At this airflow, noise and turbulence may become noticeable.'] : []),
+          'This size may work for a branch run — verify if being used as a main trunk.',
+        ]}
       />
 
       <div className={styles.resultsGrid}>

@@ -1,5 +1,11 @@
+@keyframes panelFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 .panel {
   position: relative;
+  animation: panelFadeIn 0.4s ease both;
   background: linear-gradient(180deg, #0b1c33, #0e2340, #102846);
   background-image: radial-gradient(circle at top left, rgba(74, 159, 229, 0.08), transparent 30%),
     linear-gradient(180deg, #0b1c33, #0e2340, #102846);

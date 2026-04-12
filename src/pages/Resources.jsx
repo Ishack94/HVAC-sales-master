@@ -144,9 +144,12 @@ function LoadCalculator({ onTransfer }) {
           { label: 'Acceptable Range', value: `${result.rangeLow.toFixed(1)} – ${result.rangeHigh.toFixed(1)}`, unit: 'Tons' },
         ]}
         notes={[
-          'Undersizing risk: System may struggle on the hottest/coldest days. Rooms farthest from the unit may not reach temperature.',
-          'Oversizing risk: System will short-cycle — turning on and off too frequently. This wastes energy, wears out the compressor faster, and leaves humidity problems in cooling mode.',
-          'Keep in mind — even a properly sized system won\'t perform right if the ductwork is undersized.',
+          ...(insulation >= 1.15 ? ['Homes with poor insulation often need capacity toward the higher end of the range.'] : []),
+          ...(sun >= 1.1 ? ['High sun exposure increases cooling demand — consider window treatments or shading.'] : []),
+          ...(Number(windows) > 12 ? ['Higher window counts add significant solar heat gain to the cooling load.'] : []),
+          'Undersizing risk: system may struggle on the hottest days. Rooms farthest from the unit may not reach temperature.',
+          'Oversizing risk: system will short-cycle, wasting energy and leaving humidity problems in cooling mode.',
+          'This estimate assumes the duct system can deliver the required airflow. Restrictive ductwork will reduce comfort.',
         ]}
         customerText={customerText}
         actionLabel="Size the Ductwork for This System →"
@@ -256,9 +259,9 @@ export default function Resources() {
 
           <div className={styles.boxGrid}>
             {[
-              { key: 'calculator', title: 'HVAC Load Calculator', desc: 'Estimate cooling load and equipment size' },
-              { key: 'duct-designer', title: 'Duct Design Calculator', desc: 'Size supply and return ductwork for any house' },
-              { key: 'reverse-duct', title: 'Reverse Duct Calculator', desc: 'Already have ducts? Find out how much airflow they can handle' },
+              { key: 'calculator', title: 'HVAC Load Calculator', desc: 'Estimate cooling load and equipment size', subtitle: 'Estimate system size' },
+              { key: 'duct-designer', title: 'Duct Design Calculator', desc: 'Size supply and return ductwork for any house', subtitle: 'Design the airflow' },
+              { key: 'reverse-duct', title: 'Reverse Duct Calculator', desc: 'Already have ducts? Find out how much airflow they can handle', subtitle: 'Verify duct capacity' },
             ].map((s) => {
               const isActive = openKey === s.key
               return (
@@ -270,6 +273,7 @@ export default function Resources() {
                   aria-expanded={isActive}
                 >
                   <span className={styles.boxTitle}>{s.title}</span>
+                  {s.subtitle && <span className={styles.boxSubtitle}>{s.subtitle}</span>}
                   <span className={styles.boxDesc}>{s.desc}</span>
                 </button>
               )
