@@ -24,7 +24,7 @@ export default function Newsletter() {
 
     try {
       // TODO: Replace xyzgobdl with your real Formspree form ID from https://formspree.io
-      const res = await fetch('https://formspree.io/f/xyzgobdl', {
+      const res = await fetch('https://formspree.io/f/mvzdpbqo', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, message: messageText }),
@@ -48,7 +48,7 @@ export default function Newsletter() {
   return (
     <section className={styles.section}>
       <div className={styles.inner}>
-        <h2 className={styles.heading}>Got a question? A story? A win from the field?</h2>
+        <h2 className={styles.heading}>Got a question? A funny story? A win from the field?</h2>
         <p className={styles.subtitle}>
           Drop your email and share what's on your mind. Best questions become articles.
         </p>
