@@ -7,6 +7,10 @@ import { salesArticles, proArticles } from '../utils/articleData'
 import { trackEvent } from '../utils/analytics'
 import MilwaukeeAd from '../components/UI/MilwaukeeAd'
 import headshotSrc from '../assets/headshot.png'
+import sectionAccentSales from '../assets/section-accent-sales.png'
+import sectionAccentPro from '../assets/section-accent-pro.png'
+import sectionAccentHomeowner from '../assets/section-accent-homeowner.png'
+import sectionAccentAbout from '../assets/section-accent-about.png'
 import styles from './Home.module.css'
 
 const FEATURED_SALES_SLUGS = [
@@ -240,6 +244,8 @@ export default function Home() {
             <p className={styles.noResults}>No articles found for "{search}".</p>
           )}
 
+          {!isFiltering && <img src={sectionAccentSales} alt="" role="presentation" className={styles.sectionAccent} />}
+
           {/* Sales Training */}
           {showSales && filteredSales.length > 0 && (
             <div className={`${styles.section} ${styles.sectionWhite} reveal`}>
@@ -267,6 +273,8 @@ export default function Home() {
           )}
 
 
+          {!isFiltering && <img src={sectionAccentPro} alt="" role="presentation" className={styles.sectionAccent} />}
+
           {/* Pro Lessons */}
           {showPro && filteredTech.length > 0 && (
             <div className={`${styles.section} ${styles.sectionBlueGray} reveal`}>
@@ -293,6 +301,8 @@ export default function Home() {
             </div>
           )}
 
+          {!isFiltering && <img src={sectionAccentHomeowner} alt="" role="presentation" className={styles.sectionAccent} />}
+
           {/* Homeowner */}
           {showHomeowner && filteredHomeowner.length > 0 && (
             <div className={`${styles.section} ${styles.sectionWhite} reveal`}>
@@ -318,6 +328,8 @@ export default function Home() {
               )}
             </div>
           )}
+
+          {!isFiltering && <img src={sectionAccentAbout} alt="" role="presentation" className={styles.sectionAccent} />}
 
           {/* Closing content — only when not filtering */}
           {!isFiltering && (

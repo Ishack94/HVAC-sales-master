@@ -9,6 +9,7 @@ import ReverseDuct from '../components/Tools/ReverseDuct'
 import SuperheatCalc from '../components/Tools/SuperheatCalc'
 import EnergySavingsCalc from '../components/Tools/EnergySavingsCalc'
 import ResultsPanel from '../components/Tools/ResultsPanel'
+import sectionAccentResources from '../assets/section-accent-resources.png'
 import styles from './Resources.module.css'
 
 const CEILING_OPTIONS = [
@@ -284,6 +285,8 @@ export default function Resources() {
           <p className={styles.intro}>
             A working list of the tools, training, and references I actually reach for in the field. Bookmark what's useful — and let me know what's missing.
           </p>
+
+          <img src={sectionAccentResources} alt="" role="presentation" className={styles.sectionAccent} />
 
           <div className={styles.boxGrid}>
             {[
