@@ -1,4 +1,4 @@
-const GA_ID = 'G-XXXXXXXXXX'
+const GA_ID = 'G-XXXXXXX'
 
 export function trackEvent(name, params = {}) {
   if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
