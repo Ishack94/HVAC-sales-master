@@ -39,8 +39,6 @@
 
 .boxGrid > :last-child:nth-child(odd) {
   grid-column: 1 / -1;
-  max-width: calc(50% - 8px);
-  margin: 0 auto;
 }
 
 .box {

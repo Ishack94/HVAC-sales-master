@@ -62,6 +62,7 @@ export default function Home() {
   const [message, setMessage] = useState('')
   const [search, setSearch] = useState('')
   const [activeCategory, setActiveCategory] = useState('all')
+  const [previewExpanded, setPreviewExpanded] = useState(false)
   const searchTimerRef = useRef(null)
 
   // Scroll reveal
@@ -210,27 +211,25 @@ export default function Home() {
           {!isFiltering && (
             <div className={`${styles.body} reveal`}>
               <h2>Why I Leave My Cards in the Van (And Close More Deals Because of It)</h2>
-
               <p>After I've gone through everything — <strong>explained the options, answered all their questions, handled every concern</strong> — I stop talking. I turn it over to them.</p>
-
               <p>I'll say something like, <strong>"Do you have any questions, or is there anything I didn't cover that would help you make a decision?"</strong></p>
-
               <p>Then I just let it sit.</p>
-
-              <p>I'm totally comfortable with the silence. That's usually when they're actually thinking things through. Most comfort advisors panic in the quiet and start rambling about features nobody asked about. That's where you lose them.</p>
-
-              <p>If it starts to drag on a bit, I'll give them some space. I'll say, <strong>"Hey, I'm going to run out to my truck and grab my card real quick — take your time looking this over."</strong></p>
-
-              <p>That little break changes everything.</p>
-
-              <p>It gives them a chance to talk privately, make a quick call, or just think without you hovering. A lot of times, when I come back in, they're either ready to move forward or they've got a real question to go over — not an excuse to stall.</p>
-
-              <p>The close doesn't happen because you pushed harder. It happens because <strong>you gave them the space to decide</strong>.</p>
-
-              <blockquote>The best closers aren't the ones who talk the most. They're the ones who know when to stop.</blockquote>
-
+              {!previewExpanded && (
+                <button type="button" className={styles.continueReading} onClick={() => setPreviewExpanded(true)}>
+                  Continue reading →
+                </button>
+              )}
+              {previewExpanded && (
+                <>
+                  <p>I'm totally comfortable with the silence. That's usually when they're actually thinking things through. Most comfort advisors panic in the quiet and start rambling about features nobody asked about. That's where you lose them.</p>
+                  <p>If it starts to drag on a bit, I'll give them some space. I'll say, <strong>"Hey, I'm going to run out to my truck and grab my card real quick — take your time looking this over."</strong></p>
+                  <p>That little break changes everything.</p>
+                  <p>It gives them a chance to talk privately, make a quick call, or just think without you hovering. A lot of times, when I come back in, they're either ready to move forward or they've got a real question to go over — not an excuse to stall.</p>
+                  <p>The close doesn't happen because you pushed harder. It happens because <strong>you gave them the space to decide</strong>.</p>
+                  <blockquote>The best closers aren't the ones who talk the most. They're the ones who know when to stop.</blockquote>
+                </>
+              )}
               <p>That's the kind of real-world strategy you'll find on this site. Not theory. Not motivational fluff. <strong>Just what actually works when you're sitting across from a homeowner.</strong></p>
-
               <p>If you're just getting started, I'd read <Link to="/sales/stop-selling-equipment-start-selling-outcomes" onClick={() => trackEvent('start_here_click', { article_title: 'Stop Selling Equipment' })}>Stop Selling Equipment</Link> first, then <Link to="/sales/first-90-seconds-at-the-door" onClick={() => trackEvent('start_here_click', { article_title: 'First 90 Seconds' })}>The First 90 Seconds at the Door</Link>. Everything else builds from there.</p>
             </div>
           )}
@@ -294,9 +293,6 @@ export default function Home() {
             </div>
           )}
 
-          {!isFiltering && <hr className={styles.sectionDivider} />}
-
-
           {/* Homeowner */}
           {showHomeowner && filteredHomeowner.length > 0 && (
             <div className={`${styles.section} ${styles.sectionWhite} reveal`}>
@@ -326,8 +322,6 @@ export default function Home() {
           {/* Closing content — only when not filtering */}
           {!isFiltering && (
             <div className={`${styles.body} ${styles.noDropCap} reveal`}>
-              <blockquote>The best technicians never stop learning. The best closers never stop either.</blockquote>
-
               <h2>Who Built This</h2>
               <p>HVAC Sales Master was built by someone who's been in the trades — not a marketing agency, not a content mill. Every article comes from real experience in the field: running service calls, sitting at kitchen tables, handling objections, and training other techs.</p>
               <p><strong>No fluff. Just what actually works.</strong></p>

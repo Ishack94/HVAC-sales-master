@@ -71,8 +71,12 @@ function LoadCalculator({ onTransfer }) {
     const subtotal = baseBTU + windowBTU + doorBTU + occupantBTU
     const totalBTU = subtotal * insulation * climate * sun
     const tonnage = Math.round((totalBTU / 12000) * 2) / 2
-    const rangeLow = Math.floor(tonnage * 2) / 2
-    const rangeHigh = Math.ceil(tonnage * 2) / 2
+    let rangeLow = Math.floor(tonnage * 2) / 2
+    let rangeHigh = Math.ceil(tonnage * 2) / 2
+    if (rangeLow === rangeHigh) {
+      rangeLow = Math.max(1.5, tonnage - 0.5)
+      rangeHigh = tonnage
+    }
 
     return { totalBTU: Math.round(totalBTU), tonnage, rangeLow, rangeHigh }
   }, [sqft, ceiling, windows, doors, occupants, insulation, climate, sun])
