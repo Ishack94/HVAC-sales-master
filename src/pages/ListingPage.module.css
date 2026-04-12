@@ -88,6 +88,30 @@
   margin-top: 4px;
 }
 
+.photoStrip {
+  width: 100%;
+  max-width: 960px;
+  height: 200px;
+  margin: 24px auto;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+.photoStripImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 40%;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .photoStrip {
+    height: 140px;
+    margin: 16px auto;
+  }
+}
+
 @media (max-width: 860px) {
   .layout {
     flex-direction: column;

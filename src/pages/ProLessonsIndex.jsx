@@ -5,6 +5,7 @@ import Banner from '../components/Layout/Banner'
 import Sidebar from '../components/Layout/Sidebar'
 import Newsletter from '../components/Home/Newsletter'
 import { salesArticles, proArticles } from '../utils/articleData'
+import atticDuctwork from '../assets/attic-ductwork.jpg'
 import styles from './ListingPage.module.css'
 
 const techArticles = proArticles.slice(0, 13)
@@ -41,6 +42,9 @@ export default function ProLessonsIndex() {
             <p className={styles.intro}>
               Technical training for service technicians and installers who want to diagnose faster, install better, and come back less.
             </p>
+            <div className={styles.photoStrip}>
+              <img src={atticDuctwork} alt="Attic ductwork on a real job site" className={styles.photoStripImg} />
+            </div>
             <ul className={styles.articleList}>
               {techArticles.map((a) => (
                 <li key={a.slug} className={styles.articleItem}>
