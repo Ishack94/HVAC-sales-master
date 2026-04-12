@@ -154,15 +154,6 @@ export default function Home() {
         subtitle="Master Your Craft."
       />
 
-      {/* Hero image */}
-      <img
-        src={heroImg}
-        alt="HVAC technician diagnosing a residential furnace with a clamp meter"
-        loading="eager"
-        decoding="async"
-        style={{ width: '100%', maxHeight: '180px', objectFit: 'cover', objectPosition: 'center 30%', display: 'block' }}
-      />
-
       <div className={styles.layout}>
         <main className={styles.main}>
 
@@ -307,6 +298,16 @@ export default function Home() {
           )}
 
           {!isFiltering && <hr className={styles.sectionDivider} />}
+
+          {!isFiltering && (
+            <img
+              src={heroImg}
+              alt="HVAC technician diagnosing a residential furnace with a clamp meter"
+              loading="lazy"
+              decoding="async"
+              style={{ width: '100%', maxHeight: '200px', objectFit: 'cover', objectPosition: 'center 30%', display: 'block', margin: '2.5rem 0' }}
+            />
+          )}
 
           {/* Homeowner */}
           {showHomeowner && filteredHomeowner.length > 0 && (
