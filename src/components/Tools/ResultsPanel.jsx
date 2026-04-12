@@ -12,6 +12,7 @@ export default function ResultsPanel({
   customerText,
   actionLabel,
   onAction,
+  showPrint = false,
 }) {
   const [copied, setCopied] = useState(false)
 
@@ -68,11 +69,18 @@ export default function ResultsPanel({
         </div>
       )}
 
-      {actionLabel && onAction && (
-        <button type="button" onClick={onAction} className={styles.actionBtn}>
-          {actionLabel}
-        </button>
-      )}
+      <div className={styles.actions}>
+        {actionLabel && onAction && (
+          <button type="button" onClick={onAction} className={styles.actionBtn}>
+            {actionLabel}
+          </button>
+        )}
+        {showPrint && (
+          <button type="button" onClick={() => window.print()} className={styles.printBtn}>
+            Print Results
+          </button>
+        )}
+      </div>
     </div>
   )
 }

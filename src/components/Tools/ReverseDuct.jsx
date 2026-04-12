@@ -151,6 +151,7 @@ export default function ReverseDuct() {
           ...(fpmAt(maxCFM) > 900 ? ['At this airflow, noise and turbulence may become noticeable.'] : []),
           'This size may work for a branch run — verify if being used as a main trunk.',
         ]}
+        showPrint
       />
 
       <div className={styles.resultsGrid}>

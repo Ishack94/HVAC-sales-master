@@ -154,6 +154,7 @@ function LoadCalculator({ onTransfer }) {
         customerText={customerText}
         actionLabel="Size the Ductwork for This System →"
         onAction={handleTransfer}
+        showPrint
       />
       <p className={styles.calcDisclaimer}>
         This is a simplified estimate based on rule-of-thumb calculations. For accurate equipment sizing, a full Manual J load calculation by a licensed HVAC professional is recommended.
