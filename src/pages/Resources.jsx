@@ -6,6 +6,7 @@ import Sidebar from '../components/Layout/Sidebar'
 import Newsletter from '../components/Home/Newsletter'
 import DuctDesigner from '../components/Tools/DuctDesigner'
 import ReverseDuct from '../components/Tools/ReverseDuct'
+import SuperheatCalc from '../components/Tools/SuperheatCalc'
 import ResultsPanel from '../components/Tools/ResultsPanel'
 import atticImg from '../assets/attic-ductwork.jpg'
 import styles from './Resources.module.css'
@@ -199,6 +200,14 @@ function ReverseDuctSection() {
   )
 }
 
+function SuperheatSection() {
+  return (
+    <section className={styles.sectionFlush}>
+      <SuperheatCalc />
+    </section>
+  )
+}
+
 export default function Resources() {
   const location = useLocation()
   const canonicalUrl = `https://hvac-sales-master.vercel.app${location.pathname}`
@@ -234,6 +243,9 @@ export default function Resources() {
     }
     if (openKey === 'reverse-duct') {
       return <ReverseDuctSection />
+    }
+    if (openKey === 'superheat') {
+      return <SuperheatSection />
     }
     return null
   }
@@ -271,6 +283,7 @@ export default function Resources() {
               { key: 'calculator', title: 'HVAC Load Calculator', desc: 'Estimate cooling load and equipment size', subtitle: 'Estimate system size' },
               { key: 'duct-designer', title: 'Duct Design Calculator', desc: 'Size supply and return ductwork for any house', subtitle: 'Design the airflow' },
               { key: 'reverse-duct', title: 'Reverse Duct Calculator', desc: 'Already have ducts? Find out how much airflow they can handle', subtitle: 'Verify duct capacity' },
+              { key: 'superheat', title: 'Superheat & Subcooling', desc: 'Check if the system is properly charged with superheat and subcooling calculations', subtitle: 'Verify the charge' },
             ].map((s) => {
               const isActive = openKey === s.key
               return (
