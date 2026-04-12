@@ -9,7 +9,7 @@
   background: linear-gradient(180deg, #0b1c33, #0e2340, #102846);
   background-image: radial-gradient(circle at top left, rgba(74, 159, 229, 0.08), transparent 30%),
     linear-gradient(180deg, #0b1c33, #0e2340, #102846);
-  border-radius: 12px;
+  border-radius: 4px;
   padding: 32px 28px 28px;
   color: #ffffff;
   font-family: 'Figtree', sans-serif;
@@ -137,7 +137,7 @@
 .explain {
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 8px;
+  border-radius: 4px;
   padding: 1.25rem;
   margin-bottom: 20px;
   position: relative;
@@ -199,7 +199,7 @@
   background: transparent;
   color: rgba(255, 255, 255, 0.9);
   border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
+  border-radius: 4px;
   padding: 14px 24px;
   font-family: 'Figtree', sans-serif;
   font-size: 0.95rem;
@@ -218,7 +218,7 @@
   background: none;
   color: rgba(255, 255, 255, 0.7);
   border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
+  border-radius: 4px;
   padding: 14px 20px;
   font-family: 'Figtree', sans-serif;
   font-size: 14px;

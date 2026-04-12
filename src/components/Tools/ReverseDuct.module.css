@@ -44,7 +44,7 @@
 .segmentedControl {
   display: inline-flex;
   border: 1px solid #ddd;
-  border-radius: 8px;
+  border-radius: 4px;
   overflow: hidden;
 }
 
@@ -96,7 +96,7 @@
   color: #1b3a5c;
   background: white;
   border: 1px solid rgba(14, 35, 64, 0.12);
-  border-radius: 8px;
+  border-radius: 4px;
   outline: none;
   transition: border-color 0.2s ease;
   appearance: none;
@@ -120,7 +120,7 @@
 .card {
   background: white;
   border: 1px solid #e0e0e0;
-  border-radius: 8px;
+  border-radius: 4px;
   padding: 20px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
   display: flex;

@@ -13,7 +13,7 @@
   min-width: 0;
   font-family: 'Figtree', sans-serif;
   font-size: 18px;
-  color: #333;
+  color: #2a2d32;
   line-height: 1.85;
 }
 
@@ -42,7 +42,7 @@
 }
 
 .box {
-  background: #f4f6f9;
+  background: #f5f6f8;
   border: none;
   border-left: 3px solid #4a9fe5;
   border-radius: 0;
@@ -71,9 +71,9 @@
 }
 
 .boxTitle {
-  font-family: 'Figtree', sans-serif;
-  font-size: 20px;
-  font-weight: 800;
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-size: 19px;
+  font-weight: 700;
   color: #1b3a5c;
   line-height: 1.25;
 }
@@ -131,12 +131,13 @@
 }
 
 .sectionH2 {
-  font-family: 'Figtree', sans-serif;
-  font-size: 32px;
-  font-weight: 800;
-  color: #1b3a5c;
-  line-height: 1.2;
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: #0e2340;
+  line-height: 1.25;
   margin-bottom: 18px;
+  letter-spacing: -0.01em;
 }
 
 .sectionH3 {
@@ -170,11 +171,11 @@
 
 /* Calculator */
 .calculator {
-  background-color: #f4f6f9;
+  background-color: #f5f6f8;
   background-image: radial-gradient(circle, rgba(14, 35, 64, 0.04) 0.5px, transparent 0.5px);
   background-size: 20px 20px;
   border: 1px solid rgba(14, 35, 64, 0.06);
-  border-radius: 12px;
+  border-radius: 4px;
   padding: 2rem;
   margin: 24px 0 8px;
   position: relative;
@@ -236,7 +237,7 @@
   color: #1b3a5c;
   background: #ffffff;
   border: 1px solid rgba(14, 35, 64, 0.12);
-  border-radius: 8px;
+  border-radius: 4px;
   outline: none;
   transition: border-color 0.2s ease;
   width: 100%;
@@ -249,14 +250,14 @@
 .calcResult {
   background: #ffffff;
   border: 1px solid #ddd;
-  border-radius: 8px;
+  border-radius: 4px;
   padding: 20px 22px;
 }
 
 .calcResultLine {
   font-family: 'Figtree', sans-serif;
   font-size: 18px;
-  color: #333;
+  color: #2a2d32;
   margin-bottom: 8px !important;
 }
 
@@ -304,7 +305,7 @@
 
 .customerBox {
   background: #f0f4f8;
-  border-radius: 8px;
+  border-radius: 4px;
   padding: 18px 20px;
   margin-bottom: 18px;
   position: relative;
@@ -356,7 +357,7 @@
   background: #0e2340;
   color: white;
   padding: 12px 24px;
-  border-radius: 8px;
+  border-radius: 4px;
   font-family: 'Figtree', sans-serif;
   font-size: 16px;
   font-weight: 600;

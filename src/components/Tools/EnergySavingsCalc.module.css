@@ -23,11 +23,11 @@
 }
 
 .inputCard {
-  background-color: #f4f6f9;
+  background-color: #f5f6f8;
   background-image: radial-gradient(circle, rgba(14, 35, 64, 0.04) 0.5px, transparent 0.5px);
   background-size: 20px 20px;
   border: 1px solid rgba(14, 35, 64, 0.06);
-  border-radius: 12px;
+  border-radius: 4px;
   padding: 2rem;
   margin-bottom: 24px;
   position: relative;
@@ -82,7 +82,7 @@
   color: #1b3a5c;
   background: #ffffff;
   border: 1px solid rgba(14, 35, 64, 0.12);
-  border-radius: 8px;
+  border-radius: 4px;
   outline: none;
   transition: border-color 0.2s ease;
 }

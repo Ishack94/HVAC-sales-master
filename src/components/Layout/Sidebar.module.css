@@ -10,7 +10,7 @@
 /* Ad box */
 .box {
   background: #0e2340;
-  border-radius: 12px;
+  border-radius: 4px;
   overflow: hidden;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
@@ -25,7 +25,7 @@
   display: block;
   width: 100%;
   height: auto;
-  border-radius: 12px 12px 0 0;
+  border-radius: 4px 4px 0 0;
 }
 
 .adBody {
@@ -84,7 +84,7 @@
 .curatedBox {
   background: #ffffff;
   border: 1px solid #e5e5e5;
-  border-radius: 12px;
+  border-radius: 4px;
   padding: 24px;
   display: flex;
   flex-direction: column;
@@ -103,7 +103,7 @@
   font-weight: 700;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: #999;
+  color: #8a8f96;
   margin-bottom: 16px;
 }
 
@@ -111,7 +111,7 @@
 .mostPopular {
   background: #ffffff;
   border: 1px solid #e5e5e5;
-  border-radius: 12px;
+  border-radius: 4px;
   padding: 24px;
   display: flex;
   flex-direction: column;
@@ -124,7 +124,7 @@
   font-weight: 700;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: #999;
+  color: #8a8f96;
   margin-bottom: 16px;
 }
 
@@ -152,8 +152,8 @@
 
 /* Keep reading */
 .keepReading {
-  background: #f4f6f9;
-  border-radius: 12px;
+  background: #f5f6f8;
+  border-radius: 4px;
   padding: 24px;
 }
 
@@ -163,7 +163,7 @@
   font-weight: 700;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: #999;
+  color: #8a8f96;
   margin-bottom: 20px;
 }
 

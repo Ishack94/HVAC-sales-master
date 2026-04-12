@@ -54,7 +54,7 @@
   color: #1b3a5c;
   background: white;
   border: 1px solid #ddd;
-  border-radius: 8px;
+  border-radius: 4px;
   outline: none;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
@@ -90,7 +90,7 @@ select.input {
 .segmentedControl {
   display: inline-flex;
   border: 1px solid #ddd;
-  border-radius: 8px;
+  border-radius: 4px;
   overflow: hidden;
 }
 
@@ -148,7 +148,7 @@ select.input {
 .resultCard {
   background: white;
   border: 1px solid #e0e0e0;
-  border-radius: 8px;
+  border-radius: 4px;
   padding: 22px 24px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
   display: flex;
@@ -215,7 +215,7 @@ select.input {
 .placeholder {
   background: #f0f4f8;
   border: 1px dashed #cbd5e1;
-  border-radius: 8px;
+  border-radius: 4px;
   padding: 48px 24px;
   text-align: center;
   font-size: 14px;
@@ -229,7 +229,7 @@ select.input {
 .refBlock {
   background: white;
   border: 1px solid #ddd;
-  border-radius: 12px;
+  border-radius: 4px;
   padding: 24px;
   box-shadow: 0 2px 14px rgba(14, 35, 64, 0.05);
 }
@@ -247,7 +247,7 @@ select.input {
 
 .tableWrap {
   overflow-x: auto;
-  border-radius: 8px;
+  border-radius: 4px;
   border: 1px solid #e5e5e5;
 }
 

@@ -206,7 +206,7 @@
   color: #1b3a5c;
   background: white;
   border: 1px solid rgba(14, 35, 64, 0.12);
-  border-radius: 8px;
+  border-radius: 4px;
   outline: none;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
@@ -252,7 +252,7 @@ select.input {
 .addRoomBtn {
   background: white;
   border: 1px dashed #4a9fe5;
-  border-radius: 8px;
+  border-radius: 4px;
   padding: 14px;
   font-family: 'Figtree', sans-serif;
   font-size: 14px;
@@ -277,7 +277,7 @@ select.input {
   padding: 18px 22px;
   background: #f0f4f8;
   border: 1px solid #ddd;
-  border-radius: 8px;
+  border-radius: 4px;
   font-size: 14px;
   font-weight: 600;
   color: #555;
@@ -302,7 +302,7 @@ select.input {
   background: #4a9fe5;
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 4px;
   padding: 14px 28px;
   font-family: 'Figtree', sans-serif;
   font-size: 14px;
@@ -327,7 +327,7 @@ select.input {
   background: white;
   color: #1b3a5c;
   border: 1px solid #ddd;
-  border-radius: 8px;
+  border-radius: 4px;
   padding: 14px 28px;
   font-family: 'Figtree', sans-serif;
   font-size: 14px;
@@ -373,7 +373,7 @@ select.input {
 .equipPanel {
   background: #f0f4f8;
   border: 1px solid #ddd;
-  border-radius: 12px;
+  border-radius: 4px;
   padding: 24px;
   display: flex;
   flex-direction: column;
@@ -409,7 +409,7 @@ select.input {
   align-items: center;
   background: white;
   border: 1px solid #ddd;
-  border-radius: 8px;
+  border-radius: 4px;
   padding: 14px 18px;
   margin-top: 6px;
 }
@@ -431,7 +431,7 @@ select.input {
 /* === Design CFM hero === */
 .designCfm {
   background: linear-gradient(135deg, #0e2340 0%, #1b3a5c 100%);
-  border-radius: 12px;
+  border-radius: 4px;
   padding: 32px 28px;
   text-align: center;
   margin-bottom: 28px;
@@ -489,7 +489,7 @@ select.input {
 .resultBlock {
   background: white;
   border: 1px solid #ddd;
-  border-radius: 12px;
+  border-radius: 4px;
   padding: 26px;
   margin-bottom: 20px;
   box-shadow: 0 2px 14px rgba(14, 35, 64, 0.05);
@@ -516,7 +516,7 @@ select.input {
 /* === Schedule table === */
 .tableWrap {
   overflow-x: auto;
-  border-radius: 8px;
+  border-radius: 4px;
   border: 1px solid #e5e5e5;
 }
 
@@ -578,7 +578,7 @@ select.input {
 .svgWrap {
   background: #f0f4f8;
   border: 1px solid #e5e5e5;
-  border-radius: 8px;
+  border-radius: 4px;
   padding: 16px;
   overflow-x: auto;
 }
@@ -600,7 +600,7 @@ select.input {
 .returnStat {
   background: #f0f4f8;
   border: 1px solid #ddd;
-  border-radius: 8px;
+  border-radius: 4px;
   padding: 18px;
   display: flex;
   flex-direction: column;
@@ -694,7 +694,7 @@ select.input {
     padding: 14px;
     background: #f0f4f8;
     border: 1px solid #ddd;
-    border-radius: 8px;
+    border-radius: 4px;
   }
 
   .roomRow > .input:nth-of-type(1) {
@@ -770,7 +770,7 @@ select.input {
   background: white;
   border: 1px solid #ddd;
   border-left: 4px solid #4a9fe5;
-  border-radius: 12px;
+  border-radius: 4px;
   padding: 26px 28px;
   margin-bottom: 22px;
   box-shadow: 0 4px 18px rgba(14, 35, 64, 0.06);
@@ -816,7 +816,7 @@ select.input {
   color: #1b3a5c;
   background: #f0f4f8;
   border: 1px solid #ddd;
-  border-radius: 8px;
+  border-radius: 4px;
   outline: none;
   resize: vertical;
   min-height: 110px;
@@ -849,7 +849,7 @@ select.input {
   background: #4a9fe5;
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 4px;
   padding: 13px 24px;
   font-family: 'Figtree', sans-serif;
   font-size: 13px;
@@ -890,7 +890,7 @@ select.input {
   height: 38px;
   background: linear-gradient(90deg, #f0f4f8 0%, #e3ebf3 50%, #f0f4f8 100%);
   background-size: 200% 100%;
-  border-radius: 8px;
+  border-radius: 4px;
   animation: skeletonPulse 1.5s ease-in-out infinite, skeletonShimmer 1.8s linear infinite;
 }
 
@@ -910,7 +910,7 @@ select.input {
   background: #f0f4f8;
   border: 1px solid #4a9fe5;
   border-left: 4px solid #4a9fe5;
-  border-radius: 8px;
+  border-radius: 4px;
   font-size: 13px;
   font-weight: 700;
   color: #0e2340;
@@ -923,7 +923,7 @@ select.input {
   background: #fff5f5;
   border: 1px solid #ddd;
   border-left: 4px solid #c0392b;
-  border-radius: 8px;
+  border-radius: 4px;
   font-size: 13px;
   color: #1b3a5c;
   animation: aiSlideIn 0.35s cubic-bezier(0.22, 1, 0.36, 1);
@@ -984,7 +984,7 @@ select.input {
 .segmentedControl {
   display: inline-flex;
   border: 1px solid #ddd;
-  border-radius: 8px;
+  border-radius: 4px;
   overflow: hidden;
 }
 
@@ -1065,7 +1065,7 @@ select.input {
 .floorPlanWrap {
   background: #f0f4f8;
   border: 1px solid #e5e5e5;
-  border-radius: 8px;
+  border-radius: 4px;
   padding: 16px;
   overflow-x: auto;
 }
