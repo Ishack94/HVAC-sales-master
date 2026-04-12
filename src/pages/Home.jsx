@@ -334,7 +334,7 @@ export default function Home() {
 
               <MilwaukeeAd className={styles.milwaukeeAd} />
 
-              <h2>Got a question? A story? A win from the field?</h2>
+              <h2>Got a question? A funny story? A win from the field?</h2>
               <p>Drop your email and share what's on your mind. Best questions become articles.</p>
 
               {status === 'success' ? (
