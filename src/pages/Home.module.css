@@ -1,7 +1,7 @@
 .layout {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 32px 32px 80px;
+  padding: 48px 32px 80px;
   display: flex;
   gap: 56px;
   align-items: flex-start;
@@ -122,14 +122,18 @@
 }
 
 .body blockquote {
-  background: rgba(74, 159, 229, 0.06);
-  border-left: 4px solid #4a9fe5;
-  border-radius: 0 8px 8px 0;
-  margin: 40px 0;
-  padding: 20px 24px;
+  margin: 56px 0;
+  padding: 32px 24px;
+  text-align: center;
+  border-top: 1px solid rgba(14, 35, 64, 0.12);
+  border-bottom: 1px solid rgba(14, 35, 64, 0.12);
+  border-left: none;
+  border-radius: 0;
+  background: none;
   font-style: italic;
-  color: #555;
-  font-size: 20px;
+  color: #1b3a5c;
+  font-size: 22px;
+  font-weight: 500;
   line-height: 1.55;
   position: relative;
 }
@@ -137,8 +141,9 @@
 .body blockquote::before {
   content: '\201C';
   position: absolute;
-  top: -10px;
-  left: -5px;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
   font-size: 80px;
   color: rgba(74, 159, 229, 0.15);
   font-family: Georgia, serif;
@@ -185,7 +190,7 @@
 .pill {
   padding: 8px 20px;
   min-height: 44px;
-  border-radius: 50px;
+  border-radius: 6px;
   font-family: 'Figtree', sans-serif;
   font-size: 13px;
   font-weight: 600;
@@ -223,8 +228,8 @@
 
 .section {
   margin: 0 -32px;
-  margin-top: 64px;
-  padding: 40px 32px 48px;
+  margin-top: 80px;
+  padding: 56px 32px 64px;
 }
 
 /* Subtle gradient divider between major sections */
@@ -277,7 +282,7 @@
   margin-bottom: 28px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 14px;
 }
 
 .articleList li {
@@ -288,16 +293,17 @@
 
 .articleLink {
   color: #4a9fe5;
-  text-decoration: underline;
-  text-underline-offset: 3px;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
   font-weight: 500;
   padding-left: 0;
   display: inline-block;
-  transition: color 0.2s ease, padding-left 0.2s ease;
+  transition: border-color 0.3s ease, color 0.2s ease, padding-left 0.2s ease;
 }
 
 .articleLink:hover {
   color: #3a8cd0;
+  border-bottom: 1px solid #4a9fe5;
   padding-left: 8px;
 }
 
@@ -313,13 +319,14 @@
   font-size: 15px;
   font-weight: 700;
   color: #4a9fe5;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  transition: color 0.2s ease;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.3s ease, color 0.2s ease;
 }
 
 .viewAllLink:hover {
   color: #0e2340;
+  border-bottom: 1px solid #0e2340;
 }
 
 
@@ -450,8 +457,8 @@
 
   .section {
     margin: 0 -20px;
-    margin-top: 40px;
-    padding: 32px 20px 40px;
+    margin-top: 48px;
+    padding: 36px 20px 44px;
   }
 
   .sectionDivider {
@@ -477,8 +484,8 @@
 
   .body blockquote {
     font-size: 17px;
-    padding-left: 18px;
-    margin: 28px 0;
+    padding: 24px 16px;
+    margin: 36px 0;
   }
 
   .inlineRow {

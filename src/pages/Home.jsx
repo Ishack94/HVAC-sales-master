@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useRef } from 'react'
+import React, { useState, useMemo, useRef, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import Banner from '../components/Layout/Banner'
@@ -67,6 +67,25 @@ export default function Home() {
   const [search, setSearch] = useState('')
   const [activeCategory, setActiveCategory] = useState('all')
   const searchTimerRef = useRef(null)
+
+  // Scroll reveal
+  useEffect(() => {
+    const els = document.querySelectorAll('.reveal')
+    if (!els.length) return
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('reveal-visible')
+            obs.unobserve(entry.target)
+          }
+        })
+      },
+      { threshold: 0.1 }
+    )
+    els.forEach((el) => obs.observe(el))
+    return () => obs.disconnect()
+  }, [])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -158,7 +177,7 @@ export default function Home() {
         <main className={styles.main}>
 
           {/* Author row */}
-          <div className={styles.authorRow}>
+          <div className={`${styles.authorRow} reveal`}>
             <img src={headshotSrc} alt="HVAC Sales Master founder" className={styles.headshot} />
             <div className={styles.authorText}>
               <p className={styles.authorLabel}>Written from the Field</p>
@@ -193,7 +212,7 @@ export default function Home() {
 
           {/* Body content — always visible intro */}
           {!isFiltering && (
-            <div className={styles.body}>
+            <div className={`${styles.body} reveal`}>
               <h2>Why I Leave My Cards in the Van (And Close More Deals Because of It)</h2>
 
               <p>After I've gone through everything — <strong>explained the options, answered all their questions, handled every concern</strong> — I stop talking. I turn it over to them.</p>
@@ -226,7 +245,8 @@ export default function Home() {
               alt="Kitchen counter with laptop and paperwork during an HVAC sales consultation"
               loading="lazy"
               decoding="async"
-              style={{ width: '100%', maxHeight: '200px', objectFit: 'cover', objectPosition: 'center', display: 'block', margin: '2.5rem 0' }}
+              className="reveal"
+              style={{ width: '100%', maxHeight: '200px', objectFit: 'cover', objectPosition: 'center', display: 'block', margin: '2.5rem 0', borderRadius: '6px' }}
             />
           )}
 
@@ -237,7 +257,7 @@ export default function Home() {
 
           {/* Sales Training */}
           {showSales && filteredSales.length > 0 && (
-            <div className={`${styles.section} ${styles.sectionWhite}`}>
+            <div className={`${styles.section} ${styles.sectionWhite} reveal`}>
               <h2 className={styles.sectionH2}>Sales Training</h2>
               {!isFiltering && <p>These aren't generic sales tips from someone who's never set foot in a crawl space. This is <strong>real-world HVAC sales strategy</strong> — written by people who've actually sat across from homeowners, handled objections, and closed jobs in the field.</p>}
               <p className={styles.sectionIntro}>For comfort advisors and salespeople who close in the home.</p>
@@ -267,13 +287,14 @@ export default function Home() {
               alt="Inside an organized HVAC service van with tools and refrigerant gauges"
               loading="lazy"
               decoding="async"
-              style={{ width: '100%', maxHeight: '200px', objectFit: 'cover', objectPosition: 'center', display: 'block', margin: '2.5rem 0' }}
+              className="reveal"
+              style={{ width: '100%', maxHeight: '200px', objectFit: 'cover', objectPosition: 'center', display: 'block', margin: '2.5rem 0', borderRadius: '6px' }}
             />
           )}
 
           {/* Pro Lessons */}
           {showPro && filteredTech.length > 0 && (
-            <div className={`${styles.section} ${styles.sectionBlueGray}`}>
+            <div className={`${styles.section} ${styles.sectionBlueGray} reveal`}>
               <h2 className={styles.sectionH2}>Pro Lessons for Techs &amp; Installers</h2>
               {!isFiltering && <p>Technical training that goes beyond the textbook. These lessons are written for working technicians who want to diagnose faster, install cleaner, and get fewer callbacks.</p>}
               <p className={styles.sectionIntro}>For service technicians and installers.</p>
@@ -305,13 +326,14 @@ export default function Home() {
               alt="HVAC technician diagnosing a residential furnace with a clamp meter"
               loading="lazy"
               decoding="async"
-              style={{ width: '100%', maxHeight: '200px', objectFit: 'cover', objectPosition: 'center 30%', display: 'block', margin: '2.5rem 0' }}
+              className="reveal"
+              style={{ width: '100%', maxHeight: '200px', objectFit: 'cover', objectPosition: 'center 30%', display: 'block', margin: '2.5rem 0', borderRadius: '6px' }}
             />
           )}
 
           {/* Homeowner */}
           {showHomeowner && filteredHomeowner.length > 0 && (
-            <div className={`${styles.section} ${styles.sectionWhite}`}>
+            <div className={`${styles.section} ${styles.sectionWhite} reveal`}>
               <h2 className={styles.sectionH2}>Homeowner Troubleshooting</h2>
               {!isFiltering && <p>Straightforward answers written by technicians, not content farms. These articles help homeowners understand what's going on so they can make smart decisions — and they help you close more jobs.</p>}
               <p className={styles.sectionIntro}>For homeowners trying to understand their system.</p>
@@ -341,13 +363,14 @@ export default function Home() {
               alt="Workbench with laptop, notebook, and tools — building a website after hours"
               loading="lazy"
               decoding="async"
-              style={{ width: '100%', maxHeight: '200px', objectFit: 'cover', objectPosition: 'center', display: 'block', margin: '2.5rem 0' }}
+              className="reveal"
+              style={{ width: '100%', maxHeight: '200px', objectFit: 'cover', objectPosition: 'center', display: 'block', margin: '2.5rem 0', borderRadius: '6px' }}
             />
           )}
 
           {/* Closing content — only when not filtering */}
           {!isFiltering && (
-            <div className={`${styles.body} ${styles.noDropCap}`}>
+            <div className={`${styles.body} ${styles.noDropCap} reveal`}>
               <blockquote>The best technicians never stop learning. The best closers never stop either.</blockquote>
 
               <h2>Who Built This</h2>
