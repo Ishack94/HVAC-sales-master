@@ -70,6 +70,25 @@ function ArticleBody({ content }) {
   )
 }
 
+function SummaryBox({ content }) {
+  if (!content) return null
+  // Strip markdown/HTML and take first ~150 chars
+  const plain = content
+    .replace(/<[^>]+>/g, '')
+    .replace(/^#{1,4}\s+.*/gm, '')
+    .replace(/^- .*/gm, '')
+    .replace(/\n+/g, ' ')
+    .trim()
+  if (plain.length < 30) return null
+  const snippet = plain.slice(0, 150).replace(/\s+\S*$/, '') + '...'
+  return (
+    <div className={styles.summaryBox}>
+      <p className={styles.summaryLabel}>What you'll learn</p>
+      <p className={styles.summaryText}>{snippet}</p>
+    </div>
+  )
+}
+
 function TableOfContents({ content }) {
   if (!content || content.trim().startsWith('<')) return null
 
@@ -79,7 +98,7 @@ function TableOfContents({ content }) {
     .filter((b) => b.startsWith('## '))
     .map((b) => b.slice(3))
 
-  if (headings.length < 3) return null
+  if (headings.length < 2) return null
 
   return (
     <div className={styles.toc}>
@@ -262,9 +281,10 @@ export default function ArticlePage({ section }) {
             >
               {categoryLabel}
             </span>
-            {meta?.readTime && <span className={styles.readTime}>{meta.readTime} read</span>}
+            {meta?.readTime && <span className={styles.readTime}>{meta.readTime} read · Updated April 2026</span>}
           </div>
 
+          {content && <SummaryBox content={content} />}
           {content && <TableOfContents content={content} />}
 
           <div className={styles.body}>
@@ -329,7 +349,7 @@ export default function ArticlePage({ section }) {
             <img src={headshotSrc} alt="HVAC Sales Master founder" className={styles.authorBoxHeadshot} />
             <div className={styles.authorBoxText}>
               <p className={styles.authorBoxName}>Written by HVAC Sales Master</p>
-              <p className={styles.authorBoxBio}>Every article is written from real experience in the field — running service calls, sitting at kitchen tables, and training other techs.</p>
+              <p className={styles.authorBoxBio}>Years of in-home HVAC sales and service experience across residential systems. Every article on this site comes from real field work — not a marketing desk.</p>
             </div>
           </div>
 
