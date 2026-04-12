@@ -7,6 +7,7 @@ import Newsletter from '../components/Home/Newsletter'
 import DuctDesigner from '../components/Tools/DuctDesigner'
 import ReverseDuct from '../components/Tools/ReverseDuct'
 import SuperheatCalc from '../components/Tools/SuperheatCalc'
+import EnergySavingsCalc from '../components/Tools/EnergySavingsCalc'
 import ResultsPanel from '../components/Tools/ResultsPanel'
 import atticImg from '../assets/attic-ductwork.jpg'
 import styles from './Resources.module.css'
@@ -208,6 +209,14 @@ function SuperheatSection() {
   )
 }
 
+function EnergySavingsSection() {
+  return (
+    <section className={styles.sectionFlush}>
+      <EnergySavingsCalc />
+    </section>
+  )
+}
+
 export default function Resources() {
   const location = useLocation()
   const canonicalUrl = `https://hvac-sales-master.vercel.app${location.pathname}`
@@ -247,6 +256,9 @@ export default function Resources() {
     if (openKey === 'superheat') {
       return <SuperheatSection />
     }
+    if (openKey === 'energy-savings') {
+      return <EnergySavingsSection />
+    }
     return null
   }
 
@@ -284,6 +296,7 @@ export default function Resources() {
               { key: 'duct-designer', title: 'Duct Design Calculator', desc: 'Size supply and return ductwork for any house', subtitle: 'Design the airflow' },
               { key: 'reverse-duct', title: 'Reverse Duct Calculator', desc: 'Already have ducts? Find out how much airflow they can handle', subtitle: 'Verify duct capacity' },
               { key: 'superheat', title: 'Superheat & Subcooling', desc: 'Check if the system is properly charged with superheat and subcooling calculations', subtitle: 'Verify the charge' },
+              { key: 'energy-savings', title: 'Energy Savings Calculator', desc: 'Show homeowners how much they\'ll save by upgrading to a higher SEER system', subtitle: 'Compare efficiency' },
             ].map((s) => {
               const isActive = openKey === s.key
               return (
