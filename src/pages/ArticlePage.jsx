@@ -56,6 +56,14 @@ function ArticleBody({ content }) {
           )
         }
 
+        if (trimmed.startsWith('Pro tip:') || trimmed.startsWith('Pro Tip:')) {
+          return (
+            <p key={i} className={styles.proTip}>
+              <strong>{trimmed.slice(0, 8)}</strong>{trimmed.slice(8)}
+            </p>
+          )
+        }
+
         return <p key={i}>{trimmed}</p>
       })}
     </>
@@ -121,6 +129,20 @@ export default function ArticlePage({ section }) {
   const nextArticle = currentIndex < sectionArticles.length - 1 ? sectionArticles[currentIndex + 1] : null
 
   const related = sectionArticles.filter((a) => a.slug !== slug).slice(0, 3)
+
+  // Sequential "Related on HVAC Sales Master" — next 3 articles in order (wraps around)
+  const relatedInline = useMemo(() => {
+    const pool = sectionArticles.filter((a) => a.slug !== slug)
+    const start = currentIndex >= 0 ? currentIndex : 0
+    const picks = []
+    for (let i = 1; picks.length < 3 && i <= pool.length; i++) {
+      const idx = (start + i) % sectionArticles.length
+      if (sectionArticles[idx] && sectionArticles[idx].slug !== slug) {
+        picks.push(sectionArticles[idx])
+      }
+    }
+    return picks
+  }, [slug, section])
 
   // Randomized "Related Topics" — 3 articles from same section, reshuffled per article
   const relatedTopics = useMemo(() => {
@@ -255,6 +277,21 @@ export default function ArticlePage({ section }) {
               </p>
             )}
           </div>
+
+          {relatedInline.length > 0 && (
+            <div className={styles.relatedInline}>
+              <p className={styles.relatedInlineLabel}>Related on HVAC Sales Master</p>
+              <ul className={styles.relatedInlineList}>
+                {relatedInline.map((a) => (
+                  <li key={a.slug}>
+                    <Link to={articlePath(a.slug)} className={styles.relatedInlineLink}>
+                      {a.title} →
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
 
           <MilwaukeeAd className={styles.milwaukeeAd} />
 

@@ -212,6 +212,54 @@
   font-style: italic;
 }
 
+/* Pro Tip callout */
+.proTip {
+  border-left: 3px solid #4a9fe5;
+  padding-left: 1rem;
+  margin: 1.5rem 0;
+}
+
+.proTip strong {
+  color: #0e2340;
+}
+
+/* Related on HVAC Sales Master — simple inline text links */
+.relatedInline {
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid #e5e5e5;
+}
+
+.relatedInlineLabel {
+  font-family: 'Figtree', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #999;
+  margin-bottom: 12px;
+}
+
+.relatedInlineList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.relatedInlineLink {
+  font-family: 'Figtree', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: #4a9fe5;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.relatedInlineLink:hover {
+  color: #0e2340;
+}
+
 /* Author box */
 .authorBox {
   display: flex;
