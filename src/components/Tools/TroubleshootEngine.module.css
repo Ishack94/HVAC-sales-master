@@ -1,0 +1,257 @@
+.engine {
+  font-family: 'Figtree', sans-serif;
+  color: #1b3a5c;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.heading {
+  font-size: 24px;
+  font-weight: 800;
+  color: #0e2340;
+  margin: 0 0 10px;
+  line-height: 1.2;
+}
+
+.helper {
+  font-size: 14px;
+  color: rgba(14, 35, 64, 0.5);
+  line-height: 1.6;
+  font-style: italic;
+  margin: 0 0 24px;
+}
+
+.typeLabel {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #4a9fe5;
+  margin: 0 0 8px;
+}
+
+/* Equipment cards */
+.equipGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.equipCard {
+  background: #f4f6f9;
+  border: none;
+  border-left: 3px solid #4a9fe5;
+  padding: 1.25rem 1.25rem 1.25rem 1.5rem;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-family: 'Figtree', sans-serif;
+  transition: background 160ms ease;
+}
+
+.equipCard:hover {
+  background: #edf1f5;
+}
+
+.equipTitle {
+  font-size: 17px;
+  font-weight: 800;
+  color: #0e2340;
+}
+
+.equipDesc {
+  font-size: 13px;
+  color: rgba(14, 35, 64, 0.5);
+  line-height: 1.5;
+}
+
+/* Symptom list */
+.symptomList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.symptomRow {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background: #f4f6f9;
+  border: none;
+  border-left: 3px solid transparent;
+  padding: 16px 20px;
+  text-align: left;
+  cursor: pointer;
+  font-family: 'Figtree', sans-serif;
+  min-height: 56px;
+  transition: background 160ms ease, border-color 160ms ease;
+}
+
+.symptomRow:hover {
+  background: #edf1f5;
+  border-left-color: #4a9fe5;
+}
+
+.symptomTitle {
+  font-size: 16px;
+  font-weight: 700;
+  color: #0e2340;
+}
+
+.symptomDesc {
+  font-size: 13px;
+  color: rgba(14, 35, 64, 0.5);
+  line-height: 1.4;
+}
+
+/* Breadcrumb */
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(14, 35, 64, 0.4);
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.breadSep {
+  color: rgba(14, 35, 64, 0.2);
+}
+
+/* Question */
+.questionText {
+  font-size: 20px;
+  font-weight: 700;
+  color: #0e2340;
+  line-height: 1.35;
+  margin: 0 0 10px;
+}
+
+/* Answer buttons */
+.answerRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.yesBtn,
+.noBtn {
+  min-height: 48px;
+  font-family: 'Figtree', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 160ms ease, transform 100ms ease;
+}
+
+.yesBtn {
+  background: #0e2340;
+  color: #ffffff;
+  border: none;
+}
+
+.yesBtn:hover {
+  background: #1b3a5c;
+  transform: translateY(-1px);
+}
+
+.noBtn {
+  background: #ffffff;
+  color: #0e2340;
+  border: 1px solid rgba(14, 35, 64, 0.15);
+}
+
+.noBtn:hover {
+  background: #f4f6f9;
+  transform: translateY(-1px);
+}
+
+/* Back link */
+.backLink {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: 'Figtree', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #4a9fe5;
+  margin-bottom: 20px;
+  display: inline-block;
+  transition: opacity 0.2s ease;
+}
+
+.backLink:hover {
+  opacity: 0.7;
+}
+
+/* Diagnosis actions */
+.diagActions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.tryDifferent {
+  background: none;
+  border: 1px solid rgba(14, 35, 64, 0.15);
+  border-radius: 8px;
+  padding: 12px 20px;
+  font-family: 'Figtree', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #1b3a5c;
+  cursor: pointer;
+  transition: background 160ms ease;
+}
+
+.tryDifferent:hover {
+  background: #f4f6f9;
+}
+
+.startOver {
+  background: #0e2340;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 20px;
+  font-family: 'Figtree', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 160ms ease;
+}
+
+.startOver:hover {
+  background: #1b3a5c;
+}
+
+/* Mobile */
+@media (max-width: 720px) {
+  .equipGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .answerRow {
+    grid-template-columns: 1fr;
+  }
+
+  .diagActions {
+    flex-direction: column;
+  }
+
+  .questionText {
+    font-size: 18px;
+  }
+}

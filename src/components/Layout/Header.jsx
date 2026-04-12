@@ -9,6 +9,7 @@ const navLinks = [
   { label: 'Sales', to: '/sales' },
   { label: 'Pro Lessons', to: '/pro-lessons' },
   { label: 'Resources', to: '/resources' },
+  { label: 'Troubleshoot', to: '/troubleshoot' },
   { label: 'About', to: '/about' },
 ]
 
