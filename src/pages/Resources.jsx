@@ -287,11 +287,11 @@ export default function Resources() {
 
           <div className={styles.boxGrid}>
             {[
-              { key: 'calculator', title: 'HVAC Load Calculator', desc: 'Estimate cooling load and equipment size', subtitle: 'Estimate system size' },
-              { key: 'duct-designer', title: 'Duct Design Calculator', desc: 'Size supply and return ductwork for any house', subtitle: 'Design the airflow' },
-              { key: 'reverse-duct', title: 'Reverse Duct Calculator', desc: 'Already have ducts? Find out how much airflow they can handle', subtitle: 'Verify duct capacity' },
-              { key: 'superheat', title: 'Superheat & Subcooling', desc: 'Check if the system is properly charged with superheat and subcooling calculations', subtitle: 'Verify the charge' },
-              { key: 'energy-savings', title: 'Energy Savings Calculator', desc: 'Show homeowners how much they\'ll save by upgrading to a higher SEER system', subtitle: 'Compare efficiency' },
+              { key: 'calculator', title: 'HVAC Load Calculator', desc: 'Estimate cooling load and equipment size', subtitle: 'Estimate system size', icon: (<svg width="28" height="28" viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M6 14.5L16 6L26 14.5" stroke="#0e2340" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"/><path d="M9 13.5V25H23V13.5" stroke="#0e2340" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"/><path d="M12.5 18A4.5 4.5 0 0 1 21 16.2" stroke="#4a9fe5" strokeWidth="1.75" strokeLinecap="round"/><path d="M20.5 16L20.8 13.8" stroke="#4a9fe5" strokeWidth="1.75" strokeLinecap="round"/><path d="M20.5 16L18.2 15.9" stroke="#4a9fe5" strokeWidth="1.75" strokeLinecap="round"/></svg>) },
+              { key: 'duct-designer', title: 'Duct Design Calculator', desc: 'Size supply and return ductwork for any house', subtitle: 'Design the airflow', icon: (<svg width="28" height="28" viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M6 16H18" stroke="#0e2340" strokeWidth="1.75" strokeLinecap="round"/><path d="M18 16L24 10" stroke="#0e2340" strokeWidth="1.75" strokeLinecap="round"/><path d="M18 16L24 22" stroke="#0e2340" strokeWidth="1.75" strokeLinecap="round"/><path d="M24 10H27" stroke="#4a9fe5" strokeWidth="1.75" strokeLinecap="round"/><path d="M24 22H27" stroke="#4a9fe5" strokeWidth="1.75" strokeLinecap="round"/><path d="M10 12V20" stroke="#4a9fe5" strokeWidth="1.75" strokeLinecap="round"/></svg>) },
+              { key: 'reverse-duct', title: 'Reverse Duct Calculator', desc: 'Already have ducts? Find out how much airflow they can handle', subtitle: 'Verify duct capacity', icon: (<svg width="28" height="28" viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M10 10H20C23.314 10 26 12.686 26 16C26 19.314 23.314 22 20 22H10" stroke="#0e2340" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"/><path d="M10 10L13 7" stroke="#4a9fe5" strokeWidth="1.75" strokeLinecap="round"/><path d="M10 10L13 13" stroke="#4a9fe5" strokeWidth="1.75" strokeLinecap="round"/><path d="M10 22L7 19" stroke="#4a9fe5" strokeWidth="1.75" strokeLinecap="round"/><path d="M10 22L7 25" stroke="#4a9fe5" strokeWidth="1.75" strokeLinecap="round"/></svg>) },
+              { key: 'superheat', title: 'Superheat & Subcooling', desc: 'Check if the system is properly charged with superheat and subcooling calculations', subtitle: 'Verify the charge', icon: (<svg width="28" height="28" viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M16 9V21" stroke="#0e2340" strokeWidth="1.75" strokeLinecap="round"/><circle cx="16" cy="24" r="3.5" stroke="#0e2340" strokeWidth="1.75"/><path d="M20 12H23" stroke="#4a9fe5" strokeWidth="1.75" strokeLinecap="round"/><path d="M20 16H24.5" stroke="#4a9fe5" strokeWidth="1.75" strokeLinecap="round"/><path d="M20 20H23" stroke="#4a9fe5" strokeWidth="1.75" strokeLinecap="round"/><path d="M12 16H8" stroke="#4a9fe5" strokeWidth="1.75" strokeLinecap="round"/></svg>) },
+              { key: 'energy-savings', title: 'Energy Savings Calculator', desc: 'Show homeowners how much they\'ll save by upgrading to a higher SEER system', subtitle: 'Compare efficiency', icon: (<svg width="28" height="28" viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M7 24V12H12V24" stroke="#0e2340" strokeWidth="1.75" strokeLinejoin="round"/><path d="M20 24V16H25V24" stroke="#0e2340" strokeWidth="1.75" strokeLinejoin="round"/><path d="M9.5 10.5H22.5" stroke="#4a9fe5" strokeWidth="1.75" strokeLinecap="round"/><path d="M22.5 10.5L19.8 7.8" stroke="#4a9fe5" strokeWidth="1.75" strokeLinecap="round"/><path d="M22.5 10.5L19.8 13.2" stroke="#4a9fe5" strokeWidth="1.75" strokeLinecap="round"/></svg>) },
             ].map((s) => {
               const isActive = openKey === s.key
               return (
@@ -302,7 +302,10 @@ export default function Resources() {
                   onClick={() => handleBoxClick(s.key)}
                   aria-expanded={isActive}
                 >
-                  <span className={styles.boxTitle}>{s.title}</span>
+                  <span className={styles.boxTitleRow}>
+                    {s.icon}
+                    <span className={styles.boxTitle}>{s.title}</span>
+                  </span>
                   {s.subtitle && <span className={styles.boxSubtitle}>{s.subtitle}</span>}
                   <span className={styles.boxDesc}>{s.desc}</span>
                 </button>
