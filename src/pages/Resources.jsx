@@ -306,8 +306,8 @@ export default function Resources() {
                   aria-expanded={isActive}
                 >
                   <span className={styles.boxTitleRow}>
-                    {s.icon}
                     <span className={styles.boxTitle}>{s.title}</span>
+                    {s.icon}
                   </span>
                   {s.subtitle && <span className={styles.boxSubtitle}>{s.subtitle}</span>}
                   <span className={styles.boxDesc}>{s.desc}</span>
