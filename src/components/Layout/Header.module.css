@@ -1,6 +1,6 @@
 .header {
   position: fixed;
-  top: 4px;
+  top: 0;
   left: 0;
   right: 0;
   z-index: 100;
@@ -100,7 +100,11 @@
 .hamburger {
   display: none;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   gap: 5px;
+  min-width: 44px;
+  min-height: 44px;
   padding: 6px;
   cursor: pointer;
   flex-shrink: 0;
@@ -209,5 +213,16 @@
 
   .logo {
     height: 72px;
+  }
+}
+
+@media (max-width: 768px) {
+  .inner {
+    padding: 4px 16px;
+    height: 64px;
+  }
+
+  .logo {
+    height: 52px;
   }
 }

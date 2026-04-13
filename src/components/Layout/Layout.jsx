@@ -14,7 +14,6 @@ export default function Layout() {
 
   return (
     <>
-      <div className={styles.topBar} aria-hidden="true" />
       <Header />
       <main>
         <Outlet />
