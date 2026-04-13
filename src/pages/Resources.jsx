@@ -270,8 +270,12 @@ export default function Resources() {
     <>
       <Helmet>
         <title>Resources | HVAC Sales Master</title>
-        <meta name="description" content="Vetted HVAC resources — load calculator, training and certification, manufacturer technical libraries, and industry associations." />
+        <meta name="description" content="Free HVAC calculators for load sizing, duct design, superheat and subcooling, and energy savings. Built for techs in the field." />
         <link rel="canonical" href={canonicalUrl} />
+        <meta property="og:title" content="Resources | HVAC Sales Master" />
+        <meta property="og:description" content="Free HVAC calculators for load sizing, duct design, superheat and subcooling, and energy savings. Built for techs in the field." />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:type" content="website" />
       </Helmet>
       <Banner
         title="Resources"

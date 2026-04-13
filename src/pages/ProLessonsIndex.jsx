@@ -24,8 +24,12 @@ export default function ProLessonsIndex() {
     <>
       <Helmet>
         <title>Pro Lessons | HVAC Sales Master</title>
-        <meta name="description" content="Technical training for HVAC service technicians and installers. Diagnose faster, install cleaner, get fewer callbacks." />
+        <meta name="description" content="Technical training for HVAC techs and installers. Refrigerant charging, duct design, static pressure, diagnostics, and more." />
         <link rel="canonical" href={canonicalUrl} />
+        <meta property="og:title" content="Pro Lessons | HVAC Sales Master" />
+        <meta property="og:description" content="Technical training for HVAC techs and installers. Refrigerant charging, duct design, static pressure, diagnostics, and more." />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:type" content="website" />
       </Helmet>
       <Banner
         title="Pro Lessons"

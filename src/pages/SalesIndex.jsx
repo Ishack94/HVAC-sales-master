@@ -21,8 +21,12 @@ export default function SalesIndex() {
     <>
       <Helmet>
         <title>Sales Training | HVAC Sales Master</title>
-        <meta name="description" content="Real-world HVAC sales training for comfort advisors and salespeople who close in the home. No theory — just what actually works." />
+        <meta name="description" content="In-home HVAC sales strategies that actually close. Objection handling, pricing, scripts, and closing techniques from real field experience." />
         <link rel="canonical" href={canonicalUrl} />
+        <meta property="og:title" content="Sales Training | HVAC Sales Master" />
+        <meta property="og:description" content="In-home HVAC sales strategies that actually close. Objection handling, pricing, scripts, and closing techniques from real field experience." />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:type" content="website" />
       </Helmet>
       <Banner
         title="Sales Training"

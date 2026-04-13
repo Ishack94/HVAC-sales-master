@@ -15,8 +15,12 @@ export default function Troubleshoot() {
     <>
       <Helmet>
         <title>HVAC Troubleshooter — Free Furnace Diagnostic Tool | HVAC Sales Master</title>
-        <meta name="description" content="Free interactive furnace troubleshooting tool. Diagnose no heat, short cycling, ignition failure, and more. Step-by-step guidance for 80% and 90%+ efficiency furnaces." />
+        <meta name="description" content="Free interactive furnace troubleshooter. Walk through a guided diagnostic to identify your furnace problem step by step." />
         <link rel="canonical" href={canonicalUrl} />
+        <meta property="og:title" content="HVAC Troubleshooter — Free Furnace Diagnostic Tool | HVAC Sales Master" />
+        <meta property="og:description" content="Free interactive furnace troubleshooter. Walk through a guided diagnostic to identify your furnace problem step by step." />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:type" content="website" />
       </Helmet>
       <Banner
         title="Troubleshoot"

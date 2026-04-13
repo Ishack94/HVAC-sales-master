@@ -162,8 +162,12 @@ export default function Home() {
     <>
       <Helmet>
         <title>HVAC Sales Master — Sell Smarter. Master Your Craft.</title>
-        <meta name="description" content="Real-world sales training and technical knowledge for HVAC professionals. Written by people who've actually been in the field." />
+        <meta name="description" content="Free HVAC sales training, calculators, and troubleshooting tools built from real field experience. No fluff — just what actually works." />
         <link rel="canonical" href={canonicalUrl} />
+        <meta property="og:title" content="HVAC Sales Master — Sell Smarter. Master Your Craft." />
+        <meta property="og:description" content="Free HVAC sales training, calculators, and troubleshooting tools built from real field experience. No fluff — just what actually works." />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:type" content="website" />
         <script type="application/ld+json">
           {JSON.stringify(websiteSchema)}
         </script>
