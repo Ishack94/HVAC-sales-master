@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet-async'
 import Banner from '../components/Layout/Banner'
 import Sidebar from '../components/Layout/Sidebar'
 import TroubleshootEngine from '../components/Tools/TroubleshootEngine'
+import troubleshootHero from '../assets/troubleshoot-hero.png'
 import styles from './Troubleshoot.module.css'
 
 export default function Troubleshoot() {
@@ -29,6 +30,9 @@ export default function Troubleshoot() {
           <p className={styles.intro}>
             Walk through a guided diagnostic — one question at a time. Pick your furnace type, describe the problem, and we'll help you narrow it down.
           </p>
+          <div className={styles.photoStrip}>
+            <img src={troubleshootHero} alt="Residential gas furnace with front panel removed showing burners and components" className={styles.photoStripImg} />
+          </div>
           <TroubleshootEngine />
         </main>
         <Sidebar />
