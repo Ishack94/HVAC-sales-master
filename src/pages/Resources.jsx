@@ -223,7 +223,7 @@ function EnergySavingsSection() {
 
 export default function Resources() {
   const location = useLocation()
-  const canonicalUrl = `https://hvac-sales-master.vercel.app${location.pathname}`
+  const canonicalUrl = `https://www.hvacsalesmaster.com${location.pathname}`
   const [openKey, setOpenKey] = useState(null)
   const expandedRef = useRef(null)
   const [ductEquipment, setDuctEquipment] = useState(null)

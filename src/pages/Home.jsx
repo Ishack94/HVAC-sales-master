@@ -53,13 +53,13 @@ const websiteSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
   name: 'HVAC Sales Master',
-  url: 'https://hvac-sales-master.vercel.app',
+  url: 'https://www.hvacsalesmaster.com',
   description: 'Real-world sales training and technical knowledge for HVAC professionals.',
 }
 
 export default function Home() {
   const location = useLocation()
-  const canonicalUrl = `https://hvac-sales-master.vercel.app${location.pathname}`
+  const canonicalUrl = `https://www.hvacsalesmaster.com${location.pathname}`
   const [email, setEmail] = useState('')
   const [messageText, setMessageText] = useState('')
   const [status, setStatus] = useState('idle')

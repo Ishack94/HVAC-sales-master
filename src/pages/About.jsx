@@ -9,7 +9,7 @@ import styles from './AboutPage.module.css'
 
 export default function About() {
   const location = useLocation()
-  const canonicalUrl = `https://hvac-sales-master.vercel.app${location.pathname}`
+  const canonicalUrl = `https://www.hvacsalesmaster.com${location.pathname}`
   return (
     <>
       <Helmet>

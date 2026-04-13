@@ -19,7 +19,7 @@ const sidebarLinks = salesArticles.slice(0, 3).map((a) => ({
 
 export default function ProLessonsIndex() {
   const location = useLocation()
-  const canonicalUrl = `https://hvac-sales-master.vercel.app${location.pathname}`
+  const canonicalUrl = `https://www.hvacsalesmaster.com${location.pathname}`
   return (
     <>
       <Helmet>

@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
-Sitemap: https://hvac-sales-master.vercel.app/sitemap.xml
+
+Sitemap: https://www.hvacsalesmaster.com/sitemap.xml

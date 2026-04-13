@@ -195,7 +195,7 @@ export default function ArticlePage({ section }) {
     color: categoryColor,
   }))
 
-  const canonicalUrl = `https://hvac-sales-master.vercel.app${location.pathname}`
+  const canonicalUrl = `https://www.hvacsalesmaster.com${location.pathname}`
   const pageUrl = canonicalUrl
   const articleDescription = meta?.description || `${title} — HVAC Sales Master`
   const ogTitle = `${title} | HVAC Sales Master`
@@ -214,12 +214,12 @@ export default function ArticlePage({ section }) {
       name: 'HVAC Sales Master',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://hvac-sales-master.vercel.app/og-image.png',
+        url: 'https://www.hvacsalesmaster.com/og-image.png',
       },
     },
     url: canonicalUrl,
     mainEntityOfPage: canonicalUrl,
-    image: 'https://hvac-sales-master.vercel.app/og-image.png',
+    image: 'https://www.hvacsalesmaster.com/og-image.png',
   }
 
   // Scroll depth tracking
@@ -268,11 +268,11 @@ export default function ArticlePage({ section }) {
         <meta property="og:description" content={articleDescription} />
         <meta property="og:url" content={canonicalUrl} />
         <meta property="og:type" content="article" />
-        <meta property="og:image" content="https://hvac-sales-master.vercel.app/og-image.png" />
+        <meta property="og:image" content="https://www.hvacsalesmaster.com/og-image.png" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={ogTitle} />
         <meta name="twitter:description" content={articleDescription} />
-        <meta name="twitter:image" content="https://hvac-sales-master.vercel.app/og-image.png" />
+        <meta name="twitter:image" content="https://www.hvacsalesmaster.com/og-image.png" />
         <script type="application/ld+json">
           {JSON.stringify(articleSchema)}
         </script>
