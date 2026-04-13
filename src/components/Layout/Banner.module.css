@@ -137,9 +137,7 @@
 
 @media (max-width: 768px) {
   .banner {
-    padding: 48px 20px 56px;
-    background: linear-gradient(180deg, #0e2340, #1b3a5c);
-    background-size: 100% 100%;
-    animation: none;
+    padding: 28px 20px 24px;
+    margin-top: 64px;
   }
 }
