@@ -8,6 +8,11 @@ import ArticlePage from './pages/ArticlePage'
 import About from './pages/About'
 import Resources from './pages/Resources'
 import Troubleshoot from './pages/Troubleshoot'
+import LoadCalcPage from './pages/LoadCalcPage'
+import DuctDesignPage from './pages/DuctDesignPage'
+import ReverseDuctPage from './pages/ReverseDuctPage'
+import SuperheatPage from './pages/SuperheatPage'
+import EnergySavingsPage from './pages/EnergySavingsPage'
 import NotFound from './pages/NotFound'
 import { trackPageView } from './utils/analytics'
 
@@ -32,6 +37,11 @@ export default function App() {
           <Route path="pro-lessons/:slug" element={<ArticlePage section="pro-lessons" />} />
           <Route path="about" element={<About />} />
           <Route path="resources" element={<Resources />} />
+          <Route path="resources/hvac-load-calculator" element={<LoadCalcPage />} />
+          <Route path="resources/duct-design-calculator" element={<DuctDesignPage />} />
+          <Route path="resources/reverse-duct-calculator" element={<ReverseDuctPage />} />
+          <Route path="resources/superheat-subcooling-calculator" element={<SuperheatPage />} />
+          <Route path="resources/energy-savings-calculator" element={<EnergySavingsPage />} />
           <Route path="troubleshoot" element={<Troubleshoot />} />
           <Route path="*" element={<NotFound />} />
         </Route>

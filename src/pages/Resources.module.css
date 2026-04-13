@@ -102,6 +102,21 @@
   line-height: 1.25;
 }
 
+.boxLink {
+  font-family: 'Figtree', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: #4a9fe5;
+  text-decoration: none;
+  margin-top: 8px;
+  display: inline-block;
+  transition: color 0.2s ease;
+}
+
+.boxLink:hover {
+  color: #0e2340;
+}
+
 .boxSubtitle {
   font-family: 'Figtree', sans-serif;
   font-size: 13px;
