@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
-import logoSrc from '../../assets/logo.png'
+import logoSrc from '../../assets/logo.webp'
 import styles from './Header.module.css'
 import { trackEvent } from '../../utils/analytics'
 

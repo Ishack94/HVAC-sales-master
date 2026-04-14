@@ -9,7 +9,7 @@ import ReverseDuct from '../components/Tools/ReverseDuct'
 import SuperheatCalc from '../components/Tools/SuperheatCalc'
 import EnergySavingsCalc from '../components/Tools/EnergySavingsCalc'
 import ResultsPanel from '../components/Tools/ResultsPanel'
-import sectionAccentResources from '../assets/section-accent-resources.png'
+import sectionAccentResources from '../assets/section-accent-resources.webp'
 import styles from './Resources.module.css'
 
 const CEILING_OPTIONS = [

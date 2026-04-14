@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet-async'
 import Banner from '../components/Layout/Banner'
 import Sidebar from '../components/Layout/Sidebar'
 import TroubleshootEngine from '../components/Tools/TroubleshootEngine'
-import troubleshootHero from '../assets/troubleshoot-hero.png'
+import troubleshootHero from '../assets/troubleshoot-hero.webp'
 import styles from './Troubleshoot.module.css'
 
 export default function Troubleshoot() {

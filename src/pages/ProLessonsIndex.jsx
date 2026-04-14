@@ -5,7 +5,7 @@ import Banner from '../components/Layout/Banner'
 import Sidebar from '../components/Layout/Sidebar'
 import Newsletter from '../components/Home/Newsletter'
 import { salesArticles, proArticles } from '../utils/articleData'
-import atticDuctwork from '../assets/attic-ductwork.jpg'
+import atticDuctwork from '../assets/attic-ductwork.webp'
 import styles from './ListingPage.module.css'
 
 const techArticles = proArticles.slice(0, 13)

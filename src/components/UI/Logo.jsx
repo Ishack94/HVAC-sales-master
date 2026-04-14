@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import logoSrc from '../../assets/logo.png'
+import logoSrc from '../../assets/logo.webp'
 import styles from './Logo.module.css'
 
 export default function Logo({ height = 40, mobileHeight }) {

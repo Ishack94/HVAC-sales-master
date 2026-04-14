@@ -5,7 +5,7 @@ import Banner from '../components/Layout/Banner'
 import Sidebar from '../components/Layout/Sidebar'
 import Newsletter from '../components/Home/Newsletter'
 import { salesArticles, proArticles } from '../utils/articleData'
-import salesHero from '../assets/sales-hero.png'
+import salesHero from '../assets/sales-hero.webp'
 import styles from './ListingPage.module.css'
 
 const sidebarLinks = proArticles.slice(0, 3).map((a) => ({

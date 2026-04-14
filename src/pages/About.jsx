@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet-async'
 import Banner from '../components/Layout/Banner'
 import Sidebar from '../components/Layout/Sidebar'
 import Newsletter from '../components/Home/Newsletter'
-import headshotSrc from '../assets/headshot.png'
+import headshotSrc from '../assets/headshot.webp'
 import styles from './AboutPage.module.css'
 
 export default function About() {
