@@ -35,7 +35,6 @@ export default function About() {
             <div className={styles.authorText}>
               <p className={styles.authorLabel}>Written from the Field</p>
               <p className={styles.authorName}>HVAC Sales Master</p>
-              <p className={styles.authorBio}>Built from real in-home HVAC sales experience — not a marketing agency.</p>
             </div>
           </div>
 
