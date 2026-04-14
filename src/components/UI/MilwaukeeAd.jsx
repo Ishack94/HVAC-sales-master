@@ -12,7 +12,7 @@ export default function MilwaukeeAd({ className }) {
       </a>
       <div className={styles.content}>
         <span className={styles.label}>MILWAUKEE TOOL</span>
-        <h4 className={styles.title}>M18 ROCKET™ Tower Light</h4>
+        <p className={styles.title}>M18 ROCKET™ Tower Light</p>
         <p className={styles.desc}>5-second setup. The jobsite light every tech needs.</p>
         <a
           href={HD_LINK}

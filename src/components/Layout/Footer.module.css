@@ -35,18 +35,18 @@
 .tagline {
   font-family: 'Figtree', sans-serif;
   font-size: 14px;
-  color: rgba(255, 255, 255, 0.4);
+  color: #e2e4e8;
   line-height: 1.6;
   max-width: 240px;
 }
 
 .colHead {
   font-family: 'Figtree', sans-serif;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 700;
-  letter-spacing: 0.5px;
+  letter-spacing: 1px;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.3);
+  color: #ffffff;
   margin-bottom: 16px;
 }
 

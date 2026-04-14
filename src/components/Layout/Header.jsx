@@ -68,7 +68,7 @@ export default function Header() {
         aria-label="Mobile navigation"
         aria-hidden={!menuOpen}
       >
-        <button className={styles.closeBtn} onClick={() => setMenuOpen(false)} aria-label="Close menu">
+        <button className={styles.closeBtn} onClick={() => setMenuOpen(false)} aria-label="Close menu" tabIndex={menuOpen ? 0 : -1}>
           <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
             <path d="M2 2L20 20M20 2L2 20" stroke="white" strokeWidth="2.5" strokeLinecap="round" />
           </svg>
@@ -80,6 +80,7 @@ export default function Header() {
             end={to === '/'}
             className={({ isActive }) => `${styles.mobileLink} ${isActive ? styles.mobileLinkActive : ''}`}
             onClick={() => setMenuOpen(false)}
+            tabIndex={menuOpen ? 0 : -1}
           >
             {label}
           </NavLink>
@@ -88,6 +89,7 @@ export default function Header() {
           href="mailto:contact@hvacsalesmaster.com"
           className={styles.mobileContact}
           onClick={() => { setMenuOpen(false); trackEvent('contact_click') }}
+          tabIndex={menuOpen ? 0 : -1}
         >
           Contact Us
         </a>

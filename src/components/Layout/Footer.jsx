@@ -39,7 +39,7 @@ export default function Footer() {
           </div>
 
           <div className={styles.column}>
-            <h4 className={styles.colHead}>Sales Training</h4>
+            <p className={styles.colHead}>Sales Training</p>
             <ul>
               {salesLinks.map(({ label, to }) => (
                 <li key={to}>
@@ -50,7 +50,7 @@ export default function Footer() {
           </div>
 
           <div className={styles.column}>
-            <h4 className={styles.colHead}>Pro Lessons</h4>
+            <p className={styles.colHead}>Pro Lessons</p>
             <ul>
               {proLinks.map(({ label, to }) => (
                 <li key={to}>
@@ -61,7 +61,7 @@ export default function Footer() {
           </div>
 
           <div className={styles.column}>
-            <h4 className={styles.colHead}>Company</h4>
+            <p className={styles.colHead}>Company</p>
             <ul>
               {companyLinks.map(({ label, to }) => (
                 <li key={to}>
