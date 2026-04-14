@@ -183,7 +183,7 @@ export default function Home() {
 
           {/* Author row */}
           <div className={styles.authorRow}>
-            <img src={headshotSrc} alt="HVAC Sales Master founder" className={styles.headshot} width="120" height="120" />
+            <img src={headshotSrc} alt="HVAC Sales Master founder" className={styles.headshot} width="100" height="100" />
             <div className={styles.authorText}>
               <p className={styles.authorName}>Isaac Eells</p>
               <p className={styles.authorTagline}>Real in-home sales strategies that actually work.</p>
