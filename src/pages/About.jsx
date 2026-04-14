@@ -33,8 +33,8 @@ export default function About() {
           <div className={styles.authorRow}>
             <img src={headshotSrc} alt="HVAC Sales Master founder" className={styles.headshot} width="80" height="80" />
             <div className={styles.authorText}>
-              <p className={styles.authorLabel}>Written from the Field</p>
               <p className={styles.authorName}>Isaac Eells</p>
+              <p className={styles.authorTagline}>Real in-home sales strategies that actually work.</p>
             </div>
           </div>
 

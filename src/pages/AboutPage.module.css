@@ -58,8 +58,16 @@
 .authorBio {
   font-family: 'Figtree', sans-serif;
   font-size: 15px;
-  color: #999;
+  color: #8a8f96;
   line-height: 1.5;
+}
+
+.authorTagline {
+  font-family: 'Figtree', sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  color: #5a6068;
+  margin-top: 4px;
 }
 
 /* Body content */
