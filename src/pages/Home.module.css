@@ -9,6 +9,14 @@
   user-select: none;
 }
 
+.tagline {
+  font-family: 'Figtree', sans-serif;
+  font-size: 16px;
+  color: #5a6068;
+  margin: 24px 0;
+  line-height: 1.5;
+}
+
 .layout {
   max-width: 1400px;
   margin: 0 auto;
