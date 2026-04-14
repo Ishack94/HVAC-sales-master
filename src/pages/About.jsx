@@ -67,11 +67,6 @@ export default function About() {
               One of the best lessons I learned early on: the homeowner who says "I need to think about it" isn't saying no — they're saying you haven't made it easy enough to say yes. That one shift changed everything about how I run calls. It's the kind of thing you won't learn from a YouTube video or a corporate training deck. You learn it by sitting in someone's living room and paying attention.
             </p>
 
-            <p className={styles.closing}>
-              Got a question or want to share a win from the field? <a href="mailto:contact@hvacsalesmaster.com" className={styles.mailto}>I'd love to hear it.</a>
-            </p>
-
-            <p style={{ marginTop: '32px' }}><strong>Want to get started?</strong> Check out the <a href="/sales" style={{ color: '#4a9fe5' }}>Sales Training</a> articles or try the free tools on the <a href="/resources" style={{ color: '#4a9fe5' }}>Resources</a> page.</p>
           </div>
         </main>
 
