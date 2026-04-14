@@ -42,11 +42,10 @@
 }
 
 .headshot {
-  width: 100px;
-  height: 100px;
-  border-radius: 4px;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
   object-fit: cover;
-  border: 3px solid #4a9fe5;
   flex-shrink: 0;
 }
 
@@ -62,7 +61,7 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1px;
-  color: #8a8f96;
+  color: #4a9fe5;
 }
 
 .authorName {
@@ -83,7 +82,7 @@
 .authorTagline {
   font-family: 'Figtree', sans-serif;
   font-size: 13px;
-  color: rgba(0, 0, 0, 0.5);
+  color: #5a6068;
   font-weight: 600;
   letter-spacing: 0.3px;
   margin-top: 2px;

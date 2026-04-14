@@ -41,12 +41,6 @@ export default function About() {
 
           <div className={styles.inner}>
             <p>
-              I built this site because I was tired of generic sales advice from people who've never knocked on a homeowner's door.
-            </p>
-            <p>
-              After years running service calls and sitting at kitchen tables closing jobs, I started keeping notes on what actually worked — what objections came up, what responses landed, what made homeowners trust me enough to say yes. That turned into this site.
-            </p>
-            <p>
               HVAC Sales Master covers two sides of the business: <strong>Sales Training</strong> for comfort advisors who want to close more jobs without feeling pushy, and <strong>Pro Lessons</strong> for technicians and installers who want to sharpen their skills and stop getting callbacks.
             </p>
             <p>

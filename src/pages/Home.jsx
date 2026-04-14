@@ -6,6 +6,7 @@ import Sidebar from '../components/Layout/Sidebar'
 import { salesArticles, proArticles } from '../utils/articleData'
 import { trackEvent } from '../utils/analytics'
 import MilwaukeeAd from '../components/UI/MilwaukeeAd'
+import headshotSrc from '../assets/headshot.webp'
 import sectionAccentSales from '../assets/section-accent-sales.webp'
 import sectionAccentPro from '../assets/section-accent-pro.webp'
 import sectionAccentHomeowner from '../assets/section-accent-homeowner.webp'
@@ -180,8 +181,16 @@ export default function Home() {
       <div className={styles.layout}>
         <main className={styles.main}>
 
-          {/* Tagline */}
-          <p className={styles.tagline}>Real in-home sales strategies that actually work.</p>
+          {/* Author row */}
+          <div className={styles.authorRow}>
+            <img src={headshotSrc} alt="HVAC Sales Master founder" className={styles.headshot} width="80" height="80" />
+            <div className={styles.authorText}>
+              <p className={styles.authorLabel}>Written from the Field</p>
+              <p className={styles.authorName}>HVAC Sales Master</p>
+              <p className={styles.authorTagline}>Real in-home sales strategies that actually work.</p>
+              <p className={styles.authorTagline}>Built from real HVAC field experience.</p>
+            </div>
+          </div>
 
           {/* Search + Filter */}
           <div className={styles.searchArea}>
