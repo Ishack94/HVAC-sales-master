@@ -1,9 +1,8 @@
 import React, { lazy, Suspense, useEffect } from 'react'
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import Layout from './components/Layout/Layout'
+import Home from './pages/Home'
 import { trackPageView } from './utils/analytics'
-
-const Home = lazy(() => import('./pages/Home'))
 const SalesIndex = lazy(() => import('./pages/SalesIndex'))
 const ProLessonsIndex = lazy(() => import('./pages/ProLessonsIndex'))
 const ArticlePage = lazy(() => import('./pages/ArticlePage'))
