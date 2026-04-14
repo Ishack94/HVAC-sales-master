@@ -183,7 +183,7 @@ export default function Home() {
 
           {/* Author row */}
           <div className={`${styles.authorRow} reveal`}>
-            <img src={headshotSrc} alt="HVAC Sales Master founder" className={styles.headshot} />
+            <img src={headshotSrc} alt="HVAC Sales Master founder" className={styles.headshot} width="80" height="80" />
             <div className={styles.authorText}>
               <p className={styles.authorLabel}>Written from the Field</p>
               <p className={styles.authorName}>HVAC Sales Master</p>
@@ -248,7 +248,7 @@ export default function Home() {
             <p className={styles.noResults}>No articles found for "{search}".</p>
           )}
 
-          {!isFiltering && <img src={sectionAccentSales} alt="" role="presentation" className={styles.sectionAccent} />}
+          {!isFiltering && <img src={sectionAccentSales} alt="" role="presentation" className={styles.sectionAccent} width="960" height="60" />}
 
           {/* Sales Training */}
           {showSales && filteredSales.length > 0 && (
@@ -277,7 +277,7 @@ export default function Home() {
           )}
 
 
-          {!isFiltering && <img src={sectionAccentPro} alt="" role="presentation" className={styles.sectionAccent} />}
+          {!isFiltering && <img src={sectionAccentPro} alt="" role="presentation" className={styles.sectionAccent} width="960" height="60" />}
 
           {/* Pro Lessons */}
           {showPro && filteredTech.length > 0 && (
@@ -305,7 +305,7 @@ export default function Home() {
             </div>
           )}
 
-          {!isFiltering && <img src={sectionAccentHomeowner} alt="" role="presentation" className={styles.sectionAccent} />}
+          {!isFiltering && <img src={sectionAccentHomeowner} alt="" role="presentation" className={styles.sectionAccent} width="960" height="60" />}
 
           {/* Homeowner */}
           {showHomeowner && filteredHomeowner.length > 0 && (
@@ -333,7 +333,7 @@ export default function Home() {
             </div>
           )}
 
-          {!isFiltering && <img src={sectionAccentAbout} alt="" role="presentation" className={styles.sectionAccent} />}
+          {!isFiltering && <img src={sectionAccentAbout} alt="" role="presentation" className={styles.sectionAccent} width="960" height="60" />}
 
           {/* Closing content — only when not filtering */}
           {!isFiltering && (

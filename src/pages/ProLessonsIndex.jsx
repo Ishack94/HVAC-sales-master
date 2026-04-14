@@ -47,7 +47,7 @@ export default function ProLessonsIndex() {
               Technical training for service technicians and installers who want to diagnose faster, install better, and come back less.
             </p>
             <div className={styles.photoStrip}>
-              <img src={atticDuctwork} alt="Attic ductwork on a real job site" className={styles.photoStripImg} />
+              <img src={atticDuctwork} alt="Attic ductwork on a real job site" className={styles.photoStripImg} width="960" height="200" />
             </div>
             <ul className={styles.articleList}>
               {techArticles.map((a) => (

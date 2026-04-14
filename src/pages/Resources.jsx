@@ -290,7 +290,7 @@ export default function Resources() {
             A working list of the tools, training, and references I actually reach for in the field. Bookmark what's useful — and let me know what's missing.
           </p>
 
-          <img src={sectionAccentResources} alt="" role="presentation" className={styles.sectionAccent} />
+          <img src={sectionAccentResources} alt="" role="presentation" className={styles.sectionAccent} width="960" height="60" />
 
           <div className={styles.boxGrid}>
             {[

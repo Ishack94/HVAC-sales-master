@@ -35,7 +35,7 @@ export default function Troubleshoot() {
             Walk through a guided diagnostic — one question at a time. Pick your furnace type, describe the problem, and we'll help you narrow it down.
           </p>
           <div className={styles.photoStrip}>
-            <img src={troubleshootHero} alt="Residential gas furnace with front panel removed showing burners and components" className={styles.photoStripImg} />
+            <img src={troubleshootHero} alt="Residential gas furnace with front panel removed showing burners and components" className={styles.photoStripImg} width="960" height="200" />
           </div>
           <TroubleshootEngine />
         </main>

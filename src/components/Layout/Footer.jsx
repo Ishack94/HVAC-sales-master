@@ -32,7 +32,7 @@ export default function Footer() {
       <div className={styles.inner}>
         <div className={styles.columns}>
           <div className={styles.brand}>
-            <img src={logoSrc} alt="HVAC Sales Master" className={styles.logo} />
+            <img src={logoSrc} alt="HVAC Sales Master" className={styles.logo} width="140" height="40" />
             <p className={styles.tagline}>
               Real-world sales and technical training for HVAC professionals.
             </p>

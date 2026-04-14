@@ -29,7 +29,7 @@ function MilwaukeeAdCard() {
   return (
     <div className={styles.box}>
       <a href={HD_LINK} target="_blank" rel="noopener noreferrer" onClick={() => trackEvent('sidebar_click', { item: 'milwaukee_img' })}>
-        <img src={milwaukeeImg} alt="Milwaukee M18 ROCKET Tower Light" style={{ width: '100%', borderRadius: '12px 12px 0 0', display: 'block' }} />
+        <img src={milwaukeeImg} alt="Milwaukee M18 ROCKET Tower Light" style={{ width: '100%', borderRadius: '4px 4px 0 0', display: 'block' }} width="340" height="340" />
       </a>
       <div className={styles.adBody}>
         <span className={styles.adLabel}>MILWAUKEE TOOL</span>

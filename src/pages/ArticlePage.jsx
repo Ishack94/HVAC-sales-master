@@ -364,7 +364,7 @@ export default function ArticlePage({ section }) {
 
           {/* Author box */}
           <div className={styles.authorBox}>
-            <img src={headshotSrc} alt="HVAC Sales Master founder" className={styles.authorBoxHeadshot} />
+            <img src={headshotSrc} alt="HVAC Sales Master founder" className={styles.authorBoxHeadshot} width="60" height="60" />
             <div className={styles.authorBoxText}>
               <p className={styles.authorBoxName}>Written by HVAC Sales Master</p>
               <p className={styles.authorBoxBio}>Years of in-home HVAC sales and service experience across residential systems. Every article on this site comes from real field work — not a marketing desk.</p>

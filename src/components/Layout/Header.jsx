@@ -21,7 +21,7 @@ export default function Header() {
       <header className={styles.header}>
         <div className={styles.inner}>
           <Link to="/" className={styles.brand}>
-            <img src={logoSrc} alt="HVAC Sales Master" className={styles.logo} />
+            <img src={logoSrc} alt="HVAC Sales Master" className={styles.logo} width="140" height="40" />
           </Link>
 
           <nav className={styles.nav} aria-label="Main navigation">

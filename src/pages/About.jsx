@@ -31,7 +31,7 @@ export default function About() {
       <div className={styles.layout}>
         <main className={styles.main}>
           <div className={styles.authorRow}>
-            <img src={headshotSrc} alt="HVAC Sales Master founder" className={styles.headshot} />
+            <img src={headshotSrc} alt="HVAC Sales Master founder" className={styles.headshot} width="80" height="80" />
             <div className={styles.authorText}>
               <p className={styles.authorLabel}>Written from the Field</p>
               <p className={styles.authorName}>HVAC Sales Master</p>
