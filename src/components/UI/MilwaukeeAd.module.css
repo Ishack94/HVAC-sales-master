@@ -35,7 +35,7 @@
   font-weight: 800;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: #e2e4e8;
+  color: rgba(255, 255, 255, 0.85);
   margin-bottom: 6px;
 }
 
@@ -51,7 +51,7 @@
 .desc {
   font-family: 'Figtree', sans-serif;
   font-size: 13px;
-  color: #e2e4e8;
+  color: rgba(255, 255, 255, 0.85);
   line-height: 1.5;
   margin: 0;
 }
@@ -63,7 +63,7 @@
   font-family: 'Figtree', sans-serif;
   font-size: 14px;
   font-weight: 600;
-  color: #ffffff;
+  color: #0e2340;
   background: #f96302;
   border-radius: 6px;
   text-decoration: none;
