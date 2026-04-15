@@ -182,6 +182,30 @@ export default function Home() {
       <div className={styles.layout}>
         <main className={styles.main}>
 
+          {/* Tools section */}
+          <div className={styles.toolsSection}>
+            <h2 className={styles.toolsHeading}>Tools You'll Actually Use on the Job</h2>
+            <p className={styles.toolsSubline}>Built for HVAC techs — not written by marketers.</p>
+            <div className={styles.toolsGrid}>
+              <Link to="/resources/hvac-load-calculator" className={styles.toolCard}>
+                <p className={styles.toolCardTitle}>Load Calculator</p>
+                <p className={styles.toolCardDesc}>Estimate heating and cooling loads for residential systems.</p>
+              </Link>
+              <Link to="/resources/duct-design-calculator" className={styles.toolCard}>
+                <p className={styles.toolCardTitle}>Duct Designer</p>
+                <p className={styles.toolCardDesc}>Size ductwork using CFM and friction rate.</p>
+              </Link>
+              <Link to="/troubleshoot" className={styles.toolCard}>
+                <p className={styles.toolCardTitle}>Furnace Troubleshooter</p>
+                <p className={styles.toolCardDesc}>Step-by-step diagnostics for common furnace issues.</p>
+              </Link>
+              <Link to="/resources/reverse-duct-calculator" className={styles.toolCard}>
+                <p className={styles.toolCardTitle}>Reverse Duct Calculator</p>
+                <p className={styles.toolCardDesc}>Work backwards from duct size to find airflow.</p>
+              </Link>
+            </div>
+          </div>
+
           {/* Author row */}
           <div className={styles.authorRow}>
             <img src={headshotSrc} alt="HVAC Sales Master founder" className={styles.headshot} width="100" height="100" loading="eager" />
@@ -190,6 +214,9 @@ export default function Home() {
               <p className={styles.authorTagline}>Real in-home sales strategies that actually work.</p>
             </div>
           </div>
+
+          {/* Trust signal */}
+          <p className={styles.trustSignal}>46+ articles · 5 free tools · updated regularly</p>
 
           {/* Search + Filter */}
           <div className={styles.searchArea}>
