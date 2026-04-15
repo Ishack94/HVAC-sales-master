@@ -39,34 +39,17 @@ export default function About() {
           </div>
 
           <div className={styles.inner}>
-            <p>
-              HVAC Sales Master covers two sides of the business: <strong>Sales Training</strong> for comfort advisors who want to close more jobs without feeling pushy, and <strong>Pro Lessons</strong> for technicians and installers who want to sharpen their skills and stop getting callbacks.
-            </p>
-            <p>
-              There's also homeowner content that ranks in search and brings qualified leads to your door — because an informed homeowner is easier to close.
-            </p>
-            <p>
-              Everything here is free. No courses, no upsells, no paywall. Just the real playbook.
-            </p>
+            <p>I'm a Supervising Electrician in Oregon and Master Electrician in Washington with 13 years in the trades. I've wired everything from custom homes to data centers, microchip plants, airports, casinos, and a water treatment plant. Right now I'm the sole electrician responsible for a 600,000 square foot facility.</p>
+            <p>A lot of my career has crossed into HVAC territory — building automation, rooftop unit controls, actuators, air sensors, pneumatic systems, PLCs, and motor controls on commercial buildings, schools, and a casino. I hold an EPA 608 Universal certification and I've spent years studying HVAC system design, airflow, troubleshooting, and the sales side of the business.</p>
+            <p>My brother Adam started an HVAC and electrical company a few years back with a veteran HVAC tech who'd been running his own shop for decades. Watching them build that business — and learning from the field experience they brought home every day — is what pulled me deeper into HVAC and eventually led to this site.</p>
 
-            <h2 className={styles.h2}>What You'll Find Here</h2>
+            <h2 className={styles.h2}>Why I Built This</h2>
 
-            <p>
-              <strong>Sales Training.</strong> The in-home playbook — how to open the call, walk the house, present options, handle objections, and close without ever feeling like a pushy salesperson. Every article is written from the seat across the kitchen table.
-            </p>
-            <p>
-              <strong>Pro Lessons for Techs &amp; Installers.</strong> Diagnostics, charging, electrical, airflow, and the field-tested habits that separate the techs who get callbacks from the ones who don't. Written for working technicians, not classroom students.
-            </p>
-            <p>
-              <strong>Homeowner Troubleshooting.</strong> Plain-language answers that help homeowners understand what's going on with their system. They rank in search, they earn trust, and they make the sales call easier when you walk in the door.
-            </p>
+            <p>I couldn't find what I was looking for. Every HVAC sales resource was either a $500 course selling the same recycled scripts, a corporate training deck that nobody actually uses in the field, or a blog written by a marketing company that's never been inside a mechanical room.</p>
+            <p>So I built what I wanted to exist: free tools that actually work, real sales strategies from real kitchen table conversations, and technical content written for people who understand systems — not students reading a textbook.</p>
+            <p>Every calculator on this site is built on real industry standards — Manual J for loads, Manual D for duct sizing, standard refrigerant data for superheat and subcooling. The sales content comes from actual in-home experience and field-tested methods. No fluff. No paywall. No courses to sell.</p>
 
-            <p><strong>No fluff. Just what actually works.</strong></p>
-
-            <p>
-              One of the best lessons I learned early on: the homeowner who says "I need to think about it" isn't saying no — they're saying you haven't made it easy enough to say yes. That one shift changed everything about how I run calls. It's the kind of thing you won't learn from a YouTube video or a corporate training deck. You learn it by sitting in someone's living room and paying attention.
-            </p>
-
+            <p className={styles.closing}>When I'm not working on systems, you'll probably find me playing banjo somewhere in Oregon.</p>
           </div>
         </main>
 
