@@ -206,6 +206,7 @@ export default function SuperheatCalc() {
       </div>
 
       {result && (
+        <>
         <ResultsPanel
           eyebrow="CHARGE ANALYSIS"
           title={TITLES[result.dx]}
@@ -224,6 +225,45 @@ export default function SuperheatCalc() {
           customerText={CUSTOMER_TEXT[result.dx]}
           showPrint
         />
+        <div style={{ marginTop: '16px' }}>
+          {result.dx === 'ok' && (
+            <span style={{ display: 'inline-block', background: 'rgba(74,159,229,0.15)', color: '#4a9fe5', padding: '4px 12px', borderRadius: '4px', fontSize: '13px', fontWeight: 600, fontFamily: "'Figtree', sans-serif" }}>Within Spec</span>
+          )}
+          {result.dx === 'undercharge' && (
+            <span style={{ display: 'inline-block', background: 'rgba(231,76,60,0.15)', color: '#e74c3c', padding: '4px 12px', borderRadius: '4px', fontSize: '13px', fontWeight: 600, fontFamily: "'Figtree', sans-serif" }}>High — Possible Undercharge</span>
+          )}
+          {result.dx === 'overcharge' && (
+            <span style={{ display: 'inline-block', background: 'rgba(231,76,60,0.15)', color: '#e74c3c', padding: '4px 12px', borderRadius: '4px', fontSize: '13px', fontWeight: 600, fontFamily: "'Figtree', sans-serif" }}>Low — Possible Overcharge</span>
+          )}
+          {result.dx === 'airflow' && (
+            <span style={{ display: 'inline-block', background: 'rgba(231,76,60,0.15)', color: '#e74c3c', padding: '4px 12px', borderRadius: '4px', fontSize: '13px', fontWeight: 600, fontFamily: "'Figtree', sans-serif" }}>Airflow Problem Suspected</span>
+          )}
+          {result.dx === 'check' && (
+            <span style={{ display: 'inline-block', background: 'rgba(74,159,229,0.15)', color: '#4a9fe5', padding: '4px 12px', borderRadius: '4px', fontSize: '13px', fontWeight: 600, fontFamily: "'Figtree', sans-serif" }}>Check Readings</span>
+          )}
+        </div>
+        {(() => {
+          const targetLow = isTXV ? 8 : (result.targetSH - 3)
+          const targetHigh = isTXV ? 14 : (result.targetSH + 3)
+          const val = isTXV ? result.subcooling : result.superheat
+          const label = isTXV ? 'Subcooling' : 'Superheat'
+          const span = targetHigh - targetLow || 1
+          const pct = Math.min(95, Math.max(5, ((val - targetLow) / span) * 100))
+          const inRange = val >= targetLow && val <= targetHigh
+          return (
+            <div style={{ marginTop: '12px' }}>
+              <div style={{ fontSize: '11px', color: '#8a8f96', fontFamily: "'Figtree', sans-serif", marginBottom: '6px' }}>{label} range</div>
+              <div style={{ position: 'relative', height: '8px', background: '#1b3a5c', borderRadius: '4px' }}>
+                <div style={{ position: 'absolute', top: '50%', left: `${pct}%`, transform: 'translate(-50%, -50%)', width: '16px', height: '16px', borderRadius: '50%', background: inRange ? '#4a9fe5' : '#e74c3c', border: '2px solid white' }} />
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '6px', fontSize: '11px', color: '#8a8f96', fontFamily: "'Figtree', sans-serif" }}>
+                <span>{targetLow}°F</span>
+                <span>{targetHigh}°F</span>
+              </div>
+            </div>
+          )
+        })()}
+        </>
       )}
     </div>
   )

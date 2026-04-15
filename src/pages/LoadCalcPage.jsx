@@ -130,6 +130,24 @@ export default function LoadCalcPage() {
               customerText={customerText}
               showPrint
             />
+            {(() => {
+              const min = result.rangeLow
+              const max = result.rangeHigh
+              const span = max - min || 1
+              const pct = Math.min(95, Math.max(5, ((result.tonnage - min) / span) * 100))
+              const inRange = result.tonnage >= min && result.tonnage <= max
+              return (
+                <div style={{ marginTop: '16px' }}>
+                  <div style={{ position: 'relative', height: '8px', background: '#1b3a5c', borderRadius: '4px' }}>
+                    <div style={{ position: 'absolute', top: '50%', left: `${pct}%`, transform: 'translate(-50%, -50%)', width: '16px', height: '16px', borderRadius: '50%', background: inRange ? '#4a9fe5' : '#e74c3c', border: '2px solid white' }} />
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '6px', fontSize: '11px', color: '#8a8f96', fontFamily: "'Figtree', sans-serif" }}>
+                    <span>{min.toFixed(1)}</span>
+                    <span>{max.toFixed(1)}</span>
+                  </div>
+                </div>
+              )
+            })()}
           </div>
           <p style={{ fontSize: '13px', color: '#8a8f96', marginTop: '16px' }}>Estimate based on Manual J residential load calculation principles. For exact sizing, a full Manual J with measured inputs is recommended.</p>
           <Link to="/resources/duct-design-calculator" style={{ fontFamily: "'Figtree', sans-serif", fontSize: '15px', fontWeight: 600, color: '#4a9fe5', textDecoration: 'none', marginTop: '12px', display: 'inline-block' }}>Next: Size your ductwork →</Link>
