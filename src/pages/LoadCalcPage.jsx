@@ -91,6 +91,7 @@ export default function LoadCalcPage() {
       <div className={styles.layout}>
         <main className={styles.main}>
           <Link to="/resources" className={styles.backLink}>← Back to Resources</Link>
+          <p style={{ fontFamily: "'Figtree', sans-serif", fontSize: '15px', color: '#5a6068', lineHeight: 1.6, marginBottom: '24px', fontStyle: 'italic' }}>Use this on the initial visit to estimate system size before pulling a full Manual J. Enter the home's basic specs and get a recommended tonnage you can show the customer right from your phone.</p>
           <div style={{ backgroundColor: '#f5f6f8', border: '1px solid rgba(14,35,64,0.06)', borderRadius: '4px', padding: '2rem', position: 'relative' }}>
             <div style={groupStyle}>
               <label><span style={labelStyle}>Square Footage</span><input type="number" value={sqft} onChange={(e) => setSqft(e.target.value)} min="100" style={inputStyle} /></label>
@@ -130,6 +131,8 @@ export default function LoadCalcPage() {
               showPrint
             />
           </div>
+          <p style={{ fontSize: '13px', color: '#8a8f96', marginTop: '16px' }}>Estimate based on Manual J residential load calculation principles. For exact sizing, a full Manual J with measured inputs is recommended.</p>
+          <Link to="/resources/duct-design-calculator" style={{ fontFamily: "'Figtree', sans-serif", fontSize: '15px', fontWeight: 600, color: '#4a9fe5', textDecoration: 'none', marginTop: '12px', display: 'inline-block' }}>Next: Size your ductwork →</Link>
         </main>
         <Sidebar />
       </div>
