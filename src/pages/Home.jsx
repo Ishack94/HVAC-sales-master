@@ -211,7 +211,7 @@ export default function Home() {
             <img src={headshotSrc} alt="HVAC Sales Master founder" className={styles.headshot} width="100" height="100" loading="eager" />
             <div className={styles.authorText}>
               <p className={styles.authorName}>Isaac Eells</p>
-              <p className={styles.authorTagline}>Real in-home sales strategies that actually work.</p>
+              <p className={styles.authorTagline}>Real tools and field-tested HVAC strategies.</p>
             </div>
           </div>
 
@@ -280,7 +280,7 @@ export default function Home() {
           {showSales && filteredSales.length > 0 && (
             <div className={`${styles.section} ${styles.sectionWhite} reveal`}>
               <h2 className={styles.sectionH2}>Sales Training</h2>
-              {!isFiltering && <p>These aren't generic sales tips from someone who's never set foot in a crawl space. This is <strong>real-world HVAC sales strategy</strong> — written by people who've actually sat across from homeowners, handled objections, and closed jobs in the field.</p>}
+              {!isFiltering && <p>These aren't generic sales tips from someone who's never set foot in a crawl space. This is <strong>real-world HVAC sales strategy</strong> — built from actual kitchen table experience, real objection handling, and jobs closed in the field.</p>}
               <p className={styles.sectionIntro}>For comfort advisors and salespeople who close in the home.</p>
               <ul className={styles.articleList}>
                 {(isFiltering ? filteredSales : salesArticles.filter((a) => FEATURED_SALES_SLUGS.includes(a.slug))).map((a) => (
@@ -365,7 +365,7 @@ export default function Home() {
           {!isFiltering && (
             <div className={`${styles.body} ${styles.noDropCap} reveal`}>
               <h2>Who Built This</h2>
-              <p>HVAC Sales Master was built by someone who's been in the trades — not a marketing agency, not a content mill. Every article comes from real experience in the field: running service calls, sitting at kitchen tables, handling objections, and training other techs.</p>
+              <p>HVAC Sales Master was built by a 13-year trades professional — not a marketing agency, not a content mill. Every tool is built on real industry standards, and every article draws from actual field experience and proven sales methods.</p>
               <p><strong>No fluff. Just what actually works.</strong></p>
 
               <MilwaukeeAd className={styles.milwaukeeAd} />
