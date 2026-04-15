@@ -104,6 +104,16 @@
   letter-spacing: 0.3px;
 }
 
+.description {
+  font-family: 'Figtree', sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.85);
+  margin-top: 16px;
+  max-width: 600px;
+  line-height: 1.5;
+}
+
 /* Section/article title */
 .title {
   font-family: 'Source Serif 4', Georgia, serif;

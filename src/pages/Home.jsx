@@ -174,8 +174,9 @@ export default function Home() {
       </Helmet>
 
       <Banner
-        title="Sell Smarter."
-        subtitle="Master Your Craft."
+        title="Free HVAC Tools & Sales Training"
+        subtitle="Built for the Field"
+        description="Load calculators, duct design, furnace troubleshooting, and real closing strategies — all in one place."
       />
 
       <div className={styles.layout}>
