@@ -40,7 +40,7 @@ export default function About() {
 
           <div className={styles.inner}>
             <p>I'm a Supervising Electrician in Oregon and Master Electrician in Washington with 13 years in the trades. I've wired everything from custom homes to data centers, microchip plants, airports, casinos, and a water treatment plant. Right now I'm the sole electrician responsible for a 600,000 square foot facility.</p>
-            <p>A lot of my career has crossed into HVAC territory — building automation, rooftop unit controls, actuators, air sensors, pneumatic systems, PLCs, and motor controls on commercial buildings, schools, and a casino. I hold an EPA 608 Universal certification and I've spent years studying HVAC system design, airflow, troubleshooting, and the sales side of the business.</p>
+            <p>A lot of my career has crossed into HVAC territory — building automation, rooftop unit controls, actuators, air sensors, pneumatic systems, PLCs, and motor controls on commercial buildings, schools, and a casino. I hold an EPA 608 Universal certification and an Oregon Electrical Inspector certification. I completed formal HVAC training through Interplay Learning covering system components, diagnostics, and installation methods — and I've spent years beyond that studying HVAC system design, airflow, troubleshooting, and the sales side of the business.</p>
             <p>My brother Adam started an HVAC and electrical company a few years back with a veteran HVAC tech who'd been running his own shop for decades. Watching them build that business — and learning from the field experience they brought home every day — is what pulled me deeper into HVAC and eventually led to this site.</p>
 
             <h2 className={styles.h2}>Why I Built This</h2>
