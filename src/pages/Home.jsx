@@ -244,10 +244,10 @@ export default function Home() {
           {/* Body content — always visible intro */}
           {!isFiltering && (
             <div className={`${styles.body} reveal`}>
-              <h2>Why Top Closers Leave Their Cards in the Van</h2>
-              <p>After they've gone through everything — <strong>explained the options, answered all the questions, handled every concern</strong> — the best HVAC salespeople stop talking. They turn it over to the homeowner.</p>
-              <p>They'll say something like, <strong>"Do you have any questions, or is there anything I didn't cover that would help you make a decision?"</strong></p>
-              <p>Then they just let it sit.</p>
+              <h2>Leave Your Cards in the Van (And Close More Deals Because of It)</h2>
+              <p>After you've gone through everything — <strong>explained the options, answered all the questions, handled every concern</strong> — stop talking. Turn it over to them.</p>
+              <p>Say something like, <strong>"Do you have any questions, or is there anything I didn't cover that would help you make a decision?"</strong></p>
+              <p>Then just let it sit.</p>
               {!previewExpanded && (
                 <button type="button" className={styles.continueReading} onClick={() => setPreviewExpanded(true)}>
                   Continue reading →
