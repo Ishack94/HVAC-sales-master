@@ -8,6 +8,7 @@ export default function TroubleshootEngine() {
   const [furnaceType, setFurnaceType] = useState(null)
   const [symptomId, setSymptomId] = useState(null)
   const [currentQId, setCurrentQId] = useState(null)
+  const [feedbackSent, setFeedbackSent] = useState(false)
   const [history, setHistory] = useState([])
 
   const reset = () => {
@@ -16,13 +17,30 @@ export default function TroubleshootEngine() {
     setSymptomId(null)
     setCurrentQId(null)
     setHistory([])
+    setFeedbackSent(false)
   }
 
   const goToSymptoms = () => {
     setSymptomId(null)
     setCurrentQId(null)
     setHistory([])
+    setFeedbackSent(false)
     setPhase('symptom')
+  }
+
+  const sendFeedback = (helpful) => {
+    const dx = DIAGNOSES[currentQId]
+    fetch('https://formspree.io/f/mvzdpbqo', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        feedback: helpful ? 'helpful' : 'not_helpful',
+        diagnosis: dx?.title || '',
+        furnaceType: furnaceType === '80' ? '80%' : '90%+',
+        symptom: symptomLabel,
+      }),
+    }).catch(() => {})
+    setFeedbackSent(true)
   }
 
   const selectEquipment = (type) => {
@@ -163,6 +181,18 @@ export default function TroubleshootEngine() {
           <button type="button" className={styles.startOver} onClick={reset}>
             Start Over
           </button>
+        </div>
+
+        <div style={{ marginTop: '32px' }}>
+          <p style={{ fontFamily: "'Figtree', sans-serif", fontSize: '16px', fontWeight: 600, color: '#0e2340', marginBottom: '12px' }}>Did this solve your problem?</p>
+          {feedbackSent ? (
+            <p style={{ fontStyle: 'italic', color: '#5a6068', fontSize: '14px' }}>Thanks for the feedback!</p>
+          ) : (
+            <div>
+              <button type="button" onClick={() => sendFeedback(true)} style={{ background: '#0e2340', color: 'white', padding: '10px 24px', borderRadius: '4px', border: 'none', fontFamily: "'Figtree', sans-serif", fontSize: '14px', fontWeight: 600, cursor: 'pointer', marginRight: '12px' }}>Yes, this helped</button>
+              <button type="button" onClick={() => sendFeedback(false)} style={{ background: 'white', color: '#2a2d32', padding: '10px 24px', borderRadius: '4px', border: '1px solid #e2e4e8', fontFamily: "'Figtree', sans-serif", fontSize: '14px', fontWeight: 600, cursor: 'pointer' }}>No, still having issues</button>
+            </div>
+          )}
         </div>
       </div>
     )
