@@ -244,10 +244,10 @@ export default function Home() {
           {/* Body content — always visible intro */}
           {!isFiltering && (
             <div className={`${styles.body} reveal`}>
-              <h2>Why I Leave My Cards in the Van (And Close More Deals Because of It)</h2>
-              <p>After I've gone through everything — <strong>explained the options, answered all their questions, handled every concern</strong> — I stop talking. I turn it over to them.</p>
-              <p>I'll say something like, <strong>"Do you have any questions, or is there anything I didn't cover that would help you make a decision?"</strong></p>
-              <p>Then I just let it sit.</p>
+              <h2>Why Top Closers Leave Their Cards in the Van</h2>
+              <p>After they've gone through everything — <strong>explained the options, answered all the questions, handled every concern</strong> — the best HVAC salespeople stop talking. They turn it over to the homeowner.</p>
+              <p>They'll say something like, <strong>"Do you have any questions, or is there anything I didn't cover that would help you make a decision?"</strong></p>
+              <p>Then they just let it sit.</p>
               {!previewExpanded && (
                 <button type="button" className={styles.continueReading} onClick={() => setPreviewExpanded(true)}>
                   Continue reading →
@@ -337,7 +337,7 @@ export default function Home() {
           {showHomeowner && filteredHomeowner.length > 0 && (
             <div className={`${styles.section} ${styles.sectionWhite} reveal`}>
               <h2 className={styles.sectionH2}>Homeowner Troubleshooting</h2>
-              {!isFiltering && <p>Straightforward answers written by technicians, not content farms. These articles help homeowners understand what's going on so they can make smart decisions — and they help you close more jobs.</p>}
+              {!isFiltering && <p>Straightforward answers from real trades expertise, not content farms. These articles help homeowners understand what's going on so they can make smart decisions — and they help you close more jobs.</p>}
               <p className={styles.sectionIntro}>For homeowners trying to understand their system.</p>
               <ul className={styles.articleList}>
                 {(isFiltering ? filteredHomeowner : homeownerArticles.filter((a) => FEATURED_HOMEOWNER_SLUGS.includes(a.slug))).map((a) => (
