@@ -1214,85 +1214,136 @@ Most couples who ask for private time and were genuinely interested come back wi
 `,
 
   'hvac-sales-script-word-for-word': `
-## At the Door (First 90 Seconds)
+<p>Every comfort advisor eventually asks the same question: is there a script that actually works? Something you can run in the home that leads to closed deals without sounding like a used car salesman.</p>
 
-"Hi, I'm [Name] from [Company]. Thanks for having me out today. I'm going to take a look at everything, take some measurements, and put together a recommendation for you. Is now still a good time?"
+<p>The answer is yes — but it's not a script in the way most people think. It's a sequence. A framework of what to say at each stage of the call, in what order, with actual words you can use. You don't memorize it like an actor reading lines. You internalize the structure so every call flows the same way, even when the conversation goes sideways.</p>
 
-Wait for them to invite you in. Don't push past someone who seems uncertain.
+<p>Here's the full call, from pulling up to the house to closing the deal. Every line is something a top HVAC closer would actually say.</p>
 
-"Before I get started — who else is going to be involved in the decision today? I want to make sure I'm talking to everyone who needs to be part of this."
+<h2>Before You Knock</h2>
 
-This gets decision-makers in the room early.
+<p>Sit in the truck for two minutes. Look at the house. Notice the landscaping, the age of the windows, the condition of the roof, the vehicles in the driveway. You're already learning about the homeowner before they open the door.</p>
 
-## The Discovery Phase
+<p>Check your appearance. Clean shirt, shaved or neat beard, shoes that won't track up the floor. Grab your shoe covers, a notepad, your phone for photos, and your quote builder. Nothing else goes in with you on the first visit — you don't need a bag full of parts intimidating the homeowner before you've even said hello.</p>
 
-"Tell me about what's been going on with your system."
+<h2>At the Door</h2>
 
-Listen more than you talk. Let them vent. Take notes. Nod. Ask follow-up questions.
+<p>Keep it simple and warm. Don't pitch anything yet.</p>
 
-- "How long has that been happening?"
-- "Have you had any repairs done recently?"
-- "What's your energy bill typically look like in the summer?"
-- "Are there any rooms that are harder to cool than others?"
-- "How long are you planning to stay in the home?"
+<blockquote>"Hey, I'm Isaac with [company name]. Thanks for having me out today. Before I touch anything, would you mind showing me the thermostat and telling me what the system's been doing?"</blockquote>
 
-That last question is important. It tells you whether to frame the investment as short-term or long-term.
+<p>That's the whole opening. No credentials. No brochure. No company history. Just a calm introduction and a request to see the thermostat.</p>
 
-## The Inspection
+<p>Why the thermostat? Because it gets the homeowner walking with you through their own house. It puts them in a teaching role — they're showing you something — which lowers their guard. And it gives you time to observe the home, the family, the layout, and the problem before you say anything about equipment.</p>
 
-"I'm going to take a look at the system now. I'll check everything — inside and outside. Takes about 15-20 minutes."
+<h2>On the Way to the Thermostat</h2>
 
-Do a thorough inspection. Note everything. Take photos.
+<p>This is pure relationship-building. Ask open questions. Listen more than you talk.</p>
 
-When you come back: "Okay, I've had a good look at everything. Can we sit down for a few minutes? I want to walk you through what I found."
+<p>"How long have you been in the house?"</p>
 
-## Presenting Your Findings
+<p>"What's the system been doing that brought us out today?"</p>
 
-"So here's what I found..."
+<p>"Are there rooms that don't seem to get comfortable? Upstairs? Basement?"</p>
 
-Start with what's working: "The ductwork in the main living areas looks good. No obvious leaks or blockage."
+<p>"How long have you been dealing with this?"</p>
 
-Then present the issues: "Where I have concerns is [specific findings]. This is causing [specific problem — high bills, inconsistent temperatures, reliability risk]."
+<p>Don't take notes yet. Just listen. The homeowner is telling you everything you need to know about what to present later — you just need to pay attention.</p>
 
-"Based on everything I found, here's what I'd recommend..."
+<h2>Before You Start Working</h2>
 
-## Presenting the Investment
+<p>Set time expectations clearly. This prevents everything from feeling rushed later.</p>
 
-"I have three options for you. I'll walk you through all three and you can decide what makes the most sense for your situation."
+<blockquote>"This might take about an hour depending on what I find and any questions you have. Will that work for you?"</blockquote>
 
-Present good, better, best — make the middle option the one you believe in.
+<p>If the homeowner says they have to leave in 30 minutes, now you know. Reschedule if the conversation matters. Don't try to squeeze a full presentation into a rushed call — you'll lose the sale and waste everyone's time.</p>
 
-**Option 1:** "This is the basic replacement. Gets the problem solved. Here's what it includes, here's the warranty, here's the price."
+<h2>During the Diagnosis</h2>
 
-**Option 2:** "This is what I'd personally recommend for a home like yours. Here's why. Here's the price."
+<p>Take photos. A lot of them. Cracked heat exchangers, corroded connections, undersized ductwork, filters that look like felt — anything that tells the story of the system. You're building evidence.</p>
 
-**Option 3:** "This is the premium option — [variable speed, highest efficiency]. Here's what you get with this that you don't get with the others. Here's the price."
+<p>Narrate what you're doing, but don't lecture. Keep it simple.</p>
 
-"Take a look at all three and tell me which direction makes sense for you."
+<p>"I'm going to check the refrigerant charge on this real quick to see how it's performing."</p>
 
-## Handling Silence
+<p>"I'm going to look at the ductwork connections to make sure they're sealed up."</p>
 
-After you present pricing, be quiet. Silence is uncomfortable, but it's productive. Let them think. The first person to speak after a price presentation loses.
+<p>"Going to take a few pictures so I can show you what I'm seeing when we sit down."</p>
 
-If they look worried, ask: "What are you thinking?"
+<h2>Bringing the Homeowner Into the Conversation</h2>
 
-If they ask about price: "Which option were you looking at?"
+<p>Before you present options, walk the homeowner through what you found. Show them the photos. Use language they understand.</p>
 
-## The Close
+<blockquote>"Come here for a second — I want to show you something. See this crack in the heat exchanger? That's the part that separates the flames from the air that goes into your house. When it cracks, you get carbon monoxide mixing with your breathing air. It's not something I'd recommend trying to fix — the heat exchanger is basically the core of the furnace."</blockquote>
 
-"Based on everything we talked about, which direction feels right?"
+<p>You're not scaring them. You're showing them what you found and what it means. Transparency builds trust faster than any pitch.</p>
 
-If they're leaning: "What would need to be true for you to feel comfortable moving forward today?"
+<h2>Asking Permission to Present Options</h2>
 
-If they need financing: "We have payment options — most people on this system are looking at around $X a month. Does that change anything?"
+<p>Before you pivot from diagnosis to presenting solutions, ask permission. This is the single biggest trust move in the whole call.</p>
 
-If they say they want to think about it: "Totally fair. Is there a specific piece that's giving you pause? I want to make sure you have everything you need to make a good decision."
+<blockquote>"So I can fix what we found today — that's one option. Would it be okay if I also showed you what a longer-term option looks like? That way you can compare the repair path with the replacement path and decide what makes the most sense for you."</blockquote>
 
-## Leaving the Door Open
+<p>Almost every homeowner says yes to this because it doesn't feel like a pivot. It feels like respect.</p>
 
-If they don't buy today: "I'll leave you everything in writing. My number's on there — text me any time. Take your time, and if you have questions after I leave, don't hesitate to call."
+<h2>Sitting Down at the Table</h2>
 
-Do one follow-up call in 48-72 hours: "Hey, it's [Name] from [Company] — I wanted to make sure you got my quote and answer any questions that came up. No pressure either way, just want to make sure you have what you need."`,
+<p>Get both decision-makers at the table. If only one spouse is home and the repair is small, you can probably close. If the repair is major or replacement is on the table, say this:</p>
+
+<blockquote>"This is a big decision. Would it make sense for me to come back when you and your husband are both here so I can walk you both through the options together? I'd rather you both have the same information than have you try to explain the details secondhand."</blockquote>
+
+<p>That's not losing the sale — that's protecting it.</p>
+
+<p>If both are at the table, lay out the options clearly. Three tiers works better than one quote.</p>
+
+<blockquote>"I'm going to show you three ways to handle this. One fixes the immediate problem. One upgrades the system to solve the comfort issues you mentioned. One is the full long-term solution if you're planning to stay in this home for a while."</blockquote>
+
+<h2>Presenting Price</h2>
+
+<p>Don't show the number first. Show the solution first. Then the number.</p>
+
+<blockquote>"Based on what you told me you wanted — more even temperatures upstairs, lower bills, and something reliable — the middle option is what I'd actually choose if this was my house. It handles the comfort problem, it's efficient enough to show up on your bills, and it gives you a real warranty so you're not worried about it for the next 10 years."</blockquote>
+
+<p>Then show the price.</p>
+
+<p>When the homeowner reacts — and they will react — don't rush. Let it sit for a second. Then walk them through what's included.</p>
+
+<blockquote>"I know the number feels bigger than expected. Here's what's actually in that price: the equipment, the labor, the permits, the commissioning, a 10-year parts warranty, and our labor warranty. I'd rather show you exactly where the money goes than have you wondering."</blockquote>
+
+<h2>Handling "I Need to Think About It"</h2>
+
+<p>This is the most common objection in HVAC sales. Don't fold. Don't pressure. Ask the clarifying question.</p>
+
+<blockquote>"Totally fair. Usually when someone says that, they're still sorting out one of three things — price, timing, or whether we're the right company. Which one feels biggest to you?"</blockquote>
+
+<p>Based on their answer, you address the real issue. If it's price, you can walk through financing or show a different tier. If it's trust, you recommit to your quality and process. If it's timing, you set up a clear follow-up.</p>
+
+<p>If the rapport has been strong throughout the call, follow up with:</p>
+
+<blockquote>"Before I pack up, can I ask you something? Do you feel like our company would do a great job on this install if you chose us?"</blockquote>
+
+<p>If they say yes, close the loop: "With your permission, can I go ahead and get you on the schedule? We can always adjust if timing needs to shift."</p>
+
+<h2>Closing the Deal</h2>
+
+<p>When the homeowner is ready — or close to ready — don't get cute. Ask directly.</p>
+
+<blockquote>"Based on everything we talked about, the middle option looks like the best fit. Want me to get the paperwork started?"</blockquote>
+
+<p>Silence is your friend here. Ask the question, then stop talking. Let the homeowner answer. Don't keep selling after they've already decided.</p>
+
+<h2>After the Close</h2>
+
+<p>Once they've signed, don't rush out. Take five minutes to walk them through what happens next — installation day, what to expect, who they'll hear from, and how to reach you directly if they have questions.</p>
+
+<blockquote>"Here's my cell number. If anything comes up between now and install day, text me. You won't get a call center — you'll get me. That's part of why I wanted to meet with you personally."</blockquote>
+
+<p>That last line cements the relationship. They chose you because they trusted you. Reinforcing that you're accessible after the sale is what turns a customer into a referral source for the next 10 years.</p>
+
+<h2>Key Takeaways</h2>
+
+<p>Don't pitch at the door — start with rapport and a simple request to see the thermostat. Listen during the walk-through so you know what the homeowner actually cares about. Set time expectations before you start work. Take photos of everything and use them to build the case. Get permission before pivoting from repair to replacement. Show the solution before you show the price. When you get "I need to think about it," ask the clarifying question — don't fold and don't push. Close with confidence, then stop talking. Reinforce accessibility after the sale to build long-term trust.</p>
+`,
 
   'hvac-tech-to-sales': `
 ## Why Techs Make Great Salespeople
