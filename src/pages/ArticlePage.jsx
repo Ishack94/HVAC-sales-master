@@ -369,7 +369,7 @@ export default function ArticlePage({ section }) {
             <img src={headshotSrc} alt="HVAC Sales Master founder" className={styles.authorBoxHeadshot} width="60" height="60" />
             <div className={styles.authorBoxText}>
               <p className={styles.authorBoxName}>Written by HVAC Sales Master</p>
-              <p className={styles.authorBoxBio}>Years of in-home HVAC sales and service experience across residential systems. Every article on this site comes from real field work — not a marketing desk.</p>
+              <p className={styles.authorBoxBio}>Built by a 13-year trades professional with hands-on experience in HVAC controls, building automation, and residential systems. Every article draws from real field methods — not a marketing desk.</p>
             </div>
           </div>
 
