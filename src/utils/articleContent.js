@@ -313,74 +313,68 @@ export const articleContent = {
 
   // ─── SALES (text format) ─────────────────────────────────────────────────
 
-  'maintenance-agreements-predictable-revenue': `The break-fix model pays you once per problem. Maintenance agreements pay you before there's a problem — and they keep paying every year. For any HVAC company trying to build something stable, that difference is everything.
+  'maintenance-agreements-predictable-revenue': `
+<p>Every HVAC company wants predictable revenue. You want to know what's coming in next month without depending entirely on the weather breaking something. Maintenance agreements are how you get there — and most companies either don't sell them at all or sell them so badly that customers forget they signed up.</p>
 
-A customer on a maintenance agreement calls you first when something goes wrong. They don't shop around because they already have a relationship. They don't negotiate price as hard because they trust you. They refer their neighbors. The lifetime value of a maintenance agreement customer versus a one-time service customer isn't close.
+<p>Done right, a maintenance agreement isn't just recurring revenue. It's a relationship. The customer stays in your system, they call you first when something breaks, and you get two guaranteed visits a year where you can catch problems early and have natural conversations about upgrades. Done wrong, it's a coupon book that devalues your service.</p>
 
-Most techs don't sell them consistently — not because they don't believe in them, but because they don't know how to bring them up without feeling like a salesperson. That's fixable.
+<h2>Why Most Techs Don't Sell Them</h2>
 
-## Why Agreements Change Your Business
+<p>Techs skip the maintenance pitch for two reasons. First, it feels like an upsell at a bad time — the homeowner just paid for a repair and now you're asking them to buy something else. Second, nobody trained them on how to present it in a way that makes financial sense to the customer.</p>
 
-Every service business has a revenue problem: the phone stops ringing and the money stops coming in. Maintenance agreements solve that. They create a predictable revenue floor — you know roughly how much work is coming in every spring and fall before anyone picks up the phone.
+<p>The fix is simpler than you think: tie the agreement directly to today's repair so the math does the work for you.</p>
 
-They also change your customer relationships. An agreement customer isn't a stranger calling because their heat is out. They know your name, they've seen your truck before, and they trust that you're going to take care of them. That trust makes every interaction easier — the service call, the repair recommendation, the equipment replacement conversation.
+<h2>The Math That Sells Itself</h2>
 
-Companies that build their business around agreement revenue tend to have lower marketing costs, higher customer retention, and better reviews. They also have more predictable staffing because they know when the busy periods are coming.
+<p>Here's the approach that works. Say your maintenance agreement is $199 a year and includes two tune-ups plus a 20% discount on repairs. The homeowner just got a repair bill for $850.</p>
 
-## What a Good Agreement Includes
+<p>You say: "Your repair today is $850. But if I get you set up as a maintenance member, your 20% discount kicks in on today's repair — that saves you $170 right now. So the agreement basically pays for itself today, and you still get two tune-ups this year and the discount on any future repairs."</p>
 
-Before you can sell agreements, you need to know exactly what you're selling. A standard residential HVAC maintenance agreement should cover at minimum:
+<p>That's not a sales pitch. That's math. The homeowner can see the value immediately because the savings are happening right now, not in some hypothetical future scenario.</p>
 
-- Two visits per year — one before heating season, one before cooling season
-- A full system tune-up each visit: cleaning, testing, lubricating, adjusting
-- Inspection of safety controls, electrical connections, heat exchanger, refrigerant charge, and filters
-- Priority scheduling — agreement customers go to the front of the line
-- A repair discount — typically 10 to 15 percent off parts and labor
-- No service call fee for the covered visits
+<h2>Structure It in Tiers</h2>
 
-Some companies throw in extras like free filter changes or discounted diagnostic calls. Keep it simple at first. The core value is the visit, the priority scheduling, and the discount. Those three things are what customers actually care about.
+<p>One flat plan works, but three tiers work better. Give the homeowner a choice instead of a yes-or-no decision. When people can compare options, they feel more in control — and they almost always pick the middle one.</p>
 
-## How to Price It
+<p>A practical residential structure looks like this. Your basic tier includes two annual tune-ups and a standard repair discount — maybe 15%. Your mid tier bumps the discount to 20%, adds priority scheduling so they don't wait three days in July, and includes a no-overtime-fee guarantee. Your top tier gets the biggest discount, priority service, and includes minor consumables like filters or basic parts.</p>
 
-The most common mistake is pricing agreements too cheap. You're not trying to break even — you're building a profitable program.
+<p>Price them so the middle tier feels like the obvious choice. If basic is $149, mid is $199, and premium is $279, most people land on $199 because it has the best value-to-price ratio. That's intentional.</p>
 
-Start with your actual cost to perform the visit: technician time (usually 45 to 90 minutes per system), any materials used, truck cost, and overhead. Add your standard margin. Then price it so the customer is getting real value without you eating your profit.
+<h2>When to Present It</h2>
 
-For a single-system home, a well-priced agreement typically runs $150 to $250 per year depending on your market. Multi-system homes should be priced per system with a small discount for the second and third unit.
+<p>The best time to pitch a maintenance agreement is immediately after a repair, while the homeowner is still feeling the pain of an unexpected bill. They just spent money they didn't plan to spend. Their guard is actually down because they're thinking "I don't want this to happen again."</p>
 
-If someone pushes back on the price, make the math simple for them: "Two visits, priority scheduling, discount on any repairs — that works out to less than $15 a month. And if something does go wrong, you're moving to the front of the line instead of waiting three days in January."
+<p>That's your opening. Not "would you like to sign up for our maintenance plan?" — that sounds like a checkout upsell at a retail store. Instead: "One thing I want to mention before I go — the issue we fixed today is the kind of thing a tune-up catches early, before it turns into an emergency repair. If you're on our maintenance plan, we come out twice a year, keep everything running right, and if something does come up, you get a discount on the repair. Based on what you paid today, the plan would have basically paid for itself."</p>
 
-That framing — monthly cost plus the specific benefit — converts more often than any other approach.
+<p>The other good time is during a new system installation. The homeowner just made a major investment. They want to protect it. Offering a maintenance agreement at installation feels like responsible ownership, not a sales tactic.</p>
 
-## How to Bring It Up on a Service Call
+<h2>Have the CSR Tee It Up</h2>
 
-Most techs leave agreements on the table because they don't know when or how to bring them up. The right moment is at the end of the visit, before you hand over the invoice. Not a pitch — just a natural mention.
+<p>The most effective companies don't wait for the tech to bring it up cold. The CSR mentions it on the phone when booking the call: "Don't forget to ask your technician about the maintenance member discount — it usually saves our customers 15 to 20 percent on today's repair."</p>
 
-After completing a repair: "Everything's working great now. One thing I'll mention — a lot of our customers put systems like this on our maintenance plan so we're catching small issues before they turn into what we just dealt with today. Want me to tell you how it works?"
+<p>Now the homeowner walks in already expecting to hear about it. The tech isn't pitching out of nowhere — they're following up on something the customer was already told about. That small change in sequence makes a massive difference in conversion rates.</p>
 
-After a tune-up call: "Your system's in solid shape. We have a program where I come back every spring and fall to do exactly this — plus you'd be at the front of the line if you ever need a repair. A lot of our customers find it's worth it just for the priority scheduling."
+<h2>What to Say — Scripts That Work</h2>
 
-Notice you're not pitching from a brochure. You're connecting the agreement to something you just did for them.
+<p>After completing a repair:</p>
+<blockquote>"Before I head out — the repair we did today is exactly the kind of thing our maintenance visits are designed to catch early. If you were on the plan, we'd have likely found this during a tune-up before it turned into an emergency. The plan runs $199 a year, includes two visits, and your repair discount would have saved you $170 today alone. Want me to get you set up?"</blockquote>
 
-## When They Hesitate
+<p>During a new system installation:</p>
+<blockquote>"You're making a solid investment in this system. The best way to protect it and keep the warranty valid is regular maintenance. Our plan includes two visits a year — one before heating season, one before cooling — and it keeps everything running the way it should. Most customers add it on at install so they don't have to think about it later."</blockquote>
 
-If they're not sure, ask: "Is it the price, or are you just not sure it makes sense for this system?" That opens the real conversation. If it's price, walk through the math. If they're uncertain whether the system is worth maintaining, that conversation naturally leads into equipment age and replacement planning — also valuable.
+<p>When the homeowner hesitates:</p>
+<blockquote>"Totally up to you. The way I think about it — you're going to need tune-ups anyway, and the discount on repairs usually covers most of the cost. It's basically prepaying for maintenance you'd do regardless, but with a built-in safety net."</blockquote>
 
-If they're a firm no, leave a one-page summary and don't push. Never pitch twice on the same visit.
+<h2>The Long Game</h2>
 
-## Tracking and Retaining Members
+<p>A maintenance agreement isn't just about this year's revenue. It's about keeping the customer in your ecosystem. When their system eventually needs replacement — and it will — they're calling you, not searching Google for whoever has the cheapest quote.</p>
 
-An agreement program only works if you actually manage it. You need to know who's on the plan, when visits are due, and when renewals are coming up. Use your service software or at minimum a spreadsheet — log every agreement, the visit schedule, and the renewal date.
+<p>Companies with strong maintenance programs close replacement sales at significantly higher rates because the trust is already built. You've been in their home twice a year. They know your name. They've seen your work. When it's time for a $12,000 decision, you're not competing against four strangers — you're the one they already trust.</p>
 
-Send a reminder 30 days before renewal. Make renewal effortless — most customers should auto-renew with a quick confirmation call. If you make them re-decide every year, you'll lose more than you should.
+<h2>Key Takeaways</h2>
 
-Treat agreement customers like VIPs: faster scheduling, a tech who knows their system, and personal communication when something changes. That treatment is what drives referrals.
-
-## The Long Game
-
-Maintenance agreements aren't a quick revenue hit. The first year you run a serious program, you might add 20 customers. By year three, that's 60 customers reliably paying you, calling you first for repairs, and sending you referrals.
-
-Build it consistently. Bring it up on every appropriate service call. Price it to be profitable, not just to get someone to say yes. That's the program that compounds.`,
+<p>Tie the agreement to today's repair so the math is obvious and immediate. Structure in three tiers — basic, mid, and premium — so the homeowner has a choice instead of a yes-or-no. Have your CSR mention the member discount before the tech arrives. Present it after repairs when the homeowner is most motivated to prevent future surprises. Think long-term — maintenance customers become replacement customers when the time comes.</p>
+`,
 
   // ─── PRO LESSONS (text format) ────────────────────────────────────────────
 
