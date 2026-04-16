@@ -341,6 +341,76 @@ export const articleContent = {
 <p>You can't beat PE-backed companies on marketing budget, so don't try. Lead with your advantages: local accountability, installation quality, continuity, and flexibility. Don't bash the competition — educate the homeowner on what to compare. Make installation quality visible during the sale since homeowners don't know to ask about it. Build a company based on reputation and referrals — that's the moat that money can't easily buy.</p>
 `,
 
+  'indoor-air-quality-easiest-upsell': `
+<p>You're already in the house. You already have the homeowner's attention. You already have a system torn apart or a new install scheduled. And you're walking out without mentioning air quality — which is probably the easiest add-on in the entire HVAC business.</p>
+
+<p>Indoor air quality isn't a hard sell. It's a conversation that happens naturally if you know when to bring it up and what to say. Most techs skip it entirely because they feel weird adding things to the ticket. But homeowners genuinely want cleaner air, and the products that deliver it are some of the highest-margin items you can sell.</p>
+
+<h2>Why IAQ Gets Skipped</h2>
+
+<p>The two biggest reasons techs don't bring up IAQ are feeling pushy and not knowing how to frame it. You came out to fix a compressor or install a new furnace — it feels awkward to pivot into air purifiers and filtration upgrades. Like you're nickel-and-diming the customer.</p>
+
+<p>Here's the reframe: you're not upselling. You're completing the job. If a homeowner is spending $10,000 on a new HVAC system, they probably care about the air quality in their home. If they're doing a $1,500 repair, they might have dust issues, allergies, or humidity problems that the system itself can't solve.</p>
+
+<p>Your job is to ask the question. If they don't want it, fine. But you owe them the conversation.</p>
+
+<h2>The Easiest Categories to Add</h2>
+
+<p>You don't need a massive product catalog to sell IAQ. A few core categories cover most situations.</p>
+
+<p>Upgraded filtration is the lowest-friction upsell in HVAC. A homeowner running a 1-inch builder-grade filter is catching almost nothing. Upgrading to a 4-inch media filter or a properly-sized MERV 13 filter dramatically improves what's getting pulled out of the air — and most homeowners have no idea this option exists.</p>
+
+<p>Smart thermostats with better fan control let homeowners run circulation independently of heating and cooling. This keeps air moving, keeps temperatures more even between rooms, and pulls more air through the filter. Many are also easier to use than a traditional thermostat, which is a comfort win on its own.</p>
+
+<p>Whole-home air purifiers — UV, photocatalytic, or electronic — add real value in homes with allergies, asthma, pets, or concerns about germs and VOCs. These are higher-ticket items but easy to present because the benefit is immediate and tangible.</p>
+
+<p>Humidity control is the sleeper category. Dry winter air and humid summer air cause real problems — dry skin, static, damaged hardwood, mold risk, and general discomfort. A humidifier, dehumidifier, or smart ventilation system often solves complaints the homeowner didn't realize the HVAC could address.</p>
+
+<h2>When to Bring It Up</h2>
+
+<p>The worst time to pitch IAQ is right before the homeowner signs for the main system. They're already deciding on a big purchase — piling on adds friction.</p>
+
+<p>The best time is during the walk-through, right after the homeowner tells you about a comfort complaint. If they mention dust, allergies, dry air, a stuffy bedroom, or a family member with asthma — that's your opening. You're not selling; you're responding to something they just said.</p>
+
+<p>Sounds like this: "You mentioned your daughter's allergies have been worse this year. While I'm here, I want to ask a few questions about the filter and airflow because that could be part of the picture."</p>
+
+<p>Now when you present options later, IAQ isn't an upsell. It's part of the solution to a problem they brought up.</p>
+
+<h2>What to Say — Scripts That Work</h2>
+
+<p>During the walk-through:</p>
+<blockquote>"Before I dig into the system, I want to ask a few quick questions. Does anyone in the house deal with allergies, asthma, or sensitivity to dust? Do rooms feel stale or stuffy? Any issues with dry air in the winter or sticky humidity in the summer?"</blockquote>
+
+<p>When they mention dust:</p>
+<blockquote>"That's actually something the filter handles — and most homes have a basic 1-inch filter that catches dust but not much else. Once I finish the diagnosis, I can show you what a better filtration option would do, especially if dust is a regular issue."</blockquote>
+
+<p>When they mention allergies:</p>
+<blockquote>"For allergies, we can do two things. We can upgrade the filter to a MERV 13, which catches a lot more — pollen, pet dander, fine particles. And for more serious allergy issues, there are whole-home air purifiers that go beyond what a filter can do. I can show you a couple of options so you can see the difference."</blockquote>
+
+<p>When you're presenting a new system:</p>
+<blockquote>"One thing I'd mention while we're here — the ductwork and filtration side is just as important as the equipment itself. If you're spending money on a new system, it's worth asking whether the filter is doing its job and whether the house has any air quality issues we could address at the same time. Always easier to do it now than after the install is done."</blockquote>
+
+<h2>Avoid the Fear Pitch</h2>
+
+<p>Don't sell IAQ by scaring people. "Your air is full of toxins and you're poisoning your kids" is a terrible pitch, and it makes the whole industry look like snake oil. Homeowners can tell when they're being manipulated, and they'll remember it.</p>
+
+<p>Instead, stick to real, specific, verifiable benefits. Better filtration catches more dust and allergens. Proper humidity control makes the house more comfortable. Whole-home purifiers can help with specific issues like pets, asthma, or chronic respiratory problems. Smart ventilation systems help with stuffy homes and VOC buildup.</p>
+
+<p>The honest approach works better because the products actually deliver — and homeowners feel the difference. You don't need to oversell what already works.</p>
+
+<h2>The Revenue Add Is Real</h2>
+
+<p>On a typical job, IAQ upgrades can add anywhere from $200 for a filter upgrade to $2,000+ for a full suite of filtration, purification, and humidity control. Across a year, that adds up to meaningful revenue — and it's some of the highest-margin work in HVAC because installation is usually straightforward.</p>
+
+<p>The companies that consistently sell IAQ aren't doing anything magical. They're just asking the questions and presenting the options. Every tech and comfort advisor in the house gets the same training: connect IAQ to a problem the homeowner already mentioned, offer solutions that match, and let the homeowner decide.</p>
+
+<p>You won't sell it on every call. But you'll sell it more often than you think, and the ones who say yes are often your most loyal customers — because they can feel the difference in their home immediately.</p>
+
+<h2>Key Takeaways</h2>
+
+<p>Don't think of IAQ as an upsell — think of it as completing the job. Ask questions during the walk-through about allergies, dust, humidity, and comfort issues. When a homeowner mentions a complaint, connect the IAQ solution to the problem they raised. Skip the fear-based pitch — stick to real, specific benefits. Upgraded filtration is the easiest starting point, and it opens the door to bigger conversations. IAQ is high-margin, low-friction work when you know when to bring it up.</p>
+`,
+
   // ─── LEARN (HOMEOWNER) ────────────────────────────────────────────────────
 
   'furnace-blowing-cold-air': `
