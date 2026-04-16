@@ -939,47 +939,70 @@ Then actually leave. Don't hover. Don't pop back in after three minutes. Give th
 Most couples who ask for private time and were genuinely interested come back with a yes.`,
 
   'turn-service-call-into-sale': `
-## The Setup: Diagnose Completely
+<p>You showed up to fix a capacitor. Two hours later, the homeowner is signing paperwork for a full system replacement. That's not luck — it's a process. And the techs who do it consistently aren't being pushy. They're being thorough.</p>
 
-The first step isn't a sales step at all — it's a technical one. Before you have any replacement conversation, you need a complete picture of the system.
+<p>The difference between a $300 service ticket and a $12,000 sale usually comes down to the last 15 minutes of the call — the conversation that happens after the diagnosis, when you show the homeowner what you actually found and give them a real choice between patching and solving.</p>
 
-Don't just diagnose the presenting problem. Inspect the whole system. Check the coil. Check the heat exchanger. Check the electrical. Read the operating pressures. Look at the age sticker. Note the refrigerant type.
+<h2>Secure Time Before You Start</h2>
 
-This does two things. First, it makes you a better technician — you'll catch problems before they become emergency calls. Second, it gives you legitimate, documented reasons to have a replacement conversation if the system warrants it.
+<p>The single biggest mistake techs make is jumping straight into the diagnosis without setting expectations. You're head-down in the furnace for 45 minutes, you find a cracked heat exchanger, and now you need to have a serious conversation — but the homeowner has a meeting in 20 minutes and you never mentioned this might take a while.</p>
 
-A technician who says "I checked out the whole system while I was here and I want to walk you through what I found" is trusted. A technician who fixes the capacitor and then says "by the way, you should think about replacing this" is not.
+<p>Before you touch a single panel, say this: "This might take about an hour depending on what I find and any questions you have. Will that work for you?"</p>
 
-## When to Raise the Replacement Conversation
+<p>That one sentence does two things. It tells the homeowner you're thorough, not rushed. And it reserves time for the conversation after the diagnosis — the part where options get presented and real decisions get made.</p>
 
-A capacitor on a 4-year-old system: fix it and go home. A compressor on a 17-year-old R-22 system: you owe it to the homeowner to walk them through the replacement conversation.
+<h2>Get Permission Before You Pivot</h2>
 
-The general framework: if the repair cost is more than 50% of a replacement cost, or the system is more than 12-15 years old, replacement is always part of the conversation.
+<p>Nobody likes feeling ambushed. If you diagnose a bad blower motor and then immediately pivot to "have you considered replacing the whole system?" — the homeowner's guard goes up instantly. They called you to fix one thing and now you're trying to sell them something ten times more expensive.</p>
 
-Be direct: "Before I give you the repair price, I want to make sure you have the full picture. Can I show you what I found on the whole system?"
+<p>The fix is permission. After showing them what you found, say: "Would it be okay if, once I walk you through the repair option, I also show you what a longer-term solution looks like? That way you can compare before you decide."</p>
 
-## Walking Through the Assessment
+<p>You're not pushing replacement. You're asking if they want to see their options. Almost everyone says yes to that because it feels like you're respecting their intelligence, not manipulating their situation.</p>
 
-Show them everything you found. Not to scare them — to inform them.
+<h2>Use Photos to Build the Case</h2>
 
-"Here's the repair that fixes today's problem: $X. The capacitor failed and I can have it running in 30 minutes. That's a legitimate option."
+<p>You can tell a homeowner their heat exchanger has a crack. Or you can show them the photo on your phone while you explain what it means. One of those is a claim. The other is evidence.</p>
 
-"Here's what I found on the whole system while I was doing my inspection: the unit is 16 years old, it uses R-410A which is being phased out, I can see some staining near the service valves that suggests a slow leak history, and the efficiency on this unit has probably dropped 20-30% from the rated spec just from age and wear."
+<p>Take pictures and videos of everything — the corroded flue pipe, the undersized return, the filter that looks like it's been in there since the house was built. Then sit down and walk them through it: "I took a few photos because I know you're not going to crawl back there — and you shouldn't have to. Let me show you what I found."</p>
 
-"I want to be straight with you: this repair fixes today's problem. But given the age and condition, I wouldn't be surprised if you have another issue before next summer. That's not scare tactics — it's just where we are with a 16-year-old system."
+<p>This isn't a sales technique. It's transparency. And transparency is the fastest path to trust. When the homeowner can see what you see, the conversation about repair versus replacement practically has itself.</p>
 
-## Presenting the Options
+<h2>Ask the Questions That Lead There Naturally</h2>
 
-Always present repair first. Homeowners feel respected when you start with the option that costs less — it signals you're not just trying to maximize the sale.
+<p>The best service-to-replacement conversations don't feel like a pivot. They feel like a natural extension of the diagnosis. That happens when you ask the right questions early.</p>
 
-Then present replacement, framed not as an upsell but as the long-term decision: "If you're going to be in this house for the next 10 years, a replacement is probably the better financial decision over that time frame. You get a warranty, you stop having these service calls, and your energy bill goes down. Whether that's today or next spring is completely up to you."
+<p>During the walk-through or while you're working, drop in questions like: "How long have you been dealing with comfort issues in this house?" "Are there rooms that never seem to get to the right temperature?" "How much longer were you hoping to get out of this system?" "What would frustrate you most if something else failed in six months?"</p>
 
-## When They Choose Repair
+<p>These aren't trick questions. They're diagnostic questions that also reveal how the homeowner feels about their system. If they say "honestly, it's been a headache for years" — that's your opening to show them what a clean start looks like.</p>
 
-They might choose the repair. That's fine. Do the repair, do it well, and leave them better than you found them.
+<h2>How to Handle "Just Fix It for Now"</h2>
 
-But before you go: "I'm going to leave you a quote for the replacement system I'd recommend. No pressure — you can use it, throw it away, or call me in a year when you're ready. I just want you to have it."
+<p>This is the most common response when you bring up replacement, and it's completely fair. Don't fight it. Don't act disappointed. Just make sure they're making an informed decision.</p>
 
-That quote gets put on the refrigerator. Six months later when the compressor fails, you get the call.`,
+<p>Say something like: "We can absolutely do the repair. I also want to show you what the replacement path looks like so you can compare short-term cost versus long-term investment. That way you're deciding with the full picture, not just today's number."</p>
+
+<p>Then lay out both options side by side. Repair cost, what it does and doesn't fix, expected remaining lifespan. Replacement cost, what changes, what the warranty covers, and what the monthly comfort and efficiency difference looks like. Let the homeowner compare and decide.</p>
+
+<p>Some people choose the repair. That's fine. You did your job — you gave them options, explained the tradeoffs, and let them make the call. Many of those people call back in 6 to 12 months ready to replace, and they call you because you didn't pressure them the first time.</p>
+
+<h2>The One-Leg Problem</h2>
+
+<p>If only one decision-maker is home, your odds of closing a major sale drop dramatically. This is especially true for system replacements because the number is large enough that both homeowners typically need to agree.</p>
+
+<p>If you sense the conversation is heading toward replacement and only one person is there, acknowledge it early: "This is a big decision, and I want to make sure you both have the same information. Would it make sense for me to come back when your husband is home so I can walk you both through the options together?"</p>
+
+<p>That's not losing the sale — it's protecting it. A homeowner who tries to relay your presentation secondhand will almost always get the details wrong and the other spouse will default to "let's get another quote."</p>
+
+<h2>The Mindset Shift</h2>
+
+<p>Turning a service call into a replacement sale isn't about being a closer. It's about being a thorough diagnostic professional who gives homeowners complete information instead of just the minimum to fix today's problem.</p>
+
+<p>The best techs in this industry don't think of it as "selling replacement." They think of it as "showing the homeowner all their options." When you do that honestly — with photos, clear language, and zero pressure — the right decision makes itself.</p>
+
+<h2>Key Takeaways</h2>
+
+<p>Set time expectations before you start working so you're not rushed later. Get permission before pivoting from repair to replacement. Use photos of what you found — evidence beats claims every time. Ask questions during the walk-through that reveal how the homeowner feels about their system. When they say "just fix it," show both options side by side and let them decide. If only one decision-maker is home, offer to come back when both can hear the options together.</p>
+`,
 
   'hvac-sales-script-word-for-word': `
 ## At the Door (First 90 Seconds)
