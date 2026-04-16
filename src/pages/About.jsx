@@ -46,8 +46,8 @@ export default function About() {
             <h2 className={styles.h2}>Why I Built This</h2>
 
             <p>I couldn't find what I was looking for. Every HVAC sales resource was either a $500 course selling the same recycled scripts, a corporate training deck that nobody actually uses in the field, or a blog written by a marketing company that's never been inside a mechanical room.</p>
-            <p>So I built what I wanted to exist: free tools that actually work, real sales strategies from real kitchen table conversations, and technical content written for people who understand systems — not students reading a textbook.</p>
-            <p>Every calculator on this site is built on real industry standards — Manual J for loads, Manual D for duct sizing, standard refrigerant data for superheat and subcooling. The sales content comes from actual in-home experience and field-tested methods. No fluff. No paywall. No courses to sell.</p>
+            <p>So I built what I wanted to exist: free tools that actually work, real sales strategies grounded in how top closers actually operate in the home, and technical content written for people who understand systems — not students reading a textbook.</p>
+            <p>Every calculator on this site is built on real industry standards — Manual J for loads, Manual D for duct sizing, standard refrigerant data for superheat and subcooling. The sales content draws from field-tested methods used by the best HVAC salespeople in the business. No fluff. No paywall. No courses to sell.</p>
 
             <p className={styles.closing}>When I'm not working on systems, you'll probably find me playing banjo somewhere in Oregon.</p>
           </div>
