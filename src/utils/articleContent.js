@@ -202,6 +202,77 @@ export const articleContent = {
 <p>Slow down at the door — the first impression is worth more than your best closing line. Ask the homeowner to show you the thermostat and tell you what's happening. Use the walk-through to learn what the homeowner cares about, not just what's wrong with the equipment. Take photos of everything and use them to build trust later. Set time expectations early so you're not rushed when it's time to present options. Be calm, observant, and genuinely curious — the rest follows from there.</p>
 `,
 
+  'selling-through-price-increases': `
+<p>The homeowner is looking at your quote and their face just changed. "That's a lot more than we were expecting." Or worse: "We had this done two years ago and it was way less than this."</p>
+
+<p>You know exactly why it costs more. Equipment prices went up. Labor costs went up. Materials, fuel, insurance — all of it. But the homeowner doesn't care about your overhead. They care about the number on the paper in front of them.</p>
+
+<p>How you handle the next 30 seconds determines whether you close this job or lose it to the company that cuts corners to hit a lower number.</p>
+
+<h2>Why This Conversation Is So Hard</h2>
+
+<p>Price increases in HVAC hit different than most industries. When gas prices go up, people grumble but they still fill the tank. When groceries go up, they adjust. But when an HVAC quote comes in higher than expected, people freeze — because this is a large, unplanned expense that they don't fully understand, and they have no way to evaluate whether the price is fair.</p>
+
+<p>That uncertainty is the real problem. The homeowner isn't just reacting to the number. They're reacting to the feeling that they might be getting taken advantage of, and they have no frame of reference to know otherwise.</p>
+
+<p>Your job isn't to defend your price. It's to give them that frame of reference.</p>
+
+<h2>What Most People Do Wrong</h2>
+
+<p>The two most common mistakes are apologizing and getting defensive.</p>
+
+<p>Apologizing sounds like: "Yeah, unfortunately everything's gone up. I wish I could do better on the price." That makes you sound like you don't believe in your own numbers. If you don't seem confident in the price, why would the homeowner be?</p>
+
+<p>Getting defensive sounds like: "Well, equipment costs have increased 30% and labor is up across the board." That's technically true but it sounds like an excuse, and the homeowner didn't ask for an economics lesson. They asked why this costs so much.</p>
+
+<p>The better approach is calm transparency. Acknowledge the reality, then redirect the conversation to what they're actually getting.</p>
+
+<h2>The Reframe That Works</h2>
+
+<p>When a homeowner says your price is higher than expected, don't start by explaining why costs went up. Start by showing what's included.</p>
+
+<p>"You're right — the number is higher than it would have been a couple years ago. Equipment, materials, and labor have all moved. What I don't want to do is cut corners on the installation just to make today's number feel better and leave you paying for it in callbacks, warranty issues, or a system that doesn't actually solve the comfort problem you called about."</p>
+
+<p>That one response does three things: it acknowledges their concern without apologizing, it explains the why without lecturing, and it shifts the conversation from "this costs too much" to "this is what you're paying for."</p>
+
+<h2>Separate Yourself From the Low Bid</h2>
+
+<p>The homeowner is going to get other quotes. Some of those quotes will be lower. You need to help them understand why before they start comparing numbers on a spreadsheet.</p>
+
+<p>When they mention another quote or say they're getting more bids: "That makes total sense — you should feel confident. What I'd encourage you to compare just as hard as price is the installation itself. Ask them how they size the system, whether they're checking the ductwork, what their labor warranty covers, and who's actually doing the install. Because a $9,000 system installed poorly will cost you more over ten years than a $12,000 system installed right."</p>
+
+<p>This isn't trash-talking the competition. It's educating the homeowner on what to look for. And it plants the idea that the cheapest quote might not be the best value — which is almost always true in HVAC.</p>
+
+<h2>What to Say — Scripts for Common Situations</h2>
+
+<p>When they compare to a previous price:</p>
+<blockquote>"If you're comparing to what this cost two or three years ago, I understand the sticker shock. Equipment manufacturers raised prices, and the labor market has tightened significantly. What hasn't changed is what happens if the system is undersized, the ductwork isn't right, or the installation is rushed. I'd rather show you what's included in this number so you can see where the value actually is."</blockquote>
+
+<p>When they say another company quoted less:</p>
+<blockquote>"It's possible they quoted less — and it's worth understanding why. Are they including the same equipment? Same warranty on labor? Same installation process? In HVAC, the difference between a good install and a cheap install shows up in your comfort, your energy bills, and how many times you're calling for service over the next five years."</blockquote>
+
+<p>When they ask you to come down on price:</p>
+<blockquote>"I hear you. I can't change equipment costs, but what I can do is walk through these options with you and make sure you're getting the right system for your house — not more than you need and not less. Sometimes the mid-range option hits the sweet spot between budget and long-term performance."</blockquote>
+
+<h2>Lead With Value Before You Show Price</h2>
+
+<p>The biggest strategic mistake in HVAC sales is showing the price before the homeowner understands what they're buying. When that happens, the number has no context. It's just a big scary figure with nothing anchoring it.</p>
+
+<p>Top performers spend the first 45 minutes of the call building the case — walking the house, diagnosing the system, taking photos, explaining what they found, and connecting the solution to the homeowner's specific comfort problems. By the time the price comes out, the homeowner already understands what they're paying for and why it matters.</p>
+
+<p>If you're showing price five minutes into the conversation, you're inviting price objections. If you're showing price after a thorough diagnosis and presentation, the price makes sense because the homeowner can see what's behind it.</p>
+
+<h2>The Honest Truth About Price Increases</h2>
+
+<p>Here's what you can't say to a homeowner but need to internalize: the companies that are cheaper right now are either cutting installation quality, underpaying their techs, or operating on margins so thin they won't be around to honor a warranty. The race to the bottom is real in HVAC, and the homeowner suffers most when they choose the cheapest option and the installation is wrong.</p>
+
+<p>Your price isn't high. Your price reflects doing the job correctly — proper sizing, proper installation, proper commissioning, and actual support after the sale. The homeowner deserves to understand that, and it's your job to make it clear without sounding arrogant about it.</p>
+
+<h2>Key Takeaways</h2>
+
+<p>Don't apologize for your price — that signals you don't believe in it. Don't lecture about industry economics — show them what's included instead. Help homeowners compare installations, not just numbers. Spend time building value before you ever show a price. The cheapest quote usually means the cheapest installation, and the homeowner pays for that difference over the life of the system.</p>
+`,
+
   // ─── LEARN (HOMEOWNER) ────────────────────────────────────────────────────
 
   'furnace-blowing-cold-air': `
