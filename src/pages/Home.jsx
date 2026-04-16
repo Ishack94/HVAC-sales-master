@@ -292,7 +292,7 @@ export default function Home() {
                     >
                       <strong>{a.title}</strong>
                     </Link>
-                    {a.description && <span className={styles.articleDesc}> — {a.description}</span>}
+                    <span className={styles.articleDate}>Published April 2026</span>{a.description && <span className={styles.articleDesc}> — {a.description}</span>}
                   </li>
                 ))}
               </ul>
@@ -321,7 +321,7 @@ export default function Home() {
                     >
                       <strong>{a.title}</strong>
                     </Link>
-                    {a.description && <span className={styles.articleDesc}> — {a.description}</span>}
+                    <span className={styles.articleDate}>Published April 2026</span>{a.description && <span className={styles.articleDesc}> — {a.description}</span>}
                   </li>
                 ))}
               </ul>
@@ -349,7 +349,7 @@ export default function Home() {
                     >
                       <strong>{a.title}</strong>
                     </Link>
-                    {a.description && <span className={styles.articleDesc}> — {a.description}</span>}
+                    <span className={styles.articleDate}>Published April 2026</span>{a.description && <span className={styles.articleDesc}> — {a.description}</span>}
                   </li>
                 ))}
               </ul>

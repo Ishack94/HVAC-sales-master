@@ -58,6 +58,14 @@
   color: #8a8f96;
 }
 
+.publishedDate {
+  font-family: 'Figtree', sans-serif;
+  font-size: 13px;
+  color: #8a8f96;
+  font-weight: 400;
+  margin-bottom: 16px;
+}
+
 /* Table of Contents */
 .toc {
   background: #f5f6f8;

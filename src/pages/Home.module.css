@@ -391,6 +391,15 @@
   border-bottom: 1px solid #4a9fe5;
 }
 
+.articleDate {
+  display: block;
+  font-family: 'Figtree', sans-serif;
+  font-size: 12px;
+  color: #8a8f96;
+  font-weight: 400;
+  margin-top: 2px;
+}
+
 .articleDesc {
   color: #666;
   font-size: 16px;

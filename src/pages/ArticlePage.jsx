@@ -302,6 +302,8 @@ export default function ArticlePage({ section }) {
             {meta?.readTime && <span className={styles.readTime}>{meta.readTime} read · Updated April 2026</span>}
           </div>
 
+          <p className={styles.publishedDate}>Published April 2026</p>
+
           {content && <SummaryBox content={content} />}
           {content && <TableOfContents content={content} />}
 
