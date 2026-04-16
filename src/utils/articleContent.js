@@ -1446,13 +1446,13 @@ Especially on communicating systems, variable-speed equipment, and anything with
 
 More callbacks come from line set problems than almost anything else. The common mistakes:
 
-**Inadequate insulation.** Suction line insulation that's too thin or has gaps sweats in summer, can develop ice, and kills efficiency. In attic runs or where the line transitions from outside to inside, make sure insulation is continuous and properly sealed.
+Inadequate insulation. Suction line insulation that's too thin or has gaps sweats in summer, can develop ice, and kills efficiency. In attic runs or where the line transitions from outside to inside, make sure insulation is continuous and properly sealed.
 
-**Unsupported runs.** Long horizontal runs need support every 5-6 feet. Line sets that sag pull the fittings at both ends, eventually causing stress cracks and leaks.
+Unsupported runs. Long horizontal runs need support every 5-6 feet. Line sets that sag pull the fittings at both ends, eventually causing stress cracks and leaks.
 
-**Improper flaring.** A flare that's slightly off-angle or has a small nick will seep refrigerant slowly. It may hold pressure on startup and fail six months later. Take your time on flares.
+Improper flaring. A flare that's slightly off-angle or has a small nick will seep refrigerant slowly. It may hold pressure on startup and fail six months later. Take your time on flares.
 
-**Trapping the suction line.** Suction line must slope back toward the compressor at 1/4" per foot on horizontal runs, and oil traps are required on vertical rises over 5 feet. Miss this and you'll have oil return problems.
+Trapping the suction line. Suction line must slope back toward the compressor at 1/4" per foot on horizontal runs, and oil traps are required on vertical rises over 5 feet. Miss this and you'll have oil return problems.
 
 ## The Drain System
 
@@ -1491,8 +1491,8 @@ If something was unusual about the installation — existing ductwork problems, 
 
 There are two methods for verifying refrigerant charge: superheat and subcooling. You need to know which applies to the system you're charging.
 
-- Fixed orifice systems (pistons, capillary tubes): use **superheat**
-- TXV systems: use **subcooling**
+- Fixed orifice systems (pistons, capillary tubes): use superheat
+- TXV systems: use subcooling
 
 Some modern systems specify both. Read the equipment documentation.
 
@@ -1502,7 +1502,7 @@ Superheat measures how much the refrigerant in the suction line has been heated 
 
 Measure: suction pressure at the service valve. Convert that to saturation temperature using your PT chart. Then measure actual suction line temperature at the suction valve, 6-12 inches from the service port.
 
-**Superheat = suction line temperature − saturation temperature**
+Superheat = suction line temperature − saturation temperature
 
 Target superheat varies by system and conditions. For fixed orifice residential systems, look up the target on a charging chart based on indoor wet-bulb temperature and outdoor dry-bulb temperature. The chart is usually in the installation manual or on a sticker inside the unit.
 
@@ -1514,7 +1514,7 @@ Subcooling measures how much the liquid refrigerant in the liquid line has been 
 
 Measure: liquid line pressure at the service valve. Convert to saturation temperature. Measure actual liquid line temperature near the liquid valve.
 
-**Subcooling = saturation temperature − liquid line temperature**
+Subcooling = saturation temperature − liquid line temperature
 
 TXV system targets are typically 10-15°F subcooling. Low subcooling indicates low charge or a restriction. High subcooling indicates overcharge.
 
@@ -1548,23 +1548,23 @@ The "mildly flammable" classification is the critical difference from R-410A. A2
 
 ## Key Differences from R-410A
 
-**Pressure:** R-454B operates at lower pressures than R-410A. Your gauges and hoses rated for R-410A will work from a pressure standpoint, but use R-454B-specific gauges to avoid cross-contamination and ensure accuracy.
+Pressure: R-454B operates at lower pressures than R-410A. Your gauges and hoses rated for R-410A will work from a pressure standpoint, but use R-454B-specific gauges to avoid cross-contamination and ensure accuracy.
 
-**GWP:** R-454B has a Global Warming Potential of approximately 467, compared to R-410A's 2088. That lower GWP is why the industry is moving to it.
+GWP: R-454B has a Global Warming Potential of approximately 467, compared to R-410A's 2088. That lower GWP is why the industry is moving to it.
 
-**Refrigerant oil:** A2L systems typically use POE oil, same as R-410A systems. Verify with the equipment spec.
+Refrigerant oil: A2L systems typically use POE oil, same as R-410A systems. Verify with the equipment spec.
 
-**Performance:** R-454B performs comparably to R-410A in most applications.
+Performance: R-454B performs comparably to R-410A in most applications.
 
 ## Safety Protocols That Change
 
-**Ventilation:** Any work with A2L refrigerants should be done with adequate ventilation. In enclosed spaces — mechanical rooms, tight attic installations — ventilate before and during work.
+Ventilation: Any work with A2L refrigerants should be done with adequate ventilation. In enclosed spaces — mechanical rooms, tight attic installations — ventilate before and during work.
 
-**Ignition sources:** Before recovering or working with an A2L system that has a known or suspected leak, eliminate ignition sources in the area. Open flames, sparks from electrical connections, and motor brushes can theoretically ignite a high enough concentration.
+Ignition sources: Before recovering or working with an A2L system that has a known or suspected leak, eliminate ignition sources in the area. Open flames, sparks from electrical connections, and motor brushes can theoretically ignite a high enough concentration.
 
-**Recovery:** Use a recovery machine rated for A2L refrigerants. Standard recovery equipment for A1 refrigerants is not certified for A2L.
+Recovery: Use a recovery machine rated for A2L refrigerants. Standard recovery equipment for A1 refrigerants is not certified for A2L.
 
-**Tools:** Manifold gauges and charging equipment rated for A2L are now available. As your equipment turns over, replace with A2L-compatible tools.
+Tools: Manifold gauges and charging equipment rated for A2L are now available. As your equipment turns over, replace with A2L-compatible tools.
 
 ## Certification Requirements
 
@@ -1579,33 +1579,33 @@ Get the right recovery equipment. Update your gauges and hoses. Follow the venti
   'understanding-supply-chain': `
 ## How the HVAC Supply Chain Works
 
-**Manufacturers** produce the equipment. Major manufacturers include Carrier, Trane, Lennox, Rheem, Goodman (Daikin), and others. Most manufacturing is done overseas or in a small number of North American facilities.
+Manufacturers produce the equipment. Major manufacturers include Carrier, Trane, Lennox, Rheem, Goodman (Daikin), and others. Most manufacturing is done overseas or in a small number of North American facilities.
 
-**Distributors** purchase from manufacturers in bulk and warehouse equipment regionally. You buy from distributors, not directly from manufacturers. Your local distributor stocks equipment and parts and ships to contractors in the region.
+Distributors purchase from manufacturers in bulk and warehouse equipment regionally. You buy from distributors, not directly from manufacturers. Your local distributor stocks equipment and parts and ships to contractors in the region.
 
-**Contractors** (you) purchase from distributors and install for end customers.
+Contractors (you) purchase from distributors and install for end customers.
 
 The supply chain breaks when any link fails — manufacturing slowdowns, shipping container shortages, microchip shortages, extreme weather events at manufacturing facilities, or demand spikes that outpace supply.
 
 ## What Affects Availability
 
-**Seasonality:** Equipment demand spikes in spring (cooling season) and fall (heating season). Lead times on popular equipment can go from days to weeks at peak demand. If you're quoting a job in June and need a specific unit, check availability before quoting a delivery date.
+Seasonality: Equipment demand spikes in spring (cooling season) and fall (heating season). Lead times on popular equipment can go from days to weeks at peak demand. If you're quoting a job in June and need a specific unit, check availability before quoting a delivery date.
 
-**Regulatory transitions:** When refrigerant regulations change, old equipment sells out fast as contractors and distributors stock up before the changeover. New equipment takes time to ramp up. Plan for extended lead times during transition periods.
+Regulatory transitions: When refrigerant regulations change, old equipment sells out fast as contractors and distributors stock up before the changeover. New equipment takes time to ramp up. Plan for extended lead times during transition periods.
 
-**Regional distribution:** Some equipment is better distributed in some regions than others. If your primary distributor is out of a specific model, a distributor in the next market may have it. Know your secondary sources.
+Regional distribution: Some equipment is better distributed in some regions than others. If your primary distributor is out of a specific model, a distributor in the next market may have it. Know your secondary sources.
 
-**Parts vs. equipment:** Parts availability is often separate from equipment availability. A model that's widely stocked may have proprietary parts that are backordered. Always check parts availability on OEM-specific components before committing to an installation timeline.
+Parts vs. equipment: Parts availability is often separate from equipment availability. A model that's widely stocked may have proprietary parts that are backordered. Always check parts availability on OEM-specific components before committing to an installation timeline.
 
 ## Managing Lead Times in Your Business
 
-**Quote accurately.** If you don't know the lead time, find out before you quote an installation date. A customer told "two weeks" who waits six is an angry customer.
+Quote accurately. If you don't know the lead time, find out before you quote an installation date. A customer told "two weeks" who waits six is an angry customer.
 
-**Keep common parts stocked.** Capacitors, contactors, hard-start kits, common motors — the parts you replace regularly should be in your van. Waiting a week for a $15 capacitor is a customer service failure.
+Keep common parts stocked. Capacitors, contactors, hard-start kits, common motors — the parts you replace regularly should be in your van. Waiting a week for a $15 capacitor is a customer service failure.
 
-**Have backup suppliers.** If your primary distributor is out, know who else to call. National parts distributors are alternatives when your local distributor can't help.
+Have backup suppliers. If your primary distributor is out, know who else to call. National parts distributors are alternatives when your local distributor can't help.
 
-**Communicate proactively.** If a job is going to be delayed because of equipment availability, tell the customer before they call you. "We have your equipment on order and it's running about two weeks out — I'll call you as soon as it lands" is a thousand times better than letting them wonder.
+Communicate proactively. If a job is going to be delayed because of equipment availability, tell the customer before they call you. "We have your equipment on order and it's running about two weeks out — I'll call you as soon as it lands" is a thousand times better than letting them wonder.
 
 ## The Equipment Efficiency Transition
 
@@ -1657,37 +1657,37 @@ Thank them by name. Leave your card. "If anything comes up before your next serv
   'building-hvac-career-path': `
 ## The Four Stages
 
-**Stage 1 — Apprentice/Helper**
+Stage 1 — Apprentice/Helper
 
 You're learning everything. Proper use of tools, reading schematics, handling refrigerant, attic work, crawl space work. You're riding with experienced techs and absorbing. This stage is about building a foundation.
 
 Focus: ask questions, don't be afraid to look dumb, and develop a reputation as someone who works hard and wants to learn. That reputation matters more at this stage than your technical knowledge.
 
-**Stage 2 — Journeyman Technician**
+Stage 2 — Journeyman Technician
 
 You're handling service calls independently. You can diagnose common problems, make repairs, and interact with customers. You may still have gaps in complex diagnostics or unfamiliar equipment.
 
 Focus: broaden your diagnostic confidence. If you only work on comfort cooling, go learn commercial refrigeration. If you only do residential, ask to ride along on a commercial job. The broader your competence, the harder you are to replace.
 
-**Stage 3 — Lead Technician**
+Stage 3 — Lead Technician
 
 You're handling complex diagnostics that other techs escalate. You may be training newer technicians. You're trusted with difficult customer situations.
 
 Focus: develop your teaching skills. The ability to explain what you know clearly is a multiplier — it makes you valuable as a trainer, a technical resource, and eventually a manager.
 
-**Stage 4 — Beyond the Field**
+Stage 4 — Beyond the Field
 
 Service manager. Sales. Business owner. At some point, the ceiling on field income is real. Moving into management or sales or starting your own operation is how you unlock the next level of income.
 
 ## Certifications That Matter
 
-**EPA 608:** Required to handle refrigerants. Non-negotiable. Get Universal certification (all types) even if you're only doing residential — the cost to upgrade is low and it opens all doors.
+EPA 608: Required to handle refrigerants. Non-negotiable. Get Universal certification (all types) even if you're only doing residential — the cost to upgrade is low and it opens all doors.
 
-**NATE:** Industry-standard technical certification. NATE-certified technicians command higher wages and are preferred by many employers. The specialty certifications — heat pumps, air distribution, hydronics — are the most valuable.
+NATE: Industry-standard technical certification. NATE-certified technicians command higher wages and are preferred by many employers. The specialty certifications — heat pumps, air distribution, hydronics — are the most valuable.
 
-**State licenses:** Most states require licensing for HVAC work. Know your state's requirements.
+State licenses: Most states require licensing for HVAC work. Know your state's requirements.
 
-**Manufacturer certifications:** Factory training and certification from Carrier, Trane, Lennox, and others. Valuable for warranty work and demonstrates competence on specific equipment lines.
+Manufacturer certifications: Factory training and certification from Carrier, Trane, Lennox, and others. Valuable for warranty work and demonstrates competence on specific equipment lines.
 
 ## What Determines Your Income
 
@@ -1716,27 +1716,27 @@ The basic static pressure test uses a manometer and two static pressure tips. Yo
 
 With the system running, insert the static pressure tips into both plenums. Measure simultaneously if your manometer allows.
 
-**Total External Static Pressure (TESP)** = supply static + absolute value of return static
+Total External Static Pressure (TESP) = supply static + absolute value of return static
 
 Compare TESP to the equipment's rated maximum. If you're at 0.65 on equipment rated for 0.50, you have a problem.
 
 ## Reading the Numbers
 
-**High return static (negative):** Undersized return, blocked return, or too few return registers. This is the most common finding. Many residential systems are dramatically undersized on the return side.
+High return static (negative): Undersized return, blocked return, or too few return registers. This is the most common finding. Many residential systems are dramatically undersized on the return side.
 
-**High supply static:** Undersized supply ductwork, closed or throttled dampers, or excessive duct length with too many elbows.
+High supply static: Undersized supply ductwork, closed or throttled dampers, or excessive duct length with too many elbows.
 
-**High filter drop:** Dirty filter, or a filter that's too restrictive for the system's airflow needs. High-MERV filters on systems not designed for them cause significant restriction.
+High filter drop: Dirty filter, or a filter that's too restrictive for the system's airflow needs. High-MERV filters on systems not designed for them cause significant restriction.
 
-**Low TESP with poor performance:** If static pressure is fine but the system isn't performing, look at equipment problems, refrigerant charge, or a coil issue.
+Low TESP with poor performance: If static pressure is fine but the system isn't performing, look at equipment problems, refrigerant charge, or a coil issue.
 
 ## Common Findings and Fixes
 
-**Undersized return:** The most common. Symptoms are uneven temperatures, long cycles without reaching setpoint, high humidity. Fix: add return pathways, cut in additional return grilles, install transfer grilles between rooms with closed doors.
+Undersized return: The most common. Symptoms are uneven temperatures, long cycles without reaching setpoint, high humidity. Fix: add return pathways, cut in additional return grilles, install transfer grilles between rooms with closed doors.
 
-**Restricted supply duct:** Find the restriction — often a collapsed flex duct section, a too-tight bend, or an undersized main trunk. Flex duct compressed in an attic is extremely common.
+Restricted supply duct: Find the restriction — often a collapsed flex duct section, a too-tight bend, or an undersized main trunk. Flex duct compressed in an attic is extremely common.
 
-**Wrong filter:** A MERV-13 filter on a system designed for MERV-8 will drop 0.20-0.30 in. wc. on its own. Educate the customer and replace with an appropriate filter.
+Wrong filter: A MERV-13 filter on a system designed for MERV-8 will drop 0.20-0.30 in. wc. on its own. Educate the customer and replace with an appropriate filter.
 
 ## Why This Matters
 
@@ -1767,11 +1767,11 @@ For multi-zone systems: the indoor unit capacities cannot exceed the rated capac
 
 Line sets for mini-splits bundle refrigerant lines, condensate drain, and communications/power wiring from the outdoor unit to each indoor head.
 
-**Line set length:** Most residential multi-zone systems are rated to 25-50 feet equivalent length per zone. Longer runs require checking the manufacturer's maximum allowable length and refrigerant charge adjustments.
+Line set length: Most residential multi-zone systems are rated to 25-50 feet equivalent length per zone. Longer runs require checking the manufacturer's maximum allowable length and refrigerant charge adjustments.
 
-**Height difference:** Many mini-splits have a maximum height difference between indoor and outdoor unit — commonly 25-50 feet. Verify the limit for the specific equipment.
+Height difference: Many mini-splits have a maximum height difference between indoor and outdoor unit — commonly 25-50 feet. Verify the limit for the specific equipment.
 
-**No cuts in the line set:** Refrigerant lines should be continuous runs with no splices. Cuts and fittings introduce potential leak points and are not manufacturer-approved in most cases.
+No cuts in the line set: Refrigerant lines should be continuous runs with no splices. Cuts and fittings introduce potential leak points and are not manufacturer-approved in most cases.
 
 ## Electrical
 
@@ -1781,26 +1781,26 @@ The low-voltage communication wire between indoor and outdoor units is specified
 
 ## Troubleshooting
 
-**Error codes:** Mini-splits communicate problems via error codes on the indoor unit display. Look up the codes in the manufacturer's service manual before guessing.
+Error codes: Mini-splits communicate problems via error codes on the indoor unit display. Look up the codes in the manufacturer's service manual before guessing.
 
-**Dripping water from indoor unit:** Most commonly a blocked condensate drain. Mini-split condensate drains by gravity — any sag in the drain line or a blocked drain port will cause overflow. Clean the drain and verify slope.
+Dripping water from indoor unit: Most commonly a blocked condensate drain. Mini-split condensate drains by gravity — any sag in the drain line or a blocked drain port will cause overflow. Clean the drain and verify slope.
 
-**Inconsistent temperatures in heating mode:** Below about 35-40°F outdoor temperature, some models experience reduced heating capacity. This is normal — check the equipment's heating capacity curve for low ambient conditions.
+Inconsistent temperatures in heating mode: Below about 35-40°F outdoor temperature, some models experience reduced heating capacity. This is normal — check the equipment's heating capacity curve for low ambient conditions.
 
-**Communication error between indoor and outdoor unit:** Usually a wiring issue. Verify the communication wire connections at both ends and check for damaged insulation.`,
+Communication error between indoor and outdoor unit: Usually a wiring issue. Verify the communication wire connections at both ends and check for damaged insulation.`,
 
   'electrical-fundamentals-hvac-techs': `
 ## The Basics: Voltage, Current, Resistance
 
-**Voltage (V):** The electrical pressure that drives current through a circuit. HVAC systems use line voltage (120V or 240V) and low voltage (typically 24V for controls).
+Voltage (V): The electrical pressure that drives current through a circuit. HVAC systems use line voltage (120V or 240V) and low voltage (typically 24V for controls).
 
-**Current (I):** The flow of electrons through a circuit, measured in amperes. Amperage is what does the work.
+Current (I): The flow of electrons through a circuit, measured in amperes. Amperage is what does the work.
 
-**Resistance (R):** Opposition to current flow, measured in ohms.
+Resistance (R): Opposition to current flow, measured in ohms.
 
-**Ohm's Law: V = I × R** — this governs every circuit. If you know two of the three values, you can calculate the third.
+Ohm's Law: V = I × R — this governs every circuit. If you know two of the three values, you can calculate the third.
 
-**Power: P = V × I** — a 240V circuit drawing 15 amps uses 3,600 watts.
+Power: P = V × I — a 240V circuit drawing 15 amps uses 3,600 watts.
 
 ## Reading a Wiring Diagram
 
@@ -1814,21 +1814,21 @@ Trace the circuit by following the current path from the power source through ea
 
 ## Multimeter Skills
 
-**Voltage measurement:** Measure at key points to confirm power is present. Full voltage across a component means it's open — no current is flowing through it.
+Voltage measurement: Measure at key points to confirm power is present. Full voltage across a component means it's open — no current is flowing through it.
 
-**Continuity / resistance measurement:** Power off. Test components for continuity or expected resistance. An open winding on a motor reads infinite resistance. A shorted winding reads near zero.
+Continuity / resistance measurement: Power off. Test components for continuity or expected resistance. An open winding on a motor reads infinite resistance. A shorted winding reads near zero.
 
-**Current measurement (clamp meter):** Clamp around a single conductor to read current flow. Compare to nameplate data — a compressor drawing 20A when it should draw 14A is working too hard.
+Current measurement (clamp meter): Clamp around a single conductor to read current flow. Compare to nameplate data — a compressor drawing 20A when it should draw 14A is working too hard.
 
 ## Key Components
 
-**Contactor:** Switches line voltage to the compressor and outdoor fan motor. The coil is usually 24V, controlled by the thermostat. Pitted contacts cause voltage drop and eventual failure. Check voltage drop across the contacts — more than 2-3V indicates wear.
+Contactor: Switches line voltage to the compressor and outdoor fan motor. The coil is usually 24V, controlled by the thermostat. Pitted contacts cause voltage drop and eventual failure. Check voltage drop across the contacts — more than 2-3V indicates wear.
 
-**Capacitor:** Stores and releases energy to help motors start and run. Capacitors fail frequently. Test with a capacitance meter — below 90% of rated microfarads should be replaced.
+Capacitor: Stores and releases energy to help motors start and run. Capacitors fail frequently. Test with a capacitance meter — below 90% of rated microfarads should be replaced.
 
-**Safety switches:** High-pressure switches, low-pressure switches, roll-out switches, limit switches. Each is a normally-closed switch that opens to cut power when a safety condition is detected. When a safety switch opens, find out why — don't just reset it.
+Safety switches: High-pressure switches, low-pressure switches, roll-out switches, limit switches. Each is a normally-closed switch that opens to cut power when a safety condition is detected. When a safety switch opens, find out why — don't just reset it.
 
-**Control board:** The brain of modern systems. Executes the sequence of operation and monitors safety conditions. Error codes are your first diagnostic tool when a control board is involved.
+Control board: The brain of modern systems. Executes the sequence of operation and monitors safety conditions. Error codes are your first diagnostic tool when a control board is involved.
 
 ## Safety
 
@@ -1843,7 +1843,7 @@ Arc flash from high-amperage equipment is a genuine hazard. Know the equipment y
 
 Before you connect gauges or take any readings, let the system run for at least 10-15 minutes. A system that just started hasn't stabilized — temperatures and pressures are still changing. Readings taken too early will mislead you.
 
-**Conditions that affect your readings:**
+Conditions that affect your readings:
 - Outdoor temperature: affects head pressure and condensing temperature
 - Indoor temperature and humidity: affects evaporating conditions
 - Airflow: low airflow (dirty filter, restricted return, blocked coil) makes charge look low
@@ -1858,9 +1858,9 @@ Document the conditions every time you take readings.
 4. Superheat = suction line temperature minus saturation temperature.
 5. Compare to target using the manufacturer's charging chart (indoor wet-bulb vs. outdoor dry-bulb).
 
-**If superheat is too high:** Low charge, or a restricted liquid line / metering device. Add refrigerant slowly, wait for stabilization, recheck.
+If superheat is too high: Low charge, or a restricted liquid line / metering device. Add refrigerant slowly, wait for stabilization, recheck.
 
-**If superheat is too low:** Overcharge, or a flooding metering device. Recover refrigerant, recheck.
+If superheat is too low: Overcharge, or a flooding metering device. Recover refrigerant, recheck.
 
 The key mistake: adding charge based on a single reading without waiting for stabilization. Add a small amount, wait 5 minutes, then recheck before adding more.
 
@@ -1872,19 +1872,19 @@ The key mistake: adding charge based on a single reading without waiting for sta
 4. Subcooling = saturation temperature minus liquid line temperature.
 5. Compare to manufacturer target (typically 10-15°F for most residential TXV systems).
 
-**If subcooling is too low:** Low charge. Add refrigerant.
+If subcooling is too low: Low charge. Add refrigerant.
 
-**If subcooling is too high:** Overcharge, or a restricted liquid line. If you have high subcooling before the filter drier and lower after, the drier is restricted — replace it.
+If subcooling is too high: Overcharge, or a restricted liquid line. If you have high subcooling before the filter drier and lower after, the drier is restricted — replace it.
 
 ## When Readings Don't Make Sense
 
-**Low suction pressure + high superheat:** Low charge or a restriction in the refrigerant circuit. Check for filter drier restriction. If no restriction, suspect low charge.
+Low suction pressure + high superheat: Low charge or a restriction in the refrigerant circuit. Check for filter drier restriction. If no restriction, suspect low charge.
 
-**High suction pressure + low superheat:** Overcharge, flooding TXV, or low airflow across the evaporator.
+High suction pressure + low superheat: Overcharge, flooding TXV, or low airflow across the evaporator.
 
-**High head pressure + normal suction:** Condenser problem — dirty condenser, high ambient, failed condenser fan. Not a charge issue.
+High head pressure + normal suction: Condenser problem — dirty condenser, high ambient, failed condenser fan. Not a charge issue.
 
-**Low head pressure + low suction:** Could be low charge, but could also be a failing compressor. A compressor with worn valves will have pressures that equalize more than expected.
+Low head pressure + low suction: Could be low charge, but could also be a failing compressor. A compressor with worn valves will have pressures that equalize more than expected.
 
 ## Documenting Your Charge
 
@@ -1905,35 +1905,35 @@ A furnace with poor combustion can be unsafe, inefficient, or both. The visual f
 
 ## What You're Measuring
 
-**O2 (Oxygen):** Residual oxygen in the flue gas. For residential gas furnaces, target is typically 6-9% O2. Low O2 (rich combustion) = elevated CO risk. High O2 (lean combustion) = excess air and efficiency loss.
+O2 (Oxygen): Residual oxygen in the flue gas. For residential gas furnaces, target is typically 6-9% O2. Low O2 (rich combustion) = elevated CO risk. High O2 (lean combustion) = excess air and efficiency loss.
 
-**CO (Carbon Monoxide):** Measured in ppm in the flue gas. Target is under 400 ppm. Values above 400 ppm warrant investigation. Values above 1,000 ppm indicate a serious problem. CO in ambient air is the safety emergency — flue gas CO is the diagnostic indicator.
+CO (Carbon Monoxide): Measured in ppm in the flue gas. Target is under 400 ppm. Values above 400 ppm warrant investigation. Values above 1,000 ppm indicate a serious problem. CO in ambient air is the safety emergency — flue gas CO is the diagnostic indicator.
 
-**CO2 (Carbon Dioxide):** For natural gas, target is typically 9-12% CO2. Low CO2 indicates excess air.
+CO2 (Carbon Dioxide): For natural gas, target is typically 9-12% CO2. Low CO2 indicates excess air.
 
-**Stack temperature:** High stack temp = poor heat transfer (dirty heat exchanger or scale buildup). Low stack temp = potentially condensing, or low firing rate.
+Stack temperature: High stack temp = poor heat transfer (dirty heat exchanger or scale buildup). Low stack temp = potentially condensing, or low firing rate.
 
-**Combustion efficiency:** Calculated from O2 and stack temperature. Most modern furnaces should achieve 78-82% combustion efficiency on a well-tuned system.
+Combustion efficiency: Calculated from O2 and stack temperature. Most modern furnaces should achieve 78-82% combustion efficiency on a well-tuned system.
 
 ## Performing the Analysis
 
-**Location of sample:** For induced draft furnaces, sample at the flue outlet just downstream of the heat exchanger. For atmospheric furnaces, sample in the vent connector.
+Location of sample: For induced draft furnaces, sample at the flue outlet just downstream of the heat exchanger. For atmospheric furnaces, sample in the vent connector.
 
-**Timing:** Let the furnace run for 5 minutes minimum before sampling. You need steady-state conditions.
+Timing: Let the furnace run for 5 minutes minimum before sampling. You need steady-state conditions.
 
-**Zero the CO sensor** in fresh air before sampling. Enter the fuel type — natural gas and propane have different stoichiometric requirements.
+Zero the CO sensor in fresh air before sampling. Enter the fuel type — natural gas and propane have different stoichiometric requirements.
 
 ## What High CO Indicates
 
 CO production comes from incomplete combustion. The causes:
 
-**Insufficient combustion air:** Blocked combustion air opening, closed damper, tight house that's depressurized by other exhaust fans.
+Insufficient combustion air: Blocked combustion air opening, closed damper, tight house that's depressurized by other exhaust fans.
 
-**Delayed ignition:** Gas builds up before ignition, causing a rich ignition. You'll often hear a rumbling or puff on startup.
+Delayed ignition: Gas builds up before ignition, causing a rich ignition. You'll often hear a rumbling or puff on startup.
 
-**Dirty burners:** Debris on the burner ports disrupts the flame pattern and creates rich zones. Clean the burners and retest.
+Dirty burners: Debris on the burner ports disrupts the flame pattern and creates rich zones. Clean the burners and retest.
 
-**Heat exchanger crack:** Combustion products mixing with supply air. Any furnace with elevated CO and no obvious combustion cause gets a thorough heat exchanger inspection.
+Heat exchanger crack: Combustion products mixing with supply air. Any furnace with elevated CO and no obvious combustion cause gets a thorough heat exchanger inspection.
 
 ## Heat Exchanger Inspection
 
@@ -1950,11 +1950,11 @@ Both are preventable by proper evacuation.
 
 ## Evacuation Procedure
 
-**Equipment:** A two-stage vacuum pump capable of achieving 500 microns or better. A vacuum gauge (micron gauge) — not a Bourdon tube gauge, which is not accurate in the deep vacuum range.
+Equipment: A two-stage vacuum pump capable of achieving 500 microns or better. A vacuum gauge (micron gauge) — not a Bourdon tube gauge, which is not accurate in the deep vacuum range.
 
-**Target:** 500 microns or below, confirmed by decay test.
+Target: 500 microns or below, confirmed by decay test.
 
-**Procedure:**
+Procedure:
 1. Connect the vacuum pump using large-diameter hoses (5/16" or larger ID) to minimize restriction.
 2. Evacuate to 500 microns.
 3. Isolate the pump (close the valve at the hose connection, don't just shut off the pump).
@@ -1963,28 +1963,28 @@ Both are preventable by proper evacuation.
    - Rises slowly and stabilizes: moisture. Break with dry nitrogen and re-evacuate. Repeat until the decay test holds.
    - Rises quickly to atmospheric: there's a leak. Find it before you charge.
 
-**The decay test is not optional.** Many technicians charge after seeing 500 microns without performing the decay test — this is how moisture gets into systems.
+The decay test is not optional. Many technicians charge after seeing 500 microns without performing the decay test — this is how moisture gets into systems.
 
 ## Common Mistakes
 
-**Leaving Schrader cores in during evacuation:** The cores restrict flow dramatically. Remove them with a core removal tool and replace after evacuation. The difference in evacuation speed is substantial.
+Leaving Schrader cores in during evacuation: The cores restrict flow dramatically. Remove them with a core removal tool and replace after evacuation. The difference in evacuation speed is substantial.
 
-**Long or small-diameter hoses:** Every foot of hose and every fitting restricts pump-down speed. Use the shortest, largest-bore hose practical.
+Long or small-diameter hoses: Every foot of hose and every fitting restricts pump-down speed. Use the shortest, largest-bore hose practical.
 
-**Old pump oil:** A pump with old or contaminated oil won't pull deep. Change the oil regularly and warm up the pump before pulling deep vacuums.
+Old pump oil: A pump with old or contaminated oil won't pull deep. Change the oil regularly and warm up the pump before pulling deep vacuums.
 
 ## Nitrogen Purging for Brazing
 
 Brazing copper lines without nitrogen creates copper oxide scale inside the pipe. That scale flakes off over time and circulates through the system — plugging metering devices, scoring compressor valves, and contaminating the refrigerant.
 
-**Procedure:**
+Procedure:
 1. Connect a nitrogen cylinder to one end of the line set through a regulator. Set to 1-2 PSIG — you just need flow, not high pressure.
 2. Allow nitrogen to flow through the line while brazing. The nitrogen flowing past the joint displaces oxygen and prevents oxidation.
 3. Maintain flow until the joint cools below 200°F.
 
-**Verify you're getting flow before you start brazing.** A common mistake is connecting nitrogen and having the flow path blocked — you're brazing with zero nitrogen inside. Open both ends of the line set so you can verify flow before you close up.
+Verify you're getting flow before you start brazing. A common mistake is connecting nitrogen and having the flow path blocked — you're brazing with zero nitrogen inside. Open both ends of the line set so you can verify flow before you close up.
 
-**Safety:** Never use nitrogen from an unregulated cylinder. Regulator and relief valve are required. Never use oxygen or any gas other than dry nitrogen for purging or pressure testing.`,
+Safety: Never use nitrogen from an unregulated cylinder. Regulator and relief valve are required. Never use oxygen or any gas other than dry nitrogen for purging or pressure testing.`,
 
   // ─── HOMEOWNER / LEARN ───────────────────────────────────────────────────────
 
@@ -2001,7 +2001,7 @@ Your furnace has a limit switch that shuts the burner off if the heat exchanger 
 
 What causes overheating? Blocked airflow. The most common culprit is a dirty air filter. When the filter gets clogged, the furnace can't move enough air across the heat exchanger. Heat builds up, the limit switch trips, the burner shuts off.
 
-**What to do:** Check your filter right now. If it's gray and visibly clogged, replace it. This single fix resolves a large percentage of short cycling complaints.
+What to do: Check your filter right now. If it's gray and visibly clogged, replace it. This single fix resolves a large percentage of short cycling complaints.
 
 Other airflow causes: closed supply registers, blocked return vents, or a failed blower motor.
 
@@ -2044,7 +2044,7 @@ The force of repeated banging can crack the heat exchanger over time. A cracked 
 
 Common causes: dirty burners with clogged ports, low gas pressure, or a weak igniter.
 
-**What to do:** Call a technician. Delayed ignition needs diagnosis before it damages the heat exchanger.
+What to do: Call a technician. Delayed ignition needs diagnosis before it damages the heat exchanger.
 
 A quieter popping when the system starts or stops can be ductwork expanding and contracting with temperature changes. This is typically normal.
 
@@ -2054,15 +2054,15 @@ A high-pitched squeal usually comes from a bearing in the blower motor or induce
 
 Don't ignore this. A motor that's squealing is on its way to failure. Catching it early means a motor replacement. Letting it fail completely may mean an emergency no-heat call, plus emergency service rates.
 
-**What to do:** Call a technician. The motor likely needs replacement.
+What to do: Call a technician. The motor likely needs replacement.
 
 ## Rattling
 
-**Loose panel:** The access panels on your furnace can vibrate against the cabinet. Check that all panels are fully seated and secured.
+Loose panel: The access panels on your furnace can vibrate against the cabinet. Check that all panels are fully seated and secured.
 
-**Debris in the blower:** Occasionally something falls into the return air path and gets pulled into the blower wheel. A small object hitting the blower blades creates rattling. This needs to be removed.
+Debris in the blower: Occasionally something falls into the return air path and gets pulled into the blower wheel. A small object hitting the blower blades creates rattling. This needs to be removed.
 
-**Loose ductwork:** A loose duct connection vibrating at the furnace attachment point. Often fixable with sheet metal screws.
+Loose ductwork: A loose duct connection vibrating at the furnace attachment point. Often fixable with sheet metal screws.
 
 ## Rumbling or Growling
 
@@ -2072,7 +2072,7 @@ A low rumble during or after the burner shuts off can indicate a problem with th
 
 A few clicks when the furnace starts is completely normal — that's the igniter cycling. But continuous clicking without the furnace firing indicates the igniter is cycling but the burner isn't lighting.
 
-**What to do:** Check that your gas is on (check another gas appliance in the house). If gas is fine and the furnace still clicks without igniting, a technician needs to diagnose the ignition system.`,
+What to do: Check that your gas is on (check another gas appliance in the house). If gas is fine and the furnace still clicks without igniting, a technician needs to diagnose the ignition system.`,
 
   'furnace-leaking-water': `
 ## High-Efficiency Furnaces (90%+ AFUE)
@@ -2083,25 +2083,25 @@ A high-efficiency furnace extracts so much heat from the combustion gases that t
 
 High-efficiency furnaces have a condensate system: a drain pan, a drain trap, and a drain line that routes this water out. When any part of that system fails or clogs, water ends up on the floor.
 
-**Common causes:**
+Common causes:
 - Clogged condensate drain line (most common)
 - Failed condensate pump (if the drain doesn't run to a floor drain by gravity)
 - Cracked or disconnected drain line
 - Frozen condensate drain in cold conditions
 
-**What to check:** Trace the white PVC condensate drain from the furnace to where it exits. Look for obvious cracks, disconnected sections, or blockages. If there's a condensate pump (a small device with a reservoir), check if it's running and if the reservoir is overflowing.
+What to check: Trace the white PVC condensate drain from the furnace to where it exits. Look for obvious cracks, disconnected sections, or blockages. If there's a condensate pump (a small device with a reservoir), check if it's running and if the reservoir is overflowing.
 
-**What to do:** Clear a clogged condensate line by flushing with water and a small amount of bleach. For pump failures or cracked lines, call a technician.
+What to do: Clear a clogged condensate line by flushing with water and a small amount of bleach. For pump failures or cracked lines, call a technician.
 
 ## Standard Efficiency Furnaces (80% AFUE)
 
 A standard efficiency furnace should not produce condensate. If water is appearing near one, something is wrong upstream.
 
-**The most common cause is the AC system.** The evaporator coil in or on top of the furnace drains condensate. If the coil's drain pan or drain line is clogged, water backs up and drains down into the furnace area — appearing to come from the furnace.
+The most common cause is the AC system. The evaporator coil in or on top of the furnace drains condensate. If the coil's drain pan or drain line is clogged, water backs up and drains down into the furnace area — appearing to come from the furnace.
 
-**Other causes:** A humidifier mounted on the furnace with a failed drain or cracked water panel.
+Other causes: A humidifier mounted on the furnace with a failed drain or cracked water panel.
 
-**What to check:** Is the leak happening in summer when the AC is running? More likely the coil drain system. Is there a humidifier? Check the water connections and drain.
+What to check: Is the leak happening in summer when the AC is running? More likely the coil drain system. Is there a humidifier? Check the water connections and drain.
 
 ## What to Do Right Now
 
@@ -2131,19 +2131,19 @@ Do not use heavy sandpaper or abrasive pads that would remove metal rather than 
 
 ## Step by Step
 
-**1. Turn the furnace off.** Turn off the furnace at the thermostat and at the power switch on the furnace cabinet. Wait 5 minutes.
+1. Turn the furnace off. Turn off the furnace at the thermostat and at the power switch on the furnace cabinet. Wait 5 minutes.
 
-**2. Locate the flame sensor.** Open the furnace access panel. The flame sensor is a small metal rod, about 2-3 inches long, mounted on a bracket near the burner with a single wire connection.
+2. Locate the flame sensor. Open the furnace access panel. The flame sensor is a small metal rod, about 2-3 inches long, mounted on a bracket near the burner with a single wire connection.
 
-**3. Disconnect the wire.** The wire connects with a push-on connector. Simply pull it off.
+3. Disconnect the wire. The wire connects with a push-on connector. Simply pull it off.
 
-**4. Remove the sensor.** There's usually a single screw holding the sensor bracket. Remove it and slide the sensor out.
+4. Remove the sensor. There's usually a single screw holding the sensor bracket. Remove it and slide the sensor out.
 
-**5. Clean the rod.** Lightly rub the metal rod with fine steel wool or sandpaper. You're removing the white or grayish oxidation layer. The rod should be bright and clean after a few seconds. Wipe with a clean cloth.
+5. Clean the rod. Lightly rub the metal rod with fine steel wool or sandpaper. You're removing the white or grayish oxidation layer. The rod should be bright and clean after a few seconds. Wipe with a clean cloth.
 
-**6. Reinstall.** Slide the sensor back in, secure the screw, and reconnect the wire.
+6. Reinstall. Slide the sensor back in, secure the screw, and reconnect the wire.
 
-**7. Restore power.** Turn the power back on and turn the thermostat up to call for heat. The furnace should fire up and stay lit.
+7. Restore power. Turn the power back on and turn the thermostat up to call for heat. The furnace should fire up and stay lit.
 
 ## If It Doesn't Work
 
@@ -2154,11 +2154,11 @@ There's also the possibility the issue isn't the flame sensor at all. A furnace 
   'ac-not-blowing-cold-air': `
 ## Start Here: Simple Checks First
 
-**Thermostat:** Is it set to COOL (not HEAT or FAN ONLY)? Is the setpoint actually below the current room temperature? Thermostat settings are the cause of more "no cool" calls than you'd think.
+Thermostat: Is it set to COOL (not HEAT or FAN ONLY)? Is the setpoint actually below the current room temperature? Thermostat settings are the cause of more "no cool" calls than you'd think.
 
-**Air filter:** A severely clogged filter restricts airflow enough that the evaporator coil freezes over — and a frozen coil can't cool air effectively. Check the filter. If it's gray and packed with dust, replace it.
+Air filter: A severely clogged filter restricts airflow enough that the evaporator coil freezes over — and a frozen coil can't cool air effectively. Check the filter. If it's gray and packed with dust, replace it.
 
-**Registers and vents:** Are all the supply registers open? A house with half the registers closed creates the same airflow problem as a clogged filter.
+Registers and vents: Are all the supply registers open? A house with half the registers closed creates the same airflow problem as a clogged filter.
 
 ## The AC Might Be Frozen
 
@@ -2199,14 +2199,14 @@ The AFUE rating — Annual Fuel Utilization Efficiency — measures what percent
 
 ## How They're Different
 
-**80% furnace (standard efficiency):**
+80% furnace (standard efficiency):
 - Single heat exchanger
 - Hot, dry exhaust gases exit through a metal flue pipe
 - Vents through a metal B-vent or single-wall pipe to a chimney or through the roof
 - Simpler system, fewer components to fail
 - Lower upfront cost
 
-**90%+ furnace (high efficiency / condensing):**
+90%+ furnace (high efficiency / condensing):
 - Two heat exchangers — the second extracts additional heat from exhaust gases
 - Exhaust cools enough to condense, producing liquid water as a byproduct
 - Vents through small-diameter PVC pipe through the side wall or roof
@@ -2283,41 +2283,41 @@ All major brands make reliable furnaces when properly installed. Installation qu
 
 Carrier is one of the oldest names in HVAC and makes high-quality equipment at multiple price points. Their Infinity series (modulating, variable-speed) is consistently well-reviewed. Bryant is the contractor/value channel brand owned by the same parent company.
 
-**Strengths:** Quality construction, good dealer network, solid warranty support. Carrier's Infinity communicating system is one of the better options available.
+Strengths: Quality construction, good dealer network, solid warranty support. Carrier's Infinity communicating system is one of the better options available.
 
-**Considerations:** Premium pricing on their top-tier lines.
+Considerations: Premium pricing on their top-tier lines.
 
 ## Trane / American Standard
 
 Trane is one of the most recognized consumer brands in the industry. They build solid, well-engineered equipment. American Standard is their contractor channel brand.
 
-**Strengths:** Durable equipment, particularly their XL and XV series. Good technician support and parts availability.
+Strengths: Durable equipment, particularly their XL and XV series. Good technician support and parts availability.
 
-**Considerations:** Premium pricing at the top tier.
+Considerations: Premium pricing at the top tier.
 
 ## Lennox
 
 Lennox makes some of the highest-efficiency equipment available, consistently at or near the top of AFUE ratings.
 
-**Strengths:** Excellent efficiency ratings, quiet operation on premium models, strong comfort features.
+Strengths: Excellent efficiency ratings, quiet operation on premium models, strong comfort features.
 
-**Considerations:** Proprietary parts can be harder to source in some markets. Ask your local technician about their experience with Lennox in your area.
+Considerations: Proprietary parts can be harder to source in some markets. Ask your local technician about their experience with Lennox in your area.
 
 ## Goodman / Daikin
 
 Goodman (now owned by Daikin, the world's largest HVAC manufacturer) is the value leader. Their equipment is functional and reliable at a price point that beats most competitors.
 
-**Strengths:** Lower upfront cost, good reliability record in recent years, 10-year parts warranty on registered equipment.
+Strengths: Lower upfront cost, good reliability record in recent years, 10-year parts warranty on registered equipment.
 
-**Considerations:** Fewer high-efficiency options than premium brands. Basic features.
+Considerations: Fewer high-efficiency options than premium brands. Basic features.
 
 ## Rheem / Ruud
 
 Rheem makes solid mid-tier equipment at competitive prices. They're one of the largest manufacturers in North America. Ruud is the contractor channel brand.
 
-**Strengths:** Good value, wide availability, solid warranty.
+Strengths: Good value, wide availability, solid warranty.
 
-**Considerations:** Middle of the pack on comfort features compared to Carrier and Trane at similar price points.
+Considerations: Middle of the pack on comfort features compared to Carrier and Trane at similar price points.
 
 ## What Actually Matters Most
 
@@ -2334,15 +2334,15 @@ The typical homeowner planning point is 15-20 years: if your furnace is in that 
 
 ## What Affects How Long It Lasts
 
-**Maintenance:** The single biggest variable. A furnace that gets an annual tune-up — cleaning the burners, checking combustion, replacing the filter — will outlast a neglected furnace by years.
+Maintenance: The single biggest variable. A furnace that gets an annual tune-up — cleaning the burners, checking combustion, replacing the filter — will outlast a neglected furnace by years.
 
-**Filter changes:** Air filters protect the equipment. A clogged filter makes the blower work harder, the heat exchanger run hotter, and the system strain. Change it on schedule.
+Filter changes: Air filters protect the equipment. A clogged filter makes the blower work harder, the heat exchanger run hotter, and the system strain. Change it on schedule.
 
-**Installation quality:** A furnace that was properly sized and installed starts its life in a better position. An oversized furnace short cycles constantly. An undersized one runs at peak load.
+Installation quality: A furnace that was properly sized and installed starts its life in a better position. An oversized furnace short cycles constantly. An undersized one runs at peak load.
 
-**Climate:** Furnaces in very cold climates run harder for more months per year. More hours of operation mean more wear. A furnace in Minnesota will have a harder life than the same furnace in North Carolina.
+Climate: Furnaces in very cold climates run harder for more months per year. More hours of operation mean more wear. A furnace in Minnesota will have a harder life than the same furnace in North Carolina.
 
-**Equipment quality:** Better equipment, with more robust heat exchangers and higher-quality controls, lasts longer than entry-level equipment — generally.
+Equipment quality: Better equipment, with more robust heat exchangers and higher-quality controls, lasts longer than entry-level equipment — generally.
 
 ## Signs Your Furnace Is Nearing the End
 
@@ -2372,11 +2372,11 @@ Higher AFUE = less wasted fuel = lower energy bills.
 
 ## What the Numbers Actually Mean
 
-**80% AFUE:** The federal minimum for furnaces sold in most US regions. Standard efficiency equipment. Adequate performance at a lower price point.
+80% AFUE: The federal minimum for furnaces sold in most US regions. Standard efficiency equipment. Adequate performance at a lower price point.
 
-**90-95% AFUE:** High-efficiency equipment. Requires PVC venting. Meaningful energy savings over 80% equipment.
+90-95% AFUE: High-efficiency equipment. Requires PVC venting. Meaningful energy savings over 80% equipment.
 
-**96-98% AFUE:** Top-tier efficiency. Diminishing marginal returns compared to 95%, but worth noting for very cold climates with high gas usage.
+96-98% AFUE: Top-tier efficiency. Diminishing marginal returns compared to 95%, but worth noting for very cold climates with high gas usage.
 
 The efficiency gap that matters most is between 80% and 90%+, not between 95% and 97%. Going from 80% to 95% saves 16 cents per dollar of gas used. Going from 95% to 97% saves 2 cents.
 
@@ -2384,11 +2384,11 @@ The efficiency gap that matters most is between 80% and 90%+, not between 95% an
 
 AFUE only measures fuel efficiency — it doesn't account for:
 
-**Comfort:** A variable-speed modulating furnace with 96% AFUE delivers more comfort than a single-stage furnace with the same rating, because it distributes heat more evenly.
+Comfort: A variable-speed modulating furnace with 96% AFUE delivers more comfort than a single-stage furnace with the same rating, because it distributes heat more evenly.
 
-**Electricity consumption:** The blower motor uses electricity, not gas. A variable-speed ECM blower uses significantly less electricity than a standard motor. This savings doesn't show up in AFUE.
+Electricity consumption: The blower motor uses electricity, not gas. A variable-speed ECM blower uses significantly less electricity than a standard motor. This savings doesn't show up in AFUE.
 
-**Installation quality:** A properly installed 80% furnace outperforms a poorly installed 96% furnace.
+Installation quality: A properly installed 80% furnace outperforms a poorly installed 96% furnace.
 
 ## How to Use AFUE in Your Decision
 
@@ -2506,31 +2506,31 @@ Properly maintained furnaces last 3-5 years longer than neglected ones. The tune
 
 ## What a Technician Should Check
 
-**Safety inspection:**
+Safety inspection:
 - Check heat exchanger for cracks or deterioration
 - Test carbon monoxide levels in flue and supply air
 - Inspect flue and venting for blockages or improper connections
 - Test safety switches (limit switch, pressure switch, roll-out switch)
 
-**Combustion and burner:**
+Combustion and burner:
 - Inspect and clean burners
 - Check igniter function and condition
 - Inspect and clean flame sensor
 - Test gas pressure at the manifold
 - Measure and document combustion efficiency
 
-**Mechanical:**
+Mechanical:
 - Inspect and lubricate blower motor bearings (if applicable)
 - Measure blower motor amperage
 - Inspect capacitors with a meter
 - Check all electrical connections
 
-**Airflow and filter:**
+Airflow and filter:
 - Replace air filter (ask in advance whether it's included)
 - Inspect coil condition where accessible
 - Spot-check ductwork connections at the furnace
 
-**Operation check:**
+Operation check:
 - Verify startup sequence, runtime, and shutdown
 - Measure supply and return air temperature (delta-T)
 
@@ -2565,30 +2565,30 @@ Spring maintenance — done before cooling season starts — catches these issue
 
 ## What the Technician Should Do
 
-**Electrical:**
+Electrical:
 - Check and measure capacitor health (the most commonly failed component on older AC systems)
 - Inspect contactor contacts for pitting and wear
 - Measure compressor and fan motor amperage
 - Tighten all electrical connections
 - Check disconnect condition
 
-**Refrigerant system:**
+Refrigerant system:
 - Check operating pressures (suction and discharge)
 - Calculate superheat or subcooling to verify charge
 - Inspect refrigerant lines for signs of leaks or damage
 
-**Coils and airflow:**
+Coils and airflow:
 - Clean condenser coil if dirty (coils clogged with debris lose 10-15% efficiency)
 - Inspect evaporator coil condition
 - Check and clear condensate drain line
 - Replace filter if included in the service
 
-**Mechanical:**
+Mechanical:
 - Lubricate fan motor bearings if applicable
 - Inspect fan blade for damage or looseness
 - Verify refrigerant line insulation is intact
 
-**Operational verification:**
+Operational verification:
 - Let the system run, confirm pressures are stable
 - Measure supply air temperature and delta-T
 - Verify thermostat operation
