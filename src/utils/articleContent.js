@@ -116,7 +116,7 @@ export const articleContent = {
 
 <p>This works because it doesn't fight the objection. It names it. And once the homeowner tells you what's really going on, you can actually help them instead of guessing.</p>
 
-<p>The second response works when you've built solid rapport and the conversation has been going well: "Before I pack up, can I ask you something? Do you feel like our company would do a great job on this installation if you chose us?"</p>
+<p>The second response works when you've built solid rapport and the conversation has been going well: "Before I pack up — one honest question. If you did move forward, do you feel confident we're the right company for the job?"</p>
 
 <p>If they say yes, you've just gotten them to recommit to trusting you. From there, the close is natural: "Then with your permission, can I go ahead and get you on the schedule?"</p>
 
@@ -1320,7 +1320,7 @@ Most couples who ask for private time and were genuinely interested come back wi
 
 <p>If the rapport has been strong throughout the call, follow up with:</p>
 
-<blockquote>"Before I pack up, can I ask you something? Do you feel like our company would do a great job on this install if you chose us?"</blockquote>
+<blockquote>"Before I pack up — one honest question. If you did move forward, do you feel confident we're the right company for the job?"</blockquote>
 
 <p>If they say yes, close the loop: "With your permission, can I go ahead and get you on the schedule? We can always adjust if timing needs to shift."</p>
 
