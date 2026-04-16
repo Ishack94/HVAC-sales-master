@@ -146,6 +146,62 @@ export const articleContent = {
 <p>Don't accept "I need to think about it" as the final answer — it's an invitation to find the real concern. Ask the clarifying question: price, timing, or trust. Never chase with immediate discounts — that trains homeowners to expect price drops. If you didn't get both decision-makers in the room, the objection is almost guaranteed. The best way to prevent this objection is to build enough trust during the call that the homeowner feels confident saying yes before you ever present price.</p>
 `,
 
+  'first-90-seconds-at-the-door': `
+<p>The homeowner opened the door thirty seconds ago. You haven't diagnosed anything, you haven't quoted anything, and you haven't opened your tool bag. But the sale is already half decided.</p>
+
+<p>Most techs think closing happens at the kitchen table. It doesn't. Closing happens in the first 90 seconds — when the homeowner is deciding whether you're someone they trust or just another contractor trying to sell them something expensive.</p>
+
+<h2>What Top Closers Do Differently</h2>
+
+<p>The best comfort advisors in the industry all do the same thing when the door opens: they slow down. They don't walk in talking about the system. They don't lead with credentials. They don't start diagnosing from the doorway.</p>
+
+<p>They introduce themselves calmly, they say thank you, and they ask the homeowner to show them something simple — usually the thermostat. That one move does three things at once: it gets the homeowner walking with you through their own house, it puts them in a teaching role instead of a buying role, and it gives you a chance to observe the home, the family, and the temperature situation before you say a word about equipment.</p>
+
+<p>A good opening sounds like: "Hey, I'm Isaac. Thanks for having me out. Before I touch anything, would you mind showing me the thermostat and telling me what's been going on?" That's it. No pitch, no brochure, no company history. Just a calm professional asking to understand the problem.</p>
+
+<h2>What Kills the Deal Before It Starts</h2>
+
+<p>Walking in rushed is the fastest way to lose trust. If you come through the door already looking at your clipboard, already scanning for the furnace, already talking about what you think the problem is — the homeowner feels like a ticket number, not a person.</p>
+
+<p>Other trust killers in the first 90 seconds: dirty shoe covers or no shoe covers at all, not making eye contact, immediately asking where the equipment is without acknowledging the homeowner, talking too fast, and name-dropping your company's awards or years in business before anyone asked.</p>
+
+<p>The homeowner doesn't care about your company yet. They care about whether you seem like someone who's going to listen, be careful in their home, and give them a straight answer. Everything else comes later.</p>
+
+<h2>The Walk-Through Is Where You Win</h2>
+
+<p>After the thermostat, ask to see the system. But on the way there, you're gathering information that has nothing to do with HVAC. You're noticing the family photos, the dog, the kids' shoes by the door, the temperature difference between rooms. You're building context.</p>
+
+<p>Ask simple questions as you walk: "How long have you been in the house?" "Has the system always given you trouble or is this new?" "Are there rooms that never seem to get comfortable?" These aren't sales tricks. They're diagnostic questions that also happen to tell you what the homeowner actually cares about — comfort, bills, reliability, or all three.</p>
+
+<p>The best closers treat the walk-through like a conversation, not an inspection. They're learning the homeowner's priorities so that when they sit down at the table later, every option they present connects directly to something the homeowner already told them matters.</p>
+
+<h2>Photos Change Everything</h2>
+
+<p>One habit that separates top performers from average techs: take photos and videos of everything you find. The homeowner is not going to crawl into the attic or squeeze behind the furnace to see what you see. So bring it to them.</p>
+
+<p>When you sit down later and show them a photo of their cracked heat exchanger, or their disconnected return duct, or their undersized gas line — that's not a sales tactic. That's evidence. And evidence builds trust faster than any script.</p>
+
+<p>Say something like: "I took a few pictures because I know you're not going to climb up there — and you shouldn't have to. Let me show you what I found and what it means for your system." That one line tells the homeowner you're thorough, you're transparent, and you respect their time.</p>
+
+<h2>Control the Clock Early</h2>
+
+<p>Before you start any work, set expectations on time. A simple line like: "This might take about an hour depending on what I find and any questions you have. Will that work for you?"</p>
+
+<p>This does two critical things. First, it tells the homeowner you're not going to rush through and leave. Second, it reserves time for the conversation after the diagnosis — the part where you present options and potentially discuss replacement. If you don't set that expectation up front, you'll feel rushed when it matters most.</p>
+
+<h2>What Makes HVAC Different</h2>
+
+<p>This isn't retail. You're walking into someone's home, often during a comfort crisis, and your credibility is established almost entirely by how you carry yourself in the first few minutes. It's closer to a doctor's bedside manner than a sales call.</p>
+
+<p>The homeowner is stressed. Their heat is out, or their AC died in July, or they just got a repair bill that made their stomach drop. The last thing they need is someone who walks in like a used-car salesman with a clipboard.</p>
+
+<p>Be calm. Be observant. Be genuinely curious about their situation. Ask before you touch anything. Thank them for their time. The sale takes care of itself when the homeowner feels like they're dealing with a professional who actually gives a damn.</p>
+
+<h2>Key Takeaways</h2>
+
+<p>Slow down at the door — the first impression is worth more than your best closing line. Ask the homeowner to show you the thermostat and tell you what's happening. Use the walk-through to learn what the homeowner cares about, not just what's wrong with the equipment. Take photos of everything and use them to build trust later. Set time expectations early so you're not rushed when it's time to present options. Be calm, observant, and genuinely curious — the rest follows from there.</p>
+`,
+
   // ─── LEARN (HOMEOWNER) ────────────────────────────────────────────────────
 
   'furnace-blowing-cold-air': `
