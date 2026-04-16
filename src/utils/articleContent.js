@@ -947,13 +947,13 @@ Be the person who worked with their research instead of dismissing it, who added
 
 Most lost calls fall into a few predictable patterns:
 
-**The price quote trap.** Customer asks "how much does it cost to fix my AC?" Rep gives a range or says "it depends." Caller hangs up and calls the next company. The fix: don't give prices over the phone for diagnostic work. Book the call instead. "I can't give you an accurate number without seeing what's going on — but I can get a tech out there and we'll give you a firm price before any work is done. What's your availability?"
+The price quote trap — Customer asks "how much does it cost to fix my AC?" Rep gives a range or says "it depends." Caller hangs up and calls the next company. The fix: don't give prices over the phone for diagnostic work. Book the call instead. "I can't give you an accurate number without seeing what's going on — but I can get a tech out there and we'll give you a firm price before any work is done. What's your availability?"
 
-**The hold spiral.** Customer calls, gets put on hold before being properly greeted, waits 90 seconds, hangs up. Fix: never put a caller on hold before you've gotten their name and confirmed you're going to take care of them.
+The hold spiral — Customer calls, gets put on hold before being properly greeted, waits 90 seconds, hangs up. Fix: never put a caller on hold before you've gotten their name and confirmed you're going to take care of them.
 
-**The passive close.** Rep answers questions but never asks for the appointment. "Okay, do you want to schedule?" is weak. "I have Thursday at 2 or Friday morning — which works better for you?" is a close.
+The passive close — Rep answers questions but never asks for the appointment. "Okay, do you want to schedule?" is weak. "I have Thursday at 2 or Friday morning — which works better for you?" is a close.
 
-**The tone problem.** Flat, scripted, or impatient responses communicate that you don't want the call. Warm, engaged, slightly upbeat energy communicates that this call matters. Customers feel it instantly.
+The tone problem — Flat, scripted, or impatient responses communicate that you don't want the call. Warm, engaged, slightly upbeat energy communicates that this call matters. Customers feel it instantly.
 
 ## The Perfect First 20 Seconds
 
@@ -1061,10 +1061,10 @@ If you're a small operation doing mostly commercial or mixed work, the overhead 
 
 When someone says your price is too high, they're almost never doing perfect price-comparison math in their head. What they're usually expressing is one of these:
 
-- **Sticker shock** — they didn't have a number in mind and yours surprised them
-- **Value doubt** — they're not sure you're worth the premium over someone cheaper
-- **Trust gap** — they don't know you well enough to feel confident spending that much
-- **Budget reality** — the money genuinely isn't there
+- Sticker shock — they didn't have a number in mind and yours surprised them
+- Value doubt — they're not sure you're worth the premium over someone cheaper
+- Trust gap — they don't know you well enough to feel confident spending that much
+- Budget reality — the money genuinely isn't there
 
 Each of these requires a different response. The mistake is treating every price objection as pure price comparison and responding by cutting your number. That only works for the last category — and even then, it's not always the right move.
 
