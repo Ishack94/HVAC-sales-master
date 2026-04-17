@@ -66,7 +66,6 @@ export default function Home() {
   const [message, setMessage] = useState('')
   const [search, setSearch] = useState('')
   const [activeCategory, setActiveCategory] = useState('all')
-  const [previewExpanded, setPreviewExpanded] = useState(false)
   const searchTimerRef = useRef(null)
 
   // Scroll reveal
@@ -161,10 +160,10 @@ export default function Home() {
   return (
     <>
       <Helmet>
-        <title>HVAC Sales Master — Sell Smarter. Master Your Craft.</title>
+        <title>HVAC Sales Training & Free Tools | HVAC Sales Master</title>
         <meta name="description" content="Free HVAC sales training, calculators, and troubleshooting tools built from real field experience. No fluff — just what actually works." />
         <link rel="canonical" href={canonicalUrl} />
-        <meta property="og:title" content="HVAC Sales Master — Sell Smarter. Master Your Craft." />
+        <meta property="og:title" content="HVAC Sales Training & Free Tools | HVAC Sales Master" />
         <meta property="og:description" content="Free HVAC sales training, calculators, and troubleshooting tools built from real field experience. No fluff — just what actually works." />
         <meta property="og:url" content={canonicalUrl} />
         <meta property="og:type" content="website" />
@@ -216,7 +215,7 @@ export default function Home() {
           </div>
 
           {/* Trust signal */}
-          <p className={styles.trustSignal}>46+ articles · 5 free tools · updated regularly</p>
+          <p className={styles.trustSignal}>46+ articles · 5 free tools · updated weekly</p>
 
           {/* Search + Filter */}
           <div className={styles.searchArea}>
@@ -240,34 +239,6 @@ export default function Home() {
               ))}
             </div>
           </div>
-
-          {/* Body content — always visible intro */}
-          {!isFiltering && (
-            <div className={`${styles.body} reveal`}>
-              <h2>Leave Your Cards in the Van (And Close More Deals Because of It)</h2>
-              <p>After you've gone through everything — <strong>explained the options, answered all the questions, handled every concern</strong> — stop talking. Turn it over to them.</p>
-              <p>Say something like, <strong>"Do you have any questions, or is there anything I didn't cover that would help you make a decision?"</strong></p>
-              <p>Then just let it sit.</p>
-              {!previewExpanded && (
-                <button type="button" className={styles.continueReading} onClick={() => setPreviewExpanded(true)}>
-                  Continue reading →
-                </button>
-              )}
-              {previewExpanded && (
-                <>
-                  <p>I'm totally comfortable with the silence. That's usually when they're actually thinking things through. Most comfort advisors panic in the quiet and start rambling about features nobody asked about. That's where you lose them.</p>
-                  <p>If it starts to drag on a bit, I'll give them some space. I'll say, <strong>"Hey, I'm going to run out to my truck and grab my card real quick — take your time looking this over."</strong></p>
-                  <p>That little break changes everything.</p>
-                  <p>It gives them a chance to talk privately, make a quick call, or just think without you hovering. A lot of times, when I come back in, they're either ready to move forward or they've got a real question to go over — not an excuse to stall.</p>
-                  <p>The close doesn't happen because you pushed harder. It happens because <strong>you gave them the space to decide</strong>.</p>
-                  <blockquote>The best closers aren't the ones who talk the most. They're the ones who know when to stop.</blockquote>
-                </>
-              )}
-              <p>That's the kind of real-world strategy you'll find on this site. Not theory. Not motivational fluff. <strong>Just what actually works when you're sitting across from a homeowner.</strong></p>
-              <p>If you're just getting started, I'd read <Link to="/sales/stop-selling-equipment-start-selling-outcomes" onClick={() => trackEvent('start_here_click', { article_title: 'Stop Selling Equipment' })}>Stop Selling Equipment</Link> first, then <Link to="/sales/first-90-seconds-at-the-door" onClick={() => trackEvent('start_here_click', { article_title: 'First 90 Seconds' })}>The First 90 Seconds at the Door</Link>. Everything else builds from there.</p>
-            </div>
-          )}
-
 
           {/* No results */}
           {noResults && (
