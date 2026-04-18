@@ -620,114 +620,67 @@ The goal is to be the tech who fixes it right the first time, every time. That r
 
   // ─── LEARN (text format) ──────────────────────────────────────────────────
 
-  'furnace-not-turning-on': `A furnace that won't turn on is one of the most stressful problems a homeowner can face, especially in the middle of winter. The good news is that the cause is often something simple — sometimes something you can fix yourself in a few minutes. This guide covers every common reason a furnace won't start, what you can check on your own, and when it's time to call a technician.
+  'furnace-not-turning-on': `
+<p>You walk in. Thermostat's set to 72, room's at 58, and nothing's happening at the furnace. No inducer, no igniter glow, no blower. Or the board's alive but the sequence never starts. This is the "dead furnace" call — and it's the one where it's easiest to skip steps and end up swapping the wrong part. Go methodical and it falls apart in about 10 minutes.</p>
 
-Start with the quick checks first. They catch more problems than you'd expect.
+<p><strong>The four causes that cover most of these calls</strong></p>
 
-## 1. Thermostat Issues
+<p>Line power or door interlock interrupted — about 20-30%. Lost 24V from a blown board fuse, failed transformer, or low-voltage short — another 20-30%. Thermostat not delivering the heat call (often a smart stat with C-wire issues) — 15-25%. Open safety string, usually a tripped condensate float, pressure switch stuck closed from the prior cycle, or open limit/rollout — 15-25%. Failed board or board lockout comes last and should only be called after everything upstream is proven.</p>
 
-The thermostat is the most common starting point for furnace problems, and it's where you should always look first.
+<h2>Diagnostic flow</h2>
 
-Check that the thermostat is set to Heat, not Cool or Off. Check that the set temperature is higher than the current room temperature — if the room is 68 degrees and the thermostat is set to 65, the furnace has no reason to run. Check that the fan is set to Auto, not On (the On setting runs the blower continuously, even when the furnace isn't heating).
+<p><strong>1. Prove line voltage at the disconnect and at the board.</strong></p>
 
-If your thermostat runs on batteries, replace them. Weak batteries cause erratic behavior and can prevent the thermostat from sending a signal to the furnace at all. This is an easy fix that people overlook constantly.
+<p>Meter line-to-neutral at the furnace disconnect: you should see <code>120 VAC</code> nominal. Then at L1/neutral on the board with the blower door properly engaged. If you lose voltage between those two points, the door interlock or internal wiring is the issue. Door switches look closed but fail to make contact all the time. On Carrier/Bryant especially, the blower door interlock sits directly in the power path — a loose panel makes the furnace look completely dead.</p>
 
-Also check the wiring connections at the thermostat if you're comfortable removing the cover. A loose wire — especially the R wire (power) or W wire (heat call) — can interrupt communication between the thermostat and the furnace.
+<p><strong>2. Check transformer primary and secondary.</strong></p>
 
-What you can do: Check settings, replace batteries, look for loose wires.
-When to call a pro: If the thermostat is blank, unresponsive, or shows an error after fresh batteries.
+<p>Primary: <code>120 VAC</code>. Secondary: <code>24 VAC</code>. If you see primary but no secondary, the transformer is toast. Before you replace it, find what killed it — transformers rarely fail for no reason. A short in thermostat wiring, an accessory like a humidifier or UV light, or a shorted float switch is usually the real culprit.</p>
 
-## 2. Tripped Breaker or Blown Fuse
+<p><strong>3. Check the board's low-voltage fuse and R-C voltage.</strong></p>
 
-Your furnace runs on electricity even if it uses gas for heat. The blower motor, control board, and ignition system all require electrical power. If the circuit breaker for the furnace has tripped, none of those components will work.
+<p>Visual the fuse, then test continuity. Common ratings: <code>3A</code> on Goodman GMEC96, <code>5A</code> on many other platforms. If blown, the fuse isn't the diagnosis — it's the symptom. Carrier/Bryant Status Code 24 says the same thing: secondary voltage fuse open, short in the low-voltage wiring. Find the short before putting in a new fuse. With a good fuse, meter R-C at the board: you should see <code>24 VAC</code>.</p>
 
-Go to your electrical panel and look for a breaker labeled "furnace," "air handler," or "HVAC." If it's tripped, it will be in the middle position between On and Off. Reset it by pushing it fully to Off, then back to On.
+<p><strong>4. Verify the thermostat is actually sending a W call.</strong></p>
 
-Also check the small fuse on the furnace control board itself — it's usually a standard automotive-style fuse (3–5 amp) that blows to protect the board from voltage spikes. If the fuse is blown, it needs to be replaced with the same amperage rating.
+<p>Meter W-C at the board during a call for heat. You should see <code>24 VAC</code>. If R-C is good but W-C is dead during a call, the problem is on the thermostat side — stat itself, C-wire power, wiring, subbase, or a setting. Jumper R to W at the board to bypass the stat entirely. If the furnace runs with the jumper, stop chasing furnace parts.</p>
 
-What you can do: Reset the breaker, replace the control board fuse.
-When to call a pro: If the breaker trips again immediately after resetting, there's an electrical fault that needs diagnosis.
+<p><strong>5. Read the board code, then prove the safety string with voltage drop.</strong></p>
 
-## 3. Gas Supply Shut Off
+<p>Rheem 3 blinks means limit circuit open. 4 blinks means pressure switch closed during off cycle (stuck closed from the prior call). York 4 flashes is limit open. Goodman 7/8 is external lockout, 11 is limit open/blower failure. Use the code as direction, then meter across each safety in the string while energized: <code>0 VAC</code> across a closed switch, <code>24 VAC</code> across the one that's open. That's the fastest way to find the culprit without breaking connections.</p>
 
-If your furnace isn't getting gas, it can't light the burners — so even if everything else is working correctly, there will be no heat.
+<p><strong>6. Don't forget the condensate float.</strong></p>
 
-First, check if other gas appliances in your home are working: the stove, the water heater, the gas dryer. If none of them are working, contact your gas company — there may be an outage or a supply issue on their end.
+<p>Easy to miss, huge payoff when you catch it. On a lot of installs the float switch breaks R, which kills thermostat power completely — so a tripped float can look like a dead thermostat. On some 90+ Rheem upflows the blocked-drain switch is in series with the gas valve. If symptoms include "dead stat" or a lockout you can't otherwise explain, check the float and the drain before going deeper.</p>
 
-If other appliances are working fine, check the shutoff valve on the gas line near your furnace. It should be parallel to the gas pipe (open). If it's perpendicular to the pipe, it's closed. Turn it to the open position.
+<p><strong>7. Only after all that, suspect the board.</strong></p>
 
-Important: If you smell gas at any point during this process, don't flip any switches or touch any electrical components. Leave the house and call your gas company immediately.
+<p>Line power good, transformer good, fuse good, R-C good, W-C good, safeties closed, and the sequence still won't launch? Now the board is a justified call. Not before.</p>
 
-What you can do: Check if other gas appliances work, check the furnace shutoff valve.
-When to call a pro: If the gas is on and other appliances are working but the furnace still won't light.
+<h2>What to say to the customer</h2>
 
-## 4. Dirty or Failed Ignitor
+<p>Smart thermostat / C-wire issue: <em>"Your thermostat needs a stable power connection to talk to the furnace properly. Right now it's not getting one, so the call for heat isn't making it through. The furnace itself is fine — the stat needs a proper common wire or the manufacturer's power adapter."</em></p>
 
-Modern gas furnaces use a hot surface ignitor — a small ceramic element that heats up to several hundred degrees and lights the burners. These ignitors typically last 5 to 10 years before they crack or burn out.
+<p>Tripped condensate float: <em>"The furnace is doing what it's supposed to do. A safety switch shut things down because water wasn't draining correctly. I can reset it in about two minutes, but we need to clear the drain or pump so it doesn't happen again."</em></p>
 
-When the ignitor fails, you'll often hear the furnace attempt to start — a click or a hum — followed by the blower running without any heat. Sometimes the furnace will try to ignite two or three times before going into lockout mode.
+<p>Open limit or pressure switch: <em>"The switch that stopped the furnace isn't usually the problem — it's the messenger. It opened because the furnace saw something unsafe. I need to find that reason before I decide whether the switch itself actually failed."</em></p>
 
-You can sometimes see the ignitor glow through the furnace's viewing window when the system tries to start. If it glows orange-red, it's working. If it doesn't glow at all, it's likely failed.
+<p>Board failure: <em>"I only call a board failed after I've proven it has power, the stat call is reaching it, and no safety is blocking operation. Once those are all correct and the board still won't start the sequence, replacing it is the right repair — not a guess."</em></p>
 
-What you can do: Observe through the viewing window during a start attempt.
-When to call a pro: Ignitor replacement requires shutting off the gas and working inside the burner compartment — this is a technician job.
+<h2>Common misdiagnosis</h2>
 
-## 5. Dirty Flame Sensor
+<p>Replacing the board without proving power, 24V, W call, and safeties. Replacing the transformer without finding the short that killed it — you'll blow the new one too. Missing the door switch on a unit that looks completely dead. Missing a tripped condensate float — sometimes a 2-minute fix. Replacing a limit or pressure switch without finding the airflow, venting, or condensate problem that opened it.</p>
 
-The flame sensor is a metal rod that confirms the burners have lit. Over time, it builds up a coating of residue that prevents it from reading the flame correctly. When this happens, the furnace lights the burners briefly, then shuts them off because the sensor reports no flame — even though the burners are working fine.
+<h2>Key takeaways</h2>
 
-The symptom is distinctive: the furnace lights, you feel a brief burst of warm air, then it shuts off. It may try two or three more times before locking out.
-
-What you can do: Recognize the symptom (brief heat, then shutdown on multiple attempts).
-When to call a pro: Cleaning the flame sensor is a quick fix for a technician — usually 15 to 20 minutes. It's possible to do yourself, but it involves accessing the burner compartment.
-
-## 6. Pressure Switch Failure
-
-Gas furnaces have a pressure switch that confirms the inducer motor (a small fan that vents combustion gases) is running before allowing the burners to light. This is a safety feature — without proper venting, combustion gases could back up into the house.
-
-If the pressure switch fails, or if something is preventing it from closing (a blocked condensate drain, a cracked inducer hose, or a weak inducer motor), the furnace won't progress past the inducer stage. It will just run the inducer fan without ever lighting the burners.
-
-What you can do: Check your condensate drain line for blockages — a clogged drain is a common cause of pressure switch problems on high-efficiency furnaces.
-When to call a pro: Pressure switch diagnosis and replacement requires testing with a manometer or multimeter.
-
-## 7. Blower Motor Problems
-
-The blower motor moves heated air from the furnace through your ductwork. If it fails, the furnace may light the burners but then shut them off quickly — because without airflow, the heat exchanger overheats and triggers the high limit switch.
-
-Signs of a blower motor problem: the furnace starts and then shuts off quickly, you hear humming or squealing from the furnace, or airflow from your vents is noticeably weak.
-
-A failed capacitor is a common cause of blower motor issues and is a less expensive fix than replacing the motor itself.
-
-What you can do: Listen for unusual sounds from the blower compartment.
-When to call a pro: Blower motor and capacitor diagnosis and replacement.
-
-## 8. Control Board Problems
-
-The control board is the brain of your furnace — it sequences the start-up process, monitors the safety switches, and manages every component. If the board fails, the furnace may do nothing at all, or it may get partway through the startup sequence and stop.
-
-Many modern control boards have diagnostic LED lights that blink a fault code. The code is typically explained on a sticker inside the furnace door. Count the blinks (or read the display if your furnace has one) and look up what the code means — it often points directly at the cause.
-
-What you can do: Read the fault code on the control board and look it up in the furnace manual or on the sticker inside the door.
-When to call a pro: Control board diagnosis and replacement.
-
-## 9. Safety Lockout Mode
-
-If your furnace has tried to start and failed multiple times in a row — due to any of the causes above — it will enter safety lockout mode and stop attempting to start. This protects the system from repeatedly trying to ignite without success.
-
-In lockout mode, the furnace will sit completely idle until it's reset. You can usually reset it by turning the power off at the furnace switch (or breaker) for 30 seconds, then turning it back on. Some furnaces have a reset button on the burner assembly itself.
-
-If the furnace fires up after a reset and runs normally, the lockout may have been triggered by a temporary issue. If it locks out again within a few cycles, there's an underlying problem that needs diagnosis.
-
-What you can do: Reset the furnace by cycling the power off and on.
-When to call a pro: If lockout recurs after resetting, or if you can't identify what caused the original lockout.
-
-## When to Call a Technician
-
-Start with the easy checks: thermostat settings and batteries, breaker, gas supply. These are free and fast.
-
-If those don't solve it — particularly if you hear the furnace trying to start and failing, see a fault code you can't identify, or the system just does nothing at all — it's time to call a technician. Describe exactly what you observed: what sounds the furnace made, how many times it tried to start, whether any lights or codes appeared. That information helps the technician arrive prepared.
-
-A good technician can usually diagnose a no-start condition within 15 to 20 minutes. If they can't tell you clearly what's wrong and why, ask for a second opinion.`,
+<ul>
+<li>Work the power path upstream: disconnect → board line terminals → transformer → fuse → R-C → W-C.</li>
+<li>A blown low-voltage fuse means there's a short. Find the short before replacing the fuse.</li>
+<li>A pressure switch stuck closed from a prior cycle will prevent the next ignition. Check both states.</li>
+<li>Condensate float switches cause a shocking percentage of "dead thermostat" calls. Check them early.</li>
+<li>The board is the last suspect, not the first.</li>
+</ul>
+`,
 
   // ─── SALES (batch 2) ─────────────────────────────────────────────────────────
 

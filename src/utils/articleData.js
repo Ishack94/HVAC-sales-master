@@ -229,7 +229,7 @@ export const proArticles = [
   {
     slug: 'furnace-not-turning-on',
     title: 'Why Is My Furnace Not Turning On?',
-    description: 'From tripped breakers to safety lockouts — every reason your furnace won\'t start.',
+    description: 'Working the power path from disconnect to board output on a dead-furnace call.',
     readTime: '7 min',
     featured: true,
     image: '/images/homeowner/02-furnace-not-on.jpg',
