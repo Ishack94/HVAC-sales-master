@@ -2919,63 +2919,178 @@ Routes combustion gases out of your home. Standard efficiency furnaces use metal
 A blocked flue is a serious safety hazard. Birds' nests, debris, or a damaged flue can cause combustion gases including carbon monoxide to spill into your home. Have the flue inspected as part of annual maintenance.`,
 
   'furnace-tune-up-guide': `
-## Why Tune-Ups Matter
+<p>Customer calls for a tune-up — or sees a $99 special online — and wants to know what they're actually going to get. This article isn't about what's on a checklist. It's about what an honest furnace tune-up should actually include, how to spot the pressure-sell traps that give the whole category a bad reputation, and how to turn real findings into real sales conversations without being that guy.</p>
 
-Furnaces fail most often during the first cold snap of the season — because problems that developed over the summer go undetected until the furnace is called on to perform.
+<p><strong>The tune-up reputation problem, stated up front:</strong> Certain chains treat tune-ups as lead generation for expensive repairs and manufactured replacement conversations. That's real. The honest version of a tune-up is a measurement-based safety and reliability inspection — and techs who do it right can distinguish themselves from that reputation by showing their work.</p>
 
-An annual tune-up catches these problems before they become emergency calls. It also maintains efficiency: a furnace running with dirty burners or a struggling blower motor is wasting fuel.
+<h2>The question you'll actually get asked</h2>
 
-Properly maintained furnaces last 3-5 years longer than neglected ones. The tune-up usually costs $80-150. The emergency call it prevents costs $300-600 and significantly more if it leads to a replacement.
+<ul>
+<li><em>"What's actually included in a tune-up?"</em></li>
+<li><em>"Is a $99 tune-up a scam?"</em></li>
+<li><em>"Do I really need one every year?"</em></li>
+<li><em>"Why is your tune-up $180 when the guy down the street is $79?"</em></li>
+<li><em>"Is this just a way to upsell me on repairs?"</em></li>
+</ul>
 
-## What a Technician Should Check
+<p>Behind all of them: <em>am I getting actual maintenance or just a sales visit with a wrench</em>.</p>
 
-Safety inspection:
-- Check heat exchanger for cracks or deterioration
-- Test carbon monoxide levels in flue and supply air
-- Inspect flue and venting for blockages or improper connections
-- Test safety switches (limit switch, pressure switch, roll-out switch)
+<h2>The tech-accurate answer: what an honest tune-up includes</h2>
 
-Combustion and burner:
-- Inspect and clean burners
-- Check igniter function and condition
-- Inspect and clean flame sensor
-- Test gas pressure at the manifold
-- Measure and document combustion efficiency
+<p>A real furnace tune-up measures things and documents the numbers. Not a checklist of visual glances.</p>
 
-Mechanical:
-- Inspect and lubricate blower motor bearings (if applicable)
-- Measure blower motor amperage
-- Inspect capacitors with a meter
-- Check all electrical connections
+<p><strong>Combustion and gas side:</strong></p>
 
-Airflow and filter:
-- Replace air filter (ask in advance whether it's included)
-- Inspect coil condition where accessible
-- Spot-check ductwork connections at the furnace
+<ul>
+<li>Combustion analysis with a calibrated analyzer — flue CO, O2, stack temperature, excess air</li>
+<li>Manifold pressure verified with a manometer, compared to data plate</li>
+<li>Flame current measured in microamps before and after any flame sensor cleaning</li>
+<li>Flame pattern and carryover visual inspection</li>
+<li>Heat exchanger inspection including flame disturbance on blower startup</li>
+<li>Rollout switch continuity</li>
+<li>Gas valve voltage verification during trial for ignition</li>
+</ul>
 
-Operation check:
-- Verify startup sequence, runtime, and shutdown
-- Measure supply and return air temperature (delta-T)
+<p><strong>Airflow and ductwork:</strong></p>
 
-## What to Expect on the Day
+<ul>
+<li>Filter inspection and replacement</li>
+<li>Temperature rise measured after stabilization, compared to rating plate</li>
+<li>Total external static pressure — return and supply measured separately</li>
+<li>Blower wheel cleanliness inspection</li>
+<li>Blower amp draw</li>
+<li>ECM programming verification if applicable</li>
+</ul>
 
-The visit typically takes 45-90 minutes. Be home if possible to answer questions about how the system has been performing.
+<p><strong>Electrical and controls:</strong></p>
 
-If the technician finds something — a cracked heat exchanger, a borderline capacitor — they should show you and explain it clearly before recommending anything. You should receive a written record of what was checked and what was found.
+<ul>
+<li>Capacitor tested, microfarads within <code>\u00B16%</code> of nameplate</li>
+<li>Contactor inspection for pitting</li>
+<li>Low-voltage terminal tightness</li>
+<li>Ignitor condition and resistance (hot surface) or gap (spark)</li>
+<li>Thermostat call verification at R-W</li>
+</ul>
 
-## What Questions to Ask
+<p><strong>Safety and venting:</strong></p>
 
-"What did you find?" Get a plain-language summary.
+<ul>
+<li>Pressure switch actuation verified with a manometer, not just ohms</li>
+<li>Condensate trap and drain flow on 90%+ units</li>
+<li>Venting inspected for rust, disconnections, poor connections</li>
+<li>Combustion air source verification</li>
+<li>Ambient CO and supply-air CO readings</li>
+</ul>
 
-"Is there anything you're watching that might become a problem?" Some issues aren't emergencies today but are worth monitoring.
+<p>If a "comprehensive tune-up" doesn't include combustion analysis, a manometer on the gas side, and measurement of temperature rise and static pressure — it isn't comprehensive. It's a visual walkthrough with a filter change.</p>
 
-"What's the condition of the heat exchanger?" The most important safety component.
+<h2>What's mostly theatre on corporate checklists</h2>
 
-"Did you measure combustion efficiency?" A technician with a combustion analyzer giving you actual numbers is doing a more thorough job than one going purely by visual inspection.
+<p>Not every line item earns its place. Things that often show up on "comprehensive" checklists mostly to justify a higher price:</p>
 
-## How Often?
+<ul>
+<li>Chemical coil cleaning when the coil isn't actually dirty</li>
+<li>Duct cleaning upsell during a furnace tune-up</li>
+<li>UV light recommendations pushed unprompted</li>
+<li>Preventive capacitor replacement when the existing cap tests within <code>\u00B16%</code></li>
+<li>Vague line items like "vent washing"</li>
+<li>Pressure-washing the outdoor condenser during a furnace-only visit</li>
+</ul>
 
-Once a year, ideally in the fall before heating season. If you have a maintenance agreement with an HVAC company, annual furnace service should be included.`,
+<p>None of those are inherently bad services — they're just not what makes a furnace tune-up honest. ACCA's Standard 4 defines minimum maintenance tasks and lets contractors bundle corrective actions at different fee structures. That's the right framing: maintenance task vs. condition-based corrective work. Bundled as "tune-up theatre," these items inflate the bill without adding safety or reliability value.</p>
+
+<h2>How to translate findings for the customer</h2>
+
+<p>The honest conversation depends on severity. Three categories, three different conversations.</p>
+
+<p><strong>Minor / maintenance-level issues</strong> — dirty filter, lightly dirty flame sensor, normal startup CO that settles clean. Fix it on the spot, note it, move on. Don't turn it into a sales pitch.</p>
+
+<p><em>"I found a maintenance item, corrected it, and I'm documenting it so you know what was done."</em></p>
+
+<p><strong>Future-failure indicators</strong> — capacitor drifting toward the edge of tolerance, flame current weak but present, inducer amp draw climbing, marginal draft, static pressure pointing to airflow restriction. These are measurable signs of degradation, not emergencies.</p>
+
+<p><em>"This isn't a no-heat problem today. But it's a measurable sign that the system is moving the wrong direction. You can fix it now, or we can document it and watch it."</em></p>
+
+<p><strong>Real current problems</strong> — elevated flue CO, failed venting, rollout evidence, deteriorated flue pipe, repeated pressure-switch failures, heat exchanger suspicion with supporting flame disturbance. These need direct conversations.</p>
+
+<p><em>"This is a current safety or reliability issue, and I'm not comfortable treating it like routine maintenance. Here are the measurements."</em></p>
+
+<h2>The "service call to install" conversation</h2>
+
+<p>When a tune-up genuinely reveals a furnace at end-of-life, the hardest part is delivering that news without making the tune-up look like a setup. The best framing keeps the focus on the documented problems, not on age.</p>
+
+<p><em>"Your furnace being old isn't the issue by itself. What matters is that today we found specific measurable problems — [list them]. Age matters because it changes whether putting money into those problems makes sense."</em></p>
+
+<p>Use safety language only when you have safety evidence. If you have flue CO above <code>100 ppm</code>, failed venting, or rollout with combustion evidence, say so clearly and document it. If the furnace is just old with three marginal components and no immediate safety issue, say <em>that</em> instead. The difference matters for customer trust.</p>
+
+<p>Leave documentation: measured CO, gas pressure, temperature rise, static pressure, capacitance, flame current. A written summary is what keeps the conversation from feeling like the $99 tune-up was bait.</p>
+
+<h2>Pricing conversations</h2>
+
+<p>Price tells you roughly how much time and measurement is built into the visit:</p>
+
+<ul>
+<li><strong>$79-99 "basic" / "special"</strong> — often visual inspection, filter check, operational check, limited cleaning. Can be honest as a relationship-builder if a small shop is transparent about scope. Becomes bait when the advertised scope includes measurements the time and price can't support.</li>
+<li><strong>$129-199 "comprehensive"</strong> — should include actual measurements: combustion analysis, gas pressure with a manometer, temperature rise, static pressure.</li>
+<li><strong>$250+ "premium"</strong> — deepest documentation, full safety inspection, and more time on systems with access or performance concerns.</li>
+</ul>
+
+<p>HVAC.com's pricing data puts basic tune-ups commonly around $80-150, with promotional offers lower and deeper services higher. The tier framework above is synthesized from that data plus what the work actually requires.</p>
+
+<p>A $99 tune-up can still be honest. It becomes a problem when the advertised scope can't physically fit in the time and price being charged.</p>
+
+<h2>Seasonal timing: why fall</h2>
+
+<p>Fall tune-ups beat winter tune-ups for several reasons. Parts are easier to source before peak heating demand. Labor is more available before no-heat calls flood in. Any problems found in October can be addressed calmly — the same problems found in January at 11 PM become emergencies. And moisture or condensation issues on 90%+ units only become detectable once the furnace starts regular run cycles.</p>
+
+<p>Customer-facing version: <em>"Fall lets us find issues before you need the furnace. The same problem in January becomes an emergency replacement. In October, it's a scheduled repair."</em></p>
+
+<h2>Combustion analysis specifically</h2>
+
+<p>This is the single most important tune-up measurement and the one most often skipped or faked.</p>
+
+<p>BPI thresholds give clean ethical lines: abort diagnostics if ambient CO exceeds <code>35 ppm</code>. Undiluted flue gas CO should run below <code>25 ppm</code> and in no case should it be above <code>100 ppm</code> without service to reduce it. A supply-air CO reading <code>2 ppm</code> above room ambient is a legitimate action flag when paired with other findings.</p>
+
+<p><strong>When it's real:</strong> calibrated analyzer, documented numbers, findings placed in context (clean, attention needed, or unsafe).</p>
+
+<p><strong>When it's theatre:</strong> waving around a CO number without context. Using a poorly calibrated analyzer. Presenting supply-air or room-air readings as if they were flue CO. "Your CO is dangerous" without showing the actual measurement.</p>
+
+<p>A "comprehensive" tune-up that doesn't include combustion analysis isn't actually comprehensive. The safety value of a furnace maintenance visit is hard to defend without it. Annual analyzer calibration matters because sensor accuracy degrades over time.</p>
+
+<h2>Flame sensor cleaning</h2>
+
+<p>Real maintenance when the microamp signal is weak or contamination is visible. Performative when done automatically on every tune-up regardless of the signal reading.</p>
+
+<p>The real diagnostic is the flame current measured in series — typically <code>2-6 \u00B5A</code> with acceptable range <code>0.5-10 \u00B5A</code> depending on the furnace. Measure before, clean if needed, measure after. Aggressive cleaning can damage some coated rods over time, which is another reason not to scrub every rod by reflex.</p>
+
+<p>And if microamps are low, the honest tech checks ground, polarity, burner carryover, and gas pressure — not just the rod. Flame sense weakness is usually a symptom of something else.</p>
+
+<h2>Dual-system tune-ups</h2>
+
+<p>If the home has a furnace plus AC or heat pump, bundled maintenance is legitimate — but the customer should understand the scope and price reflect both systems. Adding an AC to the visit means condenser and coil condition, refrigerant-side checks where appropriate, cooling airflow, drain function. A bundled maintenance price shouldn't be sold as "just a furnace tune-up" if it's covering two systems.</p>
+
+<h2>Maintenance agreements</h2>
+
+<p>Scheduled visits plus priority service or discount benefits. Common features: two visits per year, waived diagnostic fees, priority scheduling, discounted repairs.</p>
+
+<p>Sell the agreement when it genuinely serves the customer — priority service in the dead of winter, better documentation continuity across visits, lower effective per-visit cost. It crosses the line when the agreement is primarily a vehicle for automatic recurring revenue and the actual maintenance scope is thin. Both can be true in the same industry; the ethical version delivers real work for the price.</p>
+
+<h2>What not to say</h2>
+
+<p>Don't say "your furnace could kill your family" without actual combustion-safety evidence — BPI gives you real thresholds, use those instead of theatre. Don't say "your heat exchanger is cracked" without visual evidence or supporting signs like flame disturbance on blower startup. Don't say "this furnace is too old to fix" when what you actually mean is "this old furnace has multiple measured issues and the repair math is ugly." Don't say "you need this done today" unless there's an actual safety concern supported by measurements. Don't say "this part will fail any day now" without pointing to real degradation — out-of-tolerance capacitance, weak microamps, high amp draw, marginal draft, or visible damage.</p>
+
+<p>Measure first, then explain what the number means. That's the difference between an honest tune-up and a sales visit.</p>
+
+<h2>Key takeaways</h2>
+
+<ul>
+<li>A real tune-up is measurement-based. If the tech isn't using a manometer, a combustion analyzer, and a multimeter — it isn't a tune-up, it's a visual inspection.</li>
+<li>BPI thresholds give you the safety line: <code>35 ppm</code> ambient CO is abort-diagnostics, <code>100 ppm</code> flue CO needs service, under <code>25 ppm</code> flue is the goal.</li>
+<li>Distinguish three severities of findings: maintenance items (fix and note), future-failure indicators (document, offer option), real current problems (direct conversation with evidence).</li>
+<li>A $99 tune-up can be honest as a loss-leader; it becomes bait when the advertised scope is physically impossible at that price and time.</li>
+<li>Sell the maintenance agreement when it serves the customer — priority service, scheduling, documentation continuity. Don't sell it as a vehicle for recurring revenue alone.</li>
+</ul>
+`,
 
   'ac-tune-up-guide': `
 ## Why Spring Maintenance Matters

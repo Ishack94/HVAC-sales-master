@@ -322,8 +322,8 @@ export const proArticles = [
   {
     slug: 'furnace-tune-up-guide',
     title: 'What to Expect During a Furnace Tune-Up',
-    description: 'What technicians check, what it costs, and why it\'s worth doing every year.',
-    readTime: '6 min',
+    description: 'The honest tune-up checklist — what a measurement-based inspection includes, how to spot pressure-sell traps, and how to turn real findings into honest sales conversations.',
+    readTime: '12 min',
     image: '/images/homeowner/15-furnace-tune-up.jpg',
   },
   {
