@@ -183,8 +183,8 @@ export default function Home() {
                 <p className={styles.toolCardDesc}>Size ductwork using CFM and friction rate.</p>
               </Link>
               <Link to="/troubleshoot" className={styles.toolCard}>
-                <p className={styles.toolCardTitle}>Furnace Troubleshooter</p>
-                <p className={styles.toolCardDesc}>Step-by-step diagnostics for common furnace issues.</p>
+                <p className={styles.toolCardTitle}>Troubleshoot</p>
+                <p className={styles.toolCardDesc}>Field tools and diagnostic guides for working techs.</p>
               </Link>
               <Link to="/resources/reverse-duct-calculator" className={styles.toolCard}>
                 <p className={styles.toolCardTitle}>Reverse Duct Calculator</p>
