@@ -9,7 +9,6 @@ import MilwaukeeAd from '../components/UI/MilwaukeeAd'
 import headshotSrc from '../assets/headshot.webp'
 import sectionAccentSales from '../assets/section-accent-sales.webp'
 import sectionAccentPro from '../assets/section-accent-pro.webp'
-import sectionAccentHomeowner from '../assets/section-accent-homeowner.webp'
 import sectionAccentAbout from '../assets/section-accent-about.webp'
 import styles from './Home.module.css'
 
@@ -27,21 +26,12 @@ const FEATURED_PRO_SLUGS = [
   'installation-basics-prevent-callbacks',
 ]
 
-const FEATURED_HOMEOWNER_SLUGS = [
-  'furnace-blowing-cold-air',
-  'ac-not-blowing-cold-air',
-  'furnace-short-cycling',
-  '80-vs-90-efficiency-furnace',
-]
-
 const techArticles = proArticles.slice(0, 13)
-const homeownerArticles = proArticles.slice(13)
 
 const CATEGORIES = [
   { key: 'all', label: 'All' },
   { key: 'sales', label: 'Sales Training' },
   { key: 'pro', label: 'Pro Lessons' },
-  { key: 'homeowner', label: 'Homeowner' },
 ]
 
 const sidebarLinks = [
@@ -148,14 +138,12 @@ export default function Home() {
 
   const showSales = activeCategory === 'all' || activeCategory === 'sales'
   const showPro = activeCategory === 'all' || activeCategory === 'pro'
-  const showHomeowner = activeCategory === 'all' || activeCategory === 'homeowner'
 
   const filteredSales = useMemo(() => showSales ? salesArticles.filter(matchesSearch) : [], [search, showSales])
   const filteredTech = useMemo(() => showPro ? techArticles.filter(matchesSearch) : [], [search, showPro])
-  const filteredHomeowner = useMemo(() => showHomeowner ? homeownerArticles.filter(matchesSearch) : [], [search, showHomeowner])
 
   const isFiltering = search || activeCategory !== 'all'
-  const noResults = isFiltering && filteredSales.length === 0 && filteredTech.length === 0 && filteredHomeowner.length === 0
+  const noResults = isFiltering && filteredSales.length === 0 && filteredTech.length === 0
 
   return (
     <>
@@ -298,34 +286,6 @@ export default function Home() {
               </ul>
               {!isFiltering && (
                 <Link to="/pro-lessons" className={styles.viewAllLink}>View All Pro Lessons →</Link>
-              )}
-            </div>
-          )}
-
-          {!isFiltering && <img src={sectionAccentHomeowner} alt="" role="presentation" className={styles.sectionAccent} width="960" height="60" loading="lazy" />}
-
-          {/* Homeowner */}
-          {showHomeowner && filteredHomeowner.length > 0 && (
-            <div className={`${styles.section} ${styles.sectionWhite} reveal`}>
-              <h2 className={styles.sectionH2}>Homeowner Troubleshooting</h2>
-              {!isFiltering && <p>Straightforward answers from real trades expertise, not content farms. These articles help homeowners understand what's going on so they can make smart decisions — and they help you close more jobs.</p>}
-              <p className={styles.sectionIntro}>For homeowners trying to understand their system.</p>
-              <ul className={styles.articleList}>
-                {(isFiltering ? filteredHomeowner : homeownerArticles.filter((a) => FEATURED_HOMEOWNER_SLUGS.includes(a.slug))).map((a) => (
-                  <li key={a.slug}>
-                    <Link
-                      to={`/pro-lessons/${a.slug}`}
-                      className={styles.articleLink}
-                      onClick={() => trackEvent('article_click', { article_title: a.title, source: 'homepage' })}
-                    >
-                      <strong>{a.title}</strong>
-                    </Link>
-                    <span className={styles.articleDate}>Published April 2026</span>{a.description && <span className={styles.articleDesc}> — {a.description}</span>}
-                  </li>
-                ))}
-              </ul>
-              {!isFiltering && (
-                <Link to="/pro-lessons" className={styles.viewAllLink}>View All Homeowner Articles →</Link>
               )}
             </div>
           )}

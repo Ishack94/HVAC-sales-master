@@ -51,7 +51,7 @@ export default function About() {
 
             <h2 className={styles.h2}>Where to start</h2>
 
-            <p>If you're here to sell better, start with the Sales articles. If you're wrenching, Pro Lessons is the technical side. If you're a homeowner trying to figure out why something isn't working, try the Troubleshooter before you call.</p>
+            <p>If you're here to sell better, start with the Sales articles. If you're wrenching, Pro Lessons is the technical side.</p>
 
             <p className={styles.closing}>When I'm not working on systems, you'll probably find me playing banjo somewhere in Oregon.</p>
           </div>
