@@ -1,59 +1,94 @@
 .layout {
-  max-width: 1400px;
+  max-width: 960px;
   margin: 0 auto;
   padding: 48px 32px 80px;
-  display: flex;
-  gap: 56px;
-  align-items: flex-start;
 }
 
 .main {
-  flex: 1;
   min-width: 0;
 }
 
-.intro {
+.subhead {
   font-family: 'Figtree', sans-serif;
-  font-size: 17px;
-  color: #555;
-  line-height: 1.7;
-  margin-bottom: 32px;
+  font-size: 15px;
+  color: #5a6068;
   font-style: italic;
+  margin-bottom: 32px;
 }
 
-.photoStrip {
-  width: 100%;
-  max-width: 960px;
-  height: 200px;
-  margin: 24px auto;
-  overflow: hidden;
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 28px;
+  background: white;
+  border: 1px solid #e2e4e8;
   border-radius: 4px;
+  text-decoration: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
-.photoStripImg {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 30%;
-  display: block;
+.card:hover {
+  border-color: #4a9fe5;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
-@media (max-width: 768px) {
-  .photoStrip {
-    height: 140px;
-    margin: 16px auto;
-  }
+.cardDisabled {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 28px;
+  background: #f5f6f8;
+  border: 1px solid #e2e4e8;
+  border-radius: 4px;
+  opacity: 0.6;
 }
 
-@media (max-width: 860px) {
+.cardTitle {
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: #0e2340;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.cardDesc {
+  font-family: 'Figtree', sans-serif;
+  font-size: 15px;
+  color: #5a6068;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.cardCta {
+  font-family: 'Figtree', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #4a9fe5;
+  margin-top: auto;
+}
+
+.cardCtaDisabled {
+  font-family: 'Figtree', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #5a6068;
+  margin-top: auto;
+}
+
+@media (max-width: 640px) {
   .layout {
-    flex-direction: column;
-    padding: 16px 20px 60px;
-    gap: 0;
+    padding: 24px 16px 60px;
   }
 
-  .intro {
-    font-size: 15px;
-    margin-bottom: 24px;
+  .grid {
+    grid-template-columns: 1fr;
   }
 }
