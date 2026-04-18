@@ -2342,41 +2342,177 @@ There's also the possibility the issue isn't the flame sensor at all. A furnace 
 `,
 
   'single-stage-vs-two-stage-vs-modulating': `
-## Single Stage
+<p>Customer is comparing furnace tiers on a quote. They want to know if the two-stage is worth the extra money, or whether they should go straight to modulating, or if they're being upsold something they don't need. The answer lives in how the house actually feels — and this isn't an AFUE conversation. Staging is comfort, not efficiency. Don't let the two pitches get blurred.</p>
 
-A single stage furnace operates at one level: 100%. When it runs, it's at full capacity. When the thermostat is satisfied, it shuts off completely.
+<h2>The question you'll actually get asked</h2>
 
-This is the simplest, most reliable design and typically the least expensive. The tradeoff is that a single stage furnace creates temperature cycles — it fires full blast, overshoots the setpoint slightly, shuts off, temperature drops, fires again.
+<ul>
+<li><em>"What's the difference between single-stage and two-stage?"</em></li>
+<li><em>"Is two-stage worth the extra money?"</em></li>
+<li><em>"Do I need the modulating one?"</em></li>
+<li><em>"More stages means more things to break, right?"</em></li>
+<li><em>"Will the fancy one actually save me money?"</em></li>
+<li><em>"Do I have to replace my thermostat?"</em></li>
+</ul>
 
-For homes in mild climates or for buyers with a tight budget, single stage is a perfectly reasonable choice.
+<p>The real question underneath: <em>am I getting comfort I'll actually notice, or am I paying for specs on a brochure</em>.</p>
 
-## Two Stage
+<h2>The tech-accurate answer</h2>
 
-A two stage furnace has two operating levels, typically 65-70% capacity (first stage) and 100% (second stage). On most days it runs in first stage — heating the home more slowly and evenly. On the coldest days, when demand exceeds what first stage can handle, it shifts to full capacity.
+<p><strong>Single-stage</strong> runs at full input or not at all. Simplest, cheapest, biggest temperature swings.</p>
 
-The result is more even temperatures, longer run times at lower capacity (which improves humidity control), and lower operating costs on moderate days.
+<p><strong>Two-stage</strong> has a low fire and a high fire — typically around <code>60-70%</code> and <code>100%</code>. American Standard's S9V2 runs about <code>50,960 Btuh</code> on low and <code>78,400 Btuh</code> on high, roughly 65% on low fire. Lennox staging logic puts W1 at 70% and W2 at 100% on many platforms.</p>
 
-Two stage furnaces are a popular mid-point — meaningfully better comfort and efficiency than single stage, at a lower cost than fully variable modulating equipment.
+<p><strong>Modulating</strong> varies firing rate continuously. Carrier's Infinity 98 adjusts in <code>1%</code> increments from <code>40%</code> to <code>100%</code>. York's YP9C does it in 100 increments from <code>35%</code> to <code>100%</code>.</p>
 
-## Modulating
+<p>Staging is separate from blower type. A single-stage furnace can have a variable-speed ECM blower. A two-stage can have a constant-torque motor. Stages describe how the burners make heat. Blower type describes how air gets moved. They often travel together on premium models but they're different specs — and that distinction matters on the sales call.</p>
 
-A modulating furnace can vary its output continuously — from as low as 35-40% up to 100%. It constantly adjusts to maintain exactly the setpoint temperature.
+<h2>How to translate it for the customer</h2>
 
-Modulating furnaces almost always pair with variable-speed blower motors (ECM motors), which also adjust speed to match the heating output. The result: runs almost continuously at low output on mild days, cycling rarely, maintaining very precise temperatures, and achieving the best possible efficiency.
+<p>Keep it short:</p>
 
-The experience in the home is notably different: quieter, temperatures are very stable, and humidity control is excellent.
+<p><em>"Single-stage is like a light switch — on at full power or off. Two-stage is like a two-speed fan — low most of the time, high when it needs to catch up. Modulating is like a dimmer — it matches the burner output to exactly what the house needs."</em></p>
 
-Modulating furnaces cost more — typically $500-1,500 more than comparable single stage — and are more complex. More components means more potential failure points, though modern modulating furnaces are generally reliable.
+<p>Then separate the pitches:</p>
 
-## Which Is Right for You?
+<p><em>"There are two different conversations that get blurred together. AFUE is how much fuel the furnace wastes. Staging is how the furnace runs — how it affects your comfort, noise, and how often it starts and stops. A high-AFUE furnace isn't automatically staged, and a staged furnace isn't automatically high-AFUE. They're different decisions."</em></p>
 
-In a cold climate with hard winters: a two stage or modulating furnace pays back in comfort and efficiency over time.
+<h2>What the customer actually notices</h2>
 
-In a moderate climate with mild winters: single stage may be perfectly appropriate.
+<p><strong>Temperature swing.</strong> Single-stage overshoots setpoint by a couple degrees, then shuts off and drops below before firing again. Two-stage runs longer at low fire and holds tighter. Modulating can hold indoor temperature within about <code>\u00BDF</code> of setpoint in good installs. That's real, and customers feel it.</p>
 
-If you have significant hot/cold spots between rooms, or if humidity control in winter is important to you: a modulating system with a variable-speed blower makes a real difference.
+<p><strong>Noise.</strong> Low-fire starts are quieter. A single-stage furnace hits the ducts at full blower speed immediately. A staged furnace with an ECM blower ramps up gradually. Customers describe it as "less blasty."</p>
 
-If budget is the primary concern: a single stage furnace from a reputable manufacturer will reliably heat your home for 15-20 years.`,
+<p><strong>Humidity in cooling season.</strong> This one gets attributed to staging but it's actually the blower. A variable-speed ECM blower paired with AC runs longer at lower speed, which extends coil contact time and pulls more moisture out. That's why a customer shopping heating comfort should also ask about the blower.</p>
+
+<p><strong>Room balance.</strong> Longer, gentler runtimes help even out rooms that the ductwork struggles with. Doesn't fix a bad duct system, but helps a marginal one.</p>
+
+<p><strong>Fast recovery from setback.</strong> This one goes to single-stage. If the customer does deep overnight setbacks and wants the house warm fast in the morning, full-fire-on-demand recovers faster than low-fire modulation.</p>
+
+<h2>The operating cost angle — not AFUE</h2>
+
+<p>Staging does not double efficiency. Any salesman who says "two-stage saves you twice as much" is lying, and a researched customer will catch it.</p>
+
+<p>What staging <em>does</em> is reduce cycling losses and keep the burner in part-load operation longer, where it tends to run slightly more efficient than peak. Fuel savings from staging alone are usually modest — maybe single-digit percentages on the heating portion of the bill. The real case for staging is comfort, not payback.</p>
+
+<p>The electricity side is different. An ECM blower uses dramatically less electricity than a PSC blower — Lennox says up to two-thirds less, up to six times more efficient in fan mode. That's an aggressive manufacturer claim, but the direction is real. If a customer runs fan-on continuously or has long cooling seasons, ECM electricity savings add up faster than staging fuel savings.</p>
+
+<p>The honest positioning:</p>
+
+<p><em>"Don't buy two-stage or modulating because you think it doubles fuel savings. Buy it because it heats more evenly, starts quieter, and handles part-load better. The electricity savings from a variable-speed blower — if that's in the package — is where the actual utility-bill difference tends to show up."</em></p>
+
+<h2>The oversized single-stage problem</h2>
+
+<p>This is the single best real-world case for staging. A furnace sized for the coldest day of the year is oversized for the other 330 days. A single-stage furnace in an oversized application short cycles, overshoots setpoint, and creates the exact complaints customers describe as "uneven heat" or "the house gets hot then cold."</p>
+
+<p>Two-stage or modulating solves this by matching output to actual load. A furnace sized for design day but running at 60% low-fire on a mild day behaves completely differently than one firing 100% and shutting down.</p>
+
+<p><strong>Honesty clause:</strong> staging helps oversizing, but it doesn't make bad sizing good. If the equipment is seriously oversized, even low fire may be too much. And if the house is undersized, no amount of staging rescues it. Oversizing diagnosis matters more than staging choice. Selling modulating as a solution to a Manual J problem is how callbacks happen.</p>
+
+<h2>When each tier is the right call</h2>
+
+<p><strong>Single-stage is right when:</strong></p>
+
+<ul>
+<li>House is simple, furnace is closely matched to load</li>
+<li>Customer is cash-constrained</li>
+<li>Short residency</li>
+<li>Customer doesn't care about comfort refinement</li>
+<li>Mild climate where the furnace runs few hours anyway</li>
+</ul>
+
+<p><strong>Two-stage is right when:</strong></p>
+
+<ul>
+<li>Middle-tier customer — this is the practical default for many homes</li>
+<li>Sizing is marginal (slightly oversized)</li>
+<li>Customer notices temperature swings or noise</li>
+<li>Longer residency — 5+ years in the house</li>
+<li>Budget allows the modest step up from single-stage</li>
+</ul>
+
+<p><strong>Modulating is right when:</strong></p>
+
+<ul>
+<li>Customer specifically wants best-in-class comfort</li>
+<li>Long residency (10+ years)</li>
+<li>Compatible communicating thermostat is in the budget</li>
+<li>Humidity control paired with variable-speed blower is a priority</li>
+<li>High-end home where resale matters</li>
+<li>Customer understands what they're paying for</li>
+</ul>
+
+<h2>When modulating is being oversold</h2>
+
+<ul>
+<li>Customer is planning to move soon — never going to see the payback</li>
+<li>Tight budget where the modulation dollars could go to better ductwork or insulation</li>
+<li>House with a load so light even low-fire is still too much</li>
+<li>Quote quietly requires a communicating thermostat replacement and the rep isn't making that clear</li>
+<li>Customer doesn't understand the difference and will feel burned later</li>
+<li>Ducts or install quality won't let the premium equipment actually show its value</li>
+</ul>
+
+<p>Overselling modulating to the wrong customer creates regret, callbacks, and lost referrals. Honest downselling builds trust.</p>
+
+<h2>Thermostat compatibility</h2>
+
+<p>This is where customers get blindsided on the quote.</p>
+
+<p><strong>Single-stage</strong> works with basically any thermostat. Simple.</p>
+
+<p><strong>Two-stage</strong> needs a thermostat that can actually call W1 and W2. Nest Learning Thermostats support up to three stages of heating on conventional systems. Ecobee supports up to two stages. Most Honeywell and Resideo smart stats handle two-stage fine. The key is the wiring terminals, not the brand.</p>
+
+<p><strong>Modulating</strong> often wants a brand-specific communicating thermostat to unlock full capability: Carrier Infinity, Trane ComfortLink, Lennox iComfort, Bryant Evolution, Rheem EcoNet, Goodman ComfortBridge. If the install ends up with a basic non-communicating stat on a modulating furnace, the customer may not actually get the modulation experience they paid for.</p>
+
+<p>The honest framing:</p>
+
+<p><em>"Your existing Nest or Ecobee may work fine with a two-stage conventional furnace if we have the right wires. A premium modulating furnace usually wants its matching communicating control to give you the full comfort experience you're paying for. I'll tell you in the quote which stat comes with each option."</em></p>
+
+<h2>Objections and how to handle each</h2>
+
+<p><strong>"More stages means more things to break."</strong></p>
+
+<p><em>"That's partly true. More capability usually means more control complexity. The question is whether the added comfort is worth that tradeoff for how long you'll be here."</em></p>
+
+<p><strong>"I don't need all that comfort stuff."</strong></p>
+
+<p><em>"Then you may not need modulating. If you're not bothered by temperature swings, drafts, or noise, a well-sized single-stage or two-stage may be the smarter fit."</em></p>
+
+<p><strong>"Why would I pay double for a fancier furnace?"</strong></p>
+
+<p><em>"You shouldn't pay modulating money for single-stage expectations. The real upgrade case is steadier temperature, quieter operation, and better system behavior at part load — not a fantasy that your gas bill gets cut in half."</em></p>
+
+<p><strong>"My single-stage worked fine for 25 years."</strong></p>
+
+<p><em>"That's believable. The question is whether 'fine' is good enough or whether you want less temperature swing and noise this time around. Either answer is defensible."</em></p>
+
+<p><strong>"I heard modulating furnaces have short lifespans."</strong></p>
+
+<p><em>"There isn't a reliable rule saying modulating always dies sooner. What matters more is install quality, airflow, venting, commissioning, and maintenance. A well-installed modulating furnace outlasts a bad single-stage install."</em></p>
+
+<p><strong>"Do I have to replace my thermostat?"</strong></p>
+
+<p><em>"Maybe. Two-stage often works with the right staged thermostat and wiring you already have. Premium modulating usually wants its matching communicating control if you want full functionality. I'll lay out which option needs which stat before you decide."</em></p>
+
+<p><strong>"Isn't two-stage enough? Why modulating?"</strong></p>
+
+<p><em>"For a lot of homes, yes — two-stage is enough. Modulating is the premium option when the customer really cares about tight temperature control, quiet operation, and long-term best-in-class comfort. It's not a mandatory step up — it's a specific-case call."</em></p>
+
+<h2>What not to say</h2>
+
+<p>Don't say "two-stage is twice as efficient." False. Don't say "modulating is always the best" — it isn't, for the wrong house or the wrong ownership horizon. Don't say "the high-end furnace will last longer" — lifespan is about install quality and maintenance, not tier. Don't say "you need modulating for comfort" — many customers get most of the comfort jump from two-stage plus a good blower. Don't say "your old thermostat will work fine" unless you've verified the control strategy, especially on a modulating communicating system.</p>
+
+<h2>Key takeaways</h2>
+
+<ul>
+<li>Single-stage is a capacity switch. Two-stage is a comfort upgrade. Modulating is a premium comfort-control system.</li>
+<li>Staging is comfort, not AFUE. Don't sell a two-stage furnace on false "double efficiency" math.</li>
+<li>Blower type is a separate spec from staging. Variable-speed ECM is where the measurable electricity savings and cooling-season humidity benefits live.</li>
+<li>Two-stage is the best default for most middle-tier customers. Modulating is the right call when comfort is genuinely the priority and the customer will stay long enough to enjoy it.</li>
+<li>Thermostat compatibility can change the quote. Modulating often needs a communicating stat; two-stage usually works with smart thermostats the customer already has.</li>
+</ul>
+`,
 
   'best-gas-furnace-brands': `
 ## The Short Version

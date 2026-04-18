@@ -280,8 +280,8 @@ export const proArticles = [
   {
     slug: 'single-stage-vs-two-stage-vs-modulating',
     title: 'Single Stage vs Two Stage vs Modulating Furnace',
-    description: 'How each type works, what it costs, and which one fits your home.',
-    readTime: '8 min',
+    description: 'The staging tier decision — what single-stage, two-stage, and modulating actually do, what customers notice, and when each is the right call.',
+    readTime: '10 min',
     image: '/images/homeowner/09-single-vs-two-stage.jpg',
   },
   {
