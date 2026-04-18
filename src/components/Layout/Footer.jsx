@@ -19,6 +19,14 @@ const proLinks = [
   { label: 'View All →', to: '/pro-lessons' },
 ]
 
+const troubleshootLinks = [
+  { label: 'Pick a Symptom', to: '/troubleshoot/symptom' },
+  { label: 'Cold Air Diagnostic', to: '/pro-lessons/furnace-blowing-cold-air' },
+  { label: 'Short Cycling Diagnostic', to: '/pro-lessons/furnace-short-cycling' },
+  { label: 'AC Not Cooling Diagnostic', to: '/pro-lessons/ac-not-blowing-cold-air' },
+  { label: 'View All →', to: '/troubleshoot' },
+]
+
 const companyLinks = [
   { label: 'About', to: '/about' },
   { label: 'Resources', to: '/resources' },
@@ -53,6 +61,17 @@ export default function Footer() {
             <p className={styles.colHead}>Pro Lessons</p>
             <ul>
               {proLinks.map(({ label, to }) => (
+                <li key={to}>
+                  <Link to={to} className={styles.link}>{label}</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className={styles.column}>
+            <p className={styles.colHead}>Troubleshoot</p>
+            <ul>
+              {troubleshootLinks.map(({ label, to }) => (
                 <li key={to}>
                   <Link to={to} className={styles.link}>{label}</Link>
                 </li>

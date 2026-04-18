@@ -172,7 +172,7 @@ export default function Home() {
           {/* Tools section */}
           <div className={styles.toolsSection}>
             <h2 className={styles.toolsHeading}>Tools You'll Actually Use on the Job</h2>
-            <p className={styles.toolsSubline}>Built for HVAC techs — not written by marketers.</p>
+            <p className={styles.toolsSubline}>Built for HVAC techs.</p>
             <div className={styles.toolsGrid}>
               <Link to="/resources/hvac-load-calculator" className={styles.toolCard}>
                 <p className={styles.toolCardTitle}>Load Calculator</p>
