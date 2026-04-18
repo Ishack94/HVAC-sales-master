@@ -2373,44 +2373,133 @@ A common rule of thumb: if a repair costs more than 50% of the replacement cost 
 Talk to your technician honestly. Ask them: "If this were your house, what would you do?" A good technician will give you a straight answer.`,
 
   'what-is-afue-rating': `
-## The Simple Explanation
+<p>Customer points at the sticker on the side of the furnace and asks what that number means. Or they ask why the 96% furnace costs more than the 80%. Or their buddy told them 80% is fine and now they're asking you to justify the upgrade. This article isn't about what AFUE <em>is</em> — you already know. It's about handling the conversation without sounding like a salesman.</p>
 
-AFUE stands for Annual Fuel Utilization Efficiency. It measures how much of the fuel your furnace burns actually turns into heat for your home.
+<h2>The question you'll actually get asked</h2>
 
-A furnace with 80% AFUE converts 80 cents of every dollar of gas into heat. The remaining 20 cents goes up the flue as exhaust. A furnace with 96% AFUE converts 96 cents — only 4 cents of waste.
+<p>Homeowners don't ask "what is Annual Fuel Utilization Efficiency." They ask sideways:</p>
 
-Higher AFUE = less wasted fuel = lower energy bills.
+<ul>
+<li><em>"What's the difference between 80% and 96%?"</em></li>
+<li><em>"What does that 96 sticker actually mean?"</em></li>
+<li><em>"Is the high-efficiency one really worth the extra money?"</em></li>
+<li><em>"My old 80% works fine — why would I change?"</em></li>
+<li><em>"How long until the expensive one pays for itself?"</em></li>
+<li><em>"My neighbor said I don't need anything above 80%."</em></li>
+</ul>
 
-## What the Numbers Actually Mean
+<p>Behind all of it is the same real question: <em>is this upgrade actually worth my money in my house</em>. That's the question you're answering. Not the textbook definition.</p>
 
-80% AFUE: The federal minimum for furnaces sold in most US regions. Standard efficiency equipment. Adequate performance at a lower price point.
+<h2>The tech-accurate answer</h2>
 
-90-95% AFUE: High-efficiency equipment. Requires PVC venting. Meaningful energy savings over 80% equipment.
+<p>AFUE is the ratio of annual heat output to annual fuel energy consumed. A 96% furnace turns about 96 cents of every gas dollar into heat in the house; the rest goes up the vent or is lost in other normal furnace losses. DOE's definition covers active, standby, and off-mode fuel use, but electricity is tracked separately under a different rating called FER — which is why "high-efficiency" and "low electric bill" aren't the same thing.</p>
 
-96-98% AFUE: Top-tier efficiency. Diminishing marginal returns compared to 95%, but worth noting for very cold climates with high gas usage.
+<p>AFUE also doesn't cover duct losses — and DOE flags that duct losses can be as high as <code>35%</code> when ducts run through attics, garages, or unconditioned space. A 96% furnace with leaky attic ductwork can lose more efficiency to the ducts than it gained over an 80%. That's why installation quality matters as much as the number on the sticker.</p>
 
-The efficiency gap that matters most is between 80% and 90%+, not between 95% and 97%. Going from 80% to 95% saves 16 cents per dollar of gas used. Going from 95% to 97% saves 2 cents.
+<p>The coming rule: DOE's amended standard requires covered residential gas furnaces manufactured on or after <strong>December 18, 2028</strong> to meet <code>95% AFUE</code>. That effectively ends production of new non-condensing (80%) models in those categories. The rule is based on manufacturing date — inventory made before the cutoff can still be sold and installed.</p>
 
-## What AFUE Doesn't Tell You
+<h2>How to translate it for the customer</h2>
 
-AFUE only measures fuel efficiency — it doesn't account for:
+<p>The single best plain-language version:</p>
 
-Comfort: A variable-speed modulating furnace with 96% AFUE delivers more comfort than a single-stage furnace with the same rating, because it distributes heat more evenly.
+<p><em>"AFUE is just a fuel-use score. An 80% furnace turns about 80 cents of every gas dollar into heat for your house. A 96% furnace turns about 96 cents of that dollar into heat. The rest goes up the exhaust. That's it."</em></p>
 
-Electricity consumption: The blower motor uses electricity, not gas. A variable-speed ECM blower uses significantly less electricity than a standard motor. This savings doesn't show up in AFUE.
+<p>If they want more:</p>
 
-Installation quality: A properly installed 80% furnace outperforms a poorly installed 96% furnace.
+<p><em>"The sticker isn't saying how hot the furnace blows or how fast it heats. It's saying how much of the fuel you're paying for actually becomes heat over a season."</em></p>
 
-## How to Use AFUE in Your Decision
+<p><strong>Analogies that work:</strong> MPG for a car. R-value for insulation. Both are useful because they let the customer picture the concept without you pretending AFUE tells the whole story.</p>
 
-Use AFUE as one factor among several, not the only one. Compare:
+<p><strong>Analogies to avoid:</strong> Any math that says "16 points better AFUE = 16% off your bill." That's wrong, and a customer who Googles it later will catch the lie. For the same delivered heat, going from 80% to 96% uses about <code>16.7%</code> less fuel <em>for the heating portion</em> — not 16.7% off the total gas bill and not a penny off the electric bill.</p>
 
-- Total installed cost (equipment plus installation)
-- Comfort features (staging, motor type)
-- Expected annual fuel savings based on your climate and usage
-- Warranty terms
+<h2>Rough payback math — the honest version</h2>
 
-In cold climates with high gas usage: AFUE matters a lot. In mild climates with modest heating seasons: AFUE matters less. Your technician can calculate the actual annual savings difference for your situation.`,
+<p>Customers want a number. The honest number sounds like this:</p>
+
+<p><em>"If you spend about $1,000 a year on gas heat right now, moving from 80% to 96% would save roughly $150 to $170 a year on fuel. If your bill is closer to $400, you're looking at maybe $60 to $70. Those aren't promises — weather, thermostat settings, duct losses, and utility rates all move the number."</em></p>
+
+<p>When 95%+ is clearly the right call:</p>
+
+<ul>
+<li>Cold climate, long heating season</li>
+<li>High annual gas use</li>
+<li>Customer plans to stay in the house 10+ years</li>
+<li>Clean path for PVC venting and a condensate drain</li>
+</ul>
+
+<p>When 80% is actually the right call:</p>
+
+<ul>
+<li>Mild climate, short heating season</li>
+<li>Low annual gas use</li>
+<li>Customer plans to move within a few years</li>
+<li>Ugly or expensive venting/condensate path</li>
+<li>Customer explicitly values simplicity and understands the fuel-cost tradeoff</li>
+</ul>
+
+<p>Forcing a 95%+ sale where the math doesn't work is how you lose trust with researched customers.</p>
+
+<h2>Objections that follow, and how to handle each</h2>
+
+<p><strong>"My old 80% lasted 30 years. Why would I want something more complicated?"</strong></p>
+
+<p><em>"That's fair — simpler equipment often did run a long time. The tradeoff is your old furnace wastes more heat up the vent than a condensing furnace does. The real question isn't 'is 95% newer,' it's whether the extra efficiency is worth it in this house for how long you'll own it."</em></p>
+
+<p><strong>"High efficiency means more things to break."</strong></p>
+
+<p><em>"It does usually mean more parts and a different venting setup. That's true. The upside is lower fuel waste and usually better comfort features. I'd rather be honest with you about when the extra complexity is worth it and when it isn't."</em></p>
+
+<p><strong>"I don't plan to stay here long enough to see the savings."</strong></p>
+
+<p><em>"Then efficiency probably isn't the deciding factor. In your case, reliability, install quality, and what helps resale may matter more than squeezing out gas savings."</em></p>
+
+<p><strong>"My buddy is a contractor and he said 80% is fine."</strong></p>
+
+<p><em>"He might be right for some homes. 80% can be the right answer in a mild climate or where the venting path is ugly. I'm not saying 95% is automatic for everybody — I'm saying let's look at your house, your bills, and how long you'll be here."</em></p>
+
+<p><strong>"The internet says the savings are overhyped."</strong></p>
+
+<p><em>"Sometimes they are. I'm not going to tell you this cuts your heating bill in half, because for most people it won't. What it does do is waste less fuel. Whether that difference matters enough depends on your usage and the price gap between the options."</em></p>
+
+<p><strong>"My utility bill is already low."</strong></p>
+
+<p><em>"Then the payback will be slower, and I'm not going to push you into high-efficiency if the math isn't there. If bills are already low, comfort features, noise, and resale may matter more than AFUE alone."</em></p>
+
+<h2>When to pivot to a recommendation — and when not to</h2>
+
+<p><strong>Green light phrases</strong> — customer is ready for a specific recommendation:</p>
+
+<ul>
+<li><em>"How much would that save me?"</em></li>
+<li><em>"We're planning to be here a long time."</em></li>
+<li><em>"My gas bills are high."</em></li>
+<li><em>"I'm tired of uneven temperatures / noisy airflow / dry air."</em></li>
+</ul>
+
+<p><strong>Stay-in-education phrases</strong> — pivoting now will backfire:</p>
+
+<ul>
+<li><em>"I just want to understand the difference first."</em></li>
+<li><em>"I'm worried this is a sales pitch."</em></li>
+<li><em>"Why are you recommending the expensive one?"</em></li>
+</ul>
+
+<p>When you hear the second group, slow down. Keep explaining. The sale closes later when the customer feels informed, not pressured.</p>
+
+<h2>What not to say</h2>
+
+<p>Don't say "you'll save 50% on your bills." Not credible, never was. Don't say "high efficiency always pays for itself in three years" — sometimes it doesn't. Don't say "AFUE tells you the total efficiency of the whole system" — it doesn't include duct losses or blower electricity. Don't use the 2028 rule as scare selling — the accurate version is that new furnaces made after that date must meet 95%, and inventory made before can still be sold and installed.</p>
+
+<h2>Key takeaways</h2>
+
+<ul>
+<li>AFUE is a fuel-use score, not a system-efficiency score. Ducts, blower electricity, and install quality are separate stories.</li>
+<li>The honest math for 80% → 96% is roughly <code>16.7%</code> less fuel used <em>for heating</em>. Not 16.7% off the total bill.</li>
+<li>95%+ makes sense in cold climates, long ownership, high gas use, and clean vent paths. 80% can be the right call for mild climates, short stays, or ugly venting.</li>
+<li>Customers respect techs who admit when the upgrade isn't worth it. Forcing 95%+ on a weak application is how you lose the trust for the future jobs.</li>
+<li>The December 2028 rule is context, not pressure. Don't scare-sell the regulation.</li>
+</ul>
+`,
 
   'how-often-change-furnace-filter': `
 ## The Short Answer by Filter Type

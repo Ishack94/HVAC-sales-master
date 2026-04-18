@@ -301,8 +301,8 @@ export const proArticles = [
   {
     slug: 'what-is-afue-rating',
     title: 'What Is AFUE Rating?',
-    description: 'Understanding furnace efficiency ratings and what they mean for your energy bills.',
-    readTime: '4 min',
+    description: 'Handling the AFUE conversation on a sales call — tech-accurate answer, plain-language translation, objections, and when 80% is actually the right recommendation.',
+    readTime: '8 min',
     image: '/images/homeowner/12-afue-rating.jpg',
   },
   {
