@@ -251,8 +251,8 @@ export const proArticles = [
   {
     slug: 'furnace-leaking-water',
     title: 'Why Is My Furnace Leaking Water?',
-    description: 'High-efficiency vs standard furnaces leak for different reasons. Here\'s why.',
-    readTime: '6 min',
+    description: 'Branching diagnosis for 90%+ vs 80% furnaces, from trap and drain path to venting and heat exchanger.',
+    readTime: '7 min',
     image: '/images/homeowner/05-furnace-leaking.jpg',
   },
   {

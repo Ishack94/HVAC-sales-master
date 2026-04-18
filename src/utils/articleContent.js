@@ -1987,44 +1987,74 @@ A few clicks when the furnace starts is completely normal — that's the igniter
 What to do: Check that your gas is on (check another gas appliance in the house). If gas is fine and the furnace still clicks without igniting, a technician needs to diagnose the ignition system.`,
 
   'furnace-leaking-water': `
-## High-Efficiency Furnaces (90%+ AFUE)
+<p>You walk in. Water on the floor by the furnace, customer's freaking out about their floors or the water heater next to it. Before you touch anything, the first question decides the whole call: is this a 90%+ condensing furnace (which is <em>supposed</em> to make water) or an 80% standard-efficiency furnace (which shouldn't be making water at all during heating)?</p>
 
-The most common type of water leak comes from high-efficiency condensing furnaces.
+<p><strong>The first branch decides everything</strong></p>
 
-A high-efficiency furnace extracts so much heat from the combustion gases that the flue gases cool below the dew point before leaving the system. This causes condensation — water vapor condenses into liquid. That's normal and expected.
+<p>On a 90%+, water is normal — a leak means the condensate system isn't clearing it. Clogged trap, bad drain line, wrong vent slope, condensate pump failure. Standard stuff. On an 80%, water usually isn't from the furnace at all — it's tracking down from the AC coil above, a humidifier, a plumbing leak, or a roof leak. If you confirm it really is coming from an 80% furnace, that's a venting or combustion problem and it's serious.</p>
 
-High-efficiency furnaces have a condensate system: a drain pan, a drain trap, and a drain line that routes this water out. When any part of that system fails or clogs, water ends up on the floor.
+<h2>Diagnostic flow</h2>
 
-Common causes:
-- Clogged condensate drain line (most common)
-- Failed condensate pump (if the drain doesn't run to a floor drain by gravity)
-- Cracked or disconnected drain line
-- Frozen condensate drain in cold conditions
+<p><strong>1. Identify the furnace type.</strong></p>
 
-What to check: Trace the white PVC condensate drain from the furnace to where it exits. Look for obvious cracks, disconnected sections, or blockages. If there's a condensate pump (a small device with a reservoir), check if it's running and if the reservoir is overflowing.
+<p>PVC intake/exhaust, collector box, visible trap, drain tubing: 90%+. Metal B-vent up through the roof, no visible condensate system: 80%. Check the nameplate AFUE if you need to confirm. This one-second ID changes everything that follows.</p>
 
-What to do: Clear a clogged condensate line by flushing with water and a small amount of bleach. For pump failures or cracked lines, call a technician.
+<p><strong>2. Find the true origin of the water before touching anything.</strong></p>
 
-## Standard Efficiency Furnaces (80% AFUE)
+<p>Dry the area. Run a heat call. Flashlight and mirror the cabinet seams, top of the furnace, the AC coil case above it, humidifier, vent joints, nearby piping. Find the highest wet point and the first component getting wet. If the top of the cabinet is wet before anything inside is, the water is coming from above — coil, humidifier, plumbing, roof. Don't diagnose a furnace that isn't actually leaking.</p>
 
-A standard efficiency furnace should not produce condensate. If water is appearing near one, something is wrong upstream.
+<p><strong>3. Check pitch on the furnace, drain lines, and venting.</strong></p>
 
-The most common cause is the AC system. The evaporator coil in or on top of the furnace drains condensate. If the coil's drain pan or drain line is clogged, water backs up and drains down into the furnace area — appearing to come from the furnace.
+<p>Torpedo level. Drain lines should pitch at least <code>1/4" per foot</code> toward the drain — not <code>1/8"</code>, not level, not uphill. On 90%+ furnaces, horizontal PVC vent should also slope back toward the furnace at <code>1/4" per foot</code> so condensate returns to the trap. A surprising percentage of "intermittent" leaks come down to a sag, a double trap, or a hidden belly in the line.</p>
 
-Other causes: A humidifier mounted on the furnace with a failed drain or cracked water panel.
+<p><strong>4. On a 90%+, start with the trap.</strong></p>
 
-What to check: Is the leak happening in summer when the AC is running? More likely the coil drain system. Is there a humidifier? Check the water connections and drain.
+<p>Pull it, flush it, inspect every port. A partially clogged trap is the single most common failure mode — and it causes callbacks because the furnace may run fine after a reset, then leak again once condensate backs up. Check for cracks and confirm it's installed in the correct orientation and height per the brand. Prime it before restart. If the trap was the only problem, the leak and any nuisance pressure-switch faults usually disappear together.</p>
 
-## What to Do Right Now
+<p><strong>5. Clear the drain line after the trap.</strong></p>
 
-Any amount of water around your furnace is worth taking seriously. Water damage is cumulative.
+<p>Flush with water, wet-vac the outlet, check for slime, debris, sags, uphill sections, and double traps. If the line common-drains with the AC coil, verify the coil side is vented and configured so it doesn't interfere with furnace drainage. If the line terminates outdoors and freezes in winter — fix the routing or protect it.</p>
 
-1. Put down towels to contain water.
-2. Turn the furnace off if the leak is significant.
-3. Check the condensate drain for obvious clogs.
-4. Call a technician if the cause isn't obvious or you can't clear the drain yourself.
+<p><strong>6. Inspect the collector box, inducer, and internal drain paths.</strong></p>
 
-Do not ignore a slow drip. A small leak becomes a corroded drain pan, a warped floor, and a mold problem if left unaddressed.`,
+<p>Standing water in the inducer housing or collector area means condensate is backing up internally. That points back to trap, drain, vent pitch, or internal tubing — not "replace the inducer." Look for rust trails, white deposits, cracked hoses, or water leaking from a header/collector transition (that last one moves the call toward component failure).</p>
+
+<p><strong>7. Test the condensate pump under load, if there is one.</strong></p>
+
+<p>Fill the reservoir manually. Watch the float actuate. Verify the discharge clears and the check valve doesn't let water fall back. A stuck float or bad check valve looks exactly like a furnace leak. On installs requiring a pump, the pump is part of the furnace water-management system, not an accessory — and it must be rated for acidic condensate.</p>
+
+<p><strong>8. If it's an 80% furnace and the water really is from it, check venting and flue temp.</strong></p>
+
+<p>Only after you've ruled out AC coil, humidifier, and plumbing. Combustion analysis or stack temp check at the vent connector. Healthy 80% furnaces run around <code>300-400\u00B0F</code> flue temp; readings under <code>300\u00B0F</code> suggest underfiring, oversized venting, or excessive heat extraction — any of which can produce condensation that corrodes the vent or heat exchanger. This is a safety problem, not a drain problem.</p>
+
+<p><strong>9. Only after drain path is correct, consider heat exchanger or collector failure.</strong></p>
+
+<p>If the trap is clean, drain is clear, pitch is right, vent is good, and water is still leaking from inside the cabinet at a header or collector area — now you're into repair-or-replace and the safety conversation.</p>
+
+<h2>What to say to the customer</h2>
+
+<p>Clogged trap on a 90%+: <em>"This furnace is supposed to make water because it's high-efficiency. The problem is the water can't get out fast enough — the trap is restricted, so it's backing up and leaking. I'm clearing it now and verifying the whole drain path so it doesn't come right back."</em></p>
+
+<p>Water from somewhere above on an 80%: <em>"The furnace is where you're seeing the water, but it's not actually making it. The source is your AC coil / humidifier / a leak above the cabinet, and the water is tracking down. I'll show you the real source so we're solving the right problem."</em></p>
+
+<p>Water from an 80% furnace itself: <em>"This style of furnace shouldn't be producing liquid water during heating. If it is, that usually means a venting or combustion problem — which is more serious than a drain issue because it can corrode the heat exchanger. I need to run some tests to confirm exactly what we're dealing with."</em></p>
+
+<p>Heat exchanger or collector failure: <em>"I ruled out the normal drainage causes first. The water is coming from a component that should be containing it, so we're past maintenance and into repair-or-replace. I want to treat this as a safety issue, not just a water issue."</em></p>
+
+<h2>Common misdiagnosis</h2>
+
+<p>Clearing the trap but missing the blocked drain line downstream — leak comes right back. Replacing a condensate pump without checking the float or check valve. Calling every water leak on a 90%+ a "trap problem" without verifying vent slope. Missing that the water is coming from the AC coil above the furnace in summer months. Treating flue gas condensation on an 80% like a nuisance drain issue instead of what it is — a combustion or venting problem.</p>
+
+<h2>Key takeaways</h2>
+
+<ul>
+<li>Branch on furnace type first. 90%+ makes condensate by design; 80% shouldn't be making water at all.</li>
+<li>Find the true origin of the water before you touch a part.</li>
+<li>On 90%+: trap, drain, pitch, vent slope, pump — in that order.</li>
+<li>On 80%: water is usually from somewhere else. If it really is from the furnace, suspect venting.</li>
+<li>Drain problems cause more pressure-switch nuisance faults than bad pressure switches do.</li>
+</ul>
+`,
 
   'how-to-clean-flame-sensor': `
 ## What the Flame Sensor Does
