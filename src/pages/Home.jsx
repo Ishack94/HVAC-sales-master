@@ -189,22 +189,18 @@ export default function Home() {
               <Link to="/resources/hvac-load-calculator" className={styles.toolCard}>
                 <p className={styles.toolCardTitle}>Load Calculator</p>
                 <p className={styles.toolCardDesc}>Estimate heating and cooling loads for residential systems.</p>
-                <p className={styles.toolCardSample}>→ 2,000 sq ft home: 3.5 tons / 42,000 BTU</p>
               </Link>
               <Link to="/resources/duct-design-calculator" className={styles.toolCard}>
                 <p className={styles.toolCardTitle}>Duct Designer</p>
                 <p className={styles.toolCardDesc}>Size ductwork using CFM and friction rate.</p>
-                <p className={styles.toolCardSample}>→ 400 CFM bedroom: 7" round duct</p>
               </Link>
               <Link to="/troubleshoot" className={styles.toolCard}>
                 <p className={styles.toolCardTitle}>Furnace Troubleshooter</p>
                 <p className={styles.toolCardDesc}>Step-by-step diagnostics for common furnace issues.</p>
-                <p className={styles.toolCardSample}>→ No heat? Start with thermostat check</p>
               </Link>
               <Link to="/resources/reverse-duct-calculator" className={styles.toolCard}>
                 <p className={styles.toolCardTitle}>Reverse Duct Calculator</p>
                 <p className={styles.toolCardDesc}>Work backwards from duct size to find airflow.</p>
-                <p className={styles.toolCardSample}>→ 6" duct at 0.1" WC: ~210 CFM</p>
               </Link>
             </div>
           </div>
