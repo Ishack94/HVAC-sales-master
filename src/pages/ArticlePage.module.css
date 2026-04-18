@@ -33,10 +33,17 @@
 .metaBar {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 16px;
   margin-bottom: 24px;
   padding-bottom: 16px;
   border-bottom: 1px solid #e5e5e5;
+}
+
+.metaLeft {
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
 
 .category {
@@ -57,15 +64,6 @@
   font-weight: 500;
   color: #8a8f96;
 }
-
-.publishedDate {
-  font-family: 'Figtree', sans-serif;
-  font-size: 13px;
-  color: #8a8f96;
-  font-weight: 400;
-  margin-bottom: 16px;
-}
-
 
 /* Article body */
 .body {
@@ -376,6 +374,14 @@
 
   .milwaukeeAd {
     display: block;
+  }
+}
+
+@media (max-width: 640px) {
+  .metaBar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
   }
 }
 

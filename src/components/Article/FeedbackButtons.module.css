@@ -1,3 +1,4 @@
+/* Bottom variant (default) */
 .wrapper {
   text-align: center;
   margin: 40px 0 24px;
@@ -50,4 +51,59 @@
   font-size: 14px;
   color: #5a6068;
   margin: 0;
+}
+
+/* Top compact variant */
+.wrapperTop {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  transition: opacity 0.25s ease;
+}
+
+.labelTop {
+  font-family: 'Figtree', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #5a6068;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.buttonsTop {
+  display: flex;
+  gap: 8px;
+}
+
+.btnTop {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid #e2e4e8;
+  border-radius: 4px;
+  padding: 4px 8px;
+  height: 28px;
+  cursor: pointer;
+  color: #1b3a5c;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.btnTop:hover {
+  border-color: #4a9fe5;
+  color: #4a9fe5;
+}
+
+.btnTop.active {
+  color: #4a9fe5;
+  border-color: #4a9fe5;
+}
+
+.thanksTop {
+  font-family: 'Figtree', sans-serif;
+  font-size: 14px;
+  color: #5a6068;
+  margin: 0;
+  white-space: nowrap;
 }

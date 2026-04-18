@@ -223,18 +223,17 @@ export default function ArticlePage({ section }) {
           </Link>
 
           <div className={styles.metaBar}>
-            <span
-              className={styles.category}
-              style={{ color: categoryColor, background: `${categoryColor}1a` }}
-            >
-              {categoryLabel}
-            </span>
-            {meta?.readTime && <span className={styles.readTime}>{meta.readTime} read · Updated April 2026</span>}
+            <div className={styles.metaLeft}>
+              <span
+                className={styles.category}
+                style={{ color: categoryColor, background: `${categoryColor}1a` }}
+              >
+                {categoryLabel}
+              </span>
+              {meta?.readTime && <span className={styles.readTime}>{meta.readTime} read · Updated April 2026</span>}
+            </div>
+            <FeedbackButtons slug={slug} position="top" />
           </div>
-
-          <p className={styles.publishedDate}>Published April 2026</p>
-
-          <FeedbackButtons slug={slug} position="top" />
 
           <div className={styles.body}>
             {content ? (

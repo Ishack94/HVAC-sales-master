@@ -33,35 +33,38 @@ export default function FeedbackButtons({ slug, position }) {
     setTimeout(markSubmitted, 450)
   }
 
+  const isTop = position === 'top'
+  const iconSize = isTop ? '16' : '20'
+
   if (submitted) {
     return (
-      <div className={styles.wrapper}>
-        <p className={styles.thanks}>Thanks — noted.</p>
+      <div className={isTop ? styles.wrapperTop : styles.wrapper}>
+        <p className={isTop ? styles.thanksTop : styles.thanks}>Thanks — noted.</p>
       </div>
     )
   }
 
   return (
-    <div className={`${styles.wrapper} ${animating ? styles.fadeOut : ''}`}>
-      <p className={styles.label}>Was this helpful?</p>
-      <div className={styles.buttons}>
+    <div className={`${isTop ? styles.wrapperTop : styles.wrapper} ${animating ? styles.fadeOut : ''}`}>
+      <p className={isTop ? styles.labelTop : styles.label}>Was this helpful?</p>
+      <div className={isTop ? styles.buttonsTop : styles.buttons}>
         <button
           type="button"
-          className={`${styles.btn} ${animating === 'up' ? styles.active : ''}`}
+          className={`${isTop ? styles.btnTop : styles.btn} ${animating === 'up' ? styles.active : ''}`}
           onClick={() => handleVote('up')}
           aria-label="Helpful"
         >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <svg width={iconSize} height={iconSize} viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path d="M7 22V11M2 13v7a2 2 0 0 0 2 2h12.5a2 2 0 0 0 2-1.7l1.4-9A2 2 0 0 0 17.9 9H14V4a2 2 0 0 0-2-2h-.1a1 1 0 0 0-.9.6L7 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         </button>
         <button
           type="button"
-          className={`${styles.btn} ${animating === 'down' ? styles.active : ''}`}
+          className={`${isTop ? styles.btnTop : styles.btn} ${animating === 'down' ? styles.active : ''}`}
           onClick={() => handleVote('down')}
           aria-label="Not helpful"
         >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <svg width={iconSize} height={iconSize} viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path d="M17 2V13M22 11V4a2 2 0 0 0-2-2H7.5a2 2 0 0 0-2 1.7l-1.4 9A2 2 0 0 0 6.1 15H10v5a2 2 0 0 0 2 2h.1a1 1 0 0 0 .9-.6L17 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         </button>
