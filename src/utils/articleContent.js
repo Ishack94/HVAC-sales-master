@@ -3093,62 +3093,195 @@ A blocked flue is a serious safety hazard. Birds' nests, debris, or a damaged fl
 `,
 
   'ac-tune-up-guide': `
-## Why Spring Maintenance Matters
+<p>Customer's AC is running, but they want a tune-up before peak season. Or they bought a $99 special online. Or the system is 12 years old and they want eyes on it. This article is about what an honest AC tune-up should actually include, why the refrigerant side stays closed unless the numbers warrant opening it, and how to turn real findings into real sales conversations without being the guy who adds refrigerant on every visit.</p>
 
-Air conditioners sit idle through fall and winter. During that time, electrical connections can corrode, capacitors degrade, and refrigerant can slowly seep from fittings.
+<p><strong>The #1 AC tune-up ethical issue, up front:</strong> refrigerant should not be added during a tune-up unless there's measured evidence of undercharge AND a leak has been identified. An AC system is sealed — it doesn't consume refrigerant in normal operation. Any system that needs refrigerant has a leak, and the right response is leak location, not top-off. EPA's homeowner guidance says the same. In 2026 with A2L refrigerants in the field, unnecessary gauge connections are also handling risk. Start with airflow, not charge.</p>
 
-The first 90-degree day of summer is when all of this becomes apparent — when the system is under maximum load and every marginal component fails.
+<h2>The question you'll actually get asked</h2>
 
-Spring maintenance — done before cooling season starts — catches these issues when parts are available, technicians aren't slammed, and there's no heat emergency driving the situation.
+<ul>
+<li><em>"What's included in the AC tune-up?"</em></li>
+<li><em>"Is a $99 special worth it?"</em></li>
+<li><em>"My AC wasn't cooling as well last summer — can you top off the refrigerant?"</em></li>
+<li><em>"Do I really need maintenance every year?"</em></li>
+<li><em>"Why is this more expensive than the place offering $79?"</em></li>
+</ul>
 
-## What the Technician Should Do
+<p>Behind all of them: <em>is this actual maintenance or a sales visit with a manifold set</em>.</p>
 
-Electrical:
-- Check and measure capacitor health (the most commonly failed component on older AC systems)
-- Inspect contactor contacts for pitting and wear
-- Measure compressor and fan motor amperage
-- Tighten all electrical connections
-- Check disconnect condition
+<h2>The tech-accurate answer: what an honest AC tune-up includes</h2>
 
-Refrigerant system:
-- Check operating pressures (suction and discharge)
-- Calculate superheat or subcooling to verify charge
-- Inspect refrigerant lines for signs of leaks or damage
+<p>The discipline is airflow first, electrical second, refrigerant only if warranted. Non-invasive checks are what separate a real tune-up from a gauge-up sales visit.</p>
 
-Coils and airflow:
-- Clean condenser coil if dirty (coils clogged with debris lose 10-15% efficiency)
-- Inspect evaporator coil condition
-- Check and clear condensate drain line
-- Replace filter if included in the service
+<p><strong>Non-invasive checks first:</strong></p>
 
-Mechanical:
-- Lubricate fan motor bearings if applicable
-- Inspect fan blade for damage or looseness
-- Verify refrigerant line insulation is intact
+<ul>
+<li>Temperature split, return vs. supply — expect <code>14-23\u00B0F</code> with humidity context</li>
+<li>Total external static pressure, return and supply measured separately</li>
+<li>Filter condition</li>
+<li>Indoor blower wheel and evap coil inspection</li>
+<li>Visible duct leakage evidence</li>
+<li>Outdoor condenser coil cleanliness</li>
+<li>Condenser fan operation and rotation</li>
+<li>Line-set visual for oil stains or damage</li>
+<li>Drain line and secondary pan for attic installs</li>
+</ul>
 
-Operational verification:
-- Let the system run, confirm pressures are stable
-- Measure supply air temperature and delta-T
-- Verify thermostat operation
+<p><strong>Electrical:</strong></p>
 
-## What You Should Receive
+<ul>
+<li>Capacitor measurement, microfarads within <code>\u00B16%</code> of nameplate</li>
+<li>Contactor inspection for pitting</li>
+<li>Compressor amp draw compared to RLA</li>
+<li>Condenser fan motor amp draw</li>
+<li>Terminal tightness</li>
+<li>Voltage at disconnect</li>
+</ul>
 
-A written record of what was checked and what was found. If anything is borderline — a capacitor reading low, a contactor showing early wear — you should be told so you can plan accordingly.
+<p><strong>Controls and safety:</strong></p>
 
-## What Questions to Ask
+<ul>
+<li>Thermostat operation and programming</li>
+<li>Drain line clear, float switch operates</li>
+<li>Secondary pan condition on attic installs</li>
+<li>Condensate pump operation if present</li>
+</ul>
 
-"What did you find?" Get a plain-language summary.
+<p><strong>Refrigerant side — ONLY if non-invasive findings warrant:</strong></p>
 
-"How's the capacitor?" A capacitor reading below 90% of its rated microfarad value is living on borrowed time. Ask for the actual number.
+<ul>
+<li>Gauge-up to verify subcooling on TXV systems or target total superheat on fixed-orifice</li>
+<li>Compare to manufacturer charging chart, not generic rules of thumb</li>
+<li>Discharge line and liquid line temperatures recorded with the pressures</li>
+</ul>
 
-"What are the operating pressures and what do they tell you?" A technician who can translate the gauge readings into plain language is giving you real information.
+<p>If the airflow is right, static is normal, coil is clean, condenser is clean, and temperature split is reasonable — the refrigerant circuit stays closed. That's not laziness, that's discipline. Every unnecessary connection is a handling risk.</p>
 
-"Is the drain clear?" In humid climates, a clogged condensate drain causes water damage every summer. Ask specifically.
+<h2>The "adding refrigerant during a tune-up" problem</h2>
 
-## How Often?
+<p>This is the biggest ethical issue in AC maintenance, and it deserves its own section.</p>
 
-Once a year in the spring, before cooling season. If you have a heat pump that you run year-round, spring maintenance should include both heating and cooling checks.
+<p>A residential AC system is sealed. It does not "use up" refrigerant. Any system that needs refrigerant added has a leak — there is no other explanation. EPA homeowner guidance explicitly says owners should ask technicians to locate and repair leaks instead of topping off leaking systems. Intentional venting during service is illegal under Section 608.</p>
 
-A properly maintained AC system lasts longer, runs more efficiently, and fails less frequently. The tune-up costs $80-150. The mid-summer emergency call it prevents costs several times that.`,
+<p>Refrigerant "top-off" should never be a routine tune-up line item. It implies refrigerant is consumed during normal operation, which it isn't. If a tech sells it that way, they're either lying to the customer or confused about how AC systems work.</p>
+
+<p>The honest customer conversation:</p>
+
+<p><em>"Your system doesn't consume refrigerant. If it's low, it leaked. The right next step is to confirm the charge is actually off and find the leak — not just keep adding. Topping off without finding the leak means you'll be calling me again next summer, and it's a violation of federal refrigerant handling rules on my end."</em></p>
+
+<p>That framing protects the customer and keeps the tech on the right side of EPA.</p>
+
+<h2>A2L refrigerant discipline for 2026</h2>
+
+<p>R-454B and R-32 equipment is now in the field. EPA's Technology Transitions rule moved new residential cooling equipment off high-GWP refrigerants, with a limited sell-through window for pre-transition inventory.</p>
+
+<p>UL 60335-2-40 requires refrigerant detection systems to react at <code>25%</code> of LFL and activate mitigation — typically shutting off the compressor and running the indoor blower to dilute the concentration. That logic is now built into the equipment itself.</p>
+
+<p>A2L tool requirements changed too. Recovery machine, vacuum pump, leak detector, and manifold all need to be A2L-rated. Left-hand threaded hoses. Left-hand threaded tank adapter. Fire extinguisher on the truck. Older A1 tools aren't acceptable just because they seem to work.</p>
+
+<p>What this means for tune-ups: non-invasive checks aren't just good practice anymore, they're safer practice. Every unnecessary gauge connection on an A2L system is a handling risk, not just a sloppy habit. The tune-up conversation tightens up automatically.</p>
+
+<p>Timeline reality check: in early 2026, most service work is still R-410A because of the installed base. But every year that shifts toward R-454B/R-32, and by 2028-2030 the installed base conversation changes substantially.</p>
+
+<h2>What's mostly theatre on corporate checklists</h2>
+
+<p>Line items that inflate the price without adding real value:</p>
+
+<ul>
+<li>Chemical coil cleaning when the coil is actually clean</li>
+<li>Refrigerant "top-off" as a routine line item</li>
+<li>UV light pushed unprompted</li>
+<li>Capacitor replacement when the existing cap tests within <code>\u00B16%</code></li>
+<li>"System sanitizing" and similar vague services</li>
+<li>Duct cleaning upsell during an AC tune-up</li>
+<li>"Refrigerant enhancement" or "boost" products — these don't exist as a legitimate category</li>
+</ul>
+
+<p>None of these are inherently bad services in the right context. They just don't belong on a maintenance checklist without condition-based justification. Trane specifically warns against chemical cleaners on microchannel coils — air or water is the right cleaning approach there. "Pressure-wash the condenser" needs context too; inspect, verify it's actually dirty, then clean appropriately.</p>
+
+<h2>How to translate findings for the customer</h2>
+
+<p>Same three-severity framework as furnace tune-ups.</p>
+
+<p><strong>Minor / maintenance items</strong> — light debris on the condenser, dirty filter, drain cleared with no deeper issue. Fix and note.</p>
+
+<p><em>"I found a maintenance item, corrected it, and documented it."</em></p>
+
+<p><strong>Future-failure indicators</strong> — capacitor drifting toward the edge of tolerance, contactor with visible wear, blower wheel getting dirty enough to start affecting airflow, static pressure creeping up. Not emergencies, but real measurements pointing toward degradation.</p>
+
+<p><em>"This isn't a current no-cooling failure, but it's a measurable sign the system is drifting the wrong way. You can fix it now or we can document and watch."</em></p>
+
+<p><strong>Real current problems</strong> — measured undercharge with oil staining (leak evidence), significantly fouled condenser hurting performance, drain safety issue in an attic, actual electrical evidence of compressor trouble. Direct conversation with documented numbers.</p>
+
+<p><em>"This is a current problem, and here's the evidence."</em></p>
+
+<p>Note on compressor specifically: HVAC School points out a large share of compressors returned under warranty have no actual fault. Don't use compressor language without winding resistance, amp draw, or performance evidence.</p>
+
+<h2>The "service call to install" conversation</h2>
+
+<p>For AC replacement, two distinct conversations.</p>
+
+<p><strong>R-22 systems still in service.</strong> EPA is clear in 2026: existing R-22 equipment can still be serviced, and owners don't have to replace it just because it uses R-22. At the same time, EPA says repair leaks instead of topping off, and no new R-22 is being made or imported. The honest conversation is not "R-22 is banned, you have to replace." It's:</p>
+
+<p><em>"Your system can still legally operate and be serviced. But reclaimed R-22 is expensive and the economics of a major repair — compressor, coil — usually don't pencil. If the system is running and just needs maintenance, we keep it running. If it needs a major component, that's when we talk replacement."</em></p>
+
+<p><strong>Older R-410A systems.</strong> Existing R-410A systems can still be repaired — the new-equipment GWP restrictions don't apply to components used for repair of existing systems. But in practical terms, once a 15+ year old R-410A system needs a compressor or coil, replacement is usually the more honest conversation than major repair.</p>
+
+<p><em>"Your furnace being old isn't the issue by itself. The measurements today are — [list them]. Age changes whether putting money into those measurements makes sense."</em></p>
+
+<p>Same principle as the furnace tune-up article: measurements first, then let age inform the repair-vs-replace math.</p>
+
+<h2>The "three-ton on a two-ton duct system" conversation</h2>
+
+<p>This is one of the most valuable things a real tune-up can uncover, and it leads to a completely different kind of sale — not refrigerant, not a part, but airflow work.</p>
+
+<p>If the filter is clean, the coil is clean, the blower wheel is reasonably clean, and static pressure is still high — the issue isn't maintenance. The equipment and the duct system don't match. Comfort complaints that don't line up with a charge problem often trace back here.</p>
+
+<p><em>"Your comfort problem doesn't look like a refrigerant problem. The static pressure is high even though everything's clean. The equipment is oversized for the duct system, or the duct system has design limits that are holding the equipment back. The honest fix is duct modification or zoning, not refrigerant."</em></p>
+
+<p>That's a much better sale than inventing a charge issue on a duct problem. And it builds trust with customers who've been through previous contractors who just added refrigerant every year.</p>
+
+<h2>Pricing conversations</h2>
+
+<ul>
+<li><strong>$65-99 basic</strong> — visual inspection, filter, electrical look, maybe temp split and static if the shop is efficient</li>
+<li><strong>$129-199 comprehensive</strong> — real measurements, airflow verification, electrical testing, drain checks</li>
+<li><strong>$250+ premium</strong> — deepest documentation, refrigerant verification only if non-invasive findings justify opening the circuit</li>
+</ul>
+
+<p>This Old House puts AC tune-ups at roughly $65-200, Angi's routine HVAC maintenance data lands around $175-350 with split heating/cooling coverage up to $350. The tier framework is a reasoned synthesis of those ranges plus the time a real tune-up actually requires.</p>
+
+<p>Bundled furnace + AC annual plans can be honest, but only if the AC scope stays real. If the AC side is reduced to "hose off the condenser and read the cap," the customer isn't actually getting a proper cooling maintenance visit.</p>
+
+<h2>Seasonal timing — why spring</h2>
+
+<p>Spring is right for the same reason fall is right for furnaces: get ahead of peak demand. Carrier's maintenance guide specifically recommends scheduling comprehensive AC service in early spring before temperatures rise.</p>
+
+<p>A problem found in April is a scheduled repair. The same problem found in July is a no-cooling emergency. Parts availability is better in shoulder season. Refrigerant handling is easier at moderate ambient, if gauge work turns out to be warranted. Labor is more available before the heat-wave call flood.</p>
+
+<p>Customer-facing: <em>"April lets us find issues while you don't need the AC. Same problem in July becomes an emergency. Now it's a scheduled repair."</em></p>
+
+<h2>Maintenance agreements</h2>
+
+<p>Usually bundled with furnace coverage: two visits per year, priority service, waived diagnostic fees, discounted repairs. Common example: priority scheduling, 10% repair discount, annual AC inspection and rinse.</p>
+
+<p>The honest test: if the agreement delivers real scheduled maintenance, useful discounts, and faster response, it serves the customer. If it exists mainly for recurring revenue while the tune-up scope is thin, it doesn't. Both models exist in the industry. Sell the first kind.</p>
+
+<h2>What not to say</h2>
+
+<p>Don't say "your system is low on refrigerant" without showing the gauge readings and explaining the leak. Don't say "you need to top off refrigerant every year" — that implies refrigerant is consumed, which it isn't, and EPA specifically tells homeowners to ask techs to repair leaks instead of topping off. Don't say "your compressor is failing" without amp draw, winding resistance, or performance evidence. Don't say "your AC is too old to service" when the system is running and the measurements are acceptable. Don't say "this refrigerant is banned, you have to replace" — for R-22, existing systems can still be serviced; for R-410A, existing systems can still be repaired.</p>
+
+<p>Measure first, then explain what the number means. That's what separates an honest tune-up from a sales visit.</p>
+
+<h2>Key takeaways</h2>
+
+<ul>
+<li>Non-invasive checks first. Airflow before refrigerant, every time. On A2L systems it's also safer practice, not just better practice.</li>
+<li>Refrigerant isn't consumed in normal operation. If it's low, it leaked. The right response is leak location, not top-off — and EPA's rules back that up.</li>
+<li><code>\u00B16%</code> capacitor tolerance is the defensible replacement threshold. Anything else is preventive selling.</li>
+<li>Three-severity framework for findings: minor items (fix and note), future-failure indicators (document, offer options), real current problems (direct conversation with evidence).</li>
+<li>High static pressure with a clean system points to a duct problem, not a refrigerant problem. That's a different sale — and often a better one.</li>
+</ul>
+`,
 
 }

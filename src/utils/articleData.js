@@ -329,8 +329,8 @@ export const proArticles = [
   {
     slug: 'ac-tune-up-guide',
     title: 'What to Expect During an AC Tune-Up',
-    description: 'Spring maintenance that prevents summer breakdowns and keeps your system efficient.',
-    readTime: '6 min',
+    description: 'Airflow before refrigerant, the ethical problem with refrigerant top-offs, A2L discipline for 2026, and how to turn a tune-up into an honest sales conversation.',
+    readTime: '12 min',
     image: '/images/homeowner/16-ac-tune-up.jpg',
   },
 ]
