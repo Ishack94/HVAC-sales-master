@@ -255,6 +255,8 @@ export default function ArticlePage({ section }) {
 
           <p className={styles.publishedDate}>Published April 2026</p>
 
+          <FeedbackButtons slug={slug} position="top" />
+
           <div className={styles.body}>
             {content ? (
               <ArticleBody content={content} />
@@ -266,7 +268,7 @@ export default function ArticlePage({ section }) {
             )}
           </div>
 
-          <FeedbackButtons slug={slug} />
+          <FeedbackButtons slug={slug} position="bottom" />
 
           {relatedInline.length > 0 && (
             <div className={styles.relatedInline}>

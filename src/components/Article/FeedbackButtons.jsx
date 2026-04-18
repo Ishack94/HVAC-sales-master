@@ -1,24 +1,36 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import styles from './FeedbackButtons.module.css'
 
-export default function FeedbackButtons({ slug }) {
+export default function FeedbackButtons({ slug, position }) {
   const storageKey = `hvac_feedback_${slug}`
   const [submitted, setSubmitted] = useState(false)
   const [animating, setAnimating] = useState(null)
+
+  const markSubmitted = useCallback(() => setSubmitted(true), [])
 
   useEffect(() => {
     try {
       if (localStorage.getItem(storageKey)) setSubmitted(true)
     } catch {}
-  }, [storageKey])
+
+    const onSiblingVote = (e) => {
+      if (e.detail && e.detail.slug === slug) {
+        setAnimating(null)
+        setSubmitted(true)
+      }
+    }
+    window.addEventListener('hvac:feedback-voted', onSiblingVote)
+    return () => window.removeEventListener('hvac:feedback-voted', onSiblingVote)
+  }, [storageKey, slug])
 
   const handleVote = (vote) => {
     setAnimating(vote)
     try { localStorage.setItem(storageKey, vote) } catch {}
     if (typeof window !== 'undefined' && window.gtag) {
-      window.gtag('event', 'article_feedback', { article_slug: slug, vote })
+      window.gtag('event', 'article_feedback', { article_slug: slug, vote, position })
     }
-    setTimeout(() => setSubmitted(true), 450)
+    window.dispatchEvent(new CustomEvent('hvac:feedback-voted', { detail: { slug } }))
+    setTimeout(markSubmitted, 450)
   }
 
   if (submitted) {
