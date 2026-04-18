@@ -2515,55 +2515,149 @@ There's also the possibility the issue isn't the flame sensor at all. A furnace 
 `,
 
   'best-gas-furnace-brands': `
-## The Short Version
+<p>Customer's shopping three quotes, and each one is a different brand. Or they walked in with "I want a Trane because my neighbor has one," or "I heard Goodman is junk." This article is about handling the brand conversation honestly — because the brand conversation in 2026 is mostly a distraction from the conversation that actually matters.</p>
 
-All major brands make reliable furnaces when properly installed. Installation quality and ongoing maintenance matter more than brand choice. That said, some brands have better reputations in specific areas.
+<p><strong>The truth before any of the rankings:</strong> the installer matters more than the logo. A premium brand badly sized, badly vented, or badly commissioned is worse than a value brand installed correctly. Dealer network strength, parts availability, and whether the person who installed it will still answer the phone in year eight — those matter more than the nameplate. Start there, and everything else in this article is in proper context.</p>
 
-## Carrier / Bryant
+<h2>The question you'll actually get asked</h2>
 
-Carrier is one of the oldest names in HVAC and makes high-quality equipment at multiple price points. Their Infinity series (modulating, variable-speed) is consistently well-reviewed. Bryant is the contractor/value channel brand owned by the same parent company.
+<ul>
+<li><em>"What's the best brand of furnace?"</em></li>
+<li><em>"Why is the Trane quote so much higher than the Goodman?"</em></li>
+<li><em>"I heard Lennox is junk. Is that true?"</em></li>
+<li><em>"My buddy said to stay away from [Brand X]. Is he right?"</em></li>
+<li><em>"Are Carrier and Bryant the same company?"</em></li>
+<li><em>"These three quotes are all different brands — which one is best?"</em></li>
+</ul>
 
-Strengths: Quality construction, good dealer network, solid warranty support. Carrier's Infinity communicating system is one of the better options available.
+<p>Behind all of them: <em>am I making the right call on a $5,000-15,000 purchase</em>. Your job is to make that decision easier without bashing anyone or pretending you have data you don't have.</p>
 
-Considerations: Premium pricing on their top-tier lines.
+<h2>The ownership reality most customers don't know</h2>
 
-## Trane / American Standard
+<p>A huge portion of the "Brand X vs Brand Y" war is actually a fight between dealer channels selling equipment from the same parent company. The 2026 ownership map:</p>
 
-Trane is one of the most recognized consumer brands in the industry. They build solid, well-engineered equipment. American Standard is their contractor channel brand.
+<ul>
+<li><strong>Carrier Global</strong>: Carrier, Bryant, Payne, plus the ICP family (Comfortmaker, Day &amp; Night, Heil, Tempstar, Arcoaire, KeepRite)</li>
+<li><strong>Daikin</strong>: Daikin, Goodman, Amana</li>
+<li><strong>Trane Technologies</strong>: Trane, American Standard, Ameristar (value line)</li>
+<li><strong>Lennox International</strong>: Lennox, plus Allied Air's brands (Armstrong Air, AirEase, Concord, Ducane)</li>
+<li><strong>Bosch Home Comfort Group</strong> (acquired from Johnson Controls August 2025): York, Coleman, Champion, Luxaire, Fraser-Johnston, Guardian, Evcon, Kenmore</li>
+<li><strong>Rheem</strong>: Rheem, Ruud, WeatherKing (value)</li>
+<li><strong>Nortek/Nordyne</strong>: Frigidaire, Gibson, Maytag, Tappan, Broan/NuTone</li>
+</ul>
 
-Strengths: Durable equipment, particularly their XL and XV series. Good technician support and parts availability.
+<p>That doesn't mean every sibling brand is literally identical — cabinets, boards, and warranty terms can differ. But it does mean the homeowner who says "I want a Carrier, not a Bryant" is often choosing between two dealer channels selling very similar equipment.</p>
 
-Considerations: Premium pricing at the top tier.
+<h2>Tier positioning in 2026</h2>
 
-## Lennox
+<ul>
+<li><strong>Premium</strong>: Carrier, Bryant, Trane, American Standard, Lennox</li>
+<li><strong>Mid-tier</strong>: Rheem, Ruud, York, Coleman, Luxaire, Armstrong Air, Amana</li>
+<li><strong>Value</strong>: Goodman, Payne, Ducane, Ameristar, WeatherKing, most of the ICP family</li>
+<li><strong>Budget / off-brand</strong>: big-box labels, online-retail equipment, brands with thin local support</li>
+</ul>
 
-Lennox makes some of the highest-efficiency equipment available, consistently at or near the top of AFUE ratings.
+<p>What each tier gets you is usually less about a magic reliability jump and more about dealer channel depth, communicating control ecosystems, and feature ladder. Premium doesn't automatically mean longer life — it means deeper support infrastructure and more polished feature sets. Value doesn't automatically mean worse equipment — it means a different dealer channel and feature package.</p>
 
-Strengths: Excellent efficiency ratings, quiet operation on premium models, strong comfort features.
+<h2>Honest 2026 brand assessment</h2>
 
-Considerations: Proprietary parts can be harder to source in some markets. Ask your local technician about their experience with Lennox in your area.
+<p><strong>Carrier / Bryant / Payne / ICP.</strong> Still broadly treated as premium-tier execution with strong Factory Authorized Dealer program and a deep communicating ecosystem via Infinity. Payne and ICP brands (Heil, Tempstar, Comfortmaker, etc.) fill value-to-mid tiers under the same parent. Historical note worth knowing: older Carrier secondary heat exchanger issues exist on specific serial ranges — not a current broad problem, but a reminder that prestige doesn't erase product-era problems forever.</p>
 
-## Goodman / Daikin
+<p><strong>Trane / American Standard / Ameristar.</strong> Premium reputation, extensive dealer network. The one current data point to know: <strong>CPSC issued a recall in July 2025</strong> on certain Trane and American Standard gas/electric packaged units for a fuel-gas-valve issue that could allow a gas leak and fire hazard. Limited to specific packaged units, not a blanket indictment, but it's a real 2025 event and customers may bring it up. Ameristar is the explicit value line.</p>
 
-Goodman (now owned by Daikin, the world's largest HVAC manufacturer) is the value leader. Their equipment is functional and reliable at a price point that beats most competitors.
+<p><strong>Lennox.</strong> Still the most divisive premium brand in the trade. Excellent with a strong Lennox dealer — their iComfort ecosystem and factory-trained dealer program are real. But proprietary controls and parts make Lennox less forgiving when the installing dealer is weak. The current S40 thermostat is their 2026 replacement for the discontinued iComfort Wi-Fi stat, which tells you the ecosystem is still evolving. Fair take: great in the right hands, frustrating in the wrong ones.</p>
 
-Strengths: Lower upfront cost, good reliability record in recent years, 10-year parts warranty on registered equipment.
+<p><strong>Goodman / Amana / Daikin.</strong> The "Goodman is junk" line is stale. Daikin's 2012 acquisition of Goodman and the consolidation at Daikin Texas Technology Park changed this family. Current tech consensus is much more favorable than the old reputation. Amana carries the more premium-warranty positioning in the family; Daikin-branded equipment sits higher. Goodman publishes strong warranty terms with timely registration. Not fair to dismiss in 2026.</p>
 
-Considerations: Fewer high-efficiency options than premium brands. Basic features.
+<p><strong>Rheem / Ruud / WeatherKing.</strong> Stable mid-tier. Not flashy, not polarizing. Current contractor conversations treat them as dependable middle-ground brands — which is often exactly what a customer wants. No major 2024-2026 recall events comparable to the Trane packaged-unit issue.</p>
 
-## Rheem / Ruud
+<p><strong>York / Coleman / Luxaire / Guardian / Fraser-Johnston.</strong> The biggest 2026 news in this family is corporate: <strong>Bosch closed the acquisition of the Johnson Controls residential/light-commercial HVAC business in August 2025.</strong> These brands are now under Bosch Home Comfort Group. Any article still calling them "Johnson Controls brands" without qualification is stale. Quality reputation is mixed but not uniformly negative, and the future support conversation is now a Bosch conversation.</p>
 
-Rheem makes solid mid-tier equipment at competitive prices. They're one of the largest manufacturers in North America. Ruud is the contractor channel brand.
+<p><strong>Heat exchanger failure rates by brand.</strong> This is where the article should be careful. There's no clean, public, apples-to-apples 2024-2026 database comparing heat exchanger failure by brand. What you can say honestly: reputations are shaped by specific model families and production eras, not by a timeless blanket truth about a whole brand.</p>
 
-Strengths: Good value, wide availability, solid warranty.
+<h2>Warranty differences that actually matter</h2>
 
-Considerations: Middle of the pack on comfort features compared to Carrier and Trane at similar price points.
+<p>Across all major brands, the common pattern: 10 years on parts after timely registration, heat exchanger coverage often 20 years or limited lifetime depending on model and tier.</p>
 
-## What Actually Matters Most
+<p>Three things customers typically miss:</p>
 
-The brand matters less than: the installing contractor, maintenance quality, local parts availability, and the specific product line within the brand.
+<p>1. <strong>Labor isn't included</strong> unless there's a separate labor program or dealer agreement. Trane says this plainly. Goodman's extended service plans are a separate product. The warranty covers parts and the heat exchanger, not the two hours of labor to swap them.</p>
 
-Get the full installed price, check the warranty terms, and ask your contractor which brands they trust most in your market. Their answer is more valuable than any national ranking.`,
+<p>2. <strong>"Lifetime heat exchanger warranty" means parts coverage for the exchanger</strong> — not a free replacement furnace forever. It's real, but it's narrower than customers assume.</p>
+
+<p>3. <strong>Registration matters.</strong> Most brands require registration within 60 days to unlock the extended warranty terms. Miss the window and coverage drops materially.</p>
+
+<p>The warranty is also only as good as the dealer who has to honor it. A warranty claim goes through the installing dealer first. If they're out of business, the claim process gets harder — which circles right back to "the dealer matters more than the brand."</p>
+
+<h2>Parts availability and dealer network</h2>
+
+<p>This matters more than most customers realize. <strong>ACHR News' March 2026 distributor study found 31% of contractors expect same-day availability of key parts.</strong> A brand with dense local distribution will outperform a theoretically "better" brand with thin local support when it comes to actual service experience.</p>
+
+<p>Carrier, Trane, and Lennox push branded dealer networks hard. Goodman/Amana benefit from very strong distribution presence. Rheem/Ruud and Bosch/York vary more by market.</p>
+
+<p>The bigger serviceability risk in 2026 isn't the cabinet badge — it's proprietary communicating board/control ecosystems. Carrier's Infinity, Lennox's iComfort, Trane's ComfortLink — all excellent when supported locally, all more tightly tied to brand-specific parts and dealer competence than a standard 24V conventional furnace. That's a more useful long-term concern than "Brand X is bad."</p>
+
+<h2>How to handle "I want [specific brand]"</h2>
+
+<p><em>"That brand may be perfectly fine. My main concern is whether you have a strong local dealer and whether the system is installed correctly for your home."</em></p>
+
+<p>That's the respectful response. It doesn't pretend brands are identical, but it keeps focus where it belongs.</p>
+
+<p>Steer them away only when you have a real reason — poor local parts support, weak dealer network in the area, proprietary ecosystem that doesn't match their priorities, or a current documented issue relevant to their specific equipment family. If you can't support the warning with something real, don't invent a brand horror story. Customers with internet access can tell.</p>
+
+<p>When the brand they want is one you don't sell and you don't have a factual concern: <em>"I don't carry that brand, but they're a legitimate choice. If you want to go that direction, I can refer you to a dealer who does. Or I can show you my recommendation and we can compare."</em></p>
+
+<p>That costs you a job and buys you their trust for every future job at that address.</p>
+
+<h2>How to handle "my buddy says [Brand] is junk"</h2>
+
+<p><em>"Your buddy may have had a bad experience, but most major furnace brands today can be good or bad depending on the model, the installer, and the dealer support behind it."</em></p>
+
+<p>For the common ones:</p>
+
+<ul>
+<li><strong>"Lennox is junk"</strong> — No. Lennox can be excellent with a strong Lennox dealer. Proprietary controls are real, but that's different from junk.</li>
+<li><strong>"Goodman is cheap"</strong> — Stale. The Daikin-era Goodman is a different brand than the 1990s Goodman people remember.</li>
+<li><strong>"Carrier is overpriced"</strong> — The dealer program and control ecosystem often justify the premium. Sometimes it doesn't match the house.</li>
+<li><strong>"I won't put a York in my house"</strong> — That reputation is mostly pre-2025. York is now under Bosch, which changes the future support conversation.</li>
+</ul>
+
+<h2>The "three quotes, three brands" customer</h2>
+
+<p><em>"Those are all legitimate brands. What matters more is which contractor sized it correctly, matched the right feature set to your house, and will still answer the phone when you need service."</em></p>
+
+<p>That's not a dodge. That's the most honest summary of the current market.</p>
+
+<p>You can still flag real concerns, but they should be job-specific, not brand-bashing:</p>
+
+<ul>
+<li><em>"This quote uses a communicating platform that may not suit your priorities if you want smart-stat flexibility."</em></li>
+<li><em>"This brand is harder for us to support quickly in our market — parts can take longer."</em></li>
+<li><em>"This contractor didn't address venting, static, or airflow in the scope — that matters more than the brand choice."</em></li>
+</ul>
+
+<p>That's a lot stronger than "their brand is junk" and it keeps you out of the reputation war.</p>
+
+<h2>Contractor-sold vs big-box-available brands</h2>
+
+<p>Contractor-only prestige is partly real (formal dealer training, warranty structure) and partly marketing. What matters more is the install itself. The real risk with customer-supplied or online equipment isn't usually the hardware — it's warranty accountability and the installer's willingness to take on labor risk for equipment they didn't source.</p>
+
+<p>Goodman's own Internet Purchases Policy says HVAC systems are designed to be installed by qualified technicians and points to the legal and code issues with homeowner direct purchase. Most reputable installers won't install customer-supplied equipment for those reasons.</p>
+
+<h2>What not to say</h2>
+
+<p>Don't say "Brand X is the best" without qualification — there's no credible 2026 dataset that supports it. Don't say "all brands are basically the same" — ownership overlap is real but dealer depth, controls, and warranty structure still matter. Don't say "Lennox / Carrier / Trane always lasts longer" — the public evidence doesn't support that. Don't say "Goodman is cheap junk" — outdated and wrong in 2026. Don't say "the installer doesn't matter, the brand does" — exactly backwards. Don't trash a competitor's quote just because it uses another brand — compare scope, dealer support, controls, and warranty instead.</p>
+
+<h2>Key takeaways</h2>
+
+<ul>
+<li>The installer matters more than the logo. Every brand conversation should start there.</li>
+<li>Many "different" brands are corporate siblings. Bryant and Carrier, American Standard and Trane, Goodman and Amana and Daikin, York and Coleman and Luxaire (now Bosch) — same parent company.</li>
+<li>All major brands have viable paths in 2026. The right choice is about the specific dealer, the specific equipment, and the specific house.</li>
+<li>Don't pay premium-brand money unless you're also getting premium-brand features, controls, and dealer support that actually match the customer's priorities.</li>
+<li>Compare quotes on scope and dealer strength — not on badge.</li>
+</ul>
+`,
 
   'how-long-does-furnace-last': `
 ## Average Lifespan

@@ -287,8 +287,8 @@ export const proArticles = [
   {
     slug: 'best-gas-furnace-brands',
     title: 'Best Gas Furnace Brands (2026)',
-    description: 'Trane, Carrier, Lennox, and more — ranked by reliability, efficiency, and value.',
-    readTime: '9 min',
+    description: 'Handling the brand conversation in 2026 — ownership map, tier positioning, current brand assessment, and why the installer matters more than the logo.',
+    readTime: '12 min',
     image: '/images/homeowner/10-best-brands.jpg',
   },
   {
