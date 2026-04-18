@@ -6,6 +6,7 @@ import Sidebar from '../components/Layout/Sidebar'
 import Newsletter from '../components/Home/Newsletter'
 import ReadingProgress from '../components/UI/ReadingProgress'
 import MilwaukeeAd from '../components/UI/MilwaukeeAd'
+import FeedbackButtons from '../components/Article/FeedbackButtons'
 import headshotSrc from '../assets/headshot.webp'
 import { getArticleTitle, salesArticles, proArticles, learnArticles } from '../utils/articleData'
 import { articleContent } from '../utils/articleContent'
@@ -79,24 +80,6 @@ function ArticleBody({ content }) {
   )
 }
 
-function SummaryBox({ content }) {
-  if (!content) return null
-  // Strip markdown/HTML and take first ~150 chars
-  const plain = content
-    .replace(/<[^>]+>/g, '')
-    .replace(/^#{1,4}\s+.*/gm, '')
-    .replace(/^- .*/gm, '')
-    .replace(/\n+/g, ' ')
-    .trim()
-  if (plain.length < 30) return null
-  const snippet = plain.slice(0, 150).replace(/\s+\S*$/, '') + '...'
-  return (
-    <div className={styles.summaryBox}>
-      <p className={styles.summaryLabel}>What you'll learn</p>
-      <p className={styles.summaryText}>{snippet}</p>
-    </div>
-  )
-}
 
 function TableOfContents({ content }) {
   if (!content) return null
@@ -304,7 +287,6 @@ export default function ArticlePage({ section }) {
 
           <p className={styles.publishedDate}>Published April 2026</p>
 
-          {content && <SummaryBox content={content} />}
           {content && <TableOfContents content={content} />}
 
           <div className={styles.body}>
@@ -317,6 +299,8 @@ export default function ArticlePage({ section }) {
               </p>
             )}
           </div>
+
+          <FeedbackButtons slug={slug} />
 
           {relatedInline.length > 0 && (
             <div className={styles.relatedInline}>

@@ -110,29 +110,6 @@
   padding-left: 6px;
 }
 
-/* What you'll learn summary box */
-.summaryBox {
-  border: 1px solid #e0e0e0;
-  border-radius: 4px;
-  padding: 1.25rem;
-  margin-bottom: 1.5rem;
-}
-
-.summaryLabel {
-  font-family: 'Figtree', sans-serif;
-  font-size: 14px;
-  font-weight: 800;
-  color: #0e2340;
-  margin-bottom: 8px;
-}
-
-.summaryText {
-  font-family: 'Figtree', sans-serif;
-  font-size: 15px;
-  color: #555;
-  line-height: 1.6;
-  margin: 0;
-}
 
 /* Article body */
 .body {

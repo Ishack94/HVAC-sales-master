@@ -1,0 +1,53 @@
+.wrapper {
+  text-align: center;
+  margin: 40px 0 24px;
+  transition: opacity 0.25s ease;
+}
+
+.fadeOut {
+  opacity: 0;
+}
+
+.label {
+  font-family: 'Figtree', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #2a2d32;
+  margin: 0 0 12px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid #e2e4e8;
+  border-radius: 4px;
+  padding: 8px 16px;
+  cursor: pointer;
+  color: #1b3a5c;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.btn:hover {
+  border-color: #4a9fe5;
+  color: #4a9fe5;
+}
+
+.btn.active {
+  color: #4a9fe5;
+  border-color: #4a9fe5;
+}
+
+.thanks {
+  font-family: 'Figtree', sans-serif;
+  font-size: 14px;
+  color: #5a6068;
+  margin: 0;
+}
