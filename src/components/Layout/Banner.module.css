@@ -8,9 +8,8 @@
   background: linear-gradient(135deg, #1b3a5c, #0e2340, #2a4a6a, #0e2340);
   background-size: 300% 300%;
   animation: bannerShift 12s ease infinite;
-  padding: 32px 48px 28px;
+  padding: 20px 48px 20px;
   margin-top: 108px;
-  min-height: 200px;
   position: relative;
   overflow: hidden;
   border-bottom: 1px solid rgba(74, 159, 229, 0.15);
