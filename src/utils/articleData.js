@@ -237,8 +237,8 @@ export const proArticles = [
   {
     slug: 'furnace-short-cycling',
     title: 'Why Does My Furnace Keep Turning On and Off?',
-    description: 'Short cycling wastes energy and damages your furnace. Here\'s how to stop it.',
-    readTime: '7 min',
+    description: 'The diagnostic order for limit, flame, pressure switch, thermostat, and oversizing causes on a short-cycle call.',
+    readTime: '6 min',
     image: '/images/homeowner/03-furnace-cycling.jpg',
   },
   {

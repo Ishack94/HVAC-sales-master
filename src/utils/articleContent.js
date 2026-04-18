@@ -1938,49 +1938,59 @@ Safety: Never use nitrogen from an unregulated cylinder. Regulator and relief va
   // ─── HOMEOWNER / LEARN ───────────────────────────────────────────────────────
 
   'furnace-short-cycling': `
-## What Normal Furnace Cycling Looks Like
+<p>You walk in. Customer says the furnace won't stay on. Runs for a bit, shuts off, runs again, shuts off again. Short cycling isn't one failure — it's a pattern. The first thing to figure out is what <em>kind</em> of cycle you're looking at, because that tells you where the problem lives before you touch anything.</p>
 
-A properly sized furnace running on a cold day should run for 10-15 minutes per cycle, maybe longer during the coldest weather. It heats the house to the set temperature, shuts off, then comes back on as the temperature drops.
+<p><strong>The cycle pattern tells you where to start</strong></p>
 
-Short cycling is when the furnace turns on and then shuts off again in less than a minute or two, repeatedly, without completing a full heating cycle.
+<p>Burners run a few minutes, drop off while blower keeps running, then restart → limit or airflow. Burners light for seconds, drop out, retry → flame proving. Inducer starts, aborts, retries → pressure switch or draft. Call for heat disappears and comes back at the thermostat → control-side problem. No faults, quick satisfactions, clean cycles → oversizing, not a repair.</p>
 
-## Cause 1: Overheating (Most Common)
+<h2>Diagnostic flow</h2>
 
-Your furnace has a limit switch that shuts the burner off if the heat exchanger gets too hot. This is a safety feature — an overheating heat exchanger can crack, which is a carbon monoxide hazard.
+<p><strong>1. Watch one full cycle with a stopwatch.</strong></p>
 
-What causes overheating? Blocked airflow. The most common culprit is a dirty air filter. When the filter gets clogged, the furnace can't move enough air across the heat exchanger. Heat builds up, the limit switch trips, the burner shuts off.
+<p>Time the burner run and the off period. Read the active and stored fault codes. Meter from R to C and from W to C at the board during the event. This one step tells you more than any parts swap.</p>
 
-What to do: Check your filter right now. If it's gray and visibly clogged, replace it. This single fix resolves a large percentage of short cycling complaints.
+<p><strong>2. Is the W call steady, or is it dropping?</strong></p>
 
-Other airflow causes: closed supply registers, blocked return vents, or a failed blower motor.
+<p>Before diving into safeties, prove the thermostat is actually holding the call. You should see a steady <code>24 VAC</code> from R to W at the board during the cycle. If W disappears when the room isn't satisfied, the furnace is doing its job — the problem is the stat, wiring, low-voltage splice, batteries, or cycle-rate setting. Honeywell's recommended cycle rate for 90%+ gas is <code>3 CPH</code>; faster settings create shorter cycles by design. Jumper R to W at the board to bypass the stat. If the furnace runs normally jumpered, stop chasing safeties.</p>
 
-## Cause 2: Oversized Furnace
+<p><strong>3. If burner runs then drops with blower continuing, check temperature rise and airflow.</strong></p>
 
-A furnace that's too big for your home heats the space too quickly, satisfies the thermostat before completing a full cycle, and shuts off. This repeats constantly.
+<p>Classic limit cycle. Measure rise across the furnace and compare to the rating plate. Rise at or above the top of the range means airflow, not a bad limit. Check filter, wheel, evap coil, blower speed, zoning, and external static. Return static at <code>0.4" WC</code> or higher is a red flag on most residential systems. Replace the limit only if rise is normal and the limit still opens early.</p>
 
-This is a harder fix — an oversized furnace generally needs to be replaced with properly sized equipment. But before drawing that conclusion, verify the issue isn't one of the simpler causes above.
+<p><strong>4. If burner lights and drops in under a minute, measure flame current.</strong></p>
 
-## Cause 3: Thermostat Issues
+<p>Meter in series. Typical reads are <code>2-6 \u00B5A</code>, but brand matters: Lennox proves at <code>0.5 \u00B5A</code> and warns below <code>1.5 \u00B5A</code>; Carrier 58MVC runs <code>0.5-6.0 \u00B5A</code> with <code>4-6</code> typical; York wants <code>3.7 \u00B5A</code> normal with lockout at <code>0.9 \u00B5A</code>; Trane test pads give <code>1 VDC = 1 \u00B5A</code>. Weak signal means check ground path, polarity, burner carryover, rust, and gas pressure before condemning the rod.</p>
 
-A thermostat that's poorly located — near a heat source, in direct sunlight, or next to a drafty window — can read incorrect temperatures and signal the furnace to shut off too early.
+<p><strong>5. If the cycle aborts before or during ignition on a 90+, prove draft with a manometer.</strong></p>
 
-Check if your thermostat is on an exterior wall, near a lamp or TV that generates heat, or in a drafty location. If so, that could be causing erratic cycling.
+<p>Tee into the pressure-switch tubing. Rheem's rule: draft should run at least <code>0.1" WC</code> beyond the switch close setpoint. Weak draft means chase the cause — inducer, vent, intake, collector box, cracked tubing, condensate backup. Condensate backups on 90+ units look exactly like pressure-switch faults. Don't replace the switch until you've measured what it's actually seeing.</p>
 
-## Cause 4: Flame Sensor Failure
+<p><strong>6. No faults, normal measurements, but cycles are under 5 minutes? Think oversizing.</strong></p>
 
-The flame sensor is a small rod in the burner compartment that confirms the burner is actually lit. When the flame sensor is dirty or failing, it can't confirm the flame and the safety system shuts down the gas — even while the furnace is running.
+<p>A clean furnace with short runs in mild weather — no fault codes, rise within spec, static acceptable, stat call steady — is almost always an equipment-to-load mismatch. Not a repair call.</p>
 
-Result: the furnace starts, runs briefly, shuts down, waits, and tries again. A dirty flame sensor is a common and inexpensive fix. See our guide to cleaning a furnace flame sensor for the step-by-step.
+<h2>What to say to the customer</h2>
 
-## Cause 5: Other Safety Trips
+<p>Airflow/limit: <em>"The furnace is making heat, but it's building up faster inside than the airflow can carry it away. The safety shuts the burner off to protect the equipment, it cools down, then restarts. So the short cycling is an airflow problem, not a random failure."</em></p>
 
-Furnaces have multiple safety switches: limit switch, roll-out switch, pressure switches. Any of these tripping repeatedly indicates a problem that needs diagnosis by a technician.
+<p>Thermostat-side: <em>"The furnace is responding correctly. The heat call itself is being interrupted before the room gets satisfied. That's a thermostat or low-voltage problem, not a furnace part."</em></p>
 
-## When to Call a Technician
+<p>Oversizing: <em>"I'm not seeing a failed component. What I'm seeing is the equipment making more heat than the house or duct system can absorb in one run, so it satisfies fast and repeats. That's a sizing or duct design issue, not something I can fix with a part swap. I can show you the numbers."</em></p>
 
-Start with the filter. Replace it if it's dirty.
+<h2>Common misdiagnosis</h2>
 
-If replacing the filter doesn't solve the problem, call a technician. Recurring safety trips indicate a real underlying problem that needs proper diagnosis.`,
+<p>Replacing the limit switch without fixing airflow — the limit is usually doing its job. Replacing the pressure switch without measuring draft. Cleaning the flame rod without re-checking microamps, ground, polarity, and carryover. Missing thermostat-side cycling on a clean furnace. Calling oversizing a "repair" when it's a design mismatch that needs a load calculation and a different answer.</p>
+
+<h2>Key takeaways</h2>
+
+<ul>
+<li>Pattern-match the cycle type before touching anything. Burner-drop-with-blower-on is different from ignition-abort.</li>
+<li>Prove the W call is steady before diagnosing safeties. A lot of "furnace problems" are thermostat problems.</li>
+<li>Safeties rarely fail alone. A limit or pressure switch that opens is almost always reacting to a real problem upstream.</li>
+<li>A clean furnace cycling under 5 minutes with no faults is usually oversized, not broken. Say so.</li>
+</ul>
+`,
 
   'furnace-making-strange-noises': `
 ## Banging or Booming on Startup
