@@ -2204,49 +2204,142 @@ There's also the possibility the issue isn't the flame sensor at all. A furnace 
 `,
 
   '80-vs-90-efficiency-furnace': `
-## What Efficiency Percentage Means
+<p>The customer is shopping a furnace replacement. They want to know if the 95% is worth the extra money, or if they should just replace with another 80% like the one that died. The real answer is in this specific house — not in a brochure. This article is about having that decision conversation honestly.</p>
 
-The AFUE rating — Annual Fuel Utilization Efficiency — measures what percentage of the fuel you burn actually heats your home. An 80% AFUE furnace converts 80 cents of every dollar of gas into heat. A 96% AFUE furnace converts 96 cents. The rest goes out the flue as exhaust heat.
+<h2>The question you'll actually get asked</h2>
 
-## How They're Different
+<ul>
+<li><em>"Why is the 95% quote so much more than the 80%?"</em></li>
+<li><em>"Should I just replace it with another 80% like what I had?"</em></li>
+<li><em>"Is the high-efficiency one really worth it for my house?"</em></li>
+<li><em>"Doesn't the 95% pay for itself?"</em></li>
+<li><em>"What happens with my chimney if I switch?"</em></li>
+</ul>
 
-80% furnace (standard efficiency):
-- Single heat exchanger
-- Hot, dry exhaust gases exit through a metal flue pipe
-- Vents through a metal B-vent or single-wall pipe to a chimney or through the roof
-- Simpler system, fewer components to fail
-- Lower upfront cost
+<p>Behind all of them: <em>is the upgrade worth it in this specific house, for how long I plan to own it</em>. That's what you're answering.</p>
 
-90%+ furnace (high efficiency / condensing):
-- Two heat exchangers — the second extracts additional heat from exhaust gases
-- Exhaust cools enough to condense, producing liquid water as a byproduct
-- Vents through small-diameter PVC pipe through the side wall or roof
-- Requires a condensate drain line for the water produced
-- Higher efficiency, higher upfront cost
+<h2>The tech-accurate answer</h2>
 
-## The Operating Cost Difference
+<p>The equipment cost delta is usually smaller than customers assume. A 100k BTU Goodman two-stage at value pricing shows roughly a <code>$900</code> gap between 80% and 96%. A variable-speed example is about <code>$820</code>. The equipment itself is a few hundred to maybe <code>$2,000</code> on the retail side.</p>
 
-In a cold climate where you run the furnace 6 months a year and pay $150-200/month in gas bills, the difference between 80% and 96% efficiency is roughly $30-50/month — or $200-300 per year.
+<p>The bigger swing is the install conversion, not the box. Condensing furnaces need PVC intake/exhaust, a condensate drain (sometimes a pump), and proper trap layout. If your 80% was sharing a chimney with a natural-draft water heater, converting the furnace to PVC can orphan that water heater on an oversized chimney — BPI requires testing and sometimes relining, and a chimney liner runs roughly <code>$1,500-5,000</code>. That single issue can swing the total install by thousands.</p>
 
-Over a 15-year furnace lifespan, that's $3,000-4,500 in energy savings from the high-efficiency unit. The upfront cost difference is typically $500-1,000. In a cold climate, the high-efficiency furnace usually pays for itself in 3-6 years.
+<p>A clean, simple 80-to-95 conversion with a short PVC route and easy condensate disposal adds maybe low four figures over an 80% replacement. An ugly vent path or orphaned water heater can add several thousand more. That's why the "why is the 95% quote so much higher" conversation isn't about the furnace — it's about the job.</p>
 
-In a mild climate where you heat 3-4 months per year, the savings are smaller and the payback period is longer.
+<h2>How to translate the decision for the customer</h2>
 
-## Venting Is a Real Consideration
+<p>Start with the math framing:</p>
 
-If you're replacing an 80% furnace with another 80%, the existing metal flue can often be reused. Simple and inexpensive.
+<p><em>"Moving from 80% to 96% uses about <code>16.7%</code> less gas for the heating portion of your bill. On a $1,000-a-year gas heat house, that's roughly $150-170 a year. On a $400 house, it's more like $60-70. Those savings are real, but they have to beat the extra install cost to be worth it."</em></p>
 
-If you're upgrading to 90%+, you need new PVC venting through an exterior wall. In some homes this is straightforward. In others — finished basements, multi-story homes, or centrally located furnaces — the venting run can add hundreds to thousands of dollars.
+<p>Then pivot to the specific house:</p>
 
-Always get the full installed cost comparison, not just the equipment cost.
+<p><em>"The question isn't whether 95% is better on paper — it is. The question is whether the extra cost to install one in your house pays back in fuel savings over how long you'll own it. A clean vent path and high gas use means yes. An ugly conversion, a short stay, or low gas use means probably not."</em></p>
 
-## Which Should You Choose?
+<h2>When 95%+ is the right call</h2>
 
-In most cold-climate regions (Midwest, Northeast, Rocky Mountains), the 90%+ furnace is the better value over the life of the equipment. The energy savings justify the higher upfront cost.
+<ul>
+<li>Cold climate, long heating season — <strong>Northeast heating spend runs around <code>$817</code>/year, Midwest around <code>$555</code>/year</strong>. Real savings.</li>
+<li>Customer plans to own 10+ years</li>
+<li>PVC venting path is already clean or easy to add</li>
+<li>No shared flue / no orphaned water heater problem</li>
+<li>High annual gas use</li>
+<li>Customer values operating cost over install simplicity</li>
+</ul>
 
-In mild climates, or if you're replacing a furnace in a rental property or a home you plan to sell soon, the 80% furnace may be the practical choice.
+<h2>When 80% is the right call</h2>
 
-Ask your contractor to show you the math for your specific situation — your climate, your typical gas usage, and the actual installed cost difference for your home.`,
+<ul>
+<li>Mild climate, low heating season (<strong>West region heating spend around <code>$379</code>/year</strong> means smaller savings to offset the conversion cost)</li>
+<li>Customer plans to move within a few years</li>
+<li>Ugly PVC routing path — finished walls, no sidewall option, long runs through occupied space</li>
+<li>Shared flue with a natural-draft water heater where relining would cost thousands</li>
+<li>Customer explicitly prioritizes simplicity and understands the tradeoff</li>
+<li>Emergency replacement where a correct condensing install can't be done safely</li>
+</ul>
+
+<h2>Payback math by region</h2>
+
+<p><strong>Cold climate</strong> (Northeast, Upper Midwest, Northern New England) — single-digit to low-teens years on clean installs. Good case for 95%+.</p>
+
+<p><strong>Moderate climate</strong> (Mid-Atlantic, Ohio Valley, Pacific Northwest) — usually high single digits to mid-teens. Payback works if the conversion is clean.</p>
+
+<p><strong>Mild climate</strong> (California coastal, Southwest, Mid-South) — payback may be very long or may not pencil at all. 80% is often the rational answer if still available.</p>
+
+<p>Those are ranges, not promises. A specific house will swing within them based on gas price, insulation, duct leakage, and thermostat behavior.</p>
+
+<h2>Objections and how to handle each</h2>
+
+<p><strong>"I don't want to cut a hole in my wall for PVC."</strong></p>
+
+<p><em>"That's fair. PVC isn't about looks — it's because condensing furnaces vent completely differently than your 80%. If the vent route ends up making the job ugly or expensive, that might actually be a reason to stay with 80% while it's still available."</em></p>
+
+<p><strong>"My chimney is fine, why would I stop using it?"</strong></p>
+
+<p><em>"Your chimney might be fine today. The issue is that if the furnace stops venting there, your water heater is left alone on a chimney that's now oversized for just one appliance. That's where we have to check safety and sometimes line it or rework it. That chimney work is often why a 95% quote looks higher."</em></p>
+
+<p><strong>"Condensing furnaces are too complicated. I've heard they leak."</strong></p>
+
+<p><em>"More parts and condensate handling are real tradeoffs. The question is whether the lower fuel waste is worth that complexity in your house. In a cold climate where you run the furnace hard, usually yes. In a mild climate or a short stay, sometimes no."</em></p>
+
+<p><strong>"The 80% is $2,000 cheaper. Why would I spend more?"</strong></p>
+
+<p><em>"Because in some houses the extra cost buys meaningful savings, and in other houses it doesn't. Let's decide based on your vent path, your gas usage, and how long you'll be here — not just the sticker difference."</em></p>
+
+<p><strong>"What if the high-efficiency one dies in 10 years?"</strong></p>
+
+<p><em>"A shorter life with lower bills can still be a good tradeoff in the right home. If simplicity and minimal install complexity matter more to you, that may be pointing you back toward 80%."</em></p>
+
+<p><strong>"My house isn't that cold in winter."</strong></p>
+
+<p><em>"That's exactly when 95%+ sometimes has a weaker payback. Mild climate is one of the real reasons experienced techs still recommend 80% when the job setup also favors it."</em></p>
+
+<h2>The "just replace with the same thing" customer</h2>
+
+<p>When 95%+ is clearly better but the customer says they just want another 80% like they had, don't bulldoze them:</p>
+
+<p><em>"You absolutely can replace with another 80%. I just want to show you why this house is one of the cases where the upgrade actually makes sense — your usage is high enough and the vent path is clean enough that the extra cost earns back. But if you want the straight 80% replacement, I'll put that together too."</em></p>
+
+<p>When to back off: short-term residency, cash-constrained, ugly vent conversion, or customer still clearly wants the 80% after hearing the case. Give them what they asked for and document that both options were presented and the customer chose the 80% knowing the tradeoff.</p>
+
+<h2>The "I want the most efficient one" customer</h2>
+
+<p>The opposite problem: customer wants the top-tier 95%+ variable-speed modulating system when their situation doesn't support it. Ugly vent path, shared-flue water heater issue, planning to move soon, mild climate.</p>
+
+<p><em>"I appreciate that you want the most efficient option. In your specific situation, the install complexity and the savings math don't quite line up. I'd actually recommend the mid-tier 95% or in some cases a quality 80%. I don't want to sell you something that's going to underperform its promise in your house."</em></p>
+
+<p>Overselling the wrong furnace creates callbacks, regret, and lost referrals. Honest downselling builds trust for every future job at that address.</p>
+
+<h2>The 2028 rule as context, not pressure</h2>
+
+<p>DOE's amended standard requires covered residential gas furnaces manufactured on or after <strong>December 18, 2028</strong> to meet <code>95% AFUE</code>. ACCA confirms there's no sell-through limitation — inventory made before that date can still be sold and installed.</p>
+
+<p>What that means for today: you can still honestly recommend an 80% in 2026-2027 if it's the right fit. But the market is moving. Over the next couple of years, 80% stocking may get thinner, and by 2028 the new-equipment path narrows to condensing.</p>
+
+<p>The honest framing: <em>"By the end of 2028, new covered residential gas furnaces have to meet 95%. That doesn't mean you have to switch today — it means the product category is heading that direction. For your house, we still need to decide based on what fits, not what the law says three years from now."</em></p>
+
+<h2>Emergency replacement in cold weather</h2>
+
+<p>January, 11 PM, no-heat call, customer can't wait. The default is the best house-fit option that can be installed safely and correctly right now — not the theoretically perfect option that leaves the family cold while everyone debates.</p>
+
+<p>If the house is a clean 95% fit, install the 95%. If the vent/chimney conversion can't be done safely tonight, a correct 80% replacement or a temporary heat solution is the responsible answer. Don't treat condensing conversion as "we'll sort the chimney later."</p>
+
+<p><em>"If we had more time, I'd lay out both options side by side. Because this is an emergency, I'm recommending the option I can install safely and correctly tonight. If you want more time to decide, we can talk temporary heat so you're not making this call under pressure."</em></p>
+
+<h2>What not to say</h2>
+
+<p>Don't say "80% is obsolete." It's not — not yet. Don't say "95% always pays for itself in X years." Sometimes it doesn't. Don't say "the chimney is hurting your efficiency." The chimney isn't the problem; the conversion implications are. Don't say "you have to switch to 95% because of the law." In 2026, that's a distortion. The accurate version is that new furnaces manufactured after December 18, 2028 must meet 95%.</p>
+
+<h2>Key takeaways</h2>
+
+<ul>
+<li>The equipment cost delta is usually modest. The install conversion — PVC, condensate, chimney relining for an orphaned water heater — is what drives the real price difference.</li>
+<li>95%+ is right in cold climates, long ownership, high gas use, and clean vent paths. 80% is right in mild climates, short stays, ugly conversions, or shared-flue situations.</li>
+<li>A chimney liner for an orphaned water heater alone can run <code>$1,500-5,000</code>. That swings the whole decision.</li>
+<li>Honest downselling ("the 80% is the right call for your house") builds more trust than forced upselling.</li>
+<li>The 2028 rule is context for the market direction — not a reason to scare-sell today.</li>
+</ul>
+`,
 
   'single-stage-vs-two-stage-vs-modulating': `
 ## Single Stage

@@ -273,8 +273,8 @@ export const proArticles = [
   {
     slug: '80-vs-90-efficiency-furnace',
     title: '80% vs 90% Efficiency Furnace — Which Is Right?',
-    description: 'The real differences in cost, performance, and installation between standard and high-efficiency.',
-    readTime: '8 min',
+    description: 'The 80% vs 95%+ decision conversation — install realities, chimney implications, regional payback, and when each is the right call.',
+    readTime: '10 min',
     image: '/images/homeowner/08-80-vs-90.jpg',
   },
   {
