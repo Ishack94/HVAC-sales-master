@@ -1946,45 +1946,72 @@ Safety: Never use nitrogen from an unregulated cylinder. Regulator and relief va
 `,
 
   'furnace-making-strange-noises': `
-## Banging or Booming on Startup
+<p>Customer says the furnace is making a loud noise. Before anything else, separate the noises that are nuisance or old-equipment character from the ones that mean shut it down tonight. Most furnace sounds are benign — duct expansion, motor startup, normal ignition whoosh. But a few are safety events, and knowing the difference is the whole job on this call.</p>
 
-A loud bang or boom when the furnace fires up typically indicates delayed ignition.
+<p><strong>The seven noises that mean immediate shutdown</strong></p>
 
-In a functioning furnace, the igniter lights the gas almost immediately when the gas valve opens. In delayed ignition, gas builds up in the burner compartment for a second or two before igniting — and when it does, the accumulated gas ignites all at once, creating a small explosion.
+<p>Booming or whumping at ignition (delayed ignition). Burner roar or visible flame out the front (flame rollout). Metal-on-metal scraping from the blower compartment. Grinding or screaming inducer bearings — especially escalating. Rumble or unstable combustion noise from the burner section. Hissing or whistling that changes when the blower starts (possible heat exchanger breach). Any of the above paired with a repeated safety trip.</p>
 
-The force of repeated banging can crack the heat exchanger over time. A cracked heat exchanger is a carbon monoxide hazard.
+<h2>The combustion noises</h2>
 
-Common causes: dirty burners with clogged ports, low gas pressure, or a weak igniter.
+<p><strong>1. Booming or whumping at ignition.</strong></p>
 
-What to do: Call a technician. Delayed ignition needs diagnosis before it damages the heat exchanger.
+<p>The single most dangerous furnace noise. Gas accumulates before it lights, then ignites all at once — a pressure event you can feel in the cabinet. It'll crack a heat exchanger, blow out an inspection door, and hurt whoever's standing in front of it. Common causes: dirty burners, poor flame carryover, weak or mispositioned igniter, wrong gas pressure, misaligned burners. Do not cycle it again to "hear it one more time." Lock it out. Pull and clean burners, inspect carryover slots, verify igniter position, manometer the gas pressure, verify smooth light-off over multiple starts before returning to service.</p>
 
-A quieter popping when the system starts or stops can be ductwork expanding and contracting with temperature changes. This is typically normal.
+<p><strong>2. Flame rollout — a roar or blowtorch sound out the burner vestibule.</strong></p>
 
-## Squealing or Screeching
+<p>Combustion gases are backing up and flame is escaping the combustion chamber. Causes: blocked heat exchanger passages (including clogged secondary on 90+ units), blocked flue or venting, failed inducer, severe combustion air problem, or a cracked exchanger disrupting draft. Risk is fire, burned wiring, burned equipment, burned tech. Shut it down immediately. Never jumper a rollout switch. Carrier literature is explicit: correct inadequate combustion air or improper venting <em>before</em> resetting the rollout.</p>
 
-A high-pitched squeal usually comes from a bearing in the blower motor or inducer motor wearing out. Motors have bearings that need lubrication, and when they dry out or wear, they protest loudly.
+<p><strong>3. Combustion rumble or drum-like resonance from the burner section.</strong></p>
 
-Don't ignore this. A motor that's squealing is on its way to failure. Catching it early means a motor replacement. Letting it fail completely may mean an emergency no-heat call, plus emergency service rates.
+<p>Not airflow noise from the blower — a deep rumble or unstable roar from the combustion area. Points to burner contamination, unstable flame, wrong gas pressure, venting issues, or combustion imbalance. Any abnormal combustion sound warrants immediate inspection. Combustion analyzer should come out. BPI benchmark: abort diagnostics if ambient CO exceeds <code>35 ppm</code>, and undiluted flue CO should stay below <code>100 ppm</code>.</p>
 
-What to do: Call a technician. The motor likely needs replacement.
+<p><strong>4. Hissing or whistling that changes when the blower starts.</strong></p>
 
-## Rattling
+<p>A cracked heat exchanger is usually silent — but if the breach is big enough to alter airflow, you may hear a hiss or whistle, and almost always see flame disturbance when the blower kicks on. Watch the burner flames before and after blower startup: flame displacement, floating, or rollout when the blower starts is the AGA indicator of open crack, split seam, or severe deterioration. Shut it down pending inspection.</p>
 
-Loose panel: The access panels on your furnace can vibrate against the cabinet. Check that all panels are fully seated and secured.
+<h2>The mechanical noises</h2>
 
-Debris in the blower: Occasionally something falls into the return air path and gets pulled into the blower wheel. A small object hitting the blower blades creates rattling. This needs to be removed.
+<p><strong>5. Metal-on-metal scraping from the blower compartment.</strong></p>
 
-Loose ductwork: A loose duct connection vibrating at the furnace attachment point. Often fixable with sheet metal screws.
+<p>Wheel shifted on the shaft, broken mount, failed bearing, foreign object, wheel distortion. Not a combustion hazard but an imminent mechanical hazard — continued operation destroys the wheel, motor, and housing, and often ends in a hard stop during peak load. If it's true metal-on-metal contact that tracks blower speed, shut it down. Disconnect power before inspecting.</p>
 
-## Rumbling or Growling
+<p><strong>6. Inducer grinding, clacking, or escalating bearing scream.</strong></p>
 
-A low rumble during or after the burner shuts off can indicate a problem with the burner flame or the heat exchanger. Any noise that's new and related to burner operation warrants professional inspection.
+<p>The inducer isn't just a convenience fan — it's a combustion safety component. Failing bearings or wheel rub that degrades draft shifts the call from "noisy motor" to improper venting, pressure switch faults, and rollout risk. If the noise is severe, escalating quickly, or paired with any pressure switch trouble or rollout evidence, shut it down. Don't ask it to survive another cold snap.</p>
 
-## Clicking
+<p><strong>7. Repeated safety trips + any abnormal noise.</strong></p>
 
-A few clicks when the furnace starts is completely normal — that's the igniter cycling. But continuous clicking without the furnace firing indicates the igniter is cycling but the burner isn't lighting.
+<p>The noise is the symptom. The repeat trip is the furnace telling you the condition is unsafe. Rollout that resets and trips again. Ignition lockout that keeps relocking out. Pressure switch faults paired with inducer noise. Lock it out and find the cause. Never jumper a rollout.</p>
 
-What to do: Check that your gas is on (check another gas appliance in the house). If gas is fine and the furnace still clicks without igniting, a technician needs to diagnose the ignition system.`,
+<h2>Noises that sound alarming but usually aren't</h2>
+
+<p>A healthy ignition is a quick smooth whoosh — not a boom that shakes the cabinet. Duct expansion ticking and popping is sheet-metal movement and doesn't originate in the burner area. Normal inducer startup is a light motor ramp. Mild cabinet resonance on blower startup happens on older transition pieces. The test isn't "is there any noise" — it's whether the noise comes with flame instability, safety trips, visible damage, or worsening mechanical contact. Normal noises stay stable. Dangerous noises don't.</p>
+
+<h2>What to say to the customer</h2>
+
+<p>When you're shutting down equipment on a cold day, the conversation has to be factual, not theatrical:</p>
+
+<p><em>"This furnace is making a noise that points to a combustion or mechanical safety problem, not a normal wear noise. I'm not comfortable leaving it running — the risk isn't just losing heat later, it's damage to the furnace or a safety issue. My next step is to document what I found, show you, and give you the safest repair path and temporary heat options."</em></p>
+
+<p>If it's cold out and the customer pushes back:</p>
+
+<p><em>"I know it's cold. I don't shut heat off lightly. In this case the safer move is to keep it off, get the repair plan in motion, and figure out temporary heat until this can be returned to service safely."</em></p>
+
+<h2>What not to do</h2>
+
+<p>Don't reset repeated rollouts or ignition lockouts without finding the cause. Don't jumper a safety switch — ever. Don't assume the homeowner's description is accurate; a "pop" can mean duct expansion or delayed ignition. Don't leave a furnace running after finding rollout evidence, scorched wiring near the burners, or flame disturbance on blower startup while the customer "gets a second opinion." Don't dismiss a noise because "it's done that for months" — delayed ignition and rollout often persist right up until they cause bigger damage.</p>
+
+<h2>Key takeaways</h2>
+
+<ul>
+<li>Boom at ignition, rollout roar, metal-on-metal scrape, escalating bearing scream, or flame disturbance on blower startup — shut it down.</li>
+<li>Repeated safety trips paired with any abnormal noise means the safety is doing real work. Find the cause before resetting.</li>
+<li>Normal ignition is a smooth whoosh. Duct pops are sheet metal. Benign resonance is benign. Dangerous noises come with flame instability, safety trips, or active mechanical contact.</li>
+<li>Never jumper a rollout switch. Not for a test, not for a customer, not ever.</li>
+<li>On a cold day when you're shutting it down, be factual, not dramatic. The decision isn't negotiable when the issue is rollout, delayed ignition, or suspected exchanger failure.</li>
+</ul>
+`,
 
   'furnace-leaking-water': `
 <p>You walk in. Water on the floor by the furnace, customer's freaking out about their floors or the water heater next to it. Before you touch anything, the first question decides the whole call: is this a 90%+ condensing furnace (which is <em>supposed</em> to make water) or an 80% standard-efficiency furnace (which shouldn't be making water at all during heating)?</p>

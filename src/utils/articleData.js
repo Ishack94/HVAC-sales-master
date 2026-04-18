@@ -244,8 +244,8 @@ export const proArticles = [
   {
     slug: 'furnace-making-strange-noises',
     title: 'Why Is My Furnace Making Strange Noises?',
-    description: 'Banging, squealing, clicking, rumbling — what each sound means and what to do.',
-    readTime: '7 min',
+    description: 'The seven furnace noises that mean shut it down: delayed ignition, rollout, exchanger breach, mechanical failure, and repeated safety trips.',
+    readTime: '8 min',
     image: '/images/homeowner/04-furnace-noises.jpg',
   },
   {
