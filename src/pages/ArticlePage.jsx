@@ -118,27 +118,6 @@ export default function ArticlePage({ section }) {
 
   const related = sectionArticles.filter((a) => a.slug !== slug).slice(0, 3)
 
-  // Sequential "Related on HVAC Sales Master" — next 3 articles in order (wraps around)
-  const relatedInline = useMemo(() => {
-    const pool = sectionArticles.filter((a) => a.slug !== slug)
-    const start = currentIndex >= 0 ? currentIndex : 0
-    const picks = []
-    for (let i = 1; picks.length < 3 && i <= pool.length; i++) {
-      const idx = (start + i) % sectionArticles.length
-      if (sectionArticles[idx] && sectionArticles[idx].slug !== slug) {
-        picks.push(sectionArticles[idx])
-      }
-    }
-    return picks
-  }, [slug, section])
-
-  // Randomized "Related Topics" — 3 articles from same section, reshuffled per article
-  const relatedTopics = useMemo(() => {
-    const pool = sectionArticles.filter((a) => a.slug !== slug)
-    const shuffled = [...pool].sort(() => Math.random() - 0.5)
-    return shuffled.slice(0, 3)
-  }, [slug, section])
-
   const sidebarLinks = related.map((a) => ({
     title: a.title,
     to: articlePath(a.slug),
@@ -270,37 +249,7 @@ export default function ArticlePage({ section }) {
 
           <FeedbackButtons slug={slug} position="bottom" />
 
-          {relatedInline.length > 0 && (
-            <div className={styles.relatedInline}>
-              <p className={styles.relatedInlineLabel}>Related on HVAC Sales Master</p>
-              <ul className={styles.relatedInlineList}>
-                {relatedInline.map((a) => (
-                  <li key={a.slug}>
-                    <Link to={articlePath(a.slug)} className={styles.relatedInlineLink}>
-                      {a.title} →
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-
           <MilwaukeeAd className={styles.milwaukeeAd} />
-
-          {relatedTopics.length > 0 && (
-            <div className={styles.relatedTopics}>
-              <p className={styles.relatedTopicsLabel}>Related Topics</p>
-              <ul className={styles.relatedTopicsList}>
-                {relatedTopics.map((a) => (
-                  <li key={a.slug}>
-                    <Link to={articlePath(a.slug)} className={styles.relatedTopicsLink}>
-                      {a.title}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
 
           {related.length > 0 && (
             <div className={styles.keepReading}>
