@@ -81,39 +81,7 @@ function ArticleBody({ content }) {
 }
 
 
-function TableOfContents({ content }) {
-  if (!content) return null
 
-  let headings = []
-  if (content.trim().startsWith('<')) {
-    const re = /<h2[^>]*>(.*?)<\/h2>/gi
-    let m
-    while ((m = re.exec(content)) !== null) {
-      headings.push(m[1].replace(/<[^>]+>/g, ''))
-    }
-  } else {
-    const blocks = content.trim().split(/\n\n+/)
-    headings = blocks
-      .map((b) => b.trim())
-      .filter((b) => b.startsWith('## '))
-      .map((b) => b.slice(3))
-  }
-
-  if (headings.length < 2) return null
-
-  return (
-    <div className={styles.toc}>
-      <p className={styles.tocLabel}>In This Article</p>
-      <ul className={styles.tocList}>
-        {headings.map((h, i) => (
-          <li key={i}>
-            <a href={`#${slugify(h)}`} className={styles.tocLink}>{h}</a>
-          </li>
-        ))}
-      </ul>
-    </div>
-  )
-}
 
 export default function ArticlePage({ section }) {
   const { slug } = useParams()
@@ -286,8 +254,6 @@ export default function ArticlePage({ section }) {
           </div>
 
           <p className={styles.publishedDate}>Published April 2026</p>
-
-          {content && <TableOfContents content={content} />}
 
           <div className={styles.body}>
             {content ? (
