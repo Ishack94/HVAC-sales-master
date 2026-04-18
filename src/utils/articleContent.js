@@ -2094,45 +2094,87 @@ If the furnace still short cycles or locks out after cleaning, the sensor itself
 There's also the possibility the issue isn't the flame sensor at all. A furnace that cycles out after cleaning the sensor may have an ignition problem, a gas pressure issue, or a control board problem. At that point, call a technician for diagnosis.`,
 
   'ac-not-blowing-cold-air': `
-## Start Here: Simple Checks First
+<p>You walk in. AC is running — blower's moving, condenser's humming — but the supply air is lukewarm. Or cool but not <em>cold</em>. The most common mistake on this call is connecting gauges before you've checked anything else. Airflow problems look like charge problems on a gauge set, and with A2L refrigerants now in the field, every unnecessary connection is another chance to vent refrigerant. Non-invasive checks first.</p>
 
-Thermostat: Is it set to COOL (not HEAT or FAN ONLY)? Is the setpoint actually below the current room temperature? Thermostat settings are the cause of more "no cool" calls than you'd think.
+<p><strong>The three causes that cover most of these calls</strong></p>
 
-Air filter: A severely clogged filter restricts airflow enough that the evaporator coil freezes over — and a frozen coil can't cool air effectively. Check the filter. If it's gray and packed with dust, replace it.
+<p>Indoor airflow restriction — dirty filter, dirty coil, dirty blower wheel, duct issue — roughly 30-40%. Outdoor airflow or condenser problem — dirty coil, weak condenser fan — another 15-25%. Low refrigerant charge from an actual leak — 15-25%. Electrical (weak capacitor, pitted contactor, struggling compressor) and metering-device issues fill the rest.</p>
 
-Registers and vents: Are all the supply registers open? A house with half the registers closed creates the same airflow problem as a clogged filter.
+<h2>Diagnostic flow</h2>
 
-## The AC Might Be Frozen
+<p><strong>1. Measure return and supply temperature split.</strong></p>
 
-If the air coming from the vents feels slightly cool but not cold, and if you can see ice on the refrigerant lines or on the outdoor unit, the system is frozen.
+<p>Fast-response probes, return stream near the equipment, supply stream just downstream of the coil. Expect <code>16-22\u00B0F</code> under common conditions, broader <code>14-23\u00B0F</code> depending on humidity and airflow. High indoor humidity drops the sensible split because capacity is going into latent removal — a muggy house can show <code>13\u00B0F</code> with a healthy system. Low split points to capacity loss (charge, compression, too much airflow, high latent load). High split points to low airflow.</p>
 
-Turn the system off and set the fan to ON (not AUTO) to run the blower without the compressor. This thaws the ice over a couple of hours. Once fully thawed, replace the filter and try again.
+<p><strong>2. Visual airflow triage before anything else.</strong></p>
 
-If it freezes again, there's an underlying cause: low refrigerant, restricted airflow, or a component failure. Call a technician.
+<p>Filter, evap face, blower wheel, collapsed flex, closed dampers, outdoor coil, condenser fan. Eyes and a flashlight. If the evap is iced, stop — thaw it before any refrigerant diagnosis because frozen coils invalidate every reading.</p>
 
-## Refrigerant Is Low
+<p><strong>3. Pull static before you pull gauges.</strong></p>
 
-Refrigerant is the fluid that absorbs heat inside your home and releases it outside. If the system has developed a leak, refrigerant levels drop and the system can't cool effectively.
+<p>Manometer and static tips. Many residential systems are rated around <code>0.5" WC</code> max TESP. Field targets: roughly <code>0.4-0.6"</code> normal, <code>0.8"+</code> means trouble. Return static at <code>0.4"+</code> alone is a strong clue for return restriction, dirty filter, or undersized return. High TESP keeps you on airflow. Normal TESP with weak cooling moves you forward.</p>
 
-Signs of low refrigerant: ice on the refrigerant lines, the outdoor unit running but not cooling, hissing or bubbling sounds near the lines, higher-than-normal electricity bills.
+<p><strong>4. Verify blower airflow and speed setup.</strong></p>
 
-Refrigerant leaks require a technician. Adding refrigerant without finding and fixing the leak is a temporary measure — it'll be low again within a season.
+<p>Residential cooling target is usually <code>350-400 CFM/ton</code>. Check blower tables against measured TESP, confirm ECM programming or tap selection. ACCA QI says airflow should be within 15% of design. Low airflow explains a lot of "low on charge" misreads — low suction, low superheat in some setups, freeze risk, high split.</p>
 
-## The Condenser Is Dirty or Blocked
+<p><strong>5. Inspect indoor and outdoor coils.</strong></p>
 
-The outdoor condenser unit needs to release heat into the outdoor air. When the coil fins are packed with dirt, grass clippings, or debris, heat transfer is impaired.
+<p>Dirty condenser drives head pressure up, hurts capacity, and creates high-subcool patterns that look like overcharge. Dirty evap distorts superheat and subcool. Clean first, then recheck. This is where real techs catch what gauge-happy techs miss.</p>
 
-You can carefully rinse the outdoor unit with a garden hose (no pressure washer — the fins bend easily). Rinse from the inside out if possible. Ensure plants and shrubs aren't blocking airflow around the unit.
+<p><strong>6. Now decide if gauges are warranted.</strong></p>
 
-## The Compressor Might Have Failed
+<p>If airflow, static, coil cleanliness, and blower setup are verified and the split is still abnormal — connect. If not, finish airflow and electrical first. A2L systems especially reward this discipline: every connection is handling risk.</p>
 
-The compressor is the heart of the system. If it fails, the system runs (fans operate, thermostat calls for cooling) but no compression occurs — no heat is moved. The air may feel room temperature from the fan, but there's no refrigeration happening.
+<p><strong>7. Check charge by metering-device type.</strong></p>
 
-A failed compressor is diagnosed by a technician. It's a significant repair or replacement decision — compressor replacement on an older system often leads to a discussion about whether full replacement makes more financial sense.
+<p>Fixed orifice: target total superheat from manufacturer's chart using indoor WB + outdoor DB. Not a fixed number. TXV: target subcooling from the nameplate or manual. Rough TXV range is <code>8-14\u00B0F</code>, often around <code>10\u00B0F \u00B13\u00B0F</code> when no chart is available. TXV evaporator superheat typically <code>5-15\u00B0F</code>. Read the charging chart on the condenser — that's the source of truth.</p>
 
-## When to Call
+<p><strong>Pattern reading:</strong></p>
 
-If the simple checks above don't resolve it, call a technician. Refrigerant issues, frozen coils that keep recurring, compressor problems — these are beyond DIY territory.`,
+<ul>
+<li><strong>Undercharge</strong> — low suction, low head, high SH, low SC</li>
+<li><strong>Overcharge</strong> — high head, high SC, often low SH</li>
+<li><strong>Low airflow</strong> — high split, low or unstable suction, freeze risk</li>
+<li><strong>TXV restriction or underfeeding</strong> — high SH, high SC (starved evap)</li>
+<li><strong>Non-condensables</strong> — high head with no airflow explanation</li>
+<li><strong>Poor compression</strong> — high suction, low head, low capacity</li>
+</ul>
+
+<p><strong>8. Electrical and component checks.</strong></p>
+
+<p>Capacitors: compare to nameplate, commonly considered failed outside <code>\u00B16%</code> of rated \u00B5F. A <code>40 \u00B5F</code> cap passes roughly <code>37.6-42.4 \u00B5F</code>. Contactor: check for pitting, voltage drop across the contacts under load. Compressor windings: <code>C-R</code> lowest resistance, <code>C-S</code> higher, <code>R-S</code> should equal the sum. If a compressor draws locked rotor current and all external causes are eliminated — charge, restrictions, airflow, support components — then compressor failure is justified. Not before.</p>
+
+<h2>What to say to the customer</h2>
+
+<p>Dirty filter / airflow issue: <em>"Your AC is running, but it can't move enough air across the indoor coil. That cuts cooling way down and can freeze the coil. Good news is it's an airflow problem, not a refrigerant leak or a major part."</em></p>
+
+<p>Low charge from a leak: <em>"This system doesn't use up refrigerant — if it's low, that means it leaked out. We can add refrigerant to restore cooling, but the right repair is finding and fixing the leak. Just topping off without dealing with the leak turns into another no-cooling call later."</em></p>
+
+<p>Frozen coil: <em>"The indoor coil is iced over right now, and that's throwing off every reading I'd take. We need to restore airflow and let the coil thaw first, then I can actually diagnose what's going on."</em></p>
+
+<p>Compressor failure: <em>"The compressor is the pump that moves refrigerant. The readings show it's running but not building the pressure difference it should, which is why the air isn't getting cold. Before calling it, I verified airflow, charge pattern, and the electrical support parts — so this isn't a guess."</em></p>
+
+<p>End-of-life conversation: <em>"This unit can still be repaired in some cases, but we're balancing repair cost against age, reliability, and refrigerant type. If the compressor or coil is the issue on an older system, comparing repair cost to replacement is worth doing rather than fixing one symptom on a system that's got more failures coming."</em></p>
+
+<h2>Common misdiagnosis</h2>
+
+<p>Adding refrigerant before checking airflow — airflow problems look exactly like low charge on a gauge set. Topping off without finding the leak. Replacing a capacitor when the compressor is actually failing (hard starting vs. bad compressor are different problems). Missing a dirty condenser and chasing a head pressure ghost. Not pulling static — ever. Condemning a compressor too early, before ruling out airflow, restrictions, and electrical support.</p>
+
+<h2>A note on A2L refrigerants</h2>
+
+<p>If you're working on an R-454B or R-32 system, your discipline matters more than your gauges. UL 60335-2-40 requires refrigerant detection systems that react at <code>25% of LFL</code>. Lennox R-454B coils ship with factory leak-detection hardware that can't be mixed with non-OEM sensors. Your recovery machine, vacuum pump, leak detector, and manifold all need to be A2L-rated — older A1 tools aren't acceptable just because they seem to work. Left-hand threaded hoses and a fire extinguisher on the truck. As of early 2026, most service work is still R-410A because of the installed base, but new installs are shifting fast.</p>
+
+<h2>Key takeaways</h2>
+
+<ul>
+<li>Temperature split is free information. Take it first, every time.</li>
+<li>Pull static before you pull gauges. Airflow problems masquerade as charge problems.</li>
+<li><code>400 CFM/ton</code> is the assumption behind most delta-T charts. Low-airflow setups change the expected split.</li>
+<li>TXV gets subcooling. Fixed orifice gets target superheat from a chart. Don't mix them up.</li>
+<li>On A2L systems, every unnecessary connection is handling risk. Non-invasive checks aren't just good practice anymore — they're safer practice.</li>
+</ul>
+`,
 
   '80-vs-90-efficiency-furnace': `
 ## What Efficiency Percentage Means

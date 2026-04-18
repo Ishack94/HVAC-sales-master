@@ -265,7 +265,7 @@ export const proArticles = [
   {
     slug: 'ac-not-blowing-cold-air',
     title: 'Why Is My AC Not Blowing Cold Air?',
-    description: 'From dirty filters to refrigerant leaks — every cause and how to fix it.',
+    description: 'Non-invasive diagnostics first: temperature split, static, airflow, and coil condition before connecting gauges.',
     readTime: '8 min',
     featured: true,
     image: '/images/homeowner/07-ac-not-cold.jpg',
