@@ -296,7 +296,7 @@ export default function Home() {
           {!isFiltering && (
             <div className={`${styles.body} ${styles.noDropCap} reveal`}>
               <h2>Who Built This</h2>
-              <p>HVAC Sales Master was built by a 13-year trades professional — not a marketing agency, not a content mill. Every tool is built on real industry standards, and every article draws from actual field experience and proven sales methods.</p>
+              <p>HVAC Sales Master was built by a 13-year trades professional. Every tool is built on real industry standards, and every article draws from actual field experience and proven sales methods.</p>
               <p><strong>No fluff. Just what actually works.</strong></p>
 
               <MilwaukeeAd className={styles.milwaukeeAd} />
