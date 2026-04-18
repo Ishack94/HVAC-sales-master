@@ -221,8 +221,8 @@ export const proArticles = [
   {
     slug: 'furnace-blowing-cold-air',
     title: 'Why Is My Furnace Blowing Cold Air?',
-    description: '9 common causes and what to do about each one before calling a technician.',
-    readTime: '8 min',
+    description: 'The diagnostic order for flame proving, high-limit airflow, and pressure-switch faults on a gas furnace call.',
+    readTime: '6 min',
     featured: true,
     image: '/images/homeowner/01-furnace-cold-air.jpg',
   },

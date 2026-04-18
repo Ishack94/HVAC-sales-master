@@ -414,109 +414,58 @@ export const articleContent = {
   // ─── LEARN (HOMEOWNER) ────────────────────────────────────────────────────
 
   'furnace-blowing-cold-air': `
-<p>If your furnace is running but blowing cold air — or air that just doesn't feel warm — you're not alone. It's one of the most common furnace complaints, especially at the start of heating season. The good news is that the cause is usually something straightforward, and in some cases you can fix it yourself in a few minutes.</p>
+<p>You walk into the call. Blower's running, thermostat's calling for heat, but the air coming out is cool. It's one of the most common heat-season complaints — and it's one of the highest callback rates in the trade, because most techs replace whatever the board points at instead of proving what actually failed.</p>
 
-<p>Below are the nine most common reasons a furnace blows cold air, what's causing each one, and whether it's something you can handle or something that needs a technician.</p>
+<p><strong>The three causes that cover most of these calls</strong></p>
 
-<h2>1. Thermostat Set to "Fan On" Instead of "Auto"</h2>
+<p>Weak or lost flame proving accounts for roughly 30-40% — the furnace lights, can't prove the flame, and drops back out. High-limit tripping from low airflow is another 25-35% — the burners fire, but the furnace overheats because air isn't moving across the exchanger. Draft, pressure switch, or condensate problems on 90+ units cover most of the rest. Work the causes in that order.</p>
 
-<p>This is the most common cause — and the easiest fix.</p>
+<h2>Diagnostic flow</h2>
 
-<p>Your thermostat has two fan settings: <strong>Auto</strong> and <strong>On</strong>. When it's set to <strong>Auto</strong>, the blower only runs when the furnace is actively heating. When it's set to <strong>On</strong>, the blower runs continuously — even when the furnace isn't firing. That means you'll feel air coming from your vents that's room temperature or cooler, not heated air.</p>
+<p><strong>1. Watch one full sequence before you touch anything.</strong></p>
 
-<p><strong>The fix:</strong> Go to your thermostat and make sure the fan setting is on <strong>Auto</strong>, not <strong>On</strong>. If that was the issue, the problem should resolve within a few minutes of your next heating cycle.</p>
+<p>Pull the board's current fault code, but don't treat it as the diagnosis. Use it as a direction. Watch the furnace try to run: does it get to ignition? Light and drop? Light, run, then go cool? Each of those sends you to a different step.</p>
 
-<p><em>DIY: Yes</em></p>
+<p><strong>2. If it lights and drops, measure flame current.</strong></p>
 
-<h2>2. Dirty Air Filter</h2>
+<p>Meter in series with the flame rod lead. Most furnaces read <code>2-6 \u00B5A</code> at a healthy signal. Brand-specific normal ranges matter here: Carrier 58MVC runs <code>0.5-6.0 \u00B5A</code> (typical 4-6), Trane modern boards run <code>0.75-3 \u00B5A</code>, York wants <code>3.7 \u00B5A</code> normal, Lennox proves at <code>0.5 \u00B5A</code>. If microamps are weak, don't stop at cleaning the rod — check burner carryover, flame impingement, burner ground, chassis ground, and line polarity. Rheem specifically flags polarity and ground as real causes of what techs log as "bad flame sensor."</p>
 
-<p>A clogged air filter is the second most common cause of furnace problems across the board — including a furnace that blows cold air.</p>
+<p><strong>3. Verify gas valve control and gas pressure.</strong></p>
 
-<p>Here's why: when the filter gets too dirty, it restricts airflow through the system. Your furnace generates heat, but that heat can't move through the system properly. This causes the furnace to overheat internally, which triggers a safety switch called the high limit switch. When that trips, the furnace shuts off the burners but keeps the blower running to cool things down. The result is cold air blowing from your vents.</p>
+<p>At trial for ignition, you should see <code>24 VAC</code> at the gas valve terminals. Manifold pressure on natural gas is typically <code>3.5" WC</code> — always check the rating plate. Voltage present with no gas flow points downstream: valve, supply, orifice. Erratic pressure points upstream: regulator, supply, or a conversion that was never done right.</p>
 
-<p><strong>The fix:</strong> Check your filter. If it looks gray, clogged, or it's been more than 3 months since you changed it, replace it. Filters cost $5–$20 at any hardware store. After replacing it, give your furnace 30 minutes to cool down before restarting, since the limit switch needs to reset.</p>
+<p><strong>4. If it heats then blows cold, check temperature rise.</strong></p>
 
-<p><em>DIY: Yes</em></p>
+<p>Classic "started warm, turned cold" complaint. Measure the rise across the furnace and compare it to the rating plate. Rise at or above the top of the range means airflow, not a bad limit. Check filter, coil, blower wheel, blower speed, zoning, and external static. Replace the limit only if rise is normal and the limit still opens early — and know that Goodman/ICP literature treats a limit opening 10\u00B0F or more below its setpoint as actually defective.</p>
 
-<h2>3. Pilot Light Is Out (Older Furnaces)</h2>
+<p><strong>5. If it stalls before ignition on a 90+, prove draft with a manometer.</strong></p>
 
-<p>If your furnace is more than 15–20 years old, it may use a standing pilot light instead of an electronic ignitor. A standing pilot light burns continuously and lights the main burners when the thermostat calls for heat. If the pilot goes out, the furnace can't ignite — so the blower runs but no heat is produced.</p>
+<p>Tee into the pressure-switch tubing. Rheem's field standard: draft should run at least <code>0.1" WC</code> beyond the switch's close setpoint. Weak draft means chase the cause — inducer, vent, intake, collector box, cracked tubing, condensate trap. Don't replace the switch until you've measured what it's actually seeing. And on 90+ units specifically, check condensate management before anything else — a backed-up trap can look exactly like an ignition or pressure-switch fault.</p>
 
-<p>You can usually see the pilot light through a small window on the furnace. If it's out, there won't be a small blue flame visible.</p>
+<p><strong>6. Rollout open, or flame moves when blower starts? Stop.</strong></p>
 
-<p><strong>The fix:</strong> Most furnaces with pilot lights have relighting instructions printed on the furnace door. Follow them carefully — the process usually involves turning the gas knob to "pilot," holding it in, and lighting the flame with a long lighter. If the pilot won't stay lit after a few tries, the thermocouple (a safety sensor) may need to be replaced — that's a job for a tech.</p>
+<p>Treat it as a combustion or heat-exchanger problem. Don't reset and walk.</p>
 
-<p><em>DIY: Usually yes, if you follow the instructions on the unit</em></p>
+<h2>What to say to the customer</h2>
 
-<h2>4. Dirty Flame Sensor</h2>
+<p>If it's flame-proving: "Your furnace is lighting, but the safety control isn't getting a strong enough proof that the flame is stable — so it shuts the gas back off. That's why you feel air but not heat."</p>
 
-<p>Newer furnaces use electronic ignition and a flame sensor instead of a pilot light. The flame sensor is a small metal rod that confirms the burners have lit. Over time, the sensor gets coated with residue and can't "see" the flame properly.</p>
+<p>If it's airflow and limit: "The furnace is making heat, but it's overheating inside because not enough air is moving across it. The safety is shutting the burners off before damage happens. That's why it starts warm, then turns cool."</p>
 
-<p>When this happens, the furnace lights briefly — sometimes long enough for you to feel a puff of warm air — and then shuts off. The blower continues running, delivering unheated air. You may hear the furnace try to ignite, fail, and try again two or three times before shutting down completely.</p>
+<p>If it's draft or condensate on a 90+: "The furnace has to prove it can move combustion gases safely before it keeps running. Right now it's losing that proof, so it's shutting heating down as a safety. On this style of furnace, the drain or venting is usually part of that."</p>
 
-<p><strong>The fix:</strong> A technician can clean the flame sensor in about 15 minutes. It's one of the most common furnace service calls and usually not expensive. Some experienced homeowners clean it themselves by removing the sensor and gently rubbing it with fine steel wool, but given that it involves the gas system, most people are better off leaving this to a pro.</p>
+<h2>Common misdiagnosis</h2>
 
-<p><em>Needs a pro: Recommended</em></p>
+<p>The biggest callback trap is replacing the pressure switch without measuring draft — actual standalone switch failures are rare, draft problems are common. Second is replacing the high limit instead of fixing airflow. Third is swapping the flame sensor without re-checking microamps, ground, and burner carryover afterward. Fourth, specific to 90+ units: missing a condensate backup that presents as an ignition or pressure-switch fault.</p>
 
-<h2>5. Failed Ignitor</h2>
+<h2>Key takeaways</h2>
 
-<p>Modern furnaces use a hot surface ignitor — a small ceramic element that glows red-hot to light the burners, similar to how a toaster works. These ignitors typically last 5–10 years and then crack or burn out.</p>
-
-<p>When the ignitor fails, the furnace can't light the burners at all. The blower will still run (since it's a separate component), but no heat is produced. You may hear the furnace try to start — a click or hum — followed by nothing, then the blower running cold.</p>
-
-<p><strong>The fix:</strong> Replacing a hot surface ignitor is a straightforward repair for a technician — usually under an hour and not expensive. It's not a DIY job because it requires shutting off the gas and working around the burner assembly.</p>
-
-<p><em>Needs a pro: Yes</em></p>
-
-<h2>6. Gas Supply Issue</h2>
-
-<p>If the furnace isn't getting gas, the burners can't light. This could be caused by a few things: the gas valve to the furnace is closed, there's an issue with your gas meter, or the gas company has an outage in your area.</p>
-
-<p><strong>The fix:</strong> First, check that other gas appliances in your home (stove, water heater) are working. If they're not, contact your gas company — this is their issue to resolve. If other appliances are working fine, the shutoff valve near your furnace may have been accidentally closed. It should be parallel to the gas line (open) rather than perpendicular to it (closed). If everything looks open but the furnace still won't fire, there may be a problem with the internal gas valve — that's a technician call.</p>
-
-<p><strong>Important:</strong> If you smell gas, don't attempt any fixes. Leave the house and call your gas company immediately.</p>
-
-<p><em>Needs a pro: Depends on the cause</em></p>
-
-<h2>7. High Limit Switch Tripped</h2>
-
-<p>As mentioned in the dirty filter section, the high limit switch is a safety device that shuts off the burners when the furnace gets too hot. It's designed to prevent overheating and potential fire.</p>
-
-<p>A dirty filter is the most common reason it trips, but it can also be caused by blocked vents, a malfunctioning blower motor, or in some cases, a faulty switch that trips even when the furnace isn't actually overheating.</p>
-
-<p><strong>The fix:</strong> If you've already replaced the filter and the furnace is still blowing cold air after it's had time to cool down, the limit switch may need to be reset manually or replaced. A technician can diagnose whether the switch is tripping correctly (meaning there's a real heat issue to address) or failing prematurely.</p>
-
-<p><em>Needs a pro: Yes, if filter replacement didn't resolve it</em></p>
-
-<h2>8. Ductwork Leaks</h2>
-
-<p>If your furnace is producing heat but it never quite reaches your living spaces, leaky ductwork might be to blame. Air leaking out of the ducts in unconditioned spaces — like the attic, basement, or crawlspace — means much of the heat your furnace generates never makes it to your rooms.</p>
-
-<p>The air coming from your registers might feel cool or only slightly warm, even when the furnace is working correctly.</p>
-
-<p><strong>How to check:</strong> On a cold day while the heat is running, go to areas where your ducts run (unfinished basement, attic) and hold your hand near the ductwork. If you feel warm air escaping from seams or connections, that's a leak.</p>
-
-<p><strong>The fix:</strong> Sealing accessible duct joints with metal foil tape (not regular duct tape — it fails quickly) can help if the leaks are easy to reach. For more extensive leaking, an HVAC technician can do a duct pressure test and seal the system professionally.</p>
-
-<p><em>DIY: Partially — small accessible leaks yes, larger issues need a pro</em></p>
-
-<h2>9. Blower Motor Problem</h2>
-
-<p>The blower motor is what moves air through your system. If it's failing, it may run intermittently, run slowly, or run without actually moving enough air to feel meaningful heat at the registers — even if the furnace is firing correctly.</p>
-
-<p>Signs of a blower motor problem include: weak airflow even when the system sounds like it's running, a humming or squealing noise coming from the furnace, or the blower running continuously and not responding to the thermostat.</p>
-
-<p><strong>The fix:</strong> Blower motor issues range from a capacitor that needs replacing (relatively inexpensive) to a full motor replacement (more involved). Either way, this is a technician job.</p>
-
-<p><em>Needs a pro: Yes</em></p>
-
-<h2>When to Call a Technician</h2>
-
-<p>Start with the easy checks: thermostat fan setting, air filter, and pilot light if applicable. These take five minutes and cost nothing.</p>
-
-<p>If those don't solve it — especially if you notice the furnace attempting to light and then shutting off, strange noises, or the smell of gas — it's time to call a technician. Most of these repairs are not expensive when caught early, and running a malfunctioning furnace can turn a minor repair into a much bigger one.</p>
-
-<p>A good technician should be able to diagnose the issue within the first 15–20 minutes of the visit. If they can't explain clearly what's wrong and why, that's a sign to get a second opinion.</p>
+<ul>
+<li>Flame proving, high-limit airflow, and draft-pressure-condensate cover most cold-air calls. Work them in that order.</li>
+<li>Use the board code as a direction, not a diagnosis. Prove with instruments.</li>
+<li>Safeties rarely fail alone. If a limit or pressure switch opens, find what caused it first.</li>
+<li>Measure before you swap parts.</li>
+</ul>
 `,
 
 
