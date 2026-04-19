@@ -8,7 +8,7 @@ export default function MilwaukeeAd({ className }) {
   return (
     <div className={`${styles.card} ${className || ''}`}>
       <a href={HD_LINK} target="_blank" rel="noopener noreferrer" className={styles.imgLink}>
-        <img src={milwaukeeImg} alt="Milwaukee M18 ROCKET Tower Light" className={styles.img} width="400" height="400" loading="lazy" />
+        <img src={milwaukeeImg} alt="Milwaukee M18 ROCKET Tower Light" className={styles.img} width="400" height="400" loading="eager" fetchPriority="high" />
       </a>
       <div className={styles.content}>
         <span className={styles.label}>MILWAUKEE TOOL</span>
