@@ -2,6 +2,25 @@
 @import './reset.css';
 @import './print.css';
 
+/* Fallback font metrics to reduce CLS from font-display: swap */
+@font-face {
+  font-family: 'Figtree Fallback';
+  src: local('Arial');
+  size-adjust: 100.5%;
+  ascent-override: 95%;
+  descent-override: 25%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Source Serif Fallback';
+  src: local('Georgia');
+  size-adjust: 105%;
+  ascent-override: 90%;
+  descent-override: 25%;
+  line-gap-override: 0%;
+}
+
 html {
   scroll-behavior: smooth;
 }

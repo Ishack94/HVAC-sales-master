@@ -4,6 +4,9 @@ import { HelmetProvider } from 'react-helmet-async'
 import App from './App'
 import './styles/global.css'
 
+const heroShell = document.getElementById('hero-shell')
+if (heroShell) heroShell.remove()
+
 const container = document.getElementById('root')
 
 const tree = (

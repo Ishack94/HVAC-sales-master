@@ -11,8 +11,8 @@
   --heading: #0e2340;
   --muted: #8a8f96;
   --border: #e2e4e8;
-  --font: 'Figtree', sans-serif;
-  --font-serif: 'Source Serif 4', Georgia, serif;
+  --font: 'Figtree', 'Figtree Fallback', sans-serif;
+  --font-serif: 'Source Serif 4', 'Source Serif Fallback', Georgia, serif;
   --container-max: 1200px;
   --content-padding: 48px;
 }
