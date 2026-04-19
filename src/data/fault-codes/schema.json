@@ -1,0 +1,180 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "HVAC Fault Code Dataset Schema",
+  "description": "Platform-first fault code reference data for residential HVAC diagnostics. Schema supports gas furnaces, electric furnaces, heat pumps, AC units, and mini-splits. Designed for techs looking up codes mid-service call on mobile devices.",
+  "version": "1.0.0",
+  "type": "object",
+  "required": ["brand_family_id", "brand_family_name", "brands", "platforms"],
+  "properties": {
+    "brand_family_id": {
+      "type": "string",
+      "description": "Lowercase snake_case unique identifier (e.g., 'nortek_nordyne')"
+    },
+    "brand_family_name": {
+      "type": "string",
+      "description": "Human-readable name (e.g., 'Nortek / Nordyne')"
+    },
+    "corporate_owner": {
+      "type": "string",
+      "description": "Current corporate parent (e.g., 'Nortek Global HVAC')"
+    },
+    "brands": {
+      "type": "array",
+      "description": "All consumer-facing brand badges in this family",
+      "items": {
+        "type": "object",
+        "required": ["name", "slug"],
+        "properties": {
+          "name": { "type": "string" },
+          "slug": { "type": "string" },
+          "notes": { "type": "string", "description": "Badge variant notes, market positioning, etc." }
+        }
+      }
+    },
+    "structural_overview": {
+      "type": "string",
+      "description": "Plain-language summary of how this brand family handles fault codes. Shown as tool intro when tech picks the brand."
+    },
+    "field_quirks": {
+      "type": "array",
+      "description": "Brand-specific field knowledge that matters for diagnosis",
+      "items": {
+        "type": "object",
+        "required": ["quirk", "applies_to"],
+        "properties": {
+          "quirk": { "type": "string" },
+          "applies_to": { "type": "string" },
+          "reason": { "type": "string" }
+        }
+      }
+    },
+    "platforms": {
+      "type": "array",
+      "description": "Control board platform generations. Techs must identify platform before looking up codes.",
+      "items": {
+        "type": "object",
+        "required": ["platform_id", "platform_name", "display_type", "codes"],
+        "properties": {
+          "platform_id": {
+            "type": "string",
+            "description": "Lowercase snake_case unique identifier (e.g., 'utec_2led')"
+          },
+          "platform_name": {
+            "type": "string",
+            "description": "Human-readable platform name"
+          },
+          "platform_description": {
+            "type": "string",
+            "description": "What equipment uses this board, how to identify it"
+          },
+          "applies_to_models": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Model families that use this control board"
+          },
+          "applies_to_years": {
+            "type": "string",
+            "description": "Rough year range for equipment installation (e.g., '2010-2026')"
+          },
+          "display_type": {
+            "type": "string",
+            "enum": [
+              "single_led_flash",
+              "two_led_combination",
+              "numeric_flash",
+              "7_segment_alphanumeric",
+              "2_digit_numeric",
+              "3_digit_alphanumeric",
+              "thermostat_alert",
+              "app_diagnostic",
+              "no_display"
+            ],
+            "description": "How codes are displayed on this platform"
+          },
+          "platform_notes": {
+            "type": "string",
+            "description": "Platform-specific reset procedures, memory behavior, etc."
+          },
+          "codes": {
+            "type": "array",
+            "description": "All confirmed codes for this platform",
+            "items": { "$ref": "#/definitions/code_record" }
+          }
+        }
+      }
+    },
+    "communicating_ecosystem": {
+      "type": "object",
+      "description": "If this brand family has a communicating ecosystem (iComfort, EcoNet, Affinity, ComfortBridge, etc.), describe what the thermostat/app surfaces vs. what the equipment board displays.",
+      "properties": {
+        "name": { "type": "string" },
+        "role": {
+          "type": "string",
+          "enum": ["display_layer_only", "adds_unique_codes", "mixed"]
+        },
+        "notes": { "type": "string" }
+      }
+    },
+    "cross_generation_conflicts": {
+      "type": "array",
+      "description": "Critical warnings where the same code identifier means different things across platform generations",
+      "items": {
+        "type": "object",
+        "required": ["code_identifier", "conflict_description", "platforms_affected"],
+        "properties": {
+          "code_identifier": { "type": "string" },
+          "conflict_description": { "type": "string" },
+          "platforms_affected": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "disambiguation_guidance": { "type": "string" }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "code_record": {
+      "type": "object",
+      "required": ["code_id", "code_identifier", "code_type", "meaning"],
+      "properties": {
+        "code_id": {
+          "type": "string",
+          "description": "Unique slug within the platform (e.g., 'green_off_red_off')"
+        },
+        "code_identifier": {
+          "type": "string",
+          "description": "Exact display as tech sees it (e.g., 'Green OFF / Red OFF', '3 flashes', 'E104')"
+        },
+        "code_type": {
+          "type": "string",
+          "enum": ["flash_count", "led_pattern", "status_display", "alphanumeric", "thermostat_alert", "dual_code_alternating"]
+        },
+        "meaning": {
+          "type": "string",
+          "description": "OEM meaning, preferably verbatim from manual. Short phrase, no narrative."
+        },
+        "root_causes": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "diagnostic_path": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "escalation": { "type": "string" },
+        "reset_behavior": { "type": "string" },
+        "related_codes": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "source": { "type": "string" },
+        "field_consensus_notes": { "type": "string" },
+        "severity": {
+          "type": "string",
+          "enum": ["informational", "service_soon", "urgent", "safety_critical"]
+        }
+      }
+    }
+  }
+}

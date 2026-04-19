@@ -1,0 +1,81 @@
+{
+  "version": "1.0.0",
+  "last_updated": "2026-04-19",
+  "total_records": 485,
+  "scope": "residential_hvac",
+  "equipment_types": ["gas_furnace", "electric_furnace"],
+  "future_equipment_types": ["heat_pump", "ac_inverter", "mini_split"],
+  "brand_families": [
+    {
+      "id": "carrier_global",
+      "name": "Carrier Global",
+      "corporate_owner": "Carrier Global Corporation",
+      "brands": ["Carrier", "Bryant", "Payne", "Comfortmaker", "Day & Night", "Heil", "Tempstar", "Arcoaire", "KeepRite"],
+      "gas_records": 122,
+      "electric_records": 3,
+      "status": "research_complete_normalization_pending",
+      "file": "carrier-global.json"
+    },
+    {
+      "id": "trane_technologies",
+      "name": "Trane Technologies",
+      "corporate_owner": "Trane Technologies plc",
+      "brands": ["Trane", "American Standard", "Ameristar"],
+      "gas_records": 41,
+      "electric_records": 4,
+      "status": "research_complete_normalization_pending",
+      "file": "trane-technologies.json"
+    },
+    {
+      "id": "lennox_allied",
+      "name": "Lennox / Allied Air",
+      "corporate_owner": "Lennox International",
+      "brands": ["Lennox", "Armstrong Air", "AirEase", "Ducane", "Concord"],
+      "gas_records": 60,
+      "electric_records": 8,
+      "status": "research_complete_normalization_pending",
+      "file": "lennox-allied.json"
+    },
+    {
+      "id": "daikin_goodman",
+      "name": "Daikin / Goodman / Amana",
+      "corporate_owner": "Daikin Industries, Ltd.",
+      "brands": ["Daikin", "Goodman", "Amana"],
+      "gas_records": 90,
+      "electric_records": 2,
+      "status": "research_complete_normalization_pending",
+      "file": "daikin-goodman.json"
+    },
+    {
+      "id": "rheem_ruud",
+      "name": "Rheem / Ruud / WeatherKing",
+      "corporate_owner": "Paloma Rheem Holdings",
+      "brands": ["Rheem", "Ruud", "WeatherKing"],
+      "gas_records": 60,
+      "electric_records": 0,
+      "status": "research_complete_normalization_pending",
+      "file": "rheem-ruud.json"
+    },
+    {
+      "id": "bosch_york",
+      "name": "Bosch / York / Coleman / Luxaire",
+      "corporate_owner": "Bosch Home Comfort Group (acquired JCI HVAC Aug 2025)",
+      "brands": ["Bosch", "York", "Coleman", "Luxaire", "Champion", "Guardian", "Fraser-Johnston", "Evcon"],
+      "gas_records": 55,
+      "electric_records": 0,
+      "status": "research_complete_normalization_pending",
+      "file": "bosch-york.json"
+    },
+    {
+      "id": "nortek_nordyne",
+      "name": "Nortek / Nordyne",
+      "corporate_owner": "Nortek Global HVAC",
+      "brands": ["Frigidaire", "Gibson", "Maytag", "Tappan", "Westinghouse", "Philco", "Kelvinator", "Broan", "Intertherm", "Miller", "Revolv"],
+      "gas_records": 40,
+      "electric_records": 0,
+      "status": "NORMALIZED",
+      "file": "nortek-nordyne.json",
+      "notes": "Complete worked example demonstrating the schema. Use as template for normalizing other brand families."
+    }
+  ]
+}
