@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "last_updated": "2026-04-19",
   "total_records": 485,
   "scope": "residential_hvac",
@@ -63,8 +63,9 @@
       "brands": ["Bosch", "York", "Coleman", "Luxaire", "Champion", "Guardian", "Fraser-Johnston", "Evcon"],
       "gas_records": 55,
       "electric_records": 0,
-      "status": "research_complete_normalization_pending",
-      "file": "bosch-york.json"
+      "status": "NORMALIZED",
+      "file": "bosch-york.json",
+      "notes": "5 platforms: Legacy JCI flash (TG8S/TG9S/TM8Y), YP9C modulating, JCI outdoor dual-LED, Affinity/Hx communicating (display-only), Bosch IDS inverter. 3 cross-generation conflicts documented (Codes 4/5/6 across legacy vs YP9C)."
     },
     {
       "id": "nortek_nordyne",
@@ -75,7 +76,7 @@
       "electric_records": 0,
       "status": "NORMALIZED",
       "file": "nortek-nordyne.json",
-      "notes": "Complete worked example demonstrating the schema. Use as template for normalizing other brand families."
+      "notes": "4 platforms: UTEC two-LED, Emerson 50V64 red-flash, MG1/MG2 legacy mobile-home, iQ Drive variable-capacity. 1 cross-generation conflict documented (3-flash Emerson vs MG1)."
     }
   ]
 }

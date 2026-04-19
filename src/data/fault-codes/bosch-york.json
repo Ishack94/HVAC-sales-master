@@ -1,0 +1,1536 @@
+{
+  "brand_family_id": "bosch_york",
+  "brand_family_name": "Bosch / York / Coleman / Luxaire",
+  "corporate_owner": "Bosch Home Comfort Group (acquired JCI HVAC August 2025)",
+  "brands": [
+    {"name": "York", "slug": "york", "notes": "Primary JCI residential brand, now Bosch-owned"},
+    {"name": "Coleman", "slug": "coleman", "notes": "Badge variant, identical Johnson Controls hardware"},
+    {"name": "Luxaire", "slug": "luxaire", "notes": "Badge variant, identical Johnson Controls hardware"},
+    {"name": "Champion", "slug": "champion", "notes": "Badge variant, identical Johnson Controls hardware"},
+    {"name": "Guardian", "slug": "guardian", "notes": "Badge variant, identical Johnson Controls hardware"},
+    {"name": "Fraser-Johnston", "slug": "fraser-johnston", "notes": "Badge variant, identical Johnson Controls hardware"},
+    {"name": "Evcon", "slug": "evcon", "notes": "Badge variant, identical Johnson Controls hardware"},
+    {"name": "Bosch", "slug": "bosch", "notes": "Bosch-branded IDS inverter equipment, different architecture from JCI brands"}
+  ],
+  "structural_overview": "As of 2026, the field-installed base is still mostly Johnson Controls-era residential hardware even though Bosch completed the JCI HVAC acquisition on August 1, 2025. The practical platform split is: (1) legacy JCI 24V furnace IFC flash-code boards used on TG8S/TG9S/TM8Y and badge-equivalent Coleman/Luxaire/Champion units; (2) modulating/variable-capacity YP9C/CP9C/LP9C/TP9C boards with amber status + red fault codes and pressure transducer as primary flow sensor; (3) outdoor communicating-capable dual-LED boards on some split AC/heat pump units; (4) Affinity/Hx communicating ecosystem (display/storage layer only, not a separate code dictionary); (5) Bosch IDS inverter split systems with alphanumeric fault codes closer to ductless equipment logic. No publicly documented new Bosch-era residential furnace fault-code family has emerged yet for 2026 equipment.",
+  "field_quirks": [
+    {
+      "quirk": "York flame current is much higher than most brands",
+      "applies_to": "All JCI legacy and YP9C boards",
+      "reason": "Normal flame current is approximately 3.7 µA DC — significantly higher than the 0.5-1.5 µA most techs anchor to on other brands. TG9S family low-flame warning starts at 1.5 µA with lockout at 0.1 µA; TM8Y family warning at 0.28 µA with lockout at 0.16 µA. A tech using another brand's rule of thumb can misjudge whether York flame signal is healthy."
+    },
+    {
+      "quirk": "Cross-generation code conflicts between TG9S/TM8Y and YP9C are severe",
+      "applies_to": "TG9S, TM8Y, YP9C family boards",
+      "reason": "Code 4 means 'main limit open' on TG9S/TM8Y but 'high limit OR defective temp sensor OR open 24V fuse' on YP9C. Code 5 is rollout/limit-circuit-open on TG9S/TM8Y but 'rollout OR condensate pressure switch' on YP9C. Code 6 is 'pressure switch reopened' on legacy boards but 'gas valve communication error' on YP9C. A tech memorizing legacy codes will misdiagnose YP9C."
+    },
+    {
+      "quirk": "YP9C uses a pressure transducer as primary flow sensor, not just a switch",
+      "applies_to": "YP9C/CP9C/LP9C/TP9C modulating boards",
+      "reason": "The pressure transducer is the primary flow sensor. The pressure switch can be open under some burner-lit conditions. This makes 'bad pressure switch' a common false diagnosis if the transducer/condensate/venting side is ignored."
+    },
+    {
+      "quirk": "Bosch IDS inverter uses a completely different code architecture",
+      "applies_to": "Bosch IDS 2.0 and newer R-454B IDS families",
+      "reason": "Alphanumeric codes like C3, E4, E5, H8, P1/F1, L0-L9 — much closer to ductless/inverter logic than York furnace flash logic. Techs trained on York furnaces need to mentally reset for IDS equipment. Some limited-condition families (P**, U**, F**, C**, d**) are followed by two digits showing compressor frequency in Hz while the unit continues to run in a limited state."
+    },
+    {
+      "quirk": "Bosch acquisition transition — most installed equipment is still JCI-era",
+      "applies_to": "All York/Coleman/Luxaire residential equipment installed through 2026",
+      "reason": "Bosch completed the JCI HVAC acquisition August 1, 2025. However, the field-installed base is still predominantly Johnson Controls-era hardware. No publicly documented new Bosch-era residential furnace fault-code family replaces the older JCI dictionaries yet. Troubleshoot existing equipment using JCI documentation; only use Bosch IDS architecture if the equipment is specifically Bosch IDS."
+    }
+  ],
+  "platforms": [
+    {
+      "platform_id": "jci_legacy_flash",
+      "platform_name": "Legacy JCI 24V Furnace IFC Flash-Code Boards",
+      "platform_description": "Classic Johnson Controls residential furnace ignition control with single-color LED flash codes, soft/hard lockout logic, and LAST ERROR history function. Used on TG8S, TG9S, TM8Y and sibling Coleman/Luxaire/Champion/Guardian/Fraser-Johnston/Evcon legacy furnaces.",
+      "applies_to_models": ["TG8S", "TG9S", "TM8Y", "Coleman/Luxaire/Champion equivalent single-stage and two-stage models"],
+      "applies_to_years": "2005-2020 (installed base remains common)",
+      "display_type": "numeric_flash",
+      "platform_notes": "Board stores up to 5 errors. Repeat-trigger lockouts use 1-hour soft lockout plus power-cycle hard lockout logic depending on code. Slow green flash indicates no thermostat call (normal). Slow amber flash indicates normal operation with call for heat.",
+      "codes": [
+        {
+          "code_id": "slow_green_flash",
+          "code_identifier": "Slow GREEN flash",
+          "code_type": "status_display",
+          "meaning": "Normal operation, no thermostat call",
+          "root_causes": [],
+          "diagnostic_path": ["No action — normal status"],
+          "escalation": "None",
+          "reset_behavior": "Status only",
+          "related_codes": ["slow_amber_flash"],
+          "source": "TG9S/TM8Y install manuals",
+          "severity": "informational"
+        },
+        {
+          "code_id": "slow_amber_flash",
+          "code_identifier": "Slow AMBER flash",
+          "code_type": "status_display",
+          "meaning": "Normal operation with call for heat",
+          "root_causes": [],
+          "diagnostic_path": ["No action — normal status during heat call"],
+          "escalation": "None",
+          "reset_behavior": "Status only during heat call",
+          "related_codes": ["slow_green_flash"],
+          "source": "TG9S/TM8Y install manuals",
+          "severity": "informational"
+        },
+        {
+          "code_id": "continuous_red_flash",
+          "code_identifier": "Continuous RED flash",
+          "code_type": "status_display",
+          "meaning": "Twinning error, incorrect 24V phasing, or no power to twinned unit",
+          "root_causes": [
+            "Improper twinning wiring",
+            "24V phasing mismatch between twinned units",
+            "Loss of power to secondary twinned furnace"
+          ],
+          "diagnostic_path": [
+            "Verify twinning wiring against diagram",
+            "Check 24V phasing on both units",
+            "Verify power to secondary unit"
+          ],
+          "escalation": "If twinning wiring and power are correct, board fault is possible.",
+          "reset_behavior": "Clears when twinning issue is resolved.",
+          "related_codes": ["9_red_flashes"],
+          "source": "TG9S/TM8Y install manuals",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "continuous_amber_flash",
+          "code_identifier": "Continuous AMBER flash",
+          "code_type": "status_display",
+          "meaning": "Low flame sense current",
+          "root_causes": [
+            "Dirty flame rod",
+            "Weak flame carryover",
+            "Poor grounding",
+            "Flame sensor wiring fault"
+          ],
+          "diagnostic_path": [
+            "Clean flame rod and measure flame current (normal ~3.7 µA)",
+            "Verify burner carryover and flame pattern",
+            "Verify board/chassis grounding",
+            "TG9S family: warning at 1.5 µA, lockout at 0.1 µA",
+            "TM8Y family: warning at 0.28 µA, lockout at 0.16 µA"
+          ],
+          "escalation": "Repeated low flame after cleaning and grounding points to combustion quality or board sensitivity.",
+          "reset_behavior": "Status indicator during operation; does not itself lockout until flame drops below lockout threshold.",
+          "related_codes": ["8_red_flashes"],
+          "source": "TG9S/TM8Y install manuals",
+          "severity": "service_soon"
+        },
+        {
+          "code_id": "led_off",
+          "code_identifier": "LED OFF",
+          "code_type": "status_display",
+          "meaning": "No board power or board failure",
+          "root_causes": [
+            "No 24V control power",
+            "Blown fuse",
+            "Transformer issue",
+            "Failed control board"
+          ],
+          "diagnostic_path": [
+            "Verify 24V at board",
+            "Check low-voltage fuse",
+            "Check transformer secondary",
+            "Verify wiring integrity"
+          ],
+          "escalation": "If power is confirmed at board and LED remains off, board failure is likely.",
+          "reset_behavior": "No reset until power restored.",
+          "related_codes": ["steady_led"],
+          "source": "TG9S/TM8Y install manuals",
+          "severity": "service_soon"
+        },
+        {
+          "code_id": "steady_led",
+          "code_identifier": "Steady LED",
+          "code_type": "status_display",
+          "meaning": "Possible control failure or open fuse (family-dependent)",
+          "root_causes": [
+            "Control internal fault",
+            "Open board fuse",
+            "Power supply issue"
+          ],
+          "diagnostic_path": [
+            "Check board fuse",
+            "Verify 24V power",
+            "Consult model-specific manual for steady LED behavior"
+          ],
+          "escalation": "Board-level fault indicator if fuse and power check out.",
+          "reset_behavior": "Depends on specific fault condition.",
+          "related_codes": ["led_off"],
+          "source": "TG9S/TM8Y install manuals",
+          "severity": "service_soon"
+        },
+        {
+          "code_id": "1_red_flash",
+          "code_identifier": "1 red flash",
+          "code_type": "flash_count",
+          "meaning": "Flame sensed when there is no call for heat",
+          "root_causes": [
+            "Leaking or slow-closing gas valve",
+            "Shorted or contaminated flame-sense path",
+            "Faulty control board"
+          ],
+          "diagnostic_path": [
+            "Verify no call for heat and gas valve should be closed",
+            "Inspect flame-sense circuit for shorts/contamination",
+            "Verify valve leakage or slow-close"
+          ],
+          "escalation": "Leaking gas valve is a safety concern. If no external cause, gas valve or control fault becomes likely.",
+          "reset_behavior": "Clears when condition is removed.",
+          "related_codes": ["7_red_flashes", "8_red_flashes", "continuous_amber_flash"],
+          "source": "TG9S/TM8Y install manuals",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "2_red_flashes",
+          "code_identifier": "2 red flashes",
+          "code_type": "flash_count",
+          "meaning": "Pressure switch closed when it should be open",
+          "root_causes": [
+            "Stuck pressure switch",
+            "Inducer relay stuck on",
+            "Wiring error/miswiring"
+          ],
+          "diagnostic_path": [
+            "Verify switch state before inducer starts",
+            "Inspect switch tubing and wiring",
+            "Verify inducer is not being held on improperly"
+          ],
+          "escalation": "If switch and inducer are normal but board still sees closed, board fault is more likely.",
+          "reset_behavior": "Clears when startup proofing is normal.",
+          "related_codes": ["3_red_flashes", "6_red_flashes", "13_red_flashes"],
+          "source": "TG9S/TM8Y install manuals",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "3_red_flashes",
+          "code_identifier": "3 red flashes",
+          "code_type": "flash_count",
+          "meaning": "Pressure switch open when it should be closed",
+          "root_causes": [
+            "Faulty inducer",
+            "Blocked vent pipe",
+            "Broken pressure-switch hose",
+            "Disconnected switch or inducer wires",
+            "Faulty pressure switch"
+          ],
+          "diagnostic_path": [
+            "Verify inducer operation",
+            "Inspect venting/intake and hose routing",
+            "Use manometer to verify vent pressure (TM8Y)"
+          ],
+          "escalation": "Repeated with verified draft pressure points to switch or control.",
+          "reset_behavior": "If recurring during call, can advance to lockout logic.",
+          "related_codes": ["2_red_flashes", "6_red_flashes", "13_red_flashes"],
+          "source": "TG9S/TM8Y install manuals",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "4_red_flashes",
+          "code_identifier": "4 red flashes",
+          "code_type": "flash_count",
+          "meaning": "Main limit switch opened during call for heat",
+          "root_causes": [
+            "Dirty filter",
+            "Undersized or restricted duct system",
+            "Wrong blower speed",
+            "Loose limit wiring",
+            "Faulty blower motor"
+          ],
+          "diagnostic_path": [
+            "Check filter, static pressure, airflow first",
+            "Verify blower speed and motor operation",
+            "Verify firing rate and limit circuit"
+          ],
+          "escalation": "If limit does not re-close in time, escalates to 11 red. Repeated trips five times trigger 1-hour soft lockout.",
+          "reset_behavior": "1-hour soft lockout after repeated trips; otherwise clears when limit recloses.",
+          "related_codes": ["5_red_flashes", "11_red_flashes"],
+          "source": "TG9S/TM8Y install manuals",
+          "severity": "urgent",
+          "field_consensus_notes": "CROSS-GENERATION CONFLICT with YP9C: On YP9C boards, Code 4 can mean high limit open, defective temp sensor, OR open 24V fuse — broader than TG9S/TM8Y. Verify board before trusting this meaning."
+        },
+        {
+          "code_id": "5_red_flashes",
+          "code_identifier": "5 red flashes",
+          "code_type": "flash_count",
+          "meaning": "Rollout / limit-circuit-open hard safety condition",
+          "root_causes": [
+            "Manual-reset rollout switch open",
+            "Combustion air problem",
+            "Inducer problem",
+            "Burner problem",
+            "Heat exchanger issue"
+          ],
+          "diagnostic_path": [
+            "Inspect rollout switch physically",
+            "Verify combustion air and venting",
+            "Inspect burners, heat exchanger, inducer BEFORE resetting"
+          ],
+          "escalation": "Repeated rollout or non-resettable rollout is a hard combustion safety problem.",
+          "reset_behavior": "Hard lockout; power must be cycled after fault is corrected.",
+          "related_codes": ["4_red_flashes", "11_red_flashes"],
+          "source": "TG9S/TM8Y install manuals",
+          "severity": "safety_critical",
+          "field_consensus_notes": "CROSS-GENERATION CONFLICT with YP9C: On YP9C boards, Code 5 can also indicate condensate pressure switch open. Check condensate drainage."
+        },
+        {
+          "code_id": "6_red_flashes",
+          "code_identifier": "6 red flashes",
+          "code_type": "flash_count",
+          "meaning": "Pressure switch opened four times during the heat call",
+          "root_causes": [
+            "Weak inducer",
+            "Blocked vent",
+            "Faulty pressure switch"
+          ],
+          "diagnostic_path": [
+            "Verify inducer performance under load",
+            "Inspect vent and switch",
+            "Check for intermittent draft loss"
+          ],
+          "escalation": "Pattern indicates marginal draft or switch.",
+          "reset_behavior": "1-hour lockout then restart.",
+          "related_codes": ["2_red_flashes", "3_red_flashes"],
+          "source": "TG9S/TM8Y install manuals",
+          "severity": "urgent",
+          "field_consensus_notes": "CROSS-GENERATION CONFLICT with YP9C: On YP9C boards, Code 6 means gas valve communication error — completely different. Verify board."
+        },
+        {
+          "code_id": "7_red_flashes",
+          "code_identifier": "7 red flashes",
+          "code_type": "flash_count",
+          "meaning": "No ignition after three trials",
+          "root_causes": [
+            "Gas off or low gas pressure",
+            "Faulty gas valve",
+            "Dirty flame sensor",
+            "Faulty igniter",
+            "Burner problem"
+          ],
+          "diagnostic_path": [
+            "Verify gas valve switch and gas supply",
+            "Verify igniter and flame prove",
+            "Inspect burner carryover"
+          ],
+          "escalation": "Repeated trials exhausted; retry after lockout.",
+          "reset_behavior": "1-hour lockout then retry.",
+          "related_codes": ["8_red_flashes", "continuous_amber_flash"],
+          "source": "TG9S/TM8Y install manuals",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "8_red_flashes",
+          "code_identifier": "8 red flashes",
+          "code_type": "flash_count",
+          "meaning": "Flame lost five times / too many recycles during heating cycle",
+          "root_causes": [
+            "Low gas pressure",
+            "Dirty or faulty flame sensor",
+            "Faulty gas valve"
+          ],
+          "diagnostic_path": [
+            "Measure flame current (normal ~3.7 µA)",
+            "Verify gas pressure under load",
+            "Inspect burner stability and sensor"
+          ],
+          "escalation": "Repeated flame loss indicates combustion instability.",
+          "reset_behavior": "1-hour lockout then retry.",
+          "related_codes": ["7_red_flashes", "continuous_amber_flash"],
+          "source": "TG9S/TM8Y install manuals",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "9_red_flashes",
+          "code_identifier": "9 red flashes",
+          "code_type": "flash_count",
+          "meaning": "Reversed line polarity, grounding problem, or reversed low-voltage transformer wires",
+          "root_causes": [
+            "Incoming power polarity error",
+            "Poor ground",
+            "Transformer lead reversal"
+          ],
+          "diagnostic_path": [
+            "Verify line polarity with meter",
+            "Verify furnace grounding path",
+            "Inspect flame probe to chassis short"
+          ],
+          "escalation": "Ignition sequence inhibited until corrected.",
+          "reset_behavior": "Clears when corrected.",
+          "related_codes": ["steady_led", "continuous_amber_flash"],
+          "source": "TG9S/TM8Y install manuals",
+          "severity": "service_soon"
+        },
+        {
+          "code_id": "10_red_flashes",
+          "code_identifier": "10 red flashes",
+          "code_type": "flash_count",
+          "meaning": "Gas valve energized with no call for heat",
+          "root_causes": [
+            "Gas-valve wiring problem",
+            "Gas valve fault"
+          ],
+          "diagnostic_path": [
+            "Verify unwanted valve power",
+            "Inspect wiring",
+            "Replace valve/control only after verifying circuit"
+          ],
+          "escalation": "Ignition sequence inhibited while fault exists; safety concern.",
+          "reset_behavior": "Inducer and blower run, ignition inhibited.",
+          "related_codes": ["1_red_flash"],
+          "source": "TG9S/TM8Y install manuals",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "11_red_flashes",
+          "code_identifier": "11 red flashes",
+          "code_type": "flash_count",
+          "meaning": "Limit circuit remained open more than 5 minutes (main blower failure indicator)",
+          "root_causes": [
+            "Failed blower motor or blower wheel",
+            "Major airflow issue"
+          ],
+          "diagnostic_path": [
+            "Verify blower actually runs and moves air",
+            "Verify wheel and capacitor/ECM behavior",
+            "Verify limit re-close timing"
+          ],
+          "escalation": "Strong blower failure indicator on this family.",
+          "reset_behavior": "Hard lockout; power cycle required after correction.",
+          "related_codes": ["4_red_flashes", "5_red_flashes"],
+          "source": "TG9S/TM8Y install manuals",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "13_red_flashes",
+          "code_identifier": "13 red flashes",
+          "code_type": "flash_count",
+          "meaning": "Second-stage/high pressure switch open with call for second-stage heating",
+          "root_causes": [
+            "Faulty inducer",
+            "Blocked vent",
+            "Broken or disconnected hoses",
+            "Disconnected pressure-switch or inducer wiring",
+            "Faulty pressure switch"
+          ],
+          "diagnostic_path": [
+            "Verify second-stage inducer/draft path",
+            "Inspect tubing and wiring",
+            "Use manometer to verify vent pressure"
+          ],
+          "escalation": "Follows active fault logic; clears when proof is correct.",
+          "reset_behavior": "Clears when proof established.",
+          "related_codes": ["2_red_flashes", "3_red_flashes"],
+          "source": "TM8Y manual",
+          "severity": "urgent"
+        }
+      ]
+    },
+    {
+      "platform_id": "yp9c_modulating",
+      "platform_name": "YP9C Modulating Variable-Capacity Furnace Board",
+      "platform_description": "Johnson Controls modulating furnace board family with amber status displays, red fault codes, pressure transducer as primary flow sensor, gas-valve communication logic, and ID-plug logic. Used on YP9C, CP9C, LP9C, TP9C and sibling modulating families.",
+      "applies_to_models": ["YP9C", "CP9C", "LP9C", "TP9C"],
+      "applies_to_years": "2015-2026",
+      "display_type": "numeric_flash",
+      "platform_notes": "Materially different from legacy JCI platform. Adds amber operating/status displays, pressure transducer as primary flow sensor, gas-valve communication logic, and ID-plug logic. Different fault meanings for the same flash numbers compared to TG9S/TM8Y. Normal flame current ~3.7 µA, low-flame warning at 1.5 µA, lockout at 0.1 µA.",
+      "codes": [
+        {
+          "code_id": "1_amber",
+          "code_identifier": "1 amber flash",
+          "code_type": "status_display",
+          "meaning": "Cooling call normal",
+          "root_causes": [],
+          "diagnostic_path": ["No action — normal cooling status"],
+          "escalation": "None",
+          "reset_behavior": "Status only",
+          "related_codes": ["2_amber"],
+          "source": "YP9C install manual",
+          "severity": "informational"
+        },
+        {
+          "code_id": "2_amber",
+          "code_identifier": "2 amber flashes",
+          "code_type": "status_display",
+          "meaning": "Heating call normal",
+          "root_causes": [],
+          "diagnostic_path": ["No action — normal heating status"],
+          "escalation": "None",
+          "reset_behavior": "Status only during heat call",
+          "related_codes": ["1_amber", "3_amber"],
+          "source": "YP9C install manual",
+          "severity": "informational"
+        },
+        {
+          "code_id": "3_amber",
+          "code_identifier": "3 amber flashes",
+          "code_type": "status_display",
+          "meaning": "Burner on after thermostat satisfied / end of heat cycle",
+          "root_causes": [],
+          "diagnostic_path": ["No action — normal cycle end status"],
+          "escalation": "None",
+          "reset_behavior": "Status only during end-of-cycle",
+          "related_codes": ["2_amber"],
+          "source": "YP9C install manual",
+          "severity": "informational"
+        },
+        {
+          "code_id": "4_amber",
+          "code_identifier": "4 amber flashes",
+          "code_type": "status_display",
+          "meaning": "Reduced heating capacity from circulating-air restriction",
+          "root_causes": [
+            "Dirty filter",
+            "Duct restriction",
+            "High static pressure"
+          ],
+          "diagnostic_path": [
+            "Check filter and airflow",
+            "Measure static pressure",
+            "Inspect ductwork"
+          ],
+          "escalation": "Persistent condition may trigger limit-related fault.",
+          "reset_behavior": "Clears when airflow is restored.",
+          "related_codes": ["4_red"],
+          "source": "YP9C install manual",
+          "severity": "service_soon"
+        },
+        {
+          "code_id": "5_amber",
+          "code_identifier": "5 amber flashes",
+          "code_type": "status_display",
+          "meaning": "Reduced heating capacity from combustion-air/vent restriction or clogged condensate drain",
+          "root_causes": [
+            "Combustion air restriction",
+            "Vent restriction",
+            "Clogged condensate drain"
+          ],
+          "diagnostic_path": [
+            "Inspect vent and combustion air",
+            "Verify condensate drain flow",
+            "Measure inducer draft"
+          ],
+          "escalation": "Persistent condition may trigger pressure-switch fault.",
+          "reset_behavior": "Clears when vent/condensate is restored.",
+          "related_codes": ["3_red"],
+          "source": "YP9C install manual",
+          "severity": "service_soon"
+        },
+        {
+          "code_id": "6_amber",
+          "code_identifier": "6 amber flashes",
+          "code_type": "status_display",
+          "meaning": "Heat-pump heating normal",
+          "root_causes": [],
+          "diagnostic_path": ["No action — normal heat pump operation"],
+          "escalation": "None",
+          "reset_behavior": "Status only",
+          "related_codes": [],
+          "source": "YP9C install manual",
+          "severity": "informational"
+        },
+        {
+          "code_id": "rapid_amber",
+          "code_identifier": "Rapid amber flash",
+          "code_type": "status_display",
+          "meaning": "Low flame-sense current",
+          "root_causes": [
+            "Dirty flame rod",
+            "Weak flame",
+            "Grounding issue",
+            "Flame sensor wiring fault"
+          ],
+          "diagnostic_path": [
+            "Clean flame rod and measure current (normal ~3.7 µA)",
+            "Verify burner carryover",
+            "Verify grounding"
+          ],
+          "escalation": "Warning at 1.5 µA, lockout at 0.1 µA.",
+          "reset_behavior": "Status indicator during operation.",
+          "related_codes": ["8_red"],
+          "source": "YP9C install manual",
+          "severity": "service_soon"
+        },
+        {
+          "code_id": "1_red",
+          "code_identifier": "1 red flash",
+          "code_type": "flash_count",
+          "meaning": "Flame present with no power to gas valve",
+          "root_causes": [
+            "Slow-closing or leaking gas valve",
+            "Flame-sense path leakage"
+          ],
+          "diagnostic_path": [
+            "Verify valve leakage",
+            "Inspect flame-sense path"
+          ],
+          "escalation": "Leaking valve is a safety concern.",
+          "reset_behavior": "Clears when condition is removed.",
+          "related_codes": ["7_red", "8_red"],
+          "source": "YP9C install manual",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "2_red",
+          "code_identifier": "2 red flashes",
+          "code_type": "flash_count",
+          "meaning": "Pressure switch closed with inducer pressure below setpoint (switch closed when it should be open)",
+          "root_causes": [
+            "Bad pressure switch",
+            "Bad pressure transducer",
+            "Misread proofing state"
+          ],
+          "diagnostic_path": [
+            "Verify transducer/switch agreement",
+            "Check startup condition",
+            "Compare transducer reading to switch behavior"
+          ],
+          "escalation": "Transducer/switch disagreement indicates sensor or board issue.",
+          "reset_behavior": "Clears when startup proofing is normal.",
+          "related_codes": ["3_red"],
+          "source": "YP9C install manual",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "3_red",
+          "code_identifier": "3 red flashes",
+          "code_type": "flash_count",
+          "meaning": "Pressure switch open with inducer pressure above setpoint (switch open when it should be closed)",
+          "root_causes": [
+            "Bad switch",
+            "Bad pressure transducer",
+            "Venting issue"
+          ],
+          "diagnostic_path": [
+            "Verify actual inducer pressure",
+            "Compare to transducer/switch behavior",
+            "Inspect venting and drains"
+          ],
+          "escalation": "If transducer reads correct but switch doesn't agree, switch or board input issue.",
+          "reset_behavior": "Clears when proof establishes.",
+          "related_codes": ["2_red"],
+          "source": "YP9C install manual",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "4_red",
+          "code_identifier": "4 red flashes",
+          "code_type": "flash_count",
+          "meaning": "High-limit switch open, defective temperature sensor, or open 24V fuse",
+          "root_causes": [
+            "Dirty filter",
+            "Duct restriction",
+            "Blower problem",
+            "Open board fuse"
+          ],
+          "diagnostic_path": [
+            "Determine which branch is actually open: limit, sensor, or fuse",
+            "Verify airflow and blower",
+            "Inspect 24V fuse"
+          ],
+          "escalation": "Multiple possible causes; isolate before replacing components.",
+          "reset_behavior": "Clears when condition is resolved.",
+          "related_codes": ["11_red"],
+          "source": "YP9C install manual",
+          "severity": "urgent",
+          "field_consensus_notes": "CROSS-GENERATION CONFLICT with TG9S/TM8Y: On legacy boards, Code 4 means ONLY main limit open — narrower meaning. YP9C Code 4 is broader."
+        },
+        {
+          "code_id": "5_red",
+          "code_identifier": "5 red flashes",
+          "code_type": "flash_count",
+          "meaning": "Rollout switch or condensate pressure switch open",
+          "root_causes": [
+            "Actual rollout or combustion event",
+            "Blocked condensate drainage causing safety trip"
+          ],
+          "diagnostic_path": [
+            "Identify which switch is open physically BEFORE troubleshooting",
+            "If rollout: inspect burners/heat exchanger/venting",
+            "If condensate: inspect drain path and trap"
+          ],
+          "escalation": "Rollout is a hard combustion safety problem.",
+          "reset_behavior": "Hard lockout if rollout; condensate may clear with drain service.",
+          "related_codes": ["4_red"],
+          "source": "YP9C install manual",
+          "severity": "safety_critical",
+          "field_consensus_notes": "CROSS-GENERATION CONFLICT with TG9S/TM8Y: On legacy boards, Code 5 is rollout/manual-reset safety only — YP9C also includes condensate switch."
+        },
+        {
+          "code_id": "6_red",
+          "code_identifier": "6 red flashes",
+          "code_type": "flash_count",
+          "meaning": "Gas valve communication error",
+          "root_causes": [
+            "Gas valve wiring or communication issue",
+            "Valve fault",
+            "Board-to-valve comm problem"
+          ],
+          "diagnostic_path": [
+            "Verify connector integrity",
+            "Check valve power/communication path",
+            "Inspect valve for fault indicators"
+          ],
+          "escalation": "Communication issue blocks valve operation entirely.",
+          "reset_behavior": "Clears when communication is restored.",
+          "related_codes": ["10_red"],
+          "source": "YP9C install manual",
+          "severity": "urgent",
+          "field_consensus_notes": "CROSS-GENERATION CONFLICT with TG9S/TM8Y: On legacy boards, Code 6 means pressure switch reopened — completely different from YP9C gas valve communication meaning."
+        },
+        {
+          "code_id": "7_red",
+          "code_identifier": "7 red flashes",
+          "code_type": "flash_count",
+          "meaning": "Lockout due to no ignition after three tries",
+          "root_causes": [
+            "Gas supply issue",
+            "Ignitor problem",
+            "Gas valve fault",
+            "Flame sensor issue"
+          ],
+          "diagnostic_path": [
+            "Verify gas delivery",
+            "Check ignition sequence",
+            "Inspect flame prove"
+          ],
+          "escalation": "Repeated trials exhausted.",
+          "reset_behavior": "1-hour lockout then retry.",
+          "related_codes": ["8_red"],
+          "source": "YP9C install manual",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "8_red",
+          "code_identifier": "8 red flashes",
+          "code_type": "flash_count",
+          "meaning": "Lockout due to too many flame recycles (flame lost five times)",
+          "root_causes": [
+            "Faulty gas valve",
+            "Low gas pressure",
+            "Dirty flame sensor"
+          ],
+          "diagnostic_path": [
+            "Clean flame sensor",
+            "Verify gas pressure under load",
+            "Inspect flame pattern"
+          ],
+          "escalation": "Repeated flame loss indicates combustion instability.",
+          "reset_behavior": "1-hour lockout then retry.",
+          "related_codes": ["7_red", "rapid_amber"],
+          "source": "YP9C install manual",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "9_red",
+          "code_identifier": "9 red flashes",
+          "code_type": "flash_count",
+          "meaning": "Reversed line polarity or improper grounding",
+          "root_causes": [
+            "Incoming polarity reversed",
+            "Transformer ground issue",
+            "L1-neutral or chassis bond fault"
+          ],
+          "diagnostic_path": [
+            "Verify incoming polarity",
+            "Verify transformer ground",
+            "Verify chassis bond"
+          ],
+          "escalation": "Clears when corrected.",
+          "reset_behavior": "Self-clears once polarity/ground is correct.",
+          "related_codes": [],
+          "source": "YP9C install manual",
+          "severity": "service_soon"
+        },
+        {
+          "code_id": "10_red",
+          "code_identifier": "10 red flashes",
+          "code_type": "flash_count",
+          "meaning": "Gas valve circuit shorted",
+          "root_causes": [
+            "Gas valve wiring short",
+            "Failed gas valve"
+          ],
+          "diagnostic_path": [
+            "Check gas-valve wiring first",
+            "If wiring correct, replace gas valve per manual"
+          ],
+          "escalation": "Safety concern until resolved.",
+          "reset_behavior": "Clears when short is corrected.",
+          "related_codes": ["6_red"],
+          "source": "YP9C install manual",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "11_red",
+          "code_identifier": "11 red flashes",
+          "code_type": "flash_count",
+          "meaning": "Main blower failure (main limit opened and failed to reclose within 5 minutes)",
+          "root_causes": [
+            "Blower motor failure",
+            "Blower wheel failure"
+          ],
+          "diagnostic_path": [
+            "Verify blower operates and moves air",
+            "Inspect wheel and motor",
+            "Verify power path"
+          ],
+          "escalation": "Stronger blower-specific language than legacy boards.",
+          "reset_behavior": "Hard lockout until blower repair.",
+          "related_codes": ["4_red"],
+          "source": "YP9C install manual",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "12_red",
+          "code_identifier": "12 red flashes",
+          "code_type": "flash_count",
+          "meaning": "ID plug absent or not connected properly",
+          "root_causes": [
+            "Loose ID plug",
+            "Loose plug wires",
+            "Missing model-identification plug"
+          ],
+          "diagnostic_path": [
+            "Reseat ID plug",
+            "Verify plug/wire continuity",
+            "Confirm correct plug for model"
+          ],
+          "escalation": "Configuration error until plug is restored.",
+          "reset_behavior": "Clears when plug is properly connected.",
+          "related_codes": [],
+          "source": "YP9C install manual",
+          "severity": "service_soon"
+        },
+        {
+          "code_id": "steady_red",
+          "code_identifier": "Steady RED LED",
+          "code_type": "status_display",
+          "meaning": "Control fault detected or 115V present without 24V",
+          "root_causes": [
+            "24V control loss",
+            "Control internal fault"
+          ],
+          "diagnostic_path": [
+            "Verify both 24V and 115V to board",
+            "If both present and fault remains, replace board"
+          ],
+          "escalation": "Board-level fault if power is confirmed.",
+          "reset_behavior": "Requires board replacement if confirmed.",
+          "related_codes": ["led_off"],
+          "source": "YP9C install manual",
+          "severity": "urgent"
+        }
+      ]
+    },
+    {
+      "platform_id": "jci_outdoor_dual_led",
+      "platform_name": "JCI Outdoor Split AC/Heat Pump Board with LED1/LED2 Diagnostics",
+      "platform_description": "Johnson Controls York-family split outdoor units with communicating-capable control boards (CZF / communicating outdoor control style). Uses red LED1 and green LED2 combinations for fault and status indication.",
+      "applies_to_models": ["CZF family outdoor boards", "York communicating-capable residential outdoor units"],
+      "applies_to_years": "2010-2026",
+      "display_type": "two_led_combination",
+      "platform_notes": "Outdoor-board codes, not furnace codes. In communicating applications, faults are also stored in the thermostat. Yellow LED status: fast flash = active communication present, slow flash = board powered without communication. Soft lockout reset by thermostat satisfaction, SYSTEM OFF cycle, or shorting TEST >2 sec after fault removal.",
+      "codes": [
+        {
+          "code_id": "led1_on_led2_off",
+          "code_identifier": "LED1 ON / LED2 OFF",
+          "code_type": "led_pattern",
+          "meaning": "Control failure",
+          "root_causes": [
+            "Outdoor control failure"
+          ],
+          "diagnostic_path": [
+            "Verify 24VAC to board",
+            "Verify board power state and harnesses"
+          ],
+          "escalation": "Depends on actual failed condition.",
+          "reset_behavior": "Depends on specific fault.",
+          "related_codes": [],
+          "source": "JCI outdoor Table 6 operational fault codes",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "1_red_green_off",
+          "code_identifier": "1 red flash / green OFF",
+          "code_type": "led_pattern",
+          "meaning": "High-pressure switch fault, not yet in lockout",
+          "root_causes": [
+            "Transient head-pressure event",
+            "Coil airflow problem"
+          ],
+          "diagnostic_path": [
+            "Verify outdoor airflow",
+            "Check pressure trend"
+          ],
+          "escalation": "Repeated events escalate to lockout.",
+          "reset_behavior": "Soft-lockout logic if repeated.",
+          "related_codes": ["2_red_green_off"],
+          "source": "JCI outdoor Table 6",
+          "severity": "service_soon"
+        },
+        {
+          "code_id": "2_red_green_off",
+          "code_identifier": "2 red flashes / green OFF",
+          "code_type": "led_pattern",
+          "meaning": "System in high-pressure switch lockout",
+          "root_causes": [
+            "Repeated HPS openings within six hours",
+            "Dirty coil",
+            "Fan failure",
+            "Refrigerant charge issue"
+          ],
+          "diagnostic_path": [
+            "Clean coil",
+            "Verify fan",
+            "Verify charge and head pressure"
+          ],
+          "escalation": "Hard lockout if unresolved.",
+          "reset_behavior": "Soft lockout; reset by thermostat satisfaction / SYSTEM OFF or shorting TEST >2 sec after fault removal.",
+          "related_codes": ["1_red_green_off", "4_red_green_off"],
+          "source": "JCI outdoor Table 6",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "4_red_green_off",
+          "code_identifier": "4 red flashes / green OFF",
+          "code_type": "led_pattern",
+          "meaning": "System in low-pressure switch lockout",
+          "root_causes": [
+            "Low charge",
+            "Evaporator airflow issue",
+            "LPS opening >5 sec outside ignore windows"
+          ],
+          "diagnostic_path": [
+            "Verify refrigerant circuit and airflow",
+            "Note LPS is ignored during first 2 minutes of compressor run"
+          ],
+          "escalation": "Repeated soft lockouts escalate to hard lockout.",
+          "reset_behavior": "Soft lockout logic.",
+          "related_codes": ["2_red_green_off"],
+          "source": "JCI outdoor Table 6",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "5_red_green_off",
+          "code_identifier": "5 red flashes / green OFF",
+          "code_type": "led_pattern",
+          "meaning": "Low voltage below 19.2 VAC preventing further relay outputs",
+          "root_causes": [
+            "Transformer sag",
+            "Control voltage drop"
+          ],
+          "diagnostic_path": [
+            "Measure low-voltage under load",
+            "Isolate transformer loading"
+          ],
+          "escalation": "Higher severity if voltage drops further.",
+          "reset_behavior": "Clears when voltage recovers.",
+          "related_codes": ["6_red_green_off"],
+          "source": "JCI outdoor Table 6",
+          "severity": "service_soon"
+        },
+        {
+          "code_id": "6_red_green_off",
+          "code_identifier": "6 red flashes / green OFF",
+          "code_type": "led_pattern",
+          "meaning": "Low voltage below 16 VAC stopped current relay outputs",
+          "root_causes": [
+            "More severe low-voltage condition"
+          ],
+          "diagnostic_path": [
+            "Verify incoming control power",
+            "Verify transformer and field wiring"
+          ],
+          "escalation": "Equipment will not operate until voltage is restored.",
+          "reset_behavior": "Clears when voltage recovers.",
+          "related_codes": ["5_red_green_off"],
+          "source": "JCI outdoor Table 6",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "9_red_green_on",
+          "code_identifier": "9 red flashes / green ON",
+          "code_type": "led_pattern",
+          "meaning": "High-pressure switch fault with no communication for compressor operation and Y1/Y2 not energized",
+          "root_causes": [
+            "Abnormal HPS event outside active compressor command"
+          ],
+          "diagnostic_path": [
+            "Verify wiring/communication state",
+            "Verify HPS circuit"
+          ],
+          "escalation": "Indicates wiring or pressure issue outside normal operation.",
+          "reset_behavior": "Depends on actual condition.",
+          "related_codes": [],
+          "source": "JCI outdoor Table 6",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "red_on_1_green",
+          "code_identifier": "Red ON / 1 green flash",
+          "code_type": "led_pattern",
+          "meaning": "Outdoor ambient temperature sensor short",
+          "root_causes": [
+            "Sensor short",
+            "Wiring fault"
+          ],
+          "diagnostic_path": [
+            "Ohm sensor",
+            "Inspect harness"
+          ],
+          "escalation": "Replace sensor if shorted.",
+          "reset_behavior": "Clears when sensor reads correctly.",
+          "related_codes": ["red_on_2_green"],
+          "source": "JCI outdoor Table 7",
+          "severity": "service_soon"
+        },
+        {
+          "code_id": "red_on_2_green",
+          "code_identifier": "Red ON / 2 green flashes",
+          "code_type": "led_pattern",
+          "meaning": "Outdoor ambient temperature sensor open",
+          "root_causes": [
+            "Open sensor",
+            "Unplugged sensor",
+            "Broken lead"
+          ],
+          "diagnostic_path": [
+            "Verify sensor connection",
+            "Check sensor resistance"
+          ],
+          "escalation": "Replace sensor or repair wiring.",
+          "reset_behavior": "Clears when sensor reads correctly.",
+          "related_codes": ["red_on_1_green"],
+          "source": "JCI outdoor Table 7",
+          "severity": "service_soon"
+        },
+        {
+          "code_id": "1_red_green_on",
+          "code_identifier": "1 red flash / green ON",
+          "code_type": "led_pattern",
+          "meaning": "Compressor contactor miswire",
+          "root_causes": [
+            "Field wiring error to contactor/compressor outputs"
+          ],
+          "diagnostic_path": [
+            "Verify M / M1 / M2 wiring against diagram"
+          ],
+          "escalation": "Safety concern — verify wiring before operating.",
+          "reset_behavior": "Soft lockout; reset after correction.",
+          "related_codes": ["2_red_green_on"],
+          "source": "JCI outdoor Table 8 wiring faults",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "2_red_green_on",
+          "code_identifier": "2 red flashes / green ON",
+          "code_type": "led_pattern",
+          "meaning": "Y2 present without Y1 (thermostat or field-wiring staging error)",
+          "root_causes": [
+            "Thermostat staging wiring error",
+            "Field-wiring staging error"
+          ],
+          "diagnostic_path": [
+            "Verify thermostat outputs",
+            "Verify staging wiring"
+          ],
+          "escalation": "Staging configuration issue.",
+          "reset_behavior": "Soft-lockout-style reset; two occurrences do not create hard lockout.",
+          "related_codes": ["1_red_green_on"],
+          "source": "JCI outdoor Table 8",
+          "severity": "service_soon"
+        }
+      ]
+    },
+    {
+      "platform_id": "bosch_ids_inverter",
+      "platform_name": "Bosch IDS Inverter Split System",
+      "platform_description": "Bosch IDS 2.0 and newer inverter ducted split systems (BOVA-BVA). Completely different architecture from York/Coleman flash-code furnaces — uses alphanumeric fault codes similar to ductless/inverter equipment. Newer R-454B families add indoor refrigerant leak detection indications.",
+      "applies_to_models": ["Bosch IDS 2.0", "Bosch IDS Light", "Bosch IDS Plus", "Bosch IDS Premium Connected", "Bosch IDS Edge", "Bosch IDS Ultra", "BOVA-BVA inverter ducted splits"],
+      "applies_to_years": "2018-2026",
+      "display_type": "3_digit_alphanumeric",
+      "platform_notes": "Alphanumeric code format. Limited-condition families P**, U**, F**, C**, d** are followed by two digits showing current compressor frequency in Hz while unit continues to run in a limited condition. H5 specifically requires a hard restart even though most other abnormal conditions self-clear when the condition goes away. Most newer R-454B products include 3/4/8 flash indoor leak-detection indications.",
+      "codes": [
+        {
+          "code_id": "code_c3",
+          "code_identifier": "C3",
+          "code_type": "alphanumeric",
+          "meaning": "T3 sensor not reading correctly in cooling",
+          "root_causes": [
+            "Wrong T3 sensor location",
+            "Failed T3 sensor",
+            "Failed T4 sensor"
+          ],
+          "diagnostic_path": [
+            "Inspect sensor placement",
+            "Verify sensor readings"
+          ],
+          "escalation": "Sensor correction required.",
+          "reset_behavior": "Clears when sensor reads correctly.",
+          "related_codes": ["code_e4"],
+          "source": "Bosch IDS 2.0 service documentation",
+          "severity": "service_soon"
+        },
+        {
+          "code_id": "code_e4",
+          "code_identifier": "E4",
+          "code_type": "alphanumeric",
+          "meaning": "Temperature sensor fault (T3/T4/T5/Th/T3L/Tf)",
+          "root_causes": [
+            "Open or shorted sensors",
+            "Wrong sensor connections",
+            "Ambient beyond operating range"
+          ],
+          "diagnostic_path": [
+            "Ohm all suspect sensors",
+            "Check wiring",
+            "Verify operating conditions"
+          ],
+          "escalation": "Multiple sensors to check — isolate specific sensor.",
+          "reset_behavior": "Clears when sensor reads correctly.",
+          "related_codes": ["code_c3", "code_e7"],
+          "source": "Bosch IDS 2.0 service documentation",
+          "severity": "service_soon"
+        },
+        {
+          "code_id": "code_e5",
+          "code_identifier": "E5",
+          "code_type": "alphanumeric",
+          "meaning": "High/low voltage protection",
+          "root_causes": [
+            "Power supply ≥270V or <172V",
+            "Control-board issue"
+          ],
+          "diagnostic_path": [
+            "Verify supply voltage",
+            "Check DC bus condition"
+          ],
+          "escalation": "U** is the limited-condition family tied to this protection state.",
+          "reset_behavior": "Self-clears when voltage normalizes.",
+          "related_codes": ["u_family"],
+          "source": "Bosch IDS 2.0 service documentation",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_e6",
+          "code_identifier": "E6",
+          "code_type": "alphanumeric",
+          "meaning": "Outdoor DC fan motor fault",
+          "root_causes": [
+            "Failed motor",
+            "Blocked or damaged blade",
+            "Extreme weather",
+            "Electrical issue"
+          ],
+          "diagnostic_path": [
+            "Verify blade freedom",
+            "Verify motor operation",
+            "Verify motor power"
+          ],
+          "escalation": "Motor replacement likely if electrical and mechanical check good.",
+          "reset_behavior": "Manual reset required.",
+          "related_codes": [],
+          "source": "Bosch IDS 2.0 service documentation",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_e7",
+          "code_identifier": "E7",
+          "code_type": "alphanumeric",
+          "meaning": "T5 sensor not reading correctly",
+          "root_causes": [
+            "Wrong location of discharge-temp sensor",
+            "Wrong T5/Tf connection on board"
+          ],
+          "diagnostic_path": [
+            "Verify sensor placement",
+            "Verify connector positions on board"
+          ],
+          "escalation": "Installation error likely; verify diagrams.",
+          "reset_behavior": "Clears when sensor reads correctly.",
+          "related_codes": ["code_e4"],
+          "source": "Bosch IDS 2.0 service documentation",
+          "severity": "service_soon"
+        },
+        {
+          "code_id": "code_e9",
+          "code_identifier": "E9",
+          "code_type": "alphanumeric",
+          "meaning": "EEPROM IC20 fault",
+          "root_causes": [
+            "Poor contact of EEPROM IC20",
+            "Improper installation"
+          ],
+          "diagnostic_path": [
+            "Inspect EEPROM chip seating"
+          ],
+          "escalation": "Board/electronics fault, not refrigerant-side.",
+          "reset_behavior": "Requires board service if persistent.",
+          "related_codes": ["code_h0"],
+          "source": "Bosch IDS 2.0 service documentation",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_h0",
+          "code_identifier": "H0",
+          "code_type": "alphanumeric",
+          "meaning": "Communication fault in EEPROM IC14 chip",
+          "root_causes": [
+            "Control-board failure"
+          ],
+          "diagnostic_path": [
+            "Verify board connections",
+            "Board replacement likely if persistent"
+          ],
+          "escalation": "Board-level fault.",
+          "reset_behavior": "Board service required.",
+          "related_codes": ["code_e9"],
+          "source": "Bosch IDS 2.0 service documentation",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_h8",
+          "code_identifier": "H8",
+          "code_type": "alphanumeric",
+          "meaning": "Pressure transducer fault",
+          "root_causes": [
+            "Loose PT wiring",
+            "Failed pressure transducer"
+          ],
+          "diagnostic_path": [
+            "Verify connector integrity",
+            "Check PT output"
+          ],
+          "escalation": "Transducer replacement likely.",
+          "reset_behavior": "Clears when transducer reads correctly.",
+          "related_codes": [],
+          "source": "Bosch IDS 2.0 service documentation",
+          "severity": "service_soon"
+        },
+        {
+          "code_id": "code_p0",
+          "code_identifier": "P0",
+          "code_type": "alphanumeric",
+          "meaning": "Control board overheated",
+          "root_causes": [
+            "Poor heat dissipation",
+            "Failed Tf sensor",
+            "Wrong T5/Tf connection",
+            "Outdoor motor issue causing board overheat"
+          ],
+          "diagnostic_path": [
+            "Verify board cooling",
+            "Check Tf sensor",
+            "Verify motor operation"
+          ],
+          "escalation": "Falls under F** limited-condition family.",
+          "reset_behavior": "Self-clears when temperature drops.",
+          "related_codes": ["f_family"],
+          "source": "Bosch IDS 2.0 service documentation",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_p1_f1",
+          "code_identifier": "P1 / F1",
+          "code_type": "alphanumeric",
+          "meaning": "High-pressure protection",
+          "root_causes": [
+            "Poor heat exchange on coil",
+            "Fan failure",
+            "Service valves not open",
+            "Blocked TXV/EEV/filter-drier",
+            "Overcharge"
+          ],
+          "diagnostic_path": [
+            "Clean coils",
+            "Verify fan operation",
+            "Verify service valves",
+            "Check for restrictions",
+            "Verify charge"
+          ],
+          "escalation": "One of the most important real-world IDS codes.",
+          "reset_behavior": "Self-clears when pressure drops.",
+          "related_codes": ["code_p2_h5"],
+          "source": "Bosch IDS 2.0 service documentation",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_p2_h5",
+          "code_identifier": "P2 / H5",
+          "code_type": "alphanumeric",
+          "meaning": "Low-pressure protection",
+          "root_causes": [
+            "Poor heat exchange",
+            "Fan failure",
+            "Service valves not open",
+            "Blocked TXV/EEV/filter-drier",
+            "Undercharge"
+          ],
+          "diagnostic_path": [
+            "Verify indoor airflow",
+            "Verify service valves",
+            "Check for restrictions",
+            "Verify charge"
+          ],
+          "escalation": "H5 specifically requires HARD RESTART — does NOT self-clear when condition goes away (unlike most other abnormal conditions).",
+          "reset_behavior": "H5 requires hard restart; P2 self-clears.",
+          "related_codes": ["code_p1_f1"],
+          "source": "Bosch IDS 2.0 service documentation",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_p3",
+          "code_identifier": "P3",
+          "code_type": "alphanumeric",
+          "meaning": "Compressor over-current protection",
+          "root_causes": [
+            "Poor heat exchange",
+            "Fan failure",
+            "Valves not open",
+            "Restriction",
+            "Overcharge",
+            "Control board issue",
+            "Compressor issue"
+          ],
+          "diagnostic_path": [
+            "Verify operating conditions",
+            "Check compressor current",
+            "Evaluate refrigerant circuit"
+          ],
+          "escalation": "Persistent overcurrent threatens compressor.",
+          "reset_behavior": "Self-clears when condition normalizes.",
+          "related_codes": ["code_p1_f1"],
+          "source": "Bosch IDS 2.0 service documentation",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_p4",
+          "code_identifier": "P4",
+          "code_type": "alphanumeric",
+          "meaning": "High compressor discharge temperature protection",
+          "root_causes": [
+            "Undercharge",
+            "High compression ratio",
+            "Poor cooling"
+          ],
+          "diagnostic_path": [
+            "Evaluate refrigerant circuit",
+            "Check thermal load conditions"
+          ],
+          "escalation": "Sits in d** limited-condition family before worsening into hard fault.",
+          "reset_behavior": "Self-clears when temperature drops.",
+          "related_codes": ["d_family"],
+          "source": "Bosch IDS 2.0 service documentation",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_p5",
+          "code_identifier": "P5",
+          "code_type": "alphanumeric",
+          "meaning": "Confirmed IDS 2.0 protection code (specific wording requires manual extraction)",
+          "root_causes": [
+            "System protection triggered — specific cause requires Bosch manual consultation"
+          ],
+          "diagnostic_path": [
+            "Consult Bosch IDS 2.0 service manual for specific P5 procedure"
+          ],
+          "escalation": "Part of P** family protection codes.",
+          "reset_behavior": "Depends on specific protection trigger.",
+          "related_codes": ["code_p4", "code_p8"],
+          "source": "Bosch IDS 2.0 troubleshooting (specific table requires extraction)",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_p8",
+          "code_identifier": "P8",
+          "code_type": "alphanumeric",
+          "meaning": "Confirmed IDS 2.0 protection code (specific wording requires manual extraction)",
+          "root_causes": [
+            "System protection triggered — specific cause requires Bosch manual consultation"
+          ],
+          "diagnostic_path": [
+            "Consult Bosch IDS 2.0 service manual for specific P8 procedure"
+          ],
+          "escalation": "Part of P** family protection codes.",
+          "reset_behavior": "Depends on specific protection trigger.",
+          "related_codes": ["code_p5", "code_ph"],
+          "source": "Bosch IDS 2.0 troubleshooting (specific table requires extraction)",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_ph",
+          "code_identifier": "PH",
+          "code_type": "alphanumeric",
+          "meaning": "Confirmed IDS 2.0 protection code (specific wording requires manual extraction)",
+          "root_causes": [
+            "System protection triggered — specific cause requires Bosch manual consultation"
+          ],
+          "diagnostic_path": [
+            "Consult Bosch IDS 2.0 service manual for specific PH procedure"
+          ],
+          "escalation": "Part of P** family protection codes.",
+          "reset_behavior": "Depends on specific protection trigger.",
+          "related_codes": ["code_p8"],
+          "source": "Bosch IDS 2.0 troubleshooting (specific table requires extraction)",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_l_family",
+          "code_identifier": "L0-L9 / LO-L9",
+          "code_type": "alphanumeric",
+          "meaning": "IPM module protection",
+          "root_causes": [
+            "Failed control board",
+            "Failed compressor",
+            "Abnormal pressure"
+          ],
+          "diagnostic_path": [
+            "Verify compressor condition",
+            "Verify pressure conditions",
+            "Inspect inverter/IPM module"
+          ],
+          "escalation": "Important inverter-specific family — do NOT treat like a normal low-voltage code.",
+          "reset_behavior": "Manual intervention typically required.",
+          "related_codes": ["code_e5"],
+          "source": "Bosch IDS 2.0 service documentation",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_atl",
+          "code_identifier": "AtL",
+          "code_type": "alphanumeric",
+          "meaning": "Ambient temperature limited condition",
+          "root_causes": [
+            "Ambient beyond operating range",
+            "Incorrect O/B thermostat setting",
+            "T4 sensor fault"
+          ],
+          "diagnostic_path": [
+            "Verify ambient conditions",
+            "Verify thermostat O/B configuration",
+            "Check T4 sensor"
+          ],
+          "escalation": "Limited condition, NOT necessarily a hardware failure.",
+          "reset_behavior": "Clears when ambient returns to operating range.",
+          "related_codes": [],
+          "source": "Bosch IDS 2.0 service documentation",
+          "severity": "informational"
+        },
+        {
+          "code_id": "code_df",
+          "code_identifier": "dF",
+          "code_type": "status_display",
+          "meaning": "Defrost mode",
+          "root_causes": [],
+          "diagnostic_path": ["No action — normal defrost cycle status"],
+          "escalation": "None — this is a status display, not a service fault.",
+          "reset_behavior": "Status only; clears when defrost ends.",
+          "related_codes": [],
+          "source": "Bosch IDS 2.0 service documentation",
+          "severity": "informational"
+        },
+        {
+          "code_id": "r454b_3_flash",
+          "code_identifier": "Indoor 3 flashes (R-454B units)",
+          "code_type": "flash_count",
+          "meaning": "Refrigerant leak detection indication (R-454B indoor units)",
+          "root_causes": [
+            "Possible refrigerant leak detected by indoor leak detection system",
+            "Sensor problem",
+            "Poor connection"
+          ],
+          "diagnostic_path": [
+            "Inspect indoor unit for visible leaks",
+            "Verify sensor wiring and connections",
+            "Consult Bosch R-454B service procedures"
+          ],
+          "escalation": "A2L refrigerant leak requires mitigation procedure.",
+          "reset_behavior": "Requires service verification.",
+          "related_codes": ["r454b_4_flash", "r454b_8_flash"],
+          "source": "Bosch R-454B FAQ",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "r454b_4_flash",
+          "code_identifier": "Indoor 4 flashes (R-454B units)",
+          "code_type": "flash_count",
+          "meaning": "Refrigerant leak detection indication (R-454B indoor units)",
+          "root_causes": [
+            "Possible refrigerant leak, sensor problem, or poor connection"
+          ],
+          "diagnostic_path": [
+            "Inspect indoor unit",
+            "Verify leak detection sensor",
+            "Consult Bosch R-454B service procedures"
+          ],
+          "escalation": "A2L refrigerant leak requires mitigation procedure.",
+          "reset_behavior": "Requires service verification.",
+          "related_codes": ["r454b_3_flash", "r454b_8_flash"],
+          "source": "Bosch R-454B FAQ",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "r454b_8_flash",
+          "code_identifier": "Indoor 8 flashes (R-454B units)",
+          "code_type": "flash_count",
+          "meaning": "Refrigerant leak detection indication (R-454B indoor units)",
+          "root_causes": [
+            "Possible refrigerant leak, sensor problem, or poor connection"
+          ],
+          "diagnostic_path": [
+            "Inspect indoor unit",
+            "Verify leak detection sensor",
+            "Consult Bosch R-454B service procedures"
+          ],
+          "escalation": "A2L refrigerant leak requires mitigation procedure.",
+          "reset_behavior": "Requires service verification.",
+          "related_codes": ["r454b_3_flash", "r454b_4_flash"],
+          "source": "Bosch R-454B FAQ",
+          "severity": "safety_critical"
+        }
+      ]
+    }
+  ],
+  "communicating_ecosystem": {
+    "name": "Affinity / Hx",
+    "role": "display_layer_only",
+    "notes": "The York-family communicating system uses Hx communicating controls with a bus labeled A+, B-, R, and GND/C. Diagrams show communicating outdoor unit ↔ communicating furnace/air-handler ↔ Hx thermostat. In communicating applications, fault codes are stored in the thermostat. The Hx thermostat/user manual shows Status, Service/SVC, Log, and app Fault notifications, plus dealer-access functions. However, NO separate thermostat-only numeric code dictionary exists analogous to Rheem EcoNet or Bosch IDS. Safest model for the tool: thermostat/app = display/storage/notification/service access layer, equipment board = source of the actual fault dictionary. SSN (Simplified Service Network) does NOT have a separate public numeric fault dictionary — do not build a separate SSN code family."
+  },
+  "cross_generation_conflicts": [
+    {
+      "code_identifier": "4 red flashes",
+      "conflict_description": "On TG9S/TM8Y legacy boards, 4 red flashes means ONLY main limit switch open during call for heat. On YP9C modulating boards, 4 red flashes expands to high limit open, defective temperature sensor, OR open 24V fuse. The YP9C meaning is broader — a tech treating it narrowly will miss sensor and fuse causes.",
+      "platforms_affected": ["jci_legacy_flash", "yp9c_modulating"],
+      "disambiguation_guidance": "Identify furnace model first. TG9S/TM8Y single-stage = legacy meaning (limit only). YP9C/CP9C/LP9C/TP9C modulating = broader meaning (limit OR sensor OR fuse)."
+    },
+    {
+      "code_identifier": "5 red flashes",
+      "conflict_description": "On TG9S/TM8Y legacy boards, 5 red flashes means rollout/limit-circuit-open (usually manual-reset rollout). On YP9C modulating boards, 5 red flashes can be rollout switch OR condensate pressure switch open. YP9C adds condensate safety circuit to this code.",
+      "platforms_affected": ["jci_legacy_flash", "yp9c_modulating"],
+      "disambiguation_guidance": "Physically identify which switch is open before troubleshooting. On YP9C, check condensate drain path even if rollout switch appears to be the trigger."
+    },
+    {
+      "code_identifier": "6 red flashes",
+      "conflict_description": "On TG9S/TM8Y legacy boards, 6 red flashes means pressure switch reopened four times during heat call (pressure/venting issue). On YP9C modulating boards, 6 red flashes means gas valve communication error (completely different — communication issue between board and gas valve).",
+      "platforms_affected": ["jci_legacy_flash", "yp9c_modulating"],
+      "disambiguation_guidance": "This is the most severe cross-generation conflict in the York family. Verify furnace model before troubleshooting — legacy interpretation leads tech to inducer/vent, YP9C interpretation leads to gas valve wiring."
+    }
+  ],
+  "electric_heat_notes": {
+    "conventional_electric_furnace_codes": "None verified publicly. Johnson Controls-era York/Coleman residential air handlers and heater kits do not have a meaningful public standalone electric-heat code dictionary. Public air-handler installation manuals are wiring/configuration heavy, not heater-fault-table heavy.",
+    "common_non_code_electric_service_calls": [
+      "Heater relay/contactor not pulling in",
+      "Open strip element",
+      "Limit trip from low airflow",
+      "Miswired thermostat staging",
+      "Open low-voltage fuse",
+      "Open transformer"
+    ],
+    "manufactured_home_specifics": "Not applicable — York/Coleman brands do not primarily serve manufactured-home market."
+  }
+}

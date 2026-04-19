@@ -12,13 +12,13 @@ import brandFamiliesIndex from './brand-families-index.json';
 // Dynamic imports for lazy loading of brand family data
 const brandFamilyLoaders = {
   nortek_nordyne: () => import('./nortek-nordyne.json'),
+  bosch_york: () => import('./bosch-york.json'),
   // Additional families added as they're normalized:
   // carrier_global: () => import('./carrier-global.json'),
   // trane_technologies: () => import('./trane-technologies.json'),
   // lennox_allied: () => import('./lennox-allied.json'),
   // daikin_goodman: () => import('./daikin-goodman.json'),
   // rheem_ruud: () => import('./rheem-ruud.json'),
-  // bosch_york: () => import('./bosch-york.json'),
 };
 
 export const getBrandFamiliesIndex = () => {
