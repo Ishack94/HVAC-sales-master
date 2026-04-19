@@ -3,14 +3,46 @@
   "brand_family_name": "Bosch / York / Coleman / Luxaire",
   "corporate_owner": "Bosch Home Comfort Group (acquired JCI HVAC August 2025)",
   "brands": [
-    {"name": "York", "slug": "york", "notes": "Primary JCI residential brand, now Bosch-owned"},
-    {"name": "Coleman", "slug": "coleman", "notes": "Badge variant, identical Johnson Controls hardware"},
-    {"name": "Luxaire", "slug": "luxaire", "notes": "Badge variant, identical Johnson Controls hardware"},
-    {"name": "Champion", "slug": "champion", "notes": "Badge variant, identical Johnson Controls hardware"},
-    {"name": "Guardian", "slug": "guardian", "notes": "Badge variant, identical Johnson Controls hardware"},
-    {"name": "Fraser-Johnston", "slug": "fraser-johnston", "notes": "Badge variant, identical Johnson Controls hardware"},
-    {"name": "Evcon", "slug": "evcon", "notes": "Badge variant, identical Johnson Controls hardware"},
-    {"name": "Bosch", "slug": "bosch", "notes": "Bosch-branded IDS inverter equipment, different architecture from JCI brands"}
+    {
+      "name": "York",
+      "slug": "york",
+      "notes": "Primary JCI residential brand, now Bosch-owned"
+    },
+    {
+      "name": "Coleman",
+      "slug": "coleman",
+      "notes": "Badge variant, identical Johnson Controls hardware"
+    },
+    {
+      "name": "Luxaire",
+      "slug": "luxaire",
+      "notes": "Badge variant, identical Johnson Controls hardware"
+    },
+    {
+      "name": "Champion",
+      "slug": "champion",
+      "notes": "Badge variant, identical Johnson Controls hardware"
+    },
+    {
+      "name": "Guardian",
+      "slug": "guardian",
+      "notes": "Badge variant, identical Johnson Controls hardware"
+    },
+    {
+      "name": "Fraser-Johnston",
+      "slug": "fraser-johnston",
+      "notes": "Badge variant, identical Johnson Controls hardware"
+    },
+    {
+      "name": "Evcon",
+      "slug": "evcon",
+      "notes": "Badge variant, identical Johnson Controls hardware"
+    },
+    {
+      "name": "Bosch",
+      "slug": "bosch",
+      "notes": "Bosch-branded IDS inverter equipment, different architecture from JCI brands"
+    }
   ],
   "structural_overview": "As of 2026, the field-installed base is still mostly Johnson Controls-era residential hardware even though Bosch completed the JCI HVAC acquisition on August 1, 2025. The practical platform split is: (1) legacy JCI 24V furnace IFC flash-code boards used on TG8S/TG9S/TM8Y and badge-equivalent Coleman/Luxaire/Champion units; (2) modulating/variable-capacity YP9C/CP9C/LP9C/TP9C boards with amber status + red fault codes and pressure transducer as primary flow sensor; (3) outdoor communicating-capable dual-LED boards on some split AC/heat pump units; (4) Affinity/Hx communicating ecosystem (display/storage layer only, not a separate code dictionary); (5) Bosch IDS inverter split systems with alphanumeric fault codes closer to ductless equipment logic. No publicly documented new Bosch-era residential furnace fault-code family has emerged yet for 2026 equipment.",
   "field_quirks": [
@@ -45,8 +77,19 @@
       "platform_id": "jci_legacy_flash",
       "platform_name": "Legacy JCI 24V Furnace IFC Flash-Code Boards",
       "platform_description": "Classic Johnson Controls residential furnace ignition control with single-color LED flash codes, soft/hard lockout logic, and LAST ERROR history function. Used on TG8S, TG9S, TM8Y and sibling Coleman/Luxaire/Champion/Guardian/Fraser-Johnston/Evcon legacy furnaces.",
-      "applies_to_models": ["TG8S", "TG9S", "TM8Y", "Coleman/Luxaire/Champion equivalent single-stage and two-stage models"],
+      "applies_to_models": [
+        "TG8S",
+        "TG9S",
+        "TM8Y",
+        "Coleman/Luxaire/Champion equivalent single-stage and two-stage models"
+      ],
       "applies_to_years": "2005-2020 (installed base remains common)",
+      "model_number_prefixes": [
+        "TG8S",
+        "TG9S",
+        "TM8Y"
+      ],
+      "visual_identification": "Single LED that flashes slow green for normal, slow amber for heat call, numeric red for faults, continuous amber for low flame. Used on TG8S/TG9S/TM8Y single-stage and two-stage furnaces.",
       "display_type": "numeric_flash",
       "platform_notes": "Board stores up to 5 errors. Repeat-trigger lockouts use 1-hour soft lockout plus power-cycle hard lockout logic depending on code. Slow green flash indicates no thermostat call (normal). Slow amber flash indicates normal operation with call for heat.",
       "codes": [
@@ -56,10 +99,14 @@
           "code_type": "status_display",
           "meaning": "Normal operation, no thermostat call",
           "root_causes": [],
-          "diagnostic_path": ["No action — normal status"],
+          "diagnostic_path": [
+            "No action — normal status"
+          ],
           "escalation": "None",
           "reset_behavior": "Status only",
-          "related_codes": ["slow_amber_flash"],
+          "related_codes": [
+            "slow_amber_flash"
+          ],
           "source": "TG9S/TM8Y install manuals",
           "severity": "informational"
         },
@@ -69,10 +116,14 @@
           "code_type": "status_display",
           "meaning": "Normal operation with call for heat",
           "root_causes": [],
-          "diagnostic_path": ["No action — normal status during heat call"],
+          "diagnostic_path": [
+            "No action — normal status during heat call"
+          ],
           "escalation": "None",
           "reset_behavior": "Status only during heat call",
-          "related_codes": ["slow_green_flash"],
+          "related_codes": [
+            "slow_green_flash"
+          ],
           "source": "TG9S/TM8Y install manuals",
           "severity": "informational"
         },
@@ -93,7 +144,9 @@
           ],
           "escalation": "If twinning wiring and power are correct, board fault is possible.",
           "reset_behavior": "Clears when twinning issue is resolved.",
-          "related_codes": ["9_red_flashes"],
+          "related_codes": [
+            "9_red_flashes"
+          ],
           "source": "TG9S/TM8Y install manuals",
           "severity": "urgent"
         },
@@ -117,7 +170,9 @@
           ],
           "escalation": "Repeated low flame after cleaning and grounding points to combustion quality or board sensitivity.",
           "reset_behavior": "Status indicator during operation; does not itself lockout until flame drops below lockout threshold.",
-          "related_codes": ["8_red_flashes"],
+          "related_codes": [
+            "8_red_flashes"
+          ],
           "source": "TG9S/TM8Y install manuals",
           "severity": "service_soon"
         },
@@ -140,7 +195,9 @@
           ],
           "escalation": "If power is confirmed at board and LED remains off, board failure is likely.",
           "reset_behavior": "No reset until power restored.",
-          "related_codes": ["steady_led"],
+          "related_codes": [
+            "steady_led"
+          ],
           "source": "TG9S/TM8Y install manuals",
           "severity": "service_soon"
         },
@@ -161,7 +218,9 @@
           ],
           "escalation": "Board-level fault indicator if fuse and power check out.",
           "reset_behavior": "Depends on specific fault condition.",
-          "related_codes": ["led_off"],
+          "related_codes": [
+            "led_off"
+          ],
           "source": "TG9S/TM8Y install manuals",
           "severity": "service_soon"
         },
@@ -182,7 +241,11 @@
           ],
           "escalation": "Leaking gas valve is a safety concern. If no external cause, gas valve or control fault becomes likely.",
           "reset_behavior": "Clears when condition is removed.",
-          "related_codes": ["7_red_flashes", "8_red_flashes", "continuous_amber_flash"],
+          "related_codes": [
+            "7_red_flashes",
+            "8_red_flashes",
+            "continuous_amber_flash"
+          ],
           "source": "TG9S/TM8Y install manuals",
           "severity": "safety_critical"
         },
@@ -203,7 +266,11 @@
           ],
           "escalation": "If switch and inducer are normal but board still sees closed, board fault is more likely.",
           "reset_behavior": "Clears when startup proofing is normal.",
-          "related_codes": ["3_red_flashes", "6_red_flashes", "13_red_flashes"],
+          "related_codes": [
+            "3_red_flashes",
+            "6_red_flashes",
+            "13_red_flashes"
+          ],
           "source": "TG9S/TM8Y install manuals",
           "severity": "urgent"
         },
@@ -226,7 +293,11 @@
           ],
           "escalation": "Repeated with verified draft pressure points to switch or control.",
           "reset_behavior": "If recurring during call, can advance to lockout logic.",
-          "related_codes": ["2_red_flashes", "6_red_flashes", "13_red_flashes"],
+          "related_codes": [
+            "2_red_flashes",
+            "6_red_flashes",
+            "13_red_flashes"
+          ],
           "source": "TG9S/TM8Y install manuals",
           "severity": "urgent"
         },
@@ -249,7 +320,10 @@
           ],
           "escalation": "If limit does not re-close in time, escalates to 11 red. Repeated trips five times trigger 1-hour soft lockout.",
           "reset_behavior": "1-hour soft lockout after repeated trips; otherwise clears when limit recloses.",
-          "related_codes": ["5_red_flashes", "11_red_flashes"],
+          "related_codes": [
+            "5_red_flashes",
+            "11_red_flashes"
+          ],
           "source": "TG9S/TM8Y install manuals",
           "severity": "urgent",
           "field_consensus_notes": "CROSS-GENERATION CONFLICT with YP9C: On YP9C boards, Code 4 can mean high limit open, defective temp sensor, OR open 24V fuse — broader than TG9S/TM8Y. Verify board before trusting this meaning."
@@ -273,7 +347,10 @@
           ],
           "escalation": "Repeated rollout or non-resettable rollout is a hard combustion safety problem.",
           "reset_behavior": "Hard lockout; power must be cycled after fault is corrected.",
-          "related_codes": ["4_red_flashes", "11_red_flashes"],
+          "related_codes": [
+            "4_red_flashes",
+            "11_red_flashes"
+          ],
           "source": "TG9S/TM8Y install manuals",
           "severity": "safety_critical",
           "field_consensus_notes": "CROSS-GENERATION CONFLICT with YP9C: On YP9C boards, Code 5 can also indicate condensate pressure switch open. Check condensate drainage."
@@ -295,7 +372,10 @@
           ],
           "escalation": "Pattern indicates marginal draft or switch.",
           "reset_behavior": "1-hour lockout then restart.",
-          "related_codes": ["2_red_flashes", "3_red_flashes"],
+          "related_codes": [
+            "2_red_flashes",
+            "3_red_flashes"
+          ],
           "source": "TG9S/TM8Y install manuals",
           "severity": "urgent",
           "field_consensus_notes": "CROSS-GENERATION CONFLICT with YP9C: On YP9C boards, Code 6 means gas valve communication error — completely different. Verify board."
@@ -319,7 +399,10 @@
           ],
           "escalation": "Repeated trials exhausted; retry after lockout.",
           "reset_behavior": "1-hour lockout then retry.",
-          "related_codes": ["8_red_flashes", "continuous_amber_flash"],
+          "related_codes": [
+            "8_red_flashes",
+            "continuous_amber_flash"
+          ],
           "source": "TG9S/TM8Y install manuals",
           "severity": "urgent"
         },
@@ -340,7 +423,10 @@
           ],
           "escalation": "Repeated flame loss indicates combustion instability.",
           "reset_behavior": "1-hour lockout then retry.",
-          "related_codes": ["7_red_flashes", "continuous_amber_flash"],
+          "related_codes": [
+            "7_red_flashes",
+            "continuous_amber_flash"
+          ],
           "source": "TG9S/TM8Y install manuals",
           "severity": "urgent"
         },
@@ -361,7 +447,10 @@
           ],
           "escalation": "Ignition sequence inhibited until corrected.",
           "reset_behavior": "Clears when corrected.",
-          "related_codes": ["steady_led", "continuous_amber_flash"],
+          "related_codes": [
+            "steady_led",
+            "continuous_amber_flash"
+          ],
           "source": "TG9S/TM8Y install manuals",
           "severity": "service_soon"
         },
@@ -381,7 +470,9 @@
           ],
           "escalation": "Ignition sequence inhibited while fault exists; safety concern.",
           "reset_behavior": "Inducer and blower run, ignition inhibited.",
-          "related_codes": ["1_red_flash"],
+          "related_codes": [
+            "1_red_flash"
+          ],
           "source": "TG9S/TM8Y install manuals",
           "severity": "safety_critical"
         },
@@ -401,7 +492,10 @@
           ],
           "escalation": "Strong blower failure indicator on this family.",
           "reset_behavior": "Hard lockout; power cycle required after correction.",
-          "related_codes": ["4_red_flashes", "5_red_flashes"],
+          "related_codes": [
+            "4_red_flashes",
+            "5_red_flashes"
+          ],
           "source": "TG9S/TM8Y install manuals",
           "severity": "urgent"
         },
@@ -424,7 +518,10 @@
           ],
           "escalation": "Follows active fault logic; clears when proof is correct.",
           "reset_behavior": "Clears when proof established.",
-          "related_codes": ["2_red_flashes", "3_red_flashes"],
+          "related_codes": [
+            "2_red_flashes",
+            "3_red_flashes"
+          ],
           "source": "TM8Y manual",
           "severity": "urgent"
         }
@@ -434,8 +531,20 @@
       "platform_id": "yp9c_modulating",
       "platform_name": "YP9C Modulating Variable-Capacity Furnace Board",
       "platform_description": "Johnson Controls modulating furnace board family with amber status displays, red fault codes, pressure transducer as primary flow sensor, gas-valve communication logic, and ID-plug logic. Used on YP9C, CP9C, LP9C, TP9C and sibling modulating families.",
-      "applies_to_models": ["YP9C", "CP9C", "LP9C", "TP9C"],
+      "applies_to_models": [
+        "YP9C",
+        "CP9C",
+        "LP9C",
+        "TP9C"
+      ],
       "applies_to_years": "2015-2026",
+      "model_number_prefixes": [
+        "YP9C",
+        "CP9C",
+        "LP9C",
+        "TP9C"
+      ],
+      "visual_identification": "Modulating furnace board with separate amber (status) and red (fault) LED indicators. Pressure transducer is the primary flow sensor, not a simple switch.",
       "display_type": "numeric_flash",
       "platform_notes": "Materially different from legacy JCI platform. Adds amber operating/status displays, pressure transducer as primary flow sensor, gas-valve communication logic, and ID-plug logic. Different fault meanings for the same flash numbers compared to TG9S/TM8Y. Normal flame current ~3.7 µA, low-flame warning at 1.5 µA, lockout at 0.1 µA.",
       "codes": [
@@ -445,10 +554,14 @@
           "code_type": "status_display",
           "meaning": "Cooling call normal",
           "root_causes": [],
-          "diagnostic_path": ["No action — normal cooling status"],
+          "diagnostic_path": [
+            "No action — normal cooling status"
+          ],
           "escalation": "None",
           "reset_behavior": "Status only",
-          "related_codes": ["2_amber"],
+          "related_codes": [
+            "2_amber"
+          ],
           "source": "YP9C install manual",
           "severity": "informational"
         },
@@ -458,10 +571,15 @@
           "code_type": "status_display",
           "meaning": "Heating call normal",
           "root_causes": [],
-          "diagnostic_path": ["No action — normal heating status"],
+          "diagnostic_path": [
+            "No action — normal heating status"
+          ],
           "escalation": "None",
           "reset_behavior": "Status only during heat call",
-          "related_codes": ["1_amber", "3_amber"],
+          "related_codes": [
+            "1_amber",
+            "3_amber"
+          ],
           "source": "YP9C install manual",
           "severity": "informational"
         },
@@ -471,10 +589,14 @@
           "code_type": "status_display",
           "meaning": "Burner on after thermostat satisfied / end of heat cycle",
           "root_causes": [],
-          "diagnostic_path": ["No action — normal cycle end status"],
+          "diagnostic_path": [
+            "No action — normal cycle end status"
+          ],
           "escalation": "None",
           "reset_behavior": "Status only during end-of-cycle",
-          "related_codes": ["2_amber"],
+          "related_codes": [
+            "2_amber"
+          ],
           "source": "YP9C install manual",
           "severity": "informational"
         },
@@ -495,7 +617,9 @@
           ],
           "escalation": "Persistent condition may trigger limit-related fault.",
           "reset_behavior": "Clears when airflow is restored.",
-          "related_codes": ["4_red"],
+          "related_codes": [
+            "4_red"
+          ],
           "source": "YP9C install manual",
           "severity": "service_soon"
         },
@@ -516,7 +640,9 @@
           ],
           "escalation": "Persistent condition may trigger pressure-switch fault.",
           "reset_behavior": "Clears when vent/condensate is restored.",
-          "related_codes": ["3_red"],
+          "related_codes": [
+            "3_red"
+          ],
           "source": "YP9C install manual",
           "severity": "service_soon"
         },
@@ -526,7 +652,9 @@
           "code_type": "status_display",
           "meaning": "Heat-pump heating normal",
           "root_causes": [],
-          "diagnostic_path": ["No action — normal heat pump operation"],
+          "diagnostic_path": [
+            "No action — normal heat pump operation"
+          ],
           "escalation": "None",
           "reset_behavior": "Status only",
           "related_codes": [],
@@ -551,7 +679,9 @@
           ],
           "escalation": "Warning at 1.5 µA, lockout at 0.1 µA.",
           "reset_behavior": "Status indicator during operation.",
-          "related_codes": ["8_red"],
+          "related_codes": [
+            "8_red"
+          ],
           "source": "YP9C install manual",
           "severity": "service_soon"
         },
@@ -570,7 +700,10 @@
           ],
           "escalation": "Leaking valve is a safety concern.",
           "reset_behavior": "Clears when condition is removed.",
-          "related_codes": ["7_red", "8_red"],
+          "related_codes": [
+            "7_red",
+            "8_red"
+          ],
           "source": "YP9C install manual",
           "severity": "safety_critical"
         },
@@ -591,7 +724,9 @@
           ],
           "escalation": "Transducer/switch disagreement indicates sensor or board issue.",
           "reset_behavior": "Clears when startup proofing is normal.",
-          "related_codes": ["3_red"],
+          "related_codes": [
+            "3_red"
+          ],
           "source": "YP9C install manual",
           "severity": "urgent"
         },
@@ -612,7 +747,9 @@
           ],
           "escalation": "If transducer reads correct but switch doesn't agree, switch or board input issue.",
           "reset_behavior": "Clears when proof establishes.",
-          "related_codes": ["2_red"],
+          "related_codes": [
+            "2_red"
+          ],
           "source": "YP9C install manual",
           "severity": "urgent"
         },
@@ -634,7 +771,9 @@
           ],
           "escalation": "Multiple possible causes; isolate before replacing components.",
           "reset_behavior": "Clears when condition is resolved.",
-          "related_codes": ["11_red"],
+          "related_codes": [
+            "11_red"
+          ],
           "source": "YP9C install manual",
           "severity": "urgent",
           "field_consensus_notes": "CROSS-GENERATION CONFLICT with TG9S/TM8Y: On legacy boards, Code 4 means ONLY main limit open — narrower meaning. YP9C Code 4 is broader."
@@ -655,7 +794,9 @@
           ],
           "escalation": "Rollout is a hard combustion safety problem.",
           "reset_behavior": "Hard lockout if rollout; condensate may clear with drain service.",
-          "related_codes": ["4_red"],
+          "related_codes": [
+            "4_red"
+          ],
           "source": "YP9C install manual",
           "severity": "safety_critical",
           "field_consensus_notes": "CROSS-GENERATION CONFLICT with TG9S/TM8Y: On legacy boards, Code 5 is rollout/manual-reset safety only — YP9C also includes condensate switch."
@@ -677,7 +818,9 @@
           ],
           "escalation": "Communication issue blocks valve operation entirely.",
           "reset_behavior": "Clears when communication is restored.",
-          "related_codes": ["10_red"],
+          "related_codes": [
+            "10_red"
+          ],
           "source": "YP9C install manual",
           "severity": "urgent",
           "field_consensus_notes": "CROSS-GENERATION CONFLICT with TG9S/TM8Y: On legacy boards, Code 6 means pressure switch reopened — completely different from YP9C gas valve communication meaning."
@@ -700,7 +843,9 @@
           ],
           "escalation": "Repeated trials exhausted.",
           "reset_behavior": "1-hour lockout then retry.",
-          "related_codes": ["8_red"],
+          "related_codes": [
+            "8_red"
+          ],
           "source": "YP9C install manual",
           "severity": "urgent"
         },
@@ -721,7 +866,10 @@
           ],
           "escalation": "Repeated flame loss indicates combustion instability.",
           "reset_behavior": "1-hour lockout then retry.",
-          "related_codes": ["7_red", "rapid_amber"],
+          "related_codes": [
+            "7_red",
+            "rapid_amber"
+          ],
           "source": "YP9C install manual",
           "severity": "urgent"
         },
@@ -761,7 +909,9 @@
           ],
           "escalation": "Safety concern until resolved.",
           "reset_behavior": "Clears when short is corrected.",
-          "related_codes": ["6_red"],
+          "related_codes": [
+            "6_red"
+          ],
           "source": "YP9C install manual",
           "severity": "safety_critical"
         },
@@ -781,7 +931,9 @@
           ],
           "escalation": "Stronger blower-specific language than legacy boards.",
           "reset_behavior": "Hard lockout until blower repair.",
-          "related_codes": ["4_red"],
+          "related_codes": [
+            "4_red"
+          ],
           "source": "YP9C install manual",
           "severity": "urgent"
         },
@@ -821,7 +973,9 @@
           ],
           "escalation": "Board-level fault if power is confirmed.",
           "reset_behavior": "Requires board replacement if confirmed.",
-          "related_codes": ["led_off"],
+          "related_codes": [
+            "led_off"
+          ],
           "source": "YP9C install manual",
           "severity": "urgent"
         }
@@ -831,8 +985,15 @@
       "platform_id": "jci_outdoor_dual_led",
       "platform_name": "JCI Outdoor Split AC/Heat Pump Board with LED1/LED2 Diagnostics",
       "platform_description": "Johnson Controls York-family split outdoor units with communicating-capable control boards (CZF / communicating outdoor control style). Uses red LED1 and green LED2 combinations for fault and status indication.",
-      "applies_to_models": ["CZF family outdoor boards", "York communicating-capable residential outdoor units"],
+      "applies_to_models": [
+        "CZF family outdoor boards",
+        "York communicating-capable residential outdoor units"
+      ],
       "applies_to_years": "2010-2026",
+      "model_number_prefixes": [
+        "CZF"
+      ],
+      "visual_identification": "Outdoor unit control board with red LED1 and green LED2 combinations. Also has a yellow communication status LED. Used on York-family communicating-capable split AC and heat pump outdoor units.",
       "display_type": "two_led_combination",
       "platform_notes": "Outdoor-board codes, not furnace codes. In communicating applications, faults are also stored in the thermostat. Yellow LED status: fast flash = active communication present, slow flash = board powered without communication. Soft lockout reset by thermostat satisfaction, SYSTEM OFF cycle, or shorting TEST >2 sec after fault removal.",
       "codes": [
@@ -869,7 +1030,9 @@
           ],
           "escalation": "Repeated events escalate to lockout.",
           "reset_behavior": "Soft-lockout logic if repeated.",
-          "related_codes": ["2_red_green_off"],
+          "related_codes": [
+            "2_red_green_off"
+          ],
           "source": "JCI outdoor Table 6",
           "severity": "service_soon"
         },
@@ -891,7 +1054,10 @@
           ],
           "escalation": "Hard lockout if unresolved.",
           "reset_behavior": "Soft lockout; reset by thermostat satisfaction / SYSTEM OFF or shorting TEST >2 sec after fault removal.",
-          "related_codes": ["1_red_green_off", "4_red_green_off"],
+          "related_codes": [
+            "1_red_green_off",
+            "4_red_green_off"
+          ],
           "source": "JCI outdoor Table 6",
           "severity": "urgent"
         },
@@ -911,7 +1077,9 @@
           ],
           "escalation": "Repeated soft lockouts escalate to hard lockout.",
           "reset_behavior": "Soft lockout logic.",
-          "related_codes": ["2_red_green_off"],
+          "related_codes": [
+            "2_red_green_off"
+          ],
           "source": "JCI outdoor Table 6",
           "severity": "urgent"
         },
@@ -930,7 +1098,9 @@
           ],
           "escalation": "Higher severity if voltage drops further.",
           "reset_behavior": "Clears when voltage recovers.",
-          "related_codes": ["6_red_green_off"],
+          "related_codes": [
+            "6_red_green_off"
+          ],
           "source": "JCI outdoor Table 6",
           "severity": "service_soon"
         },
@@ -948,7 +1118,9 @@
           ],
           "escalation": "Equipment will not operate until voltage is restored.",
           "reset_behavior": "Clears when voltage recovers.",
-          "related_codes": ["5_red_green_off"],
+          "related_codes": [
+            "5_red_green_off"
+          ],
           "source": "JCI outdoor Table 6",
           "severity": "urgent"
         },
@@ -985,7 +1157,9 @@
           ],
           "escalation": "Replace sensor if shorted.",
           "reset_behavior": "Clears when sensor reads correctly.",
-          "related_codes": ["red_on_2_green"],
+          "related_codes": [
+            "red_on_2_green"
+          ],
           "source": "JCI outdoor Table 7",
           "severity": "service_soon"
         },
@@ -1005,7 +1179,9 @@
           ],
           "escalation": "Replace sensor or repair wiring.",
           "reset_behavior": "Clears when sensor reads correctly.",
-          "related_codes": ["red_on_1_green"],
+          "related_codes": [
+            "red_on_1_green"
+          ],
           "source": "JCI outdoor Table 7",
           "severity": "service_soon"
         },
@@ -1022,7 +1198,9 @@
           ],
           "escalation": "Safety concern — verify wiring before operating.",
           "reset_behavior": "Soft lockout; reset after correction.",
-          "related_codes": ["2_red_green_on"],
+          "related_codes": [
+            "2_red_green_on"
+          ],
           "source": "JCI outdoor Table 8 wiring faults",
           "severity": "urgent"
         },
@@ -1041,7 +1219,9 @@
           ],
           "escalation": "Staging configuration issue.",
           "reset_behavior": "Soft-lockout-style reset; two occurrences do not create hard lockout.",
-          "related_codes": ["1_red_green_on"],
+          "related_codes": [
+            "1_red_green_on"
+          ],
           "source": "JCI outdoor Table 8",
           "severity": "service_soon"
         }
@@ -1051,8 +1231,21 @@
       "platform_id": "bosch_ids_inverter",
       "platform_name": "Bosch IDS Inverter Split System",
       "platform_description": "Bosch IDS 2.0 and newer inverter ducted split systems (BOVA-BVA). Completely different architecture from York/Coleman flash-code furnaces — uses alphanumeric fault codes similar to ductless/inverter equipment. Newer R-454B families add indoor refrigerant leak detection indications.",
-      "applies_to_models": ["Bosch IDS 2.0", "Bosch IDS Light", "Bosch IDS Plus", "Bosch IDS Premium Connected", "Bosch IDS Edge", "Bosch IDS Ultra", "BOVA-BVA inverter ducted splits"],
+      "applies_to_models": [
+        "Bosch IDS 2.0",
+        "Bosch IDS Light",
+        "Bosch IDS Plus",
+        "Bosch IDS Premium Connected",
+        "Bosch IDS Edge",
+        "Bosch IDS Ultra",
+        "BOVA-BVA inverter ducted splits"
+      ],
       "applies_to_years": "2018-2026",
+      "model_number_prefixes": [
+        "BOVA",
+        "BVA"
+      ],
+      "visual_identification": "Alphanumeric display (letters + numbers like C3, E4, P1) on Bosch IDS inverter equipment. Completely different from York furnace flash logic. Newer R-454B units add 3/4/8 flash indoor leak-detection indications.",
       "display_type": "3_digit_alphanumeric",
       "platform_notes": "Alphanumeric code format. Limited-condition families P**, U**, F**, C**, d** are followed by two digits showing current compressor frequency in Hz while unit continues to run in a limited condition. H5 specifically requires a hard restart even though most other abnormal conditions self-clear when the condition goes away. Most newer R-454B products include 3/4/8 flash indoor leak-detection indications.",
       "codes": [
@@ -1072,7 +1265,9 @@
           ],
           "escalation": "Sensor correction required.",
           "reset_behavior": "Clears when sensor reads correctly.",
-          "related_codes": ["code_e4"],
+          "related_codes": [
+            "code_e4"
+          ],
           "source": "Bosch IDS 2.0 service documentation",
           "severity": "service_soon"
         },
@@ -1093,7 +1288,10 @@
           ],
           "escalation": "Multiple sensors to check — isolate specific sensor.",
           "reset_behavior": "Clears when sensor reads correctly.",
-          "related_codes": ["code_c3", "code_e7"],
+          "related_codes": [
+            "code_c3",
+            "code_e7"
+          ],
           "source": "Bosch IDS 2.0 service documentation",
           "severity": "service_soon"
         },
@@ -1112,7 +1310,9 @@
           ],
           "escalation": "U** is the limited-condition family tied to this protection state.",
           "reset_behavior": "Self-clears when voltage normalizes.",
-          "related_codes": ["u_family"],
+          "related_codes": [
+            "u_family"
+          ],
           "source": "Bosch IDS 2.0 service documentation",
           "severity": "urgent"
         },
@@ -1153,7 +1353,9 @@
           ],
           "escalation": "Installation error likely; verify diagrams.",
           "reset_behavior": "Clears when sensor reads correctly.",
-          "related_codes": ["code_e4"],
+          "related_codes": [
+            "code_e4"
+          ],
           "source": "Bosch IDS 2.0 service documentation",
           "severity": "service_soon"
         },
@@ -1171,7 +1373,9 @@
           ],
           "escalation": "Board/electronics fault, not refrigerant-side.",
           "reset_behavior": "Requires board service if persistent.",
-          "related_codes": ["code_h0"],
+          "related_codes": [
+            "code_h0"
+          ],
           "source": "Bosch IDS 2.0 service documentation",
           "severity": "urgent"
         },
@@ -1189,7 +1393,9 @@
           ],
           "escalation": "Board-level fault.",
           "reset_behavior": "Board service required.",
-          "related_codes": ["code_e9"],
+          "related_codes": [
+            "code_e9"
+          ],
           "source": "Bosch IDS 2.0 service documentation",
           "severity": "urgent"
         },
@@ -1230,7 +1436,9 @@
           ],
           "escalation": "Falls under F** limited-condition family.",
           "reset_behavior": "Self-clears when temperature drops.",
-          "related_codes": ["f_family"],
+          "related_codes": [
+            "f_family"
+          ],
           "source": "Bosch IDS 2.0 service documentation",
           "severity": "urgent"
         },
@@ -1255,7 +1463,9 @@
           ],
           "escalation": "One of the most important real-world IDS codes.",
           "reset_behavior": "Self-clears when pressure drops.",
-          "related_codes": ["code_p2_h5"],
+          "related_codes": [
+            "code_p2_h5"
+          ],
           "source": "Bosch IDS 2.0 service documentation",
           "severity": "urgent"
         },
@@ -1279,7 +1489,9 @@
           ],
           "escalation": "H5 specifically requires HARD RESTART — does NOT self-clear when condition goes away (unlike most other abnormal conditions).",
           "reset_behavior": "H5 requires hard restart; P2 self-clears.",
-          "related_codes": ["code_p1_f1"],
+          "related_codes": [
+            "code_p1_f1"
+          ],
           "source": "Bosch IDS 2.0 service documentation",
           "severity": "urgent"
         },
@@ -1304,7 +1516,9 @@
           ],
           "escalation": "Persistent overcurrent threatens compressor.",
           "reset_behavior": "Self-clears when condition normalizes.",
-          "related_codes": ["code_p1_f1"],
+          "related_codes": [
+            "code_p1_f1"
+          ],
           "source": "Bosch IDS 2.0 service documentation",
           "severity": "urgent"
         },
@@ -1324,7 +1538,9 @@
           ],
           "escalation": "Sits in d** limited-condition family before worsening into hard fault.",
           "reset_behavior": "Self-clears when temperature drops.",
-          "related_codes": ["d_family"],
+          "related_codes": [
+            "d_family"
+          ],
           "source": "Bosch IDS 2.0 service documentation",
           "severity": "urgent"
         },
@@ -1341,7 +1557,10 @@
           ],
           "escalation": "Part of P** family protection codes.",
           "reset_behavior": "Depends on specific protection trigger.",
-          "related_codes": ["code_p4", "code_p8"],
+          "related_codes": [
+            "code_p4",
+            "code_p8"
+          ],
           "source": "Bosch IDS 2.0 troubleshooting (specific table requires extraction)",
           "severity": "urgent"
         },
@@ -1358,7 +1577,10 @@
           ],
           "escalation": "Part of P** family protection codes.",
           "reset_behavior": "Depends on specific protection trigger.",
-          "related_codes": ["code_p5", "code_ph"],
+          "related_codes": [
+            "code_p5",
+            "code_ph"
+          ],
           "source": "Bosch IDS 2.0 troubleshooting (specific table requires extraction)",
           "severity": "urgent"
         },
@@ -1375,7 +1597,9 @@
           ],
           "escalation": "Part of P** family protection codes.",
           "reset_behavior": "Depends on specific protection trigger.",
-          "related_codes": ["code_p8"],
+          "related_codes": [
+            "code_p8"
+          ],
           "source": "Bosch IDS 2.0 troubleshooting (specific table requires extraction)",
           "severity": "urgent"
         },
@@ -1396,7 +1620,9 @@
           ],
           "escalation": "Important inverter-specific family — do NOT treat like a normal low-voltage code.",
           "reset_behavior": "Manual intervention typically required.",
-          "related_codes": ["code_e5"],
+          "related_codes": [
+            "code_e5"
+          ],
           "source": "Bosch IDS 2.0 service documentation",
           "severity": "urgent"
         },
@@ -1427,7 +1653,9 @@
           "code_type": "status_display",
           "meaning": "Defrost mode",
           "root_causes": [],
-          "diagnostic_path": ["No action — normal defrost cycle status"],
+          "diagnostic_path": [
+            "No action — normal defrost cycle status"
+          ],
           "escalation": "None — this is a status display, not a service fault.",
           "reset_behavior": "Status only; clears when defrost ends.",
           "related_codes": [],
@@ -1451,7 +1679,10 @@
           ],
           "escalation": "A2L refrigerant leak requires mitigation procedure.",
           "reset_behavior": "Requires service verification.",
-          "related_codes": ["r454b_4_flash", "r454b_8_flash"],
+          "related_codes": [
+            "r454b_4_flash",
+            "r454b_8_flash"
+          ],
           "source": "Bosch R-454B FAQ",
           "severity": "safety_critical"
         },
@@ -1470,7 +1701,10 @@
           ],
           "escalation": "A2L refrigerant leak requires mitigation procedure.",
           "reset_behavior": "Requires service verification.",
-          "related_codes": ["r454b_3_flash", "r454b_8_flash"],
+          "related_codes": [
+            "r454b_3_flash",
+            "r454b_8_flash"
+          ],
           "source": "Bosch R-454B FAQ",
           "severity": "safety_critical"
         },
@@ -1489,7 +1723,10 @@
           ],
           "escalation": "A2L refrigerant leak requires mitigation procedure.",
           "reset_behavior": "Requires service verification.",
-          "related_codes": ["r454b_3_flash", "r454b_4_flash"],
+          "related_codes": [
+            "r454b_3_flash",
+            "r454b_4_flash"
+          ],
           "source": "Bosch R-454B FAQ",
           "severity": "safety_critical"
         }
@@ -1505,19 +1742,28 @@
     {
       "code_identifier": "4 red flashes",
       "conflict_description": "On TG9S/TM8Y legacy boards, 4 red flashes means ONLY main limit switch open during call for heat. On YP9C modulating boards, 4 red flashes expands to high limit open, defective temperature sensor, OR open 24V fuse. The YP9C meaning is broader — a tech treating it narrowly will miss sensor and fuse causes.",
-      "platforms_affected": ["jci_legacy_flash", "yp9c_modulating"],
+      "platforms_affected": [
+        "jci_legacy_flash",
+        "yp9c_modulating"
+      ],
       "disambiguation_guidance": "Identify furnace model first. TG9S/TM8Y single-stage = legacy meaning (limit only). YP9C/CP9C/LP9C/TP9C modulating = broader meaning (limit OR sensor OR fuse)."
     },
     {
       "code_identifier": "5 red flashes",
       "conflict_description": "On TG9S/TM8Y legacy boards, 5 red flashes means rollout/limit-circuit-open (usually manual-reset rollout). On YP9C modulating boards, 5 red flashes can be rollout switch OR condensate pressure switch open. YP9C adds condensate safety circuit to this code.",
-      "platforms_affected": ["jci_legacy_flash", "yp9c_modulating"],
+      "platforms_affected": [
+        "jci_legacy_flash",
+        "yp9c_modulating"
+      ],
       "disambiguation_guidance": "Physically identify which switch is open before troubleshooting. On YP9C, check condensate drain path even if rollout switch appears to be the trigger."
     },
     {
       "code_identifier": "6 red flashes",
       "conflict_description": "On TG9S/TM8Y legacy boards, 6 red flashes means pressure switch reopened four times during heat call (pressure/venting issue). On YP9C modulating boards, 6 red flashes means gas valve communication error (completely different — communication issue between board and gas valve).",
-      "platforms_affected": ["jci_legacy_flash", "yp9c_modulating"],
+      "platforms_affected": [
+        "jci_legacy_flash",
+        "yp9c_modulating"
+      ],
       "disambiguation_guidance": "This is the most severe cross-generation conflict in the York family. Verify furnace model before troubleshooting — legacy interpretation leads tech to inducer/vent, YP9C interpretation leads to gas valve wiring."
     }
   ],

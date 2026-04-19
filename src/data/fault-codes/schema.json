@@ -1,8 +1,8 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "HVAC Fault Code Dataset Schema",
-  "description": "Platform-first fault code reference data for residential HVAC diagnostics. Schema supports gas furnaces, electric furnaces, heat pumps, AC units, and mini-splits. Designed for techs looking up codes mid-service call on mobile devices.",
-  "version": "1.0.0",
+  "description": "Platform-first fault code reference data for residential HVAC diagnostics. Schema supports gas furnaces, electric furnaces, heat pumps, AC units, and mini-splits. Designed for techs looking up codes mid-service call on mobile devices. v1.1.0 adds model_number_prefixes for nameplate-based platform identification and visual_identification for when the nameplate is inaccessible.",
+  "version": "1.1.0",
   "type": "object",
   "required": ["brand_family_id", "brand_family_name", "brands", "platforms"],
   "properties": {
@@ -74,7 +74,16 @@
           },
           "applies_to_years": {
             "type": "string",
-            "description": "Rough year range for equipment installation (e.g., '2010-2026')"
+            "description": "Rough year range for equipment installation (e.g., '2010-2026'). Used as secondary confirmation, not primary disambiguator."
+          },
+          "model_number_prefixes": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "NEW in v1.1.0. Array of nameplate model-number prefix strings that match this platform (e.g., ['58SC0B', '58SC1B']). Tool performs case-insensitive prefix matching on user-entered model numbers. Primary disambiguator. Leave empty array if model-number prefixes are not reliably documented for this platform — use visual_identification and display_type instead."
+          },
+          "visual_identification": {
+            "type": "string",
+            "description": "NEW in v1.1.0. Short human-readable description of what the control board looks like. Used in the 'Don't know the model?' visual picker when the tech can't access the nameplate. Should be scannable in under 5 seconds (e.g., 'Two-color LED board (green + red) plus separate yellow flame LED')."
           },
           "display_type": {
             "type": "string",
@@ -89,7 +98,7 @@
               "app_diagnostic",
               "no_display"
             ],
-            "description": "How codes are displayed on this platform"
+            "description": "How codes are displayed on this platform. Used as fallback disambiguator when model_number_prefixes can't resolve."
           },
           "platform_notes": {
             "type": "string",

@@ -5,6 +5,7 @@
   "scope": "residential_hvac",
   "equipment_types": ["gas_furnace", "electric_furnace"],
   "future_equipment_types": ["heat_pump", "ac_inverter", "mini_split"],
+  "schema_notes": "v1.1.0 adds model_number_prefixes and visual_identification fields to platform definitions for nameplate-based disambiguation. Backwards-compatible with v1.0.0 data.",
   "brand_families": [
     {
       "id": "carrier_global",
@@ -65,7 +66,7 @@
       "electric_records": 0,
       "status": "NORMALIZED",
       "file": "bosch-york.json",
-      "notes": "5 platforms: Legacy JCI flash (TG8S/TG9S/TM8Y), YP9C modulating, JCI outdoor dual-LED, Affinity/Hx communicating (display-only), Bosch IDS inverter. 3 cross-generation conflicts documented (Codes 4/5/6 across legacy vs YP9C)."
+      "notes": "5 platforms: Legacy JCI flash (TG8S/TG9S/TM8Y), YP9C modulating, JCI outdoor dual-LED, Affinity/Hx communicating (display-only), Bosch IDS inverter. 3 cross-generation conflicts documented (Codes 4/5/6 across legacy vs YP9C). Updated to schema v1.1.0 with model_number_prefixes and visual_identification."
     },
     {
       "id": "nortek_nordyne",
@@ -76,7 +77,7 @@
       "electric_records": 0,
       "status": "NORMALIZED",
       "file": "nortek-nordyne.json",
-      "notes": "4 platforms: UTEC two-LED, Emerson 50V64 red-flash, MG1/MG2 legacy mobile-home, iQ Drive variable-capacity. 1 cross-generation conflict documented (3-flash Emerson vs MG1)."
+      "notes": "4 platforms: UTEC two-LED, Emerson 50V64 red-flash, MG1/MG2 legacy mobile-home, iQ Drive variable-capacity. 1 cross-generation conflict documented (3-flash Emerson vs MG1). Updated to schema v1.1.0 with model_number_prefixes and visual_identification."
     }
   ]
 }

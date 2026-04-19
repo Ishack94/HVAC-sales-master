@@ -3,17 +3,61 @@
   "brand_family_name": "Nortek / Nordyne",
   "corporate_owner": "Nortek Global HVAC",
   "brands": [
-    {"name": "Frigidaire", "slug": "frigidaire", "notes": "Site-built residential, mid-tier positioning"},
-    {"name": "Gibson", "slug": "gibson", "notes": "Site-built residential, value tier"},
-    {"name": "Maytag", "slug": "maytag", "notes": "Licensed badge on Nordyne hardware, includes iQ Drive variable-capacity"},
-    {"name": "Tappan", "slug": "tappan", "notes": "Site-built residential, historical value brand"},
-    {"name": "Westinghouse", "slug": "westinghouse", "notes": "Site-built residential"},
-    {"name": "Philco", "slug": "philco", "notes": "Site-built residential"},
-    {"name": "Kelvinator", "slug": "kelvinator", "notes": "Site-built residential"},
-    {"name": "Broan", "slug": "broan", "notes": "Air handler/IAQ focus"},
-    {"name": "Intertherm", "slug": "intertherm", "notes": "Manufactured-home gas and electric furnaces, dominant installed base"},
-    {"name": "Miller", "slug": "miller", "notes": "Manufactured-home equipment, Nordyne badge"},
-    {"name": "Revolv", "slug": "revolv", "notes": "Manufactured-home equipment, Nordyne badge"}
+    {
+      "name": "Frigidaire",
+      "slug": "frigidaire",
+      "notes": "Site-built residential, mid-tier positioning"
+    },
+    {
+      "name": "Gibson",
+      "slug": "gibson",
+      "notes": "Site-built residential, value tier"
+    },
+    {
+      "name": "Maytag",
+      "slug": "maytag",
+      "notes": "Licensed badge on Nordyne hardware, includes iQ Drive variable-capacity"
+    },
+    {
+      "name": "Tappan",
+      "slug": "tappan",
+      "notes": "Site-built residential, historical value brand"
+    },
+    {
+      "name": "Westinghouse",
+      "slug": "westinghouse",
+      "notes": "Site-built residential"
+    },
+    {
+      "name": "Philco",
+      "slug": "philco",
+      "notes": "Site-built residential"
+    },
+    {
+      "name": "Kelvinator",
+      "slug": "kelvinator",
+      "notes": "Site-built residential"
+    },
+    {
+      "name": "Broan",
+      "slug": "broan",
+      "notes": "Air handler/IAQ focus"
+    },
+    {
+      "name": "Intertherm",
+      "slug": "intertherm",
+      "notes": "Manufactured-home gas and electric furnaces, dominant installed base"
+    },
+    {
+      "name": "Miller",
+      "slug": "miller",
+      "notes": "Manufactured-home equipment, Nordyne badge"
+    },
+    {
+      "name": "Revolv",
+      "slug": "revolv",
+      "notes": "Manufactured-home equipment, Nordyne badge"
+    }
   ],
   "structural_overview": "Nortek/Nordyne uses four distinct control board architectures across its installed base, plus iQ Drive variable-capacity. Site-built residential brands (Frigidaire/Gibson/Maytag/Tappan/Westinghouse/Philco/Kelvinator) share boards with some manufactured-home families. Intertherm/Miller/Revolv manufactured-home equipment uses similar code dictionaries but installation-driven root causes differ significantly because of downflow form factor, underfloor crossover duct dependence, and multi-circuit heat-bank staging. A tech must identify both the board generation AND whether the furnace is site-built or manufactured-home before trusting the code dictionary. Most Nortek electric furnaces (E2/E3 series mobile home) use sequencer/contactor/relay architecture with NO onboard fault code display.",
   "field_quirks": [
@@ -43,8 +87,18 @@
       "platform_id": "utec_2led",
       "platform_name": "UTEC Two-LED Furnace Board",
       "platform_description": "Green/red two-LED board with separate yellow flame LED. Used on newer Nortek site-built condensing furnaces (FG7SA family and siblings) and some manufactured-home condensing models including M7RL.",
-      "applies_to_models": ["FG7SA site-built", "M7RL manufactured-home condensing", "CMF95 family"],
+      "applies_to_models": [
+        "FG7SA site-built",
+        "M7RL manufactured-home condensing",
+        "CMF95 family"
+      ],
       "applies_to_years": "2010-2026",
+      "model_number_prefixes": [
+        "FG7SA",
+        "M7RL",
+        "CMF95"
+      ],
+      "visual_identification": "Two LEDs (green + red) that show diagnostic combinations, plus a separate yellow LED for flame signal. Used on newer site-built condensing furnaces.",
       "display_type": "two_led_combination",
       "platform_notes": "Diagnostic matrix uses green + red LED combinations. Yellow LED shows flame signal status separately and should not be confused with fault LEDs.",
       "codes": [
@@ -68,7 +122,10 @@
           ],
           "escalation": "If proper power and fuse test good and both LEDs remain off, board failure is likely.",
           "reset_behavior": "No reset until power/fault is restored.",
-          "related_codes": ["green_flash_red_flash", "green_alt_red_alt"],
+          "related_codes": [
+            "green_flash_red_flash",
+            "green_alt_red_alt"
+          ],
           "source": "Nordyne/UTEC control-board fault-condition tables (FG7SA installation manual)",
           "severity": "service_soon"
         },
@@ -89,7 +146,9 @@
           ],
           "escalation": "Recurring polarity indication after verified supply points to wiring or board input issue.",
           "reset_behavior": "Clears when polarity is corrected.",
-          "related_codes": ["green_off_red_off"],
+          "related_codes": [
+            "green_off_red_off"
+          ],
           "source": "Nordyne/UTEC fault table",
           "severity": "service_soon"
         },
@@ -110,7 +169,10 @@
           ],
           "escalation": "Repeated hourly re-lockout means the primary fault remains unresolved.",
           "reset_behavior": "Timed 1-hour retry behavior; clears when underlying fault is resolved.",
-          "related_codes": ["green_flash_red_on", "green_on_red_flash"],
+          "related_codes": [
+            "green_flash_red_on",
+            "green_on_red_flash"
+          ],
           "source": "Nordyne/UTEC fault table",
           "severity": "urgent"
         },
@@ -125,7 +187,9 @@
           ],
           "escalation": "None",
           "reset_behavior": "Status only",
-          "related_codes": ["yellow_flame_on"],
+          "related_codes": [
+            "yellow_flame_on"
+          ],
           "source": "Nordyne/UTEC fault table",
           "severity": "informational"
         },
@@ -147,7 +211,10 @@
           ],
           "escalation": "If switch is mechanically open and wiring is normal but board still reads closed, the fault shifts toward board input or relay/control sequencing.",
           "reset_behavior": "Clears when startup proofing sequence sees the switch open when expected.",
-          "related_codes": ["green_flash_red_on", "green_alt_red_alt"],
+          "related_codes": [
+            "green_flash_red_on",
+            "green_alt_red_alt"
+          ],
           "source": "Nordyne/UTEC wiring-diagram fault table (FG7SA installation manual)",
           "severity": "urgent"
         },
@@ -170,7 +237,10 @@
           ],
           "escalation": "If inducer draft and venting prove normal but switch never closes, switch or board input is likely.",
           "reset_behavior": "Clears when proof is restored; repeated ignition failures can escalate into 1-hour lockout.",
-          "related_codes": ["green_on_red_flash", "green_alt_red_alt"],
+          "related_codes": [
+            "green_on_red_flash",
+            "green_alt_red_alt"
+          ],
           "source": "Nordyne/UTEC fault table",
           "severity": "urgent",
           "field_consensus_notes": "Tubing and drain issues are common nuisance causes on condensing installations (field consensus from HVAC-Talk)"
@@ -193,7 +263,9 @@
           ],
           "escalation": "Repeated limit opening with normal airflow points toward weak limit, firing-rate issue, or deeper heat-exchanger/airflow problem.",
           "reset_behavior": "Clears when limit recloses; repeated failed heat cycles can escalate to lockout.",
-          "related_codes": ["green_alt_red_alt"],
+          "related_codes": [
+            "green_alt_red_alt"
+          ],
           "source": "Nordyne/UTEC fault table",
           "severity": "urgent"
         },
@@ -215,7 +287,9 @@
           ],
           "escalation": "If correct board output is present and motor does not run, motor/module path becomes primary.",
           "reset_behavior": "Condition-based; clears when motor fault is corrected.",
-          "related_codes": ["green_flash_red_off"],
+          "related_codes": [
+            "green_flash_red_off"
+          ],
           "source": "Nordyne/UTEC fault table",
           "severity": "service_soon"
         },
@@ -237,7 +311,9 @@
           ],
           "escalation": "Repeated low flame signal after cleaning and grounding checks points to combustion quality issue.",
           "reset_behavior": "Status indicator during operation; does not itself cause lockout.",
-          "related_codes": ["yellow_flame_on"],
+          "related_codes": [
+            "yellow_flame_on"
+          ],
           "source": "Nordyne/UTEC fault table",
           "severity": "service_soon"
         },
@@ -247,7 +323,9 @@
           "code_type": "status_display",
           "meaning": "Flame present (normal)",
           "root_causes": [],
-          "diagnostic_path": ["Confirms flame is established; no action needed"],
+          "diagnostic_path": [
+            "Confirms flame is established; no action needed"
+          ],
           "escalation": "None",
           "reset_behavior": "Status only",
           "related_codes": [],
@@ -260,8 +338,12 @@
       "platform_id": "emerson_50v64",
       "platform_name": "Emerson 50V64 Single-Digit Red-Flash Board",
       "platform_description": "Later Emerson/Copeland control board used on Nortek condensing furnaces. Red LED single-digit flash count with separate status indicators for fuse and board health.",
-      "applies_to_models": ["Nordyne condensing furnace models using Emerson 50V64-743 or variants"],
+      "applies_to_models": [
+        "Nordyne condensing furnace models using Emerson 50V64-743 or variants"
+      ],
       "applies_to_years": "2015-2026",
+      "model_number_prefixes": [],
+      "visual_identification": "Single red LED that flashes numeric fault codes, plus separate status indicators for board fuse and board health. Emerson/Copeland 50V64-743 board stamped on the PCB.",
       "display_type": "numeric_flash",
       "platform_notes": "Fault memory retains last 4 error codes for 14 days with 2-second pauses between codes during retrieval. Solid LED error codes are NOT displayed in retrieval. Memory clear: power up with G energized, toggle W1 three times within 8 seconds. Lockout auto-resets after 1 hour or manual reset with 24V power interruption for at least 5 seconds.",
       "codes": [
@@ -282,7 +364,10 @@
           ],
           "escalation": "This is typically a result code, not the original root cause. Check fault history for preceding live-cause codes.",
           "reset_behavior": "Stored in memory; auto-erased after 14 days.",
-          "related_codes": ["7_flashes", "8_flashes"],
+          "related_codes": [
+            "7_flashes",
+            "8_flashes"
+          ],
           "source": "Emerson 50V64-743 diagnostic features",
           "severity": "urgent"
         },
@@ -304,7 +389,9 @@
           ],
           "escalation": "If draft proves good but switch never closes or behaves erratically, switch or board input becomes more likely.",
           "reset_behavior": "Stored in memory; auto-erased after 14 days.",
-          "related_codes": ["2_flashes"],
+          "related_codes": [
+            "2_flashes"
+          ],
           "source": "Emerson 50V64-743 diagnostic features",
           "severity": "urgent"
         },
@@ -327,7 +414,9 @@
           ],
           "escalation": "Rollout trip is a hard combustion safety problem — do not reset without finding root cause.",
           "reset_behavior": "Self-reset limit clears when temperature falls; manual-reset rollout requires physical reset after root cause correction.",
-          "related_codes": ["6_flashes"],
+          "related_codes": [
+            "6_flashes"
+          ],
           "source": "Emerson 50V64-743 diagnostic features",
           "severity": "safety_critical"
         },
@@ -369,7 +458,9 @@
           ],
           "escalation": "If polarity and ground are correct and ignitor ohms correctly, board output may be failing.",
           "reset_behavior": "Stored in memory; auto-erased after 14 days.",
-          "related_codes": ["8_flashes"],
+          "related_codes": [
+            "8_flashes"
+          ],
           "source": "Emerson 50V64-743 diagnostic features",
           "severity": "service_soon"
         },
@@ -390,7 +481,9 @@
           ],
           "escalation": "If wiring and output are correct and valve doesn't respond, valve replacement likely.",
           "reset_behavior": "NOT stored in memory on this platform.",
-          "related_codes": ["2_flashes"],
+          "related_codes": [
+            "2_flashes"
+          ],
           "source": "Emerson 50V64-743 diagnostic features",
           "severity": "urgent"
         },
@@ -412,7 +505,9 @@
           ],
           "escalation": "Repeated weak flame after cleaning and grounding checks points to combustion quality or sensor sensitivity.",
           "reset_behavior": "Stored in memory; auto-erased after 14 days.",
-          "related_codes": ["2_flashes"],
+          "related_codes": [
+            "2_flashes"
+          ],
           "source": "Emerson 50V64-743 diagnostic features",
           "severity": "service_soon"
         },
@@ -434,7 +529,9 @@
           ],
           "escalation": "Repeated inducer limit trips points to failed inducer or venting obstruction.",
           "reset_behavior": "Stored in memory; auto-erased after 14 days.",
-          "related_codes": ["3_flashes"],
+          "related_codes": [
+            "3_flashes"
+          ],
           "source": "Emerson 50V64-743 diagnostic features",
           "severity": "urgent"
         },
@@ -455,7 +552,9 @@
           ],
           "escalation": "Repeated fuse failure means a real low-voltage short — not bad luck. Find and fix the short before replacing fuse.",
           "reset_behavior": "Fault remains until fuse is replaced and short corrected.",
-          "related_codes": ["red_only"],
+          "related_codes": [
+            "red_only"
+          ],
           "source": "Emerson 50V64-743 diagnostic features",
           "severity": "urgent"
         },
@@ -474,7 +573,9 @@
           ],
           "escalation": "Already a board-level escalation once supply and fuse are ruled out. Control is not field-repairable.",
           "reset_behavior": "Not a normal auto-reset fault.",
-          "related_codes": ["red_green_solid"],
+          "related_codes": [
+            "red_green_solid"
+          ],
           "source": "Emerson 50V64-743 diagnostic features",
           "severity": "urgent"
         },
@@ -499,8 +600,17 @@
       "platform_id": "mg1_mg2_legacy",
       "platform_name": "MG1 / MG2 Legacy Mobile-Home Board",
       "platform_description": "Simpler flash dictionary used on legacy non-condensing mobile-home furnaces (Intertherm/Miller/Revolv pre-condensing era). Yellow flame LED separate from main status LED.",
-      "applies_to_models": ["Intertherm legacy MG1/MG2 families", "Miller legacy mobile-home", "Revolv legacy mobile-home"],
+      "applies_to_models": [
+        "Intertherm legacy MG1/MG2 families",
+        "Miller legacy mobile-home",
+        "Revolv legacy mobile-home"
+      ],
       "applies_to_years": "2000-2015 (installed base still common)",
+      "model_number_prefixes": [
+        "MG1",
+        "MG2"
+      ],
+      "visual_identification": "Simpler older board with a main status LED and a separate yellow flame LED. Used on legacy non-condensing mobile-home furnaces pre-2015.",
       "display_type": "numeric_flash",
       "platform_notes": "Simpler dictionary than site-built platforms. Main status LED shows flash codes; yellow LED is dedicated to flame signal status.",
       "codes": [
@@ -510,10 +620,15 @@
           "code_type": "status_display",
           "meaning": "Control OK",
           "root_causes": [],
-          "diagnostic_path": ["No action unless heating sequence still fails"],
+          "diagnostic_path": [
+            "No action unless heating sequence still fails"
+          ],
           "escalation": "None",
           "reset_behavior": "Steady during normal powered condition",
-          "related_codes": ["steady_off", "rapid_flash"],
+          "related_codes": [
+            "steady_off",
+            "rapid_flash"
+          ],
           "source": "MG1 installation manual status indicators",
           "severity": "informational"
         },
@@ -534,7 +649,9 @@
           ],
           "escalation": "If power is present and board remains dark, board fault is likely.",
           "reset_behavior": "Returns to status display when power is restored.",
-          "related_codes": ["steady_on"],
+          "related_codes": [
+            "steady_on"
+          ],
           "source": "MG1 installation manual",
           "severity": "service_soon"
         },
@@ -600,7 +717,9 @@
           ],
           "escalation": "If draft proves correct and switch still stays open, switch or control issue is more likely.",
           "reset_behavior": "Clears when switch proves correctly.",
-          "related_codes": ["3_flashes"],
+          "related_codes": [
+            "3_flashes"
+          ],
           "source": "MG1 installation manual",
           "severity": "urgent"
         },
@@ -622,7 +741,9 @@
           ],
           "escalation": "If switch behavior is normal at the component but board still reads closed, board fault is likely.",
           "reset_behavior": "Clears when startup proofing becomes normal.",
-          "related_codes": ["2_flashes"],
+          "related_codes": [
+            "2_flashes"
+          ],
           "source": "MG1 installation manual",
           "severity": "urgent",
           "field_consensus_notes": "CROSS-GENERATION CONFLICT: On Emerson 50V64 boards, 3 flashes means inducer/pressure switch error — different meaning entirely. Identify board before interpreting."
@@ -676,7 +797,9 @@
           "code_type": "status_display",
           "meaning": "Flame sensed (normal)",
           "root_causes": [],
-          "diagnostic_path": ["Confirms flame is established; no action needed"],
+          "diagnostic_path": [
+            "Confirms flame is established; no action needed"
+          ],
           "escalation": "None",
           "reset_behavior": "Status only",
           "related_codes": [],
@@ -699,7 +822,9 @@
           ],
           "escalation": "Repeated weak signal after cleaning points to combustion quality or sensor issue.",
           "reset_behavior": "Status indicator during operation",
-          "related_codes": ["yellow_flame_on"],
+          "related_codes": [
+            "yellow_flame_on"
+          ],
           "source": "MG1 installation manual",
           "severity": "service_soon"
         }
@@ -709,8 +834,17 @@
       "platform_id": "iq_drive_interface",
       "platform_name": "iQ Drive Variable-Capacity Interface Board",
       "platform_description": "Two-character numeric display on interface board. Fault memory retains last 20 different faults/warnings through power loss. Used on Maytag iQ Drive variable-capacity inverter systems and sibling Nordyne inverter platforms.",
-      "applies_to_models": ["Maytag iQ Drive", "Nordyne variable-capacity inverter equipment"],
+      "applies_to_models": [
+        "Maytag iQ Drive",
+        "Nordyne variable-capacity inverter equipment"
+      ],
       "applies_to_years": "2012-2026",
+      "model_number_prefixes": [
+        "PSA1BG",
+        "SA1BG",
+        "iQ Drive"
+      ],
+      "visual_identification": "Two-character alphanumeric display on the interface board. Used on Maytag iQ Drive variable-capacity inverter systems and similar Nordyne inverter equipment.",
       "display_type": "2_digit_numeric",
       "platform_notes": "Alternates between operating code and last 20 different stored faults/warnings. Each stored code shows for 5 seconds. Repeat conditions are NOT duplicated in memory, so stored list is not chronological. Memory clear: short J4 Test pins briefly when compressor is off. Same J4 pins also override startup delay — clearing history can affect troubleshooting.",
       "codes": [
@@ -719,11 +853,19 @@
           "code_identifier": "01",
           "code_type": "alphanumeric",
           "meaning": "Inverter Power Module Overcurrent",
-          "root_causes": ["Shorted compressor or inverter power device", "Severe inverter stress"],
-          "diagnostic_path": ["Verify compressor and inverter condition", "Do not assume simple low-voltage issue"],
+          "root_causes": [
+            "Shorted compressor or inverter power device",
+            "Severe inverter stress"
+          ],
+          "diagnostic_path": [
+            "Verify compressor and inverter condition",
+            "Do not assume simple low-voltage issue"
+          ],
           "escalation": "Strong inverter/compressor hardware concern.",
           "reset_behavior": "Manual reset via J4 Test pins with compressor off.",
-          "related_codes": ["code_03"],
+          "related_codes": [
+            "code_03"
+          ],
           "source": "iQ Drive Table 7",
           "severity": "urgent"
         },
@@ -732,11 +874,19 @@
           "code_identifier": "02",
           "code_type": "alphanumeric",
           "meaning": "General Inverter Drive Fault",
-          "root_causes": ["Inverter drive anomaly", "Internal drive component issue"],
-          "diagnostic_path": ["Verify inverter power and signal conditions", "Check inverter drive status"],
+          "root_causes": [
+            "Inverter drive anomaly",
+            "Internal drive component issue"
+          ],
+          "diagnostic_path": [
+            "Verify inverter power and signal conditions",
+            "Check inverter drive status"
+          ],
           "escalation": "Persistent general drive fault may indicate inverter replacement.",
           "reset_behavior": "Manual reset via J4 Test pins with compressor off.",
-          "related_codes": ["code_01"],
+          "related_codes": [
+            "code_01"
+          ],
           "source": "iQ Drive Table 7",
           "severity": "urgent"
         },
@@ -745,11 +895,21 @@
           "code_identifier": "03",
           "code_type": "alphanumeric",
           "meaning": "High Compressor Current",
-          "root_causes": ["Overloaded compressor", "Refrigerant circuit issue causing high current draw", "Mechanical compressor problem"],
-          "diagnostic_path": ["Verify compressor current draw under load", "Evaluate refrigerant circuit and operating conditions"],
+          "root_causes": [
+            "Overloaded compressor",
+            "Refrigerant circuit issue causing high current draw",
+            "Mechanical compressor problem"
+          ],
+          "diagnostic_path": [
+            "Verify compressor current draw under load",
+            "Evaluate refrigerant circuit and operating conditions"
+          ],
           "escalation": "Repeated high current strongly points to compressor or refrigerant issue.",
           "reset_behavior": "Manual reset via J4 Test pins.",
-          "related_codes": ["code_01", "code_15"],
+          "related_codes": [
+            "code_01",
+            "code_15"
+          ],
           "source": "iQ Drive Table 7",
           "severity": "urgent"
         },
@@ -758,8 +918,12 @@
           "code_identifier": "04",
           "code_type": "alphanumeric",
           "meaning": "Current Sampling Error (Inverter)",
-          "root_causes": ["Inverter sampling circuit fault"],
-          "diagnostic_path": ["Verify inverter control board condition"],
+          "root_causes": [
+            "Inverter sampling circuit fault"
+          ],
+          "diagnostic_path": [
+            "Verify inverter control board condition"
+          ],
           "escalation": "Internal inverter fault likely if persistent.",
           "reset_behavior": "Manual reset via J4 Test pins.",
           "related_codes": [],
@@ -771,11 +935,21 @@
           "code_identifier": "05",
           "code_type": "alphanumeric",
           "meaning": "High Inverter Heat Sink Temperature",
-          "root_causes": ["Restricted cooling of inverter section", "High ambient temperature", "Fan-related issue", "Inverter thermal problem"],
-          "diagnostic_path": ["Verify condenser airflow and inverter cooling", "Check for obstructions or debris"],
+          "root_causes": [
+            "Restricted cooling of inverter section",
+            "High ambient temperature",
+            "Fan-related issue",
+            "Inverter thermal problem"
+          ],
+          "diagnostic_path": [
+            "Verify condenser airflow and inverter cooling",
+            "Check for obstructions or debris"
+          ],
           "escalation": "Repeated heat sink high temperature points to cooling path issue.",
           "reset_behavior": "Self-clears when temperature drops.",
-          "related_codes": ["code_17"],
+          "related_codes": [
+            "code_17"
+          ],
           "source": "iQ Drive Table 7",
           "severity": "urgent"
         },
@@ -784,11 +958,20 @@
           "code_identifier": "06",
           "code_type": "alphanumeric",
           "meaning": "High DC Bus Voltage (Inverter)",
-          "root_causes": ["High incoming line voltage", "Regenerative voltage from compressor braking", "Inverter DC bus fault"],
-          "diagnostic_path": ["Measure incoming line voltage", "Check inverter DC bus condition"],
+          "root_causes": [
+            "High incoming line voltage",
+            "Regenerative voltage from compressor braking",
+            "Inverter DC bus fault"
+          ],
+          "diagnostic_path": [
+            "Measure incoming line voltage",
+            "Check inverter DC bus condition"
+          ],
           "escalation": "Persistent high bus voltage can damage inverter.",
           "reset_behavior": "Self-clears when voltage returns to normal.",
-          "related_codes": ["code_07"],
+          "related_codes": [
+            "code_07"
+          ],
           "source": "iQ Drive Table 7",
           "severity": "urgent"
         },
@@ -797,11 +980,21 @@
           "code_identifier": "07",
           "code_type": "alphanumeric",
           "meaning": "Low DC Bus Voltage (Inverter)",
-          "root_causes": ["Low incoming line voltage", "Voltage sag under load", "Inverter rectifier or DC bus fault"],
-          "diagnostic_path": ["Measure incoming line voltage under load", "Check supply path for voltage drops"],
+          "root_causes": [
+            "Low incoming line voltage",
+            "Voltage sag under load",
+            "Inverter rectifier or DC bus fault"
+          ],
+          "diagnostic_path": [
+            "Measure incoming line voltage under load",
+            "Check supply path for voltage drops"
+          ],
           "escalation": "Persistent low bus voltage indicates supply or inverter issue.",
           "reset_behavior": "Self-clears when voltage recovers.",
-          "related_codes": ["code_06", "code_08"],
+          "related_codes": [
+            "code_06",
+            "code_08"
+          ],
           "source": "iQ Drive Table 7",
           "severity": "urgent"
         },
@@ -810,11 +1003,19 @@
           "code_identifier": "08",
           "code_type": "alphanumeric",
           "meaning": "Low Line Voltage at Inverter",
-          "root_causes": ["Supply sag", "Disconnect or contactor voltage drop", "Utility voltage issue"],
-          "diagnostic_path": ["Measure line voltage under load at unit and inverter feed"],
+          "root_causes": [
+            "Supply sag",
+            "Disconnect or contactor voltage drop",
+            "Utility voltage issue"
+          ],
+          "diagnostic_path": [
+            "Measure line voltage under load at unit and inverter feed"
+          ],
           "escalation": "Confirmed utility sag requires utility involvement; local voltage drop indicates wiring issue.",
           "reset_behavior": "Self-clears when voltage recovers.",
-          "related_codes": ["code_07"],
+          "related_codes": [
+            "code_07"
+          ],
           "source": "iQ Drive Table 7",
           "severity": "urgent"
         },
@@ -823,11 +1024,20 @@
           "code_identifier": "09",
           "code_type": "alphanumeric",
           "meaning": "Line Overcurrent at Inverter",
-          "root_causes": ["High compressor load", "Shorted inverter section", "Line-side fault"],
-          "diagnostic_path": ["Measure line current under load", "Check inverter output condition"],
+          "root_causes": [
+            "High compressor load",
+            "Shorted inverter section",
+            "Line-side fault"
+          ],
+          "diagnostic_path": [
+            "Measure line current under load",
+            "Check inverter output condition"
+          ],
           "escalation": "Persistent overcurrent is a serious inverter/compressor concern.",
           "reset_behavior": "Manual reset via J4 Test pins.",
-          "related_codes": ["code_03"],
+          "related_codes": [
+            "code_03"
+          ],
           "source": "iQ Drive Table 7",
           "severity": "urgent"
         },
@@ -836,11 +1046,17 @@
           "code_identifier": "10",
           "code_type": "alphanumeric",
           "meaning": "Line Voltage Sampling Error (Inverter)",
-          "root_causes": ["Inverter voltage sampling circuit fault"],
-          "diagnostic_path": ["Verify inverter control board condition"],
+          "root_causes": [
+            "Inverter voltage sampling circuit fault"
+          ],
+          "diagnostic_path": [
+            "Verify inverter control board condition"
+          ],
           "escalation": "Internal inverter fault likely if persistent.",
           "reset_behavior": "Manual reset via J4 Test pins.",
-          "related_codes": ["code_04"],
+          "related_codes": [
+            "code_04"
+          ],
           "source": "iQ Drive Table 7",
           "severity": "urgent"
         },
@@ -849,11 +1065,20 @@
           "code_identifier": "11",
           "code_type": "alphanumeric",
           "meaning": "Loss of Communication (Inverter Internal)",
-          "root_causes": ["Internal inverter communication harness fault", "Inverter board failure"],
-          "diagnostic_path": ["Inspect inverter internal harnesses", "Verify inverter power"],
+          "root_causes": [
+            "Internal inverter communication harness fault",
+            "Inverter board failure"
+          ],
+          "diagnostic_path": [
+            "Inspect inverter internal harnesses",
+            "Verify inverter power"
+          ],
           "escalation": "Internal inverter failure likely if harnesses check good.",
           "reset_behavior": "Manual reset via J4 Test pins.",
-          "related_codes": ["code_13", "code_14"],
+          "related_codes": [
+            "code_13",
+            "code_14"
+          ],
           "source": "iQ Drive Table 7",
           "severity": "urgent"
         },
@@ -862,11 +1087,19 @@
           "code_identifier": "12",
           "code_type": "alphanumeric",
           "meaning": "Inverter Heat Sink Sensor Failure",
-          "root_causes": ["Failed heat sink thermistor", "Open or shorted sensor wiring"],
-          "diagnostic_path": ["Ohm heat sink sensor", "Inspect sensor wiring"],
+          "root_causes": [
+            "Failed heat sink thermistor",
+            "Open or shorted sensor wiring"
+          ],
+          "diagnostic_path": [
+            "Ohm heat sink sensor",
+            "Inspect sensor wiring"
+          ],
           "escalation": "Failed sensor requires inverter service.",
           "reset_behavior": "Manual reset via J4 Test pins.",
-          "related_codes": ["code_05"],
+          "related_codes": [
+            "code_05"
+          ],
           "source": "iQ Drive Table 7",
           "severity": "service_soon"
         },
@@ -875,11 +1108,18 @@
           "code_identifier": "13",
           "code_type": "alphanumeric",
           "meaning": "Loss of Communication (Inverter Internal)",
-          "root_causes": ["Internal inverter communication fault"],
-          "diagnostic_path": ["Inspect inverter internal harnesses"],
+          "root_causes": [
+            "Internal inverter communication fault"
+          ],
+          "diagnostic_path": [
+            "Inspect inverter internal harnesses"
+          ],
           "escalation": "Inverter replacement likely.",
           "reset_behavior": "Manual reset via J4 Test pins.",
-          "related_codes": ["code_11", "code_14"],
+          "related_codes": [
+            "code_11",
+            "code_14"
+          ],
           "source": "iQ Drive Table 7",
           "severity": "urgent"
         },
@@ -888,11 +1128,20 @@
           "code_identifier": "14",
           "code_type": "alphanumeric",
           "meaning": "Loss of Communication (IFB to Inverter)",
-          "root_causes": ["Wiring/harness issue between interface board and inverter", "Board failure"],
-          "diagnostic_path": ["Inspect inter-board harness and connections", "Board substitution only after wiring is verified"],
+          "root_causes": [
+            "Wiring/harness issue between interface board and inverter",
+            "Board failure"
+          ],
+          "diagnostic_path": [
+            "Inspect inter-board harness and connections",
+            "Board substitution only after wiring is verified"
+          ],
           "escalation": "If wiring is good and both boards have power, one or both may need replacement.",
           "reset_behavior": "Manual reset via J4 Test pins.",
-          "related_codes": ["code_11", "code_13"],
+          "related_codes": [
+            "code_11",
+            "code_13"
+          ],
           "source": "iQ Drive Table 7",
           "severity": "urgent"
         },
@@ -901,11 +1150,19 @@
           "code_identifier": "15",
           "code_type": "alphanumeric",
           "meaning": "Override, High Compressor Current",
-          "root_causes": ["Compressor current above override threshold", "System operating at capacity limit"],
-          "diagnostic_path": ["Verify current draw", "Evaluate operating conditions"],
+          "root_causes": [
+            "Compressor current above override threshold",
+            "System operating at capacity limit"
+          ],
+          "diagnostic_path": [
+            "Verify current draw",
+            "Evaluate operating conditions"
+          ],
           "escalation": "System is self-limiting to protect compressor; persistent override indicates operating issue.",
           "reset_behavior": "Override cleared when condition normalizes.",
-          "related_codes": ["code_03"],
+          "related_codes": [
+            "code_03"
+          ],
           "source": "iQ Drive Table 7",
           "severity": "service_soon"
         },
@@ -914,11 +1171,17 @@
           "code_identifier": "16",
           "code_type": "alphanumeric",
           "meaning": "Override, High Line Current",
-          "root_causes": ["Line current above override threshold"],
-          "diagnostic_path": ["Check line current and system load"],
+          "root_causes": [
+            "Line current above override threshold"
+          ],
+          "diagnostic_path": [
+            "Check line current and system load"
+          ],
           "escalation": "Persistent override indicates system overload or supply issue.",
           "reset_behavior": "Override cleared when condition normalizes.",
-          "related_codes": ["code_09"],
+          "related_codes": [
+            "code_09"
+          ],
           "source": "iQ Drive Table 7",
           "severity": "service_soon"
         },
@@ -927,11 +1190,18 @@
           "code_identifier": "17",
           "code_type": "alphanumeric",
           "meaning": "Override, High Inverter Heat Sink Temp",
-          "root_causes": ["Inverter heat sink temperature at override threshold", "Cooling path degraded but not failed"],
-          "diagnostic_path": ["Check cooling path and airflow around inverter"],
+          "root_causes": [
+            "Inverter heat sink temperature at override threshold",
+            "Cooling path degraded but not failed"
+          ],
+          "diagnostic_path": [
+            "Check cooling path and airflow around inverter"
+          ],
           "escalation": "Persistent override points toward cooling issue before full lockout.",
           "reset_behavior": "Override cleared when temperature drops.",
-          "related_codes": ["code_05"],
+          "related_codes": [
+            "code_05"
+          ],
           "source": "iQ Drive Table 7",
           "severity": "service_soon"
         },
@@ -940,8 +1210,16 @@
           "code_identifier": "18",
           "code_type": "alphanumeric",
           "meaning": "Outdoor Fan Motor Fault",
-          "root_causes": ["Failed motor", "Failed motor electronics", "Wiring issue"],
-          "diagnostic_path": ["Verify motor operation", "Check wiring", "Verify commanded operation"],
+          "root_causes": [
+            "Failed motor",
+            "Failed motor electronics",
+            "Wiring issue"
+          ],
+          "diagnostic_path": [
+            "Verify motor operation",
+            "Check wiring",
+            "Verify commanded operation"
+          ],
           "escalation": "Confirmed motor failure requires replacement.",
           "reset_behavior": "Manual reset via J4 Test pins after repair.",
           "related_codes": [],
@@ -953,8 +1231,16 @@
           "code_identifier": "19",
           "code_type": "alphanumeric",
           "meaning": "Low Pressure Switch Open",
-          "root_causes": ["Low charge", "Restricted indoor airflow", "Low load conditions", "Refrigerant-side issue"],
-          "diagnostic_path": ["Verify actual refrigerant conditions", "Verify airflow before condemning switch"],
+          "root_causes": [
+            "Low charge",
+            "Restricted indoor airflow",
+            "Low load conditions",
+            "Refrigerant-side issue"
+          ],
+          "diagnostic_path": [
+            "Verify actual refrigerant conditions",
+            "Verify airflow before condemning switch"
+          ],
           "escalation": "Repeated trips with verified airflow indicate refrigerant issue.",
           "reset_behavior": "Self-clears when pressure recovers; repeated trips may lock out.",
           "related_codes": [],
@@ -966,11 +1252,22 @@
           "code_identifier": "20",
           "code_type": "alphanumeric",
           "meaning": "High Compressor Discharge Temperature",
-          "root_causes": ["Undercharge", "Restriction", "Poor cooling", "High compression ratio"],
-          "diagnostic_path": ["Evaluate refrigerant circuit", "Check thermal load conditions", "Verify discharge sensor"],
+          "root_causes": [
+            "Undercharge",
+            "Restriction",
+            "Poor cooling",
+            "High compression ratio"
+          ],
+          "diagnostic_path": [
+            "Evaluate refrigerant circuit",
+            "Check thermal load conditions",
+            "Verify discharge sensor"
+          ],
           "escalation": "Persistent high discharge is compressor-damaging.",
           "reset_behavior": "Self-clears when temperature drops.",
-          "related_codes": ["code_23"],
+          "related_codes": [
+            "code_23"
+          ],
           "source": "iQ Drive Table 7",
           "severity": "urgent"
         },
@@ -979,8 +1276,13 @@
           "code_identifier": "21",
           "code_type": "alphanumeric",
           "meaning": "Interface Board Software Error",
-          "root_causes": ["Interface-board fault"],
-          "diagnostic_path": ["Power cycle and verify persistent error", "Board replacement likely if persistent"],
+          "root_causes": [
+            "Interface-board fault"
+          ],
+          "diagnostic_path": [
+            "Power cycle and verify persistent error",
+            "Board replacement likely if persistent"
+          ],
           "escalation": "Persistent software error requires board replacement.",
           "reset_behavior": "May clear on power cycle.",
           "related_codes": [],
@@ -992,11 +1294,22 @@
           "code_identifier": "22",
           "code_type": "alphanumeric",
           "meaning": "Sensor Failure — Suction Line Temperature",
-          "root_causes": ["Failed suction line temperature sensor", "Open or shorted sensor wiring"],
-          "diagnostic_path": ["Ohm sensor against spec", "Inspect sensor harness"],
+          "root_causes": [
+            "Failed suction line temperature sensor",
+            "Open or shorted sensor wiring"
+          ],
+          "diagnostic_path": [
+            "Ohm sensor against spec",
+            "Inspect sensor harness"
+          ],
           "escalation": "Failed sensor requires replacement.",
           "reset_behavior": "Self-clears when sensor reads correctly.",
-          "related_codes": ["code_23", "code_24", "code_25", "code_26"],
+          "related_codes": [
+            "code_23",
+            "code_24",
+            "code_25",
+            "code_26"
+          ],
           "source": "iQ Drive Table 7",
           "severity": "service_soon"
         },
@@ -1005,11 +1318,20 @@
           "code_identifier": "23",
           "code_type": "alphanumeric",
           "meaning": "Sensor Failure — Compressor Discharge Temperature",
-          "root_causes": ["Failed discharge temperature sensor", "Open or shorted sensor wiring"],
-          "diagnostic_path": ["Ohm sensor against spec", "Inspect sensor harness"],
+          "root_causes": [
+            "Failed discharge temperature sensor",
+            "Open or shorted sensor wiring"
+          ],
+          "diagnostic_path": [
+            "Ohm sensor against spec",
+            "Inspect sensor harness"
+          ],
           "escalation": "Failed sensor; replace.",
           "reset_behavior": "Self-clears when sensor reads correctly.",
-          "related_codes": ["code_22", "code_20"],
+          "related_codes": [
+            "code_22",
+            "code_20"
+          ],
           "source": "iQ Drive Table 7",
           "severity": "service_soon"
         },
@@ -1018,11 +1340,21 @@
           "code_identifier": "24",
           "code_type": "alphanumeric",
           "meaning": "Sensor Failure — Ambient Temperature",
-          "root_causes": ["Failed ambient temperature sensor", "Open or shorted sensor wiring"],
-          "diagnostic_path": ["Ohm sensor against spec", "Inspect sensor harness"],
+          "root_causes": [
+            "Failed ambient temperature sensor",
+            "Open or shorted sensor wiring"
+          ],
+          "diagnostic_path": [
+            "Ohm sensor against spec",
+            "Inspect sensor harness"
+          ],
           "escalation": "Failed sensor; replace.",
           "reset_behavior": "Self-clears when sensor reads correctly.",
-          "related_codes": ["code_22", "code_23", "code_25"],
+          "related_codes": [
+            "code_22",
+            "code_23",
+            "code_25"
+          ],
           "source": "iQ Drive Table 7",
           "severity": "service_soon"
         },
@@ -1031,11 +1363,21 @@
           "code_identifier": "25",
           "code_type": "alphanumeric",
           "meaning": "Sensor Failure — Coil Temperature #1 / Defrost",
-          "root_causes": ["Failed coil/defrost sensor", "Open or shorted sensor wiring"],
-          "diagnostic_path": ["Ohm sensor against spec", "Inspect sensor harness"],
+          "root_causes": [
+            "Failed coil/defrost sensor",
+            "Open or shorted sensor wiring"
+          ],
+          "diagnostic_path": [
+            "Ohm sensor against spec",
+            "Inspect sensor harness"
+          ],
           "escalation": "Failed sensor; replace.",
           "reset_behavior": "Self-clears when sensor reads correctly.",
-          "related_codes": ["code_22", "code_23", "code_24"],
+          "related_codes": [
+            "code_22",
+            "code_23",
+            "code_24"
+          ],
           "source": "iQ Drive Table 7",
           "severity": "service_soon"
         },
@@ -1044,11 +1386,20 @@
           "code_identifier": "26",
           "code_type": "alphanumeric",
           "meaning": "Sensor Failure — Suction Pressure Transducer",
-          "root_causes": ["Failed pressure transducer", "Open or shorted transducer wiring"],
-          "diagnostic_path": ["Check transducer circuit against specs", "Inspect connections"],
+          "root_causes": [
+            "Failed pressure transducer",
+            "Open or shorted transducer wiring"
+          ],
+          "diagnostic_path": [
+            "Check transducer circuit against specs",
+            "Inspect connections"
+          ],
           "escalation": "Failed transducer; replace.",
           "reset_behavior": "Self-clears when transducer reads correctly.",
-          "related_codes": ["code_22", "code_23"],
+          "related_codes": [
+            "code_22",
+            "code_23"
+          ],
           "source": "iQ Drive Table 7",
           "severity": "service_soon"
         },
@@ -1057,11 +1408,21 @@
           "code_identifier": "27",
           "code_type": "alphanumeric",
           "meaning": "Blower Motor Fault",
-          "root_causes": ["Blower motor issue", "Motor electronics fault", "Power issue to motor"],
-          "diagnostic_path": ["Verify motor power", "Verify commanded operation", "Check motor health"],
+          "root_causes": [
+            "Blower motor issue",
+            "Motor electronics fault",
+            "Power issue to motor"
+          ],
+          "diagnostic_path": [
+            "Verify motor power",
+            "Verify commanded operation",
+            "Check motor health"
+          ],
           "escalation": "Confirmed motor failure requires replacement.",
           "reset_behavior": "Manual reset via J4 Test pins after repair.",
-          "related_codes": ["code_28"],
+          "related_codes": [
+            "code_28"
+          ],
           "source": "iQ Drive Table 7",
           "severity": "urgent"
         },
@@ -1070,11 +1431,20 @@
           "code_identifier": "28",
           "code_type": "alphanumeric",
           "meaning": "Blower Communication Fault",
-          "root_causes": ["Communication harness issue", "Control/motor mismatch", "Motor electronics fault"],
-          "diagnostic_path": ["Inspect communication wiring first", "Verify motor/control compatibility"],
+          "root_causes": [
+            "Communication harness issue",
+            "Control/motor mismatch",
+            "Motor electronics fault"
+          ],
+          "diagnostic_path": [
+            "Inspect communication wiring first",
+            "Verify motor/control compatibility"
+          ],
           "escalation": "If wiring is good and compatibility confirmed, board or motor replacement.",
           "reset_behavior": "Manual reset via J4 Test pins after repair.",
-          "related_codes": ["code_27"],
+          "related_codes": [
+            "code_27"
+          ],
           "source": "iQ Drive Table 7",
           "severity": "urgent"
         }
@@ -1090,7 +1460,10 @@
     {
       "code_identifier": "3 flashes",
       "conflict_description": "On Emerson 50V64 single-digit boards, 3 flashes indicates inducer or pressure switch error (broad). On legacy MG1/MG2 mobile-home boards, 3 flashes specifically means pressure switch stuck CLOSED. Same flash count, different meanings and different diagnostic paths.",
-      "platforms_affected": ["emerson_50v64", "mg1_mg2_legacy"],
+      "platforms_affected": [
+        "emerson_50v64",
+        "mg1_mg2_legacy"
+      ],
       "disambiguation_guidance": "Tool must force board/platform identification BEFORE showing code meanings. Ask: 'Is your furnace a mobile-home unit from before 2015?' (likely MG1/MG2) or 'Is it a site-built condensing furnace from 2015 or later?' (likely Emerson 50V64). If unsure, check the control board label or physical appearance."
     }
   ],
