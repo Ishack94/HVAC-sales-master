@@ -1,0 +1,4101 @@
+{
+  "brand_family_id": "carrier_global",
+  "brand_family_name": "Carrier Global",
+  "corporate_owner": "Carrier Global Corporation",
+  "brands": [
+    {
+      "name": "Carrier",
+      "slug": "carrier",
+      "notes": "Premium brand"
+    },
+    {
+      "name": "Bryant",
+      "slug": "bryant",
+      "notes": "Mid-tier brand, shares most platforms with Carrier"
+    },
+    {
+      "name": "Payne",
+      "slug": "payne",
+      "notes": "Value brand, shares most platforms with Carrier"
+    },
+    {
+      "name": "Comfortmaker",
+      "slug": "comfortmaker",
+      "notes": "ICP brand, shares boards with Heil/Tempstar/etc."
+    },
+    {
+      "name": "Day & Night",
+      "slug": "day-and-night",
+      "notes": "ICP brand"
+    },
+    {
+      "name": "Heil",
+      "slug": "heil",
+      "notes": "ICP brand"
+    },
+    {
+      "name": "Tempstar",
+      "slug": "tempstar",
+      "notes": "ICP brand"
+    },
+    {
+      "name": "Arcoaire",
+      "slug": "arcoaire",
+      "notes": "ICP brand"
+    },
+    {
+      "name": "KeepRite",
+      "slug": "keeprite",
+      "notes": "ICP brand"
+    }
+  ],
+  "structural_overview": "Carrier Global is the largest and most architecturally complex brand family in the residential HVAC market. The family breaks into three distinct diagnostic worlds: (1) Carrier/Bryant/Payne conventional 24V equipment using 2-digit or 3-digit major.minor LED codes on the furnace board; (2) ICP-family equipment (Comfortmaker, Day & Night, Heil, Tempstar, Arcoaire, KeepRite) using simpler single-digit flash codes with 6+X soft-lockout subcodes on legacy SmartValve platforms; (3) Infinity/Evolution communicating systems with two-part wall-control codes, inverter/VFD diagnostic families, and board-level Status Code 16 variants. Same number often means different things across platforms — Code 6 has at least 4 different meanings, Code 16 has 3 different meanings on communicating equipment. Platform identification is critical. Public documentation coverage is strong on conventional boards and the 186CNV/284ANV inverter family, partial on communicating fan coils and legacy communicating outdoor, and thin on the complete Connex wall-control event dictionary (some event numbers require dealer portal access). The Infinity/Evolution Connex wall control also surfaces commissioning-time diagnostics (e.g., 'Indoor unit not found', 'Outdoor unit not found') during initial system discovery that are separate from runtime fault codes — a tech troubleshooting a running system should not see these, and a tech seeing these during install should not look for them in runtime fault history.",
+  "field_quirks": [
+    {
+      "quirk": "Same code number means different things across Carrier Global platforms",
+      "applies_to": "All platforms — cross-generation conflicts are the #1 diagnostic trap",
+      "reason": "Code 6 alone has 4+ meanings: ignition proving failure on Recent ICP IGC, failure to ignite/flame lost on SmartValve legacy single-stage, soft lockout status on ICP Gen 1 two-stage, active ignition/flame-proving failure on ICP Gen 2/3. Code 16 has 3 meanings across communicating fan coils, legacy communicating outdoor, and Greenspeed/Extreme platforms. Platform identification is mandatory before trusting any code meaning."
+    },
+    {
+      "quirk": "24V-trained tech often treats Infinity/Evolution wall control like a thermostat",
+      "applies_to": "Infinity/Evolution communicating systems",
+      "reason": "The Connex wall control is not just sending Y/W/G calls — it's part of the ABCD communication network. A comm fault can take down system behavior in a way that looks like a 'bad thermostat' on first glance, when the real issue is bus wiring, device loading, or a failed board elsewhere on the network."
+    },
+    {
+      "quirk": "Board LEDs and wall-control events are not interchangeable on Infinity/Evolution",
+      "applies_to": "186CNV/284ANV inverter outdoor specifically",
+      "reason": "On legacy communicating outdoor (24ANB/25HCB), tech sees local board Status Code 16. On 186CNV/284ANV inverter outdoor, the local clue is COMM light OFF or the matrix display, while the richer two-part codes live at the wall control. Treating 'no board flash code' as 'no fault' is a trap on the inverter platform."
+    },
+    {
+      "quirk": "Model-plug logic is a trap during board replacements",
+      "applies_to": "All Carrier/Bryant communicating outdoor and modulating furnace platforms",
+      "reason": "A board replacement that would be straightforward on conventional 24V systems can create communicating faults or invalid-model behavior if the model plug is wrong, missing, or not transferred. Communicating outdoor manuals repeatedly call out the model plug as required."
+    },
+    {
+      "quirk": "Emergency operation mode can hide the real communicating architecture",
+      "applies_to": "Communicating fan coils and 186CNV/284ANV inverter outdoor",
+      "reason": "When communication is lost for more than 2 minutes, fan coils drop into emergency-operable mode with a common thermostat, and inverter outdoor enters emergency communicating mode. A tech from conventional systems can misread this as proof the system is 'basically a normal 24V setup.' Emergency mode is a degraded fallback, not the native control architecture."
+    },
+    {
+      "quirk": "Legacy variable-speed-only codes don't exist on 58SC0B",
+      "applies_to": "58MVP/58MVC legacy variable-speed vs 58SC0B single-stage",
+      "reason": "Codes 15, 41, 42, 43, 44 are part of the older ECM/variable-speed logic families and are NOT present on the newer 58SC0B single-stage platform. A tech troubleshooting a 58SC0B shouldn't look for these codes."
+    },
+    {
+      "quirk": "Connex wall control firmware version affects how fault expansion codes are displayed in Last 10 Events history",
+      "applies_to": "Infinity/Evolution Connex wall control — all platforms using Connex UI",
+      "reason": "Per Carrier/Bryant PTC bulletins for Infinity/Evolution Extreme 24/26, after specific firmware updates, fault codes with different expansion codes are treated as distinct entries in Last 10 Events. Before the update, these may appear merged or behave differently. Two techs on different firmware versions may see the same fault cluster displayed differently. Additionally, updated firmware stores fault description messages in permanent memory to prevent incorrect messages after a wall-control reset. If a history screen looks wrong or inconsistent with equipment behavior, verify firmware version and consider applying the latest update before deeper diagnosis."
+    }
+  ],
+  "platforms": [
+    {
+      "platform_id": "carrier_58mvp_legacy",
+      "platform_name": "Carrier/Bryant/Payne Legacy 2-Digit Variable-Speed Condensing Board",
+      "platform_description": "Classic Carrier/Bryant/Payne variable-speed condensing furnace control board using a 2-digit LED flash code (first digit short flashes, second digit long flashes). Stores fault history automatically for 72 hours. Supports component test mode that flashes 11, 25, 41, 42 as operational indicators.",
+      "applies_to_models": [
+        "58MVP series 170/180",
+        "58MVC",
+        "58UVB",
+        "58MVB",
+        "Bryant/Payne sibling variable-speed platforms"
+      ],
+      "applies_to_years": "1998-2015",
+      "model_number_prefixes": [
+        "58MVP",
+        "58MVC",
+        "58UVB",
+        "58MVB"
+      ],
+      "visual_identification": "Single LED that flashes 2-digit codes (first digit short flashes, second digit long flashes). Shows CONTINUOUS OFF, CONTINUOUS ON, or RAPID FLASHING as status states. Supports component test mode when button is pressed.",
+      "display_type": "numeric_flash",
+      "platform_notes": "Auto-resets limit lockout (13) and ignition lockout (14) after 3 hours. Gas heating lockout (21) does NOT auto-reset. Fault history stored for 72 hours or manually cleared. Codes 15, 41, 42, 43, 44 are variable-speed-only and are NOT present on 58SC0B single-stage successor.",
+      "codes": [
+        {
+          "code_id": "continuous_off",
+          "code_identifier": "CONTINUOUS OFF",
+          "code_type": "status_display",
+          "meaning": "No control power indicated; check line and secondary power",
+          "root_causes": [
+            "No 115 VAC to L1/L2",
+            "No 24 VAC at SEC-1/SEC-2",
+            "Open door switch",
+            "Failed transformer",
+            "Failed board"
+          ],
+          "diagnostic_path": [
+            "Verify 115 VAC at L1/L2",
+            "Verify 24 VAC at SEC-1/SEC-2",
+            "Inspect interlock/transformer/board"
+          ],
+          "escalation": "If both line and secondary voltage are present and LED remains off, control failure becomes likely.",
+          "reset_behavior": "Not a timed lockout; clears when power is restored.",
+          "related_codes": [
+            "continuous_on",
+            "rapid_flashing",
+            "24"
+          ],
+          "source": "Carrier 58-06T service/status code instructions",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "continuous_on",
+          "code_identifier": "CONTINUOUS ON",
+          "code_type": "status_display",
+          "meaning": "Control has 24 VAC power (normal powered state, no active flash code)",
+          "root_causes": [],
+          "diagnostic_path": [
+            "If unit is still inoperative, proceed to active operating sequence checks and stored code recall"
+          ],
+          "escalation": "None by itself",
+          "reset_behavior": "Steady while powered",
+          "related_codes": [
+            "continuous_off",
+            "stored_2digit_codes"
+          ],
+          "source": "Carrier 58-06T service/status code instructions",
+          "severity": "informational"
+        },
+        {
+          "code_id": "rapid_flashing",
+          "code_identifier": "RAPID FLASHING",
+          "code_type": "status_display",
+          "meaning": "Reversed 115 VAC polarity",
+          "root_causes": [
+            "Reversed line/neutral",
+            "Improper grounding",
+            "Wiring error"
+          ],
+          "diagnostic_path": [
+            "Verify polarity first",
+            "Verify furnace grounding",
+            "Verify supply wiring"
+          ],
+          "escalation": "Persistent rapid flash with verified supply wiring points to control/wiring abnormality.",
+          "reset_behavior": "Clears when polarity issue is corrected.",
+          "related_codes": [],
+          "source": "Carrier 58-06T service/status code instructions",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_11",
+          "code_identifier": "11",
+          "code_type": "flash_count",
+          "meaning": "No previous code",
+          "root_causes": [],
+          "diagnostic_path": [
+            "Run furnace through a full heating cycle if complaint is intermittent and no active code is present"
+          ],
+          "escalation": "None",
+          "reset_behavior": "Stored codes erase after 72 hours of operation or by manual clear procedure.",
+          "related_codes": [],
+          "source": "Carrier 58-06T service/status code instructions",
+          "severity": "informational"
+        },
+        {
+          "code_id": "code_12",
+          "code_identifier": "12",
+          "code_type": "flash_count",
+          "meaning": "Blower on after power-up",
+          "root_causes": [
+            "Normal response when powered during a heat call",
+            "Normal response when R-W opens during blower on-delay",
+            "Direct short in certain circuits can cause repetitive code-12 behavior"
+          ],
+          "diagnostic_path": [
+            "Verify whether unit was repowered mid-call before treating this as a fault"
+          ],
+          "escalation": "None unless blower remains abnormal after the 90-second period.",
+          "reset_behavior": "Blower runs 90 seconds, then control resumes normal sequence.",
+          "related_codes": [
+            "code_11",
+            "code_41"
+          ],
+          "source": "Carrier 58-06T service/status code instructions",
+          "severity": "informational"
+        },
+        {
+          "code_id": "code_13",
+          "code_identifier": "13",
+          "code_type": "flash_count",
+          "meaning": "Limit circuit lockout",
+          "root_causes": [
+            "Limit or rollout switch open more than 3 minutes",
+            "10 successive limit trips during high heat",
+            "Dirty filter, weak blower, wrong airflow setup",
+            "Venting/combustion issue if rollout is involved"
+          ],
+          "diagnostic_path": [
+            "Determine whether the open device is main limit or rollout",
+            "Verify airflow/static/blower operation",
+            "Inspect venting/burner/heat-exchanger area if rollout is implicated"
+          ],
+          "escalation": "Manual-reset rollout or recurring limit trip after airflow corrections indicates a harder safety/combustion problem.",
+          "reset_behavior": "Auto-resets after 3 hours.",
+          "related_codes": [
+            "code_33",
+            "code_45"
+          ],
+          "source": "Carrier 58-06T status-code guide",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "code_14",
+          "code_identifier": "14",
+          "code_type": "flash_count",
+          "meaning": "Ignition lockout",
+          "root_causes": [
+            "Repeated ignition proving failure (4 attempts)",
+            "No gas, weak flame sense, poor ground, igniter issue, burner carryover problem"
+          ],
+          "diagnostic_path": [
+            "Verify gas supply and valve state",
+            "Verify igniter operation",
+            "Verify flame-sense microamps and ground continuity"
+          ],
+          "escalation": "Repeated 14 after normal gas and ignition hardware checks points toward control or valve problems.",
+          "reset_behavior": "Auto-resets after 3 hours.",
+          "related_codes": [
+            "code_34",
+            "code_21",
+            "code_22"
+          ],
+          "source": "Carrier 58-06T status-code guide",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_15",
+          "code_identifier": "15",
+          "code_type": "flash_count",
+          "meaning": "Blower motor lockout",
+          "root_causes": [
+            "Blower failed to reach 250 RPM",
+            "Blower failed to communicate within 30 seconds in two successive heating cycles",
+            "ECM motor/module issue",
+            "Wiring issue"
+          ],
+          "diagnostic_path": [
+            "Verify blower motor powers and communicates",
+            "Inspect harness/connections",
+            "Isolate ECM motor/module vs control with OEM blower/ECM procedures"
+          ],
+          "escalation": "Repeated lockout after proven-good blower wiring/power strongly points to ECM module/motor or control failure.",
+          "reset_behavior": "Auto-resets after 3 hours.",
+          "related_codes": [
+            "code_41"
+          ],
+          "source": "Carrier 58-06T troubleshooting guide and ECM simulator bulletin",
+          "severity": "urgent",
+          "field_consensus_notes": "Variable-speed-only code; NOT present on 58SC0B single-stage successor."
+        },
+        {
+          "code_id": "code_21",
+          "code_identifier": "21",
+          "code_type": "flash_count",
+          "meaning": "Gas heating lockout",
+          "root_causes": [
+            "Stuck-closed main gas valve relay on control",
+            "Miswire/short to gas-valve wiring",
+            "Flame-sense loss after burner-on time (in some lockout scenarios)"
+          ],
+          "diagnostic_path": [
+            "Verify gas-valve wiring is correct (blue to M / green-yellow to C)",
+            "Isolate miswire/short vs relay failure using OEM steps",
+            "If lockout occurs only when pressure switch makes, suspect control"
+          ],
+          "escalation": "If wiring is correct and code still flashes under proven conditions, control board becomes likely.",
+          "reset_behavior": "Does NOT auto-reset.",
+          "related_codes": [
+            "code_22",
+            "code_45"
+          ],
+          "source": "Carrier 58-06T and mirrored OEM 58MVC troubleshooting excerpt",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "code_22",
+          "code_identifier": "22",
+          "code_type": "flash_count",
+          "meaning": "Abnormal flame-proving signal",
+          "root_causes": [
+            "Flame sensed while gas valve is de-energized",
+            "Leaky/stuck-open gas valve",
+            "Flame-rectification/control issue"
+          ],
+          "diagnostic_path": [
+            "Shut off external gas supply and observe whether code clears",
+            "If code clears, suspect leaking gas valve",
+            "If code persists with gas off, isolate flame-sensing/control circuit"
+          ],
+          "escalation": "Persistent false flame with gas physically shut off moves suspicion toward board/flame circuit.",
+          "reset_behavior": "Inducer runs until fault clears.",
+          "related_codes": [
+            "code_21",
+            "code_34"
+          ],
+          "source": "Carrier 58-3T and mirrored OEM 58MVC troubleshooting excerpt",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "code_23",
+          "code_identifier": "23",
+          "code_type": "flash_count",
+          "meaning": "Pressure switch did not open",
+          "root_causes": [
+            "Obstructed pressure tubing",
+            "Pressure switch stuck closed",
+            "Moisture/debris in tubing or trap on condensing units"
+          ],
+          "diagnostic_path": [
+            "Verify switch state with inducer off",
+            "Inspect tubing for blockage/water",
+            "Prove switch operation with manometer if needed"
+          ],
+          "escalation": "If switch state is correct but board still reports fault, control/input issue becomes possible.",
+          "reset_behavior": "Clears when proper switch-open condition is restored.",
+          "related_codes": [
+            "code_31",
+            "code_32"
+          ],
+          "source": "Carrier 58-3T summary and Carrier 58-06T guide flow",
+          "severity": "urgent",
+          "field_consensus_notes": "CROSS-GENERATION CONFLICT: 58SC0B successor uses 23.1 format for stuck main pressure switch."
+        },
+        {
+          "code_id": "code_24",
+          "code_identifier": "24",
+          "code_type": "flash_count",
+          "meaning": "Secondary voltage fuse open",
+          "root_causes": [
+            "Short in 24V thermostat/accessory wiring",
+            "Shorted outdoor-contact circuit",
+            "Shorted humidifier/accessory",
+            "Board fuse blown during service or install"
+          ],
+          "diagnostic_path": [
+            "Isolate low-voltage wiring",
+            "Inspect thermostat, outdoor, and accessory circuits",
+            "Replace fuse only after fault isolation"
+          ],
+          "escalation": "Repeated fuse failures after field wiring isolation raise suspicion of board/transformer issue.",
+          "reset_behavior": "Clears after fuse replacement and fault correction.",
+          "related_codes": [
+            "code_21",
+            "code_22"
+          ],
+          "source": "Carrier 58-06T index entry",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_25",
+          "code_identifier": "25",
+          "code_type": "flash_count",
+          "meaning": "Model selection or setup error",
+          "root_causes": [
+            "Missing/incorrect model plug",
+            "SW1-1 or SW1-6 improper position",
+            "Thermostat call with setup switch on",
+            "Mismatched twinned furnaces",
+            "Incompatible 58UVB model-plug recognition on older board date codes"
+          ],
+          "diagnostic_path": [
+            "Verify model plug",
+            "Verify setup-switch position",
+            "Verify no call is present during setup functions"
+          ],
+          "escalation": "If plug/switching are correct and fault persists, control replacement becomes more likely.",
+          "reset_behavior": "If flashes only four times at power-up, board is defaulting to stored model selection; persistent flashing indicates active setup fault.",
+          "related_codes": [],
+          "source": "Carrier 58-06T status-code guide",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_31",
+          "code_identifier": "31",
+          "code_type": "flash_count",
+          "meaning": "High-heat pressure switch or relay did not close or reopened",
+          "root_causes": [
+            "High-heat pressure switch not proving",
+            "Relay fault",
+            "Gas-valve miswire",
+            "Condensate issues or vent restrictions can indirectly create high-fire proving complaints"
+          ],
+          "diagnostic_path": [
+            "Verify high-heat proving sequence and switch closure",
+            "Verify relay/gas-valve wiring",
+            "Inspect venting/condensate path"
+          ],
+          "escalation": "Repeated code after proofing checks points toward relay/control fault.",
+          "reset_behavior": "Active fault clears when proper proving returns.",
+          "related_codes": [
+            "code_32",
+            "code_43"
+          ],
+          "source": "Carrier 58-06T status-code guide",
+          "severity": "urgent",
+          "field_consensus_notes": "CROSS-GENERATION CONFLICT: Legacy 58MVP Code 31 is high-heat-specific staging logic. 58SC0B successor Code 31.1 is broader general pressure-switch fault since it's single-stage."
+        },
+        {
+          "code_id": "code_32",
+          "code_identifier": "32",
+          "code_type": "flash_count",
+          "meaning": "Low-heat pressure switch, draft safeguard, or auxiliary limit (downflow only) did not close or reopened",
+          "root_causes": [
+            "Low-fire draft issue",
+            "Pressure-switch tubing issue",
+            "Blocked condensate/trap",
+            "Draft safeguard/auxiliary-limit opening on specific configurations"
+          ],
+          "diagnostic_path": [
+            "Verify which switch in the chain is actually open",
+            "Inspect tubing/condensate path and low-fire draft",
+            "Follow OEM draft/pressure procedure"
+          ],
+          "escalation": "Repeated 32 on condensing units with correct switch operation often points to marginal draft or trap/vent issues.",
+          "reset_behavior": "Retry logic varies with sequence stage; diagnose active condition.",
+          "related_codes": [
+            "code_23",
+            "code_31",
+            "code_43"
+          ],
+          "source": "Carrier 58-3T troubleshooting guide",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_33",
+          "code_identifier": "33",
+          "code_type": "flash_count",
+          "meaning": "Limit circuit fault",
+          "root_causes": [
+            "Dirty filter/restricted duct",
+            "Failed blower motor or capacitor",
+            "Loose blower wheel",
+            "Rollout switch open",
+            "Inadequate combustion air"
+          ],
+          "diagnostic_path": [
+            "Separate airflow problem from rollout/combustion problem",
+            "Check static, temp rise, blower operation, filter, wheel",
+            "Inspect rollout/manual-reset switch and vent path"
+          ],
+          "escalation": "If open longer than 3 minutes changes to lockout code 13; rollout/manual-reset event is a harder safety problem.",
+          "reset_behavior": "Blower runs 4 minutes or until switch remakes, whichever is longer; escalates to 13 if open >3 minutes.",
+          "related_codes": [
+            "code_13"
+          ],
+          "source": "Carrier 58-06T troubleshooting guide",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_34",
+          "code_identifier": "34",
+          "code_type": "flash_count",
+          "meaning": "Ignition-proving fault",
+          "root_causes": [
+            "Poor flame-sense current",
+            "Gas valve not opening correctly",
+            "Gas supply issue",
+            "Rough ignition / poor carryover",
+            "Grounding problem"
+          ],
+          "diagnostic_path": [
+            "Measure flame current in µA",
+            "Check sensor, ground path, burner carryover, gas pressure",
+            "Verify gas valve operation and inlet pressure"
+          ],
+          "escalation": "Repeated flame loss after successful ignition can point to rollout/combustion instability or board/flame-rectification issue.",
+          "reset_behavior": "Control retries three more times before lockout 14.",
+          "related_codes": [
+            "code_14",
+            "code_22"
+          ],
+          "source": "Carrier 58-3T and 58-06T troubleshooting guides",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_41",
+          "code_identifier": "41",
+          "code_type": "flash_count",
+          "meaning": "Blower motor fault",
+          "root_causes": [
+            "Blower motor/module fault",
+            "Communication failure between blower and control",
+            "Power/harness issue"
+          ],
+          "diagnostic_path": [
+            "Verify line voltage and harness",
+            "Inspect blower wheel drag/binding",
+            "Isolate ECM module/motor vs control with OEM motor procedures"
+          ],
+          "escalation": "If code 15 follows, event has escalated to blower motor lockout.",
+          "reset_behavior": "May escalate to 15 lockout after repeated failure.",
+          "related_codes": [
+            "code_15",
+            "code_44"
+          ],
+          "source": "Carrier 58-06T troubleshooting guide",
+          "severity": "urgent",
+          "field_consensus_notes": "Variable-speed-only code; NOT present on 58SC0B single-stage successor."
+        },
+        {
+          "code_id": "code_42",
+          "code_identifier": "42",
+          "code_type": "flash_count",
+          "meaning": "Inducer motor fault",
+          "root_causes": [
+            "Inducer not starting within 20 seconds",
+            "Inducer RPM out of valid range",
+            "Lost inducer RPM signal for 5 seconds",
+            "Vent restriction",
+            "Failed inducer",
+            "Wiring fault"
+          ],
+          "diagnostic_path": [
+            "Verify inducer operation and RPM",
+            "Inspect venting/combustion-air path",
+            "Inspect motor wiring"
+          ],
+          "escalation": "Repeated code with free venting and correct power points toward inducer or board failure.",
+          "reset_behavior": "Active fault clears when inducer feedback normalizes.",
+          "related_codes": [
+            "code_31",
+            "code_32"
+          ],
+          "source": "Carrier 58-06T troubleshooting guide",
+          "severity": "urgent",
+          "field_consensus_notes": "Variable-speed-only code; NOT present on 58SC0B single-stage successor."
+        },
+        {
+          "code_id": "code_43",
+          "code_identifier": "43",
+          "code_type": "flash_count",
+          "meaning": "Low-heat pressure switch open while high-heat pressure switch is closed",
+          "root_causes": [
+            "Sag in vent pipe",
+            "Clogged trap/drain line",
+            "Improperly plumbed drain tubing",
+            "Switch circuit issue"
+          ],
+          "diagnostic_path": [
+            "Check vent sag, condensate trap/line, tubing, pressure switch circuit, draft timing"
+          ],
+          "escalation": "If vent/drain path is right and switch circuit checks out, board or pressure-sensing integrity issue is next.",
+          "reset_behavior": "Fault logic tied to pressure-switch state relationship.",
+          "related_codes": [
+            "code_31",
+            "code_32",
+            "code_44"
+          ],
+          "source": "Carrier 58-06T troubleshooting guide",
+          "severity": "urgent",
+          "field_consensus_notes": "Variable-speed-only code; NOT present on 58SC0B single-stage successor."
+        },
+        {
+          "code_id": "code_44",
+          "code_identifier": "44",
+          "code_type": "flash_count",
+          "meaning": "Blower calibration fault",
+          "root_causes": [
+            "Calculated blower speed below 250 RPM or above 1300 RPM",
+            "Blower wheel drag/restriction",
+            "ECM module or tach/rpm feedback issue",
+            "High static causing blower control problems"
+          ],
+          "diagnostic_path": [
+            "Verify blower wheel spins freely and airflow path is not excessively restricted",
+            "Inspect ECM wiring/module and blower RPM feedback",
+            "Follow OEM blower calibration/ECM diagnostic procedure"
+          ],
+          "escalation": "If code 41 is also present, focus on blower communication/module failure.",
+          "reset_behavior": "Sequence-dependent; heating mode defaults and fallback behavior depend on operating mode.",
+          "related_codes": [
+            "code_41",
+            "code_15"
+          ],
+          "source": "Mirrored OEM/manual references for Carrier 58MVP fault section",
+          "severity": "urgent",
+          "field_consensus_notes": "Variable-speed-only code; NOT present on 58SC0B single-stage successor."
+        },
+        {
+          "code_id": "code_45",
+          "code_identifier": "45",
+          "code_type": "flash_count",
+          "meaning": "Control circuitry lockout",
+          "root_causes": [
+            "Flame-circuit failure",
+            "Software/check-sequence error",
+            "Gas-valve relay/control fault"
+          ],
+          "diagnostic_path": [
+            "Cycle power",
+            "Verify flame-sense circuit and gas-valve relay behavior",
+            "If code repeats, replace control"
+          ],
+          "escalation": "Repeated code 45 after clean power reset is high-confidence control failure.",
+          "reset_behavior": "Lockout behavior; reset by power cycle, but repeated recurrence indicates failed control. Auto-resets after 1 hour.",
+          "related_codes": [
+            "code_21",
+            "code_34"
+          ],
+          "source": "Carrier 58-06T index",
+          "severity": "urgent",
+          "field_consensus_notes": "CROSS-GENERATION CONFLICT: 58SC0B successor splits into 45.1/45.2/45.3 granular subcodes."
+        }
+      ]
+    },
+    {
+      "platform_id": "carrier_58sc0b_3digit",
+      "platform_name": "Carrier/Bryant/Payne Newer 3-Digit Major.Minor Board",
+      "platform_description": "Newer single-stage non-communicating Carrier-family furnace control using a 3-digit display with major.minor code format (e.g., 14.1, 45.1). Stores last 7 faults. Descendant of 58MVP-era logic but with more granular subcodes. Variable-speed-only codes 15, 41, 42, 43, 44 are NOT present on this single-stage platform.",
+      "applies_to_models": [
+        "58SC0B",
+        "58SC1B",
+        "59SC5B",
+        "Bryant 915SB",
+        "Payne PG95ESA",
+        "Payne PG96VTA",
+        "Carrier 59TP6A",
+        "Carrier 59TP6C"
+      ],
+      "applies_to_years": "2012-2026",
+      "model_number_prefixes": [
+        "58SC0B",
+        "58SC1B",
+        "59SC5B",
+        "915SB",
+        "PG95ESA",
+        "PG96VTA",
+        "59TP6A",
+        "59TP6C",
+        "916SA",
+        "59SC6A"
+      ],
+      "visual_identification": "3-digit display showing codes in format like 14.1, 31.1, 45.1 (major.minor). Pushbutton navigation for fault history recall. Shows the last 7 faults.",
+      "display_type": "3_digit_alphanumeric",
+      "platform_notes": "Faults stored 72 hours or cleared manually. Auto-reset after 3 hours on 13.1/14.1 lockout. 21.1 gas heating lockout requires power cycle after 5 minutes.",
+      "codes": [
+        {
+          "code_id": "code_11_1",
+          "code_identifier": "11.1",
+          "code_type": "alphanumeric",
+          "meaning": "No previous code",
+          "root_causes": [],
+          "diagnostic_path": [
+            "If complaint is intermittent, run heat/cool sequence and re-check the last-7-fault menu"
+          ],
+          "escalation": "None",
+          "reset_behavior": "Faults remain in memory for 72 hours of powered operation; manual clear procedure also available.",
+          "related_codes": [],
+          "source": "PG96VTA install/service manual and Carrier/Bryant 3-digit service-label documentation",
+          "severity": "informational"
+        },
+        {
+          "code_id": "code_12_1",
+          "code_identifier": "12.1",
+          "code_type": "alphanumeric",
+          "meaning": "Blower on after power-up",
+          "root_causes": [
+            "Normal operation if unit is repowered during a heat call or blower-on-delay interval"
+          ],
+          "diagnostic_path": [
+            "Verify recent power interruption before treating as a defect"
+          ],
+          "escalation": "None unless the blower stays abnormal beyond the normal purge interval.",
+          "reset_behavior": "Normal 90-second blower run, then control resumes normal sequence.",
+          "related_codes": [
+            "code_11_1"
+          ],
+          "source": "PG96VTA public install/service manual",
+          "severity": "informational"
+        },
+        {
+          "code_id": "code_13_1",
+          "code_identifier": "13.1",
+          "code_type": "alphanumeric",
+          "meaning": "Limit circuit lockout",
+          "root_causes": [
+            "Limit or flame rollout switch open longer than 3 minutes",
+            "Low airflow, blocked filter/coil, blower-speed mismatch, rollout-related combustion problem"
+          ],
+          "diagnostic_path": [
+            "Identify whether the open device is main limit, draft safeguard, rollout, or blocked-vent branch",
+            "Verify airflow/static/blower first if it is a limit event"
+          ],
+          "escalation": "Manual-reset rollout or repeated limit cycling after airflow correction indicates higher-risk combustion or HX issue.",
+          "reset_behavior": "Auto-resets after 3 hours.",
+          "related_codes": [
+            "code_33_1",
+            "code_14_1"
+          ],
+          "source": "58SC0B public manual snippets",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "code_14_1",
+          "code_identifier": "14.1",
+          "code_type": "alphanumeric",
+          "meaning": "Ignition lockout",
+          "root_causes": [
+            "System failed to ignite gas and prove flame in 4 attempts",
+            "No gas, poor flame sense, grounding issue, ignition hardware problem"
+          ],
+          "diagnostic_path": [
+            "Verify gas supply",
+            "Verify HSI and valve operation",
+            "Verify flame-sense current and grounding"
+          ],
+          "escalation": "Repeated 14.1 after normal gas and ignition checks points toward board/valve issues.",
+          "reset_behavior": "Auto-resets after 3 hours.",
+          "related_codes": [
+            "code_34_1",
+            "code_21_1"
+          ],
+          "source": "PG96VTA public install/service manual",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_21_1",
+          "code_identifier": "21.1",
+          "code_type": "alphanumeric",
+          "meaning": "Gas heating lockout; 24 VAC sensed on gas valve when it should not be",
+          "root_causes": [
+            "Stuck-closed gas valve relay",
+            "Miswire",
+            "Unwanted 24 VAC to gas valve"
+          ],
+          "diagnostic_path": [
+            "Verify unwanted voltage at gas valve",
+            "Compare wiring to schematic",
+            "Replace board only after field miswire is ruled out"
+          ],
+          "escalation": "Strong control/relay concern if wiring is correct.",
+          "reset_behavior": "Turn off power and wait 5 minutes to retry.",
+          "related_codes": [
+            "code_34_1",
+            "code_45_1"
+          ],
+          "source": "Public 58SC0B manual snippet",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "code_23_1",
+          "code_identifier": "23.1",
+          "code_type": "alphanumeric",
+          "meaning": "Stuck main pressure switch",
+          "root_causes": [
+            "Obstructed pressure tube",
+            "Pressure switch stuck closed"
+          ],
+          "diagnostic_path": [
+            "Verify switch state before inducer run",
+            "Inspect tubing and ports",
+            "Replace switch only after tubing is proven clear"
+          ],
+          "escalation": "Persistent false-closed reading with proven tubing and switch state points toward board input fault.",
+          "reset_behavior": "Active fault clears when pressure-switch startup proofing normalizes.",
+          "related_codes": [
+            "code_31_1"
+          ],
+          "source": "Bryant/Carrier descendant public manual snippets",
+          "severity": "urgent",
+          "field_consensus_notes": "CROSS-GENERATION CONFLICT: Legacy 58MVP uses Code 23 (no decimal) for same subsystem."
+        },
+        {
+          "code_id": "code_24_1",
+          "code_identifier": "24.1",
+          "code_type": "alphanumeric",
+          "meaning": "Low-voltage fuse needs replacement / fuse open",
+          "root_causes": [
+            "Short in 24 VAC wiring",
+            "Thermostat, outdoor contactor coil, humidifier, accessory, or harness short"
+          ],
+          "diagnostic_path": [
+            "Isolate low-voltage branches",
+            "Inspect thermostat/outdoor/accessory wiring",
+            "Replace fuse only after short path is corrected"
+          ],
+          "escalation": "Repeated 24.1 means real short, not nuisance fuse failure.",
+          "reset_behavior": "Clears when fuse is replaced and the short is removed.",
+          "related_codes": [
+            "code_11_1",
+            "code_45_1"
+          ],
+          "source": "Carrier-family public install documentation",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_31_1",
+          "code_identifier": "31.1",
+          "code_type": "alphanumeric",
+          "meaning": "Open main pressure switch / pressure switch did not function properly",
+          "root_causes": [
+            "Low/main pressure switch not proving",
+            "Vent/condensate/tubing issue",
+            "Switch calibration issue",
+            "Sagged vent, plugged trap, water in tubing, marginal inducer, wind effects"
+          ],
+          "diagnostic_path": [
+            "Verify inducer operation and actual proving path",
+            "Inspect condensate drain, tubing, and venting",
+            "Verify switch function"
+          ],
+          "escalation": "If HSI glows with inducer disconnected, manual says shut furnace down immediately.",
+          "reset_behavior": "Clears when proper proving returns.",
+          "related_codes": [
+            "code_23_1"
+          ],
+          "source": "58SC0B/916SA/915SB family public manual snippets",
+          "severity": "urgent",
+          "field_consensus_notes": "CROSS-GENERATION CONFLICT: Legacy 58MVP Code 31 is high-heat-specific staging logic (different meaning on staged equipment)."
+        },
+        {
+          "code_id": "code_33_1",
+          "code_identifier": "33.1",
+          "code_type": "alphanumeric",
+          "meaning": "Switch opened in the main limit / main limit branch open",
+          "root_causes": [
+            "Airflow restriction",
+            "Blower problem",
+            "Open limit",
+            "Dirty filter, oversized temperature rise, closed registers, weak motor/capacitor on non-ECM applications"
+          ],
+          "diagnostic_path": [
+            "Verify airflow/static and filter",
+            "Verify blower operation and heat rise",
+            "Inspect limit circuit"
+          ],
+          "escalation": "Repeated main-limit opening after airflow correction suggests switch or HX/combustion concern.",
+          "reset_behavior": "Transitions into 13.1 if lockout criteria are met.",
+          "related_codes": [
+            "code_13_1",
+            "code_14_1"
+          ],
+          "source": "Public Carrier-family snippet",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_34_1",
+          "code_identifier": "34.1",
+          "code_type": "alphanumeric",
+          "meaning": "Ignition proving failure",
+          "root_causes": [
+            "Adequate flame sense not detected during trial for ignition",
+            "Dirty flame sensor, weak ground, low gas pressure, bad gas valve, burner carryover issue"
+          ],
+          "diagnostic_path": [
+            "Verify flame is actually lighting",
+            "Verify flame-sense current and clean sensor",
+            "Verify gas pressure and ground continuity"
+          ],
+          "escalation": "Repeated 34.1 after proper flame current and gas checks points toward control/valve faults.",
+          "reset_behavior": "Repeated proving failures escalate to 14.1 lockout.",
+          "related_codes": [
+            "code_14_1",
+            "code_21_1"
+          ],
+          "source": "Carrier-family public snippet on newer major.minor platform",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_45_1",
+          "code_identifier": "45.1",
+          "code_type": "alphanumeric",
+          "meaning": "Control failure",
+          "root_causes": [
+            "Internal control-board fault",
+            "Sometimes surfaced after repeated false lockouts"
+          ],
+          "diagnostic_path": [
+            "Verify line and low-voltage supply",
+            "Verify no induced miswire/backfeed",
+            "Replace control if fault persists"
+          ],
+          "escalation": "Board-level escalation.",
+          "reset_behavior": "Not documented in public snippets as a timed auto-reset; treat as persistent until corrected/reset.",
+          "related_codes": [
+            "code_21_1"
+          ],
+          "source": "Public 58SC0B manual snippets",
+          "severity": "urgent",
+          "field_consensus_notes": "CROSS-GENERATION CONFLICT: Legacy 58MVP Code 45 is broad control lockout. 58SC0B splits into 45.1/45.2/45.3 (this is 45.1). Additional subcodes 45.2 (gas valve relay won't close) and 45.3 (EEPROM) may exist but weren't cleanly verifiable from public sources in this pass."
+        }
+      ]
+    },
+    {
+      "platform_id": "carrier_38tdb_outdoor",
+      "platform_name": "Carrier/Bryant 38TDB Two-Speed Outdoor Board",
+      "platform_description": "Carrier/Bryant 38TDB WeatherMaker / Infinity 18 two-speed air conditioner outdoor control board. Outdoor-board LED language, keep separate from furnace records.",
+      "applies_to_models": [
+        "38TDB two-speed air conditioner",
+        "Bryant Infinity 18 two-speed sibling"
+      ],
+      "applies_to_years": "2005-2020",
+      "model_number_prefixes": [
+        "38TDB"
+      ],
+      "visual_identification": "Single LED on outdoor control board showing flash patterns — single count, or compound patterns like '3 pause 4', '5 pause 1', '5 pause 2'. Constant flash is standby, constant light is board failure.",
+      "display_type": "numeric_flash",
+      "platform_notes": "Outdoor-only codes — NOT furnace codes. Do not merge into indoor-furnace lookup logic.",
+      "codes": [
+        {
+          "code_id": "standby",
+          "code_identifier": "Constant flash / no pause",
+          "code_type": "status_display",
+          "meaning": "No demand / standby",
+          "root_causes": [
+            "No active Y call; normal idle state"
+          ],
+          "diagnostic_path": [
+            "Verify thermostat demand and low-voltage call before chasing refrigeration faults"
+          ],
+          "escalation": "None",
+          "reset_behavior": "Normal standby state.",
+          "related_codes": [
+            "1_flash",
+            "2_flashes"
+          ],
+          "source": "38TDB Table 5",
+          "severity": "informational"
+        },
+        {
+          "code_id": "1_flash",
+          "code_identifier": "1 flash w/pause",
+          "code_type": "flash_count",
+          "meaning": "Low-speed operation",
+          "root_causes": [
+            "Normal first-stage compressor operation"
+          ],
+          "diagnostic_path": [
+            "Verify staging call if expected high speed is absent"
+          ],
+          "escalation": "None by itself",
+          "reset_behavior": "Follows active demand.",
+          "related_codes": [
+            "2_flashes"
+          ],
+          "source": "38TDB Table 5",
+          "severity": "informational"
+        },
+        {
+          "code_id": "2_flashes",
+          "code_identifier": "2 flashes w/pause",
+          "code_type": "flash_count",
+          "meaning": "High-speed operation",
+          "root_causes": [
+            "Normal second-stage compressor operation"
+          ],
+          "diagnostic_path": [
+            "Verify thermostat/control staging if expected high speed never appears"
+          ],
+          "escalation": "None by itself",
+          "reset_behavior": "Follows active demand.",
+          "related_codes": [
+            "1_flash"
+          ],
+          "source": "38TDB Table 5",
+          "severity": "informational"
+        },
+        {
+          "code_id": "3_flashes",
+          "code_identifier": "3 flashes w/pause",
+          "code_type": "flash_count",
+          "meaning": "Outdoor thermistor failure",
+          "root_causes": [
+            "Failed outdoor-air thermistor",
+            "Open/shorted sensor",
+            "Wiring damage"
+          ],
+          "diagnostic_path": [
+            "Inspect sensor resistance and harness",
+            "Verify sensor placement"
+          ],
+          "escalation": "If sensor values are correct at the board, control-board input fault becomes more likely.",
+          "reset_behavior": "No public reset timing documented in install/start-up manual.",
+          "related_codes": [
+            "3_pause_4",
+            "4_flashes"
+          ],
+          "source": "38TDB Table 5",
+          "severity": "service_soon"
+        },
+        {
+          "code_id": "4_flashes",
+          "code_identifier": "4 flashes w/pause",
+          "code_type": "flash_count",
+          "meaning": "Outdoor coil thermistor failure",
+          "root_causes": [
+            "Failed OCT thermistor",
+            "Wiring fault",
+            "Bad connection"
+          ],
+          "diagnostic_path": [
+            "Verify coil-sensor resistance and wiring",
+            "Verify mounting/location"
+          ],
+          "escalation": "If sensor checks good at board, suspect control input issue.",
+          "reset_behavior": "No public reset timing documented in install/start-up manual.",
+          "related_codes": [
+            "3_flashes",
+            "3_pause_4"
+          ],
+          "source": "38TDB Table 5",
+          "severity": "service_soon"
+        },
+        {
+          "code_id": "3_pause_4",
+          "code_identifier": "3 flashes pause 4 flashes",
+          "code_type": "flash_count",
+          "meaning": "Thermistor out of range",
+          "root_causes": [
+            "Sensor reading outside valid range",
+            "Poor sensor placement (manual warns nuisance 'out of frame' faults if outdoor-air thermistor is not placed properly under the base pan)"
+          ],
+          "diagnostic_path": [
+            "Verify sensor placement",
+            "Verify actual thermistor resistance vs temperature"
+          ],
+          "escalation": "Repeated fault after proper placement points toward sensor/control issue.",
+          "reset_behavior": "No public reset timing documented in install/start-up manual.",
+          "related_codes": [
+            "3_flashes",
+            "4_flashes"
+          ],
+          "source": "38TDB Table 5 and thermistor-placement note",
+          "severity": "service_soon"
+        },
+        {
+          "code_id": "5_pause_1",
+          "code_identifier": "5 flashes pause 1 flash",
+          "code_type": "flash_count",
+          "meaning": "Low-pressure switch trip",
+          "root_causes": [
+            "Low charge",
+            "Low indoor airflow",
+            "Restriction",
+            "Low-load conditions"
+          ],
+          "diagnostic_path": [
+            "Verify actual operating pressures and airflow",
+            "Inspect charge/restriction path"
+          ],
+          "escalation": "Repeated LPS trips under normal load point toward leak/restriction/system issue.",
+          "reset_behavior": "No public timing/reset detail documented in Table 5.",
+          "related_codes": [
+            "5_pause_2",
+            "6_flashes"
+          ],
+          "source": "38TDB Table 5",
+          "severity": "urgent",
+          "field_consensus_notes": "Refrigerant-side issue is more common than bad switch."
+        },
+        {
+          "code_id": "5_pause_2",
+          "code_identifier": "5 flashes pause 2 flashes",
+          "code_type": "flash_count",
+          "meaning": "High-pressure switch trip",
+          "root_causes": [
+            "Dirty condenser",
+            "Fan issue",
+            "Overcharge",
+            "Non-condensables"
+          ],
+          "diagnostic_path": [
+            "Inspect outdoor airflow and fan",
+            "Verify pressures and charge"
+          ],
+          "escalation": "Repeated HPS trips under clean-airflow conditions indicate deeper refrigerant/control issues.",
+          "reset_behavior": "No public timing/reset detail documented in Table 5.",
+          "related_codes": [
+            "5_pause_1",
+            "6_flashes"
+          ],
+          "source": "38TDB Table 5",
+          "severity": "urgent",
+          "field_consensus_notes": "Condenser airflow is the first thing to check."
+        },
+        {
+          "code_id": "6_flashes",
+          "code_identifier": "6 flashes w/pause",
+          "code_type": "flash_count",
+          "meaning": "Compressor VC/VH trip",
+          "root_causes": [
+            "Compressor protective trip / internal protection event",
+            "Can be secondary to pressure problems or electrical/mechanical compressor stress"
+          ],
+          "diagnostic_path": [
+            "Verify supply voltage and compressor condition",
+            "Verify whether an HPS/LPS or thermistor issue preceded it"
+          ],
+          "escalation": "Repeated protective trips point toward compressor or system abnormality.",
+          "reset_behavior": "No public timing/reset detail documented in Table 5.",
+          "related_codes": [
+            "5_pause_1",
+            "5_pause_2",
+            "constant_light"
+          ],
+          "source": "38TDB Table 5",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "constant_light",
+          "code_identifier": "Constant light / no pause / no flash",
+          "code_type": "status_display",
+          "meaning": "Board failure",
+          "root_causes": [
+            "Failed outdoor control board"
+          ],
+          "diagnostic_path": [
+            "Verify board power and wiring",
+            "Replace board if supply conditions are correct"
+          ],
+          "escalation": "Board-level escalation.",
+          "reset_behavior": "Not documented as a timed auto-reset in install/start-up manual.",
+          "related_codes": [],
+          "source": "38TDB Table 5",
+          "severity": "urgent"
+        }
+      ]
+    },
+    {
+      "platform_id": "icp_single_stage_igc",
+      "platform_name": "ICP Recent/Intermediate Single-Stage IGC (N9MSB/N9MSE)",
+      "platform_description": "ICP single-stage IGC board used on N9MSB/N9MSE/N9MS family and sibling badge-equivalent Comfortmaker, Day & Night, Heil, Tempstar, Arcoaire, KeepRite models. Uses single-LED flash codes (1-10) plus compound codes (1+2, 6+1). Merged platform — 'Recent' and 'Intermediate' generations share the same service-label legend per primary-source verification.",
+      "applies_to_models": [
+        "N9MSB",
+        "N9MSE",
+        "N9MS series",
+        "Comfortmaker/Day & Night/Heil/Tempstar/Arcoaire/KeepRite single-stage condensing"
+      ],
+      "applies_to_years": "2010-2026",
+      "model_number_prefixes": [
+        "N9MSB",
+        "N9MSE",
+        "N9MS"
+      ],
+      "visual_identification": "Single LED board with heartbeat (bright-dim) for normal, single-digit flash counts 2-10 for faults, plus compound codes 1+2 and 6+1. ON SOLID indicates control lockout.",
+      "display_type": "single_led_flash",
+      "platform_notes": "Auto-reset after 3 hours on 6+1 and 14-family lockouts. 9 flashes (internal software processor fault) was NOT cleanly verifiable from primary-source material and is NOT included.",
+      "codes": [
+        {
+          "code_id": "heartbeat",
+          "code_identifier": "HEARTBEAT (bright-dim)",
+          "code_type": "status_display",
+          "meaning": "Control has 24 VAC power / normal powered state",
+          "root_causes": [
+            "Normal standby or active normal operation with no stored fault recall in progress"
+          ],
+          "diagnostic_path": [
+            "Verify call for heat and live sequence if complaint persists with only heartbeat showing"
+          ],
+          "escalation": "None by itself",
+          "reset_behavior": "Steady repeating heartbeat while powered normally.",
+          "related_codes": [
+            "off",
+            "on_solid"
+          ],
+          "source": "N9MSB/N9MSE service-label legend",
+          "severity": "informational"
+        },
+        {
+          "code_id": "off",
+          "code_identifier": "OFF",
+          "code_type": "status_display",
+          "meaning": "Secondary voltage fuse open / board not properly powered",
+          "root_causes": [
+            "Door switch not closed",
+            "No 115 VAC at L1/Neutral",
+            "No 24 VAC",
+            "Open 3 A fuse",
+            "Short in secondary wiring"
+          ],
+          "diagnostic_path": [
+            "Verify blower-door switch and line voltage",
+            "Verify 24 VAC at board",
+            "Isolate low-voltage short and inspect fuse"
+          ],
+          "escalation": "Repeated fuse failure indicates a real low-voltage short.",
+          "reset_behavior": "Clears when power/fuse issue is corrected.",
+          "related_codes": [
+            "on_solid"
+          ],
+          "source": "N9MSB/N9MSE service-label legend and troubleshooting flowchart",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "on_solid",
+          "code_identifier": "ON SOLID",
+          "code_type": "status_display",
+          "meaning": "Control circuitry lockout",
+          "root_causes": [
+            "Flame sense circuit failure",
+            "Gas valve relay stuck open",
+            "Software check error"
+          ],
+          "diagnostic_path": [
+            "Reset power",
+            "Verify flame-sense circuit, gas-valve relay behavior, and general board operation"
+          ],
+          "escalation": "If code repeats after power reset, OEM directs replacement of control.",
+          "reset_behavior": "Auto-reset after 1 hour; power reset clears immediately.",
+          "related_codes": [
+            "code_8",
+            "code_5",
+            "code_6"
+          ],
+          "source": "N9MSB/N9MSE service-label legend and troubleshooting flowchart",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_2",
+          "code_identifier": "2",
+          "code_type": "flash_count",
+          "meaning": "Pressure switch did not open",
+          "root_causes": [
+            "Obstructed pressure tubing",
+            "Pressure switch stuck closed"
+          ],
+          "diagnostic_path": [
+            "Verify switch state before inducer starts",
+            "Inspect tubing and ports",
+            "Replace switch only after proving tubing/port integrity"
+          ],
+          "escalation": "If switch state remains wrong with known-good tubing, switch or board input fault becomes more likely.",
+          "reset_behavior": "Clears when startup proofing normalizes.",
+          "related_codes": [
+            "code_3",
+            "code_10"
+          ],
+          "source": "N9MSB/N9MSE service-label legend",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_3",
+          "code_identifier": "3",
+          "code_type": "flash_count",
+          "meaning": "Pressure switch did not close or reopened",
+          "root_causes": [
+            "Excessive vent length",
+            "Defective inducer motor",
+            "Low inducer voltage",
+            "Defective pressure switch",
+            "Inadequate combustion air supply",
+            "Low inlet gas pressure if LGPS used",
+            "Disconnected/obstructed pressure tubing",
+            "Restricted vent",
+            "Blocked/restricted condensate drainage",
+            "Plugged trap/tubing and marginal inducer performance are common on nuisance repeats"
+          ],
+          "diagnostic_path": [
+            "Inspect venting, condensate, and tubing",
+            "Verify inducer operation and incoming voltage",
+            "Verify switch calibration and inlet gas pressure if LGPS is in play"
+          ],
+          "escalation": "If pressure switch remains open after three successive trials, board locks out for 3 hours before retry.",
+          "reset_behavior": "Inducer shuts off for 15 minutes before retry; if HPS remains open for 1 minute after gas valve closes after three trials, control locks out for 3 hours before retry.",
+          "related_codes": [
+            "code_2",
+            "code_4",
+            "code_7"
+          ],
+          "source": "ICP N9MSB service label, Figure 14, manual 440 04 4413 00 / service label rev. 338310-2 Rev F",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_4",
+          "code_identifier": "4",
+          "code_type": "flash_count",
+          "meaning": "Limit circuit fault; indicates a limit or flame rollout is open",
+          "root_causes": [
+            "Restricted vent",
+            "Proper vent sizing issue",
+            "Loose blower wheel",
+            "Excessive wind",
+            "Dirty filter or restricted duct system",
+            "Defective blower motor or capacitor",
+            "Defective switch or connections",
+            "Inadequate combustion air supply",
+            "Flame-rollout switch open"
+          ],
+          "diagnostic_path": [
+            "Identify whether open device is main limit or rollout",
+            "Verify filter, duct restriction, blower wheel, blower motor/capacitor, and venting",
+            "Inspect switch wiring/connections and combustion-air path"
+          ],
+          "escalation": "If flame-rollout is open, this is a combustion safety escalation; if switch remains open longer than 3 minutes, code changes to lockout 7.",
+          "reset_behavior": "Blower runs for 4 minutes or until open switch remakes, whichever is longer; if open less than 3 minutes code 4 continues until blower shuts off; if open longer than 3 minutes it becomes lockout 7.",
+          "related_codes": [
+            "code_7",
+            "code_5",
+            "code_3"
+          ],
+          "source": "ICP N9MSB service label, Figure 14",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "code_5",
+          "code_identifier": "5",
+          "code_type": "flash_count",
+          "meaning": "Abnormal flame-proving signal; flame proved while gas valve is de-energized",
+          "root_causes": [
+            "Leaky gas valve",
+            "Stuck-open gas valve",
+            "Contaminated flame-sense path or grounding issues can contribute"
+          ],
+          "diagnostic_path": [
+            "Verify whether flame is actually present with valve de-energized",
+            "Isolate gas valve leakage/stuck-open condition",
+            "Inspect flame-sense path only after valve behavior is ruled out"
+          ],
+          "escalation": "Persistent abnormal flame-proving with gas valve confirmed closed points toward control or sensing fault; actual gas leakage/stuck-open valve is a high-priority safety issue.",
+          "reset_behavior": "Inducer runs until the fault is cleared.",
+          "related_codes": [
+            "code_6",
+            "code_8"
+          ],
+          "source": "ICP N9MSB service label, Figure 14",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "code_6",
+          "code_identifier": "6",
+          "code_type": "flash_count",
+          "meaning": "Ignition proving failure",
+          "root_causes": [
+            "Flame sensor must not be grounded",
+            "Oxide buildup on flame sensor",
+            "Improper flame-sense microamps",
+            "Gas valve defective or gas valve turned off",
+            "Manual valve shut-off",
+            "Low inlet gas pressure",
+            "Defective hot-surface ignitor",
+            "Control ground continuity issue",
+            "Inadequate flame carryover or rough ignition"
+          ],
+          "diagnostic_path": [
+            "Verify gas is on and inlet gas pressure is adequate",
+            "Verify HSI operation and burner carryover",
+            "Clean/check flame sensor and verify flame-sense microamps and control grounding"
+          ],
+          "escalation": "Control retries and then escalates to 6+1 ignition lockout.",
+          "reset_behavior": "Control will try three more times before 6+1 ignition lockout occurs.",
+          "related_codes": [
+            "code_6_plus_1",
+            "code_5",
+            "code_8"
+          ],
+          "source": "ICP N9MSB service label, Figure 14",
+          "severity": "urgent",
+          "field_consensus_notes": "CROSS-GENERATION CONFLICT: On ICP SmartValve legacy single-stage, Code 6 is broader (failure to ignite OR flame sense lost during run). On ICP Gen 1 NTV6, Code 6 is soft lockout status."
+        },
+        {
+          "code_id": "code_7",
+          "code_identifier": "7",
+          "code_type": "flash_count",
+          "meaning": "Limit circuit lockout; lockout occurs if limit or flame-rollout circuit stays open longer than 3 minutes",
+          "root_causes": [
+            "Open main limit",
+            "Open rollout",
+            "Repeated overheating from low airflow",
+            "Dirty filter, blocked coil, failed/slow blower, undersized duct, or actual combustion/rollout issue if rollout is the open device"
+          ],
+          "diagnostic_path": [
+            "Determine whether open device is main limit or rollout switch",
+            "Verify airflow, filter, blower operation, and temperature rise",
+            "Inspect burners, venting, and heat exchanger area if rollout is involved"
+          ],
+          "escalation": "Rollout involvement is the hard-safety branch; repeated limit lockout after airflow correction points to deeper blower, heat-rise, or heat-exchanger/combustion issues.",
+          "reset_behavior": "Control auto-resets after 3 hours.",
+          "related_codes": [
+            "code_4",
+            "code_8",
+            "code_10"
+          ],
+          "source": "N9MSB service-label troubleshooting page and N9MSE service-manual retrieval/service-label instructions",
+          "severity": "safety_critical",
+          "field_consensus_notes": "CROSS-GENERATION CONFLICT: ICP SmartValve legacy single-stage Code 7 triggers at 2 minutes with 1-hour lockout (shorter threshold, shorter reset)."
+        },
+        {
+          "code_id": "code_8",
+          "code_identifier": "8",
+          "code_type": "flash_count",
+          "meaning": "Gas heating lockout",
+          "root_causes": [
+            "Stuck-closed gas-valve relay on control",
+            "Miswire",
+            "Short to gas-valve wire",
+            "False backfeed to GV lead and board relay failure are main branches once field miswire is ruled out"
+          ],
+          "diagnostic_path": [
+            "Verify whether 24 V is being sent to gas valve when it should not be",
+            "Compare gas-valve wiring to schematic and look for shorts/backfeed",
+            "Condemn board only after field wiring is proven correct"
+          ],
+          "escalation": "Board/relay-level escalation if gas-valve circuit is wired correctly.",
+          "reset_behavior": "Control does not auto-reset; turn off power and wait 5 minutes to retry.",
+          "related_codes": [
+            "code_5",
+            "code_6",
+            "code_6_plus_1",
+            "code_10"
+          ],
+          "source": "N9MSB service-label troubleshooting page",
+          "severity": "safety_critical",
+          "field_consensus_notes": "CROSS-GENERATION CONFLICT: ICP Gen 1 NTV6 two-stage Code 8 means HPS stuck closed (completely different)."
+        },
+        {
+          "code_id": "code_10",
+          "code_identifier": "10",
+          "code_type": "flash_count",
+          "meaning": "Polarity fault",
+          "root_causes": [
+            "Reversed line-voltage polarity",
+            "If twinned, improper low-voltage transformer phasing",
+            "Poor grounding and supply miswire"
+          ],
+          "diagnostic_path": [
+            "Verify correct 115 V hot/neutral polarity",
+            "Verify chassis grounding",
+            "If twinned, verify 24 V phasing per twinning instructions"
+          ],
+          "escalation": "Persistent polarity indication with verified incoming wiring points toward control-input abnormality.",
+          "reset_behavior": "Clears when polarity/phasing issue is corrected.",
+          "related_codes": [
+            "code_1_plus_2",
+            "code_8"
+          ],
+          "source": "N9MSB service-label troubleshooting page",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_1_plus_2",
+          "code_identifier": "1+2",
+          "code_type": "flash_count",
+          "meaning": "Blower on after power-up",
+          "root_causes": [
+            "Normal response when power is restored during a call for heat or when R-W/W1 opens during blower on-delay"
+          ],
+          "diagnostic_path": [
+            "Verify whether there was a recent power interruption during a heat call",
+            "Verify blower clears after normal timed period before treating it as a fault"
+          ],
+          "escalation": "None by itself unless blower operation stays abnormal beyond normal post-power-up interval.",
+          "reset_behavior": "Blower runs 90 seconds, then unit returns to normal heartbeat/no-fault display if no faults are present.",
+          "related_codes": [
+            "heartbeat"
+          ],
+          "source": "N9MSB service-label page and N9MSB/N9MSE service-manual text describing the 90-second blower-only period",
+          "severity": "informational"
+        },
+        {
+          "code_id": "code_6_plus_1",
+          "code_identifier": "6+1",
+          "code_type": "flash_count",
+          "meaning": "Ignition lockout; system failed to ignite gas and prove flame in 4 attempts",
+          "root_causes": [
+            "Same root-cause family as code 6: no gas, igniter issue, low flame current, poor ground, gas-valve problem, burner carryover issue"
+          ],
+          "diagnostic_path": [
+            "Troubleshoot active proving-failure path under code 6",
+            "Verify gas supply, igniter operation, and flame-sense current",
+            "Verify grounding and gas-valve operation"
+          ],
+          "escalation": "Timed lockout state after repeated code-6 ignition-proving failures.",
+          "reset_behavior": "Auto-resets after 3 hours; service label says refer back to status code 6.",
+          "related_codes": [
+            "code_6",
+            "code_8",
+            "code_10"
+          ],
+          "source": "N9MSB service-label troubleshooting page",
+          "severity": "urgent",
+          "field_consensus_notes": "CROSS-GENERATION CONFLICT: ICP SmartValve legacy single-stage 6+1 has 5-minute soft lockout (not 3-hour)."
+        }
+      ]
+    },
+    {
+      "platform_id": "icp_smartvalve_single_stage",
+      "platform_name": "ICP SmartValve Legacy Single-Stage (N8MPN/H8MPN family)",
+      "platform_description": "Older Honeywell SmartValve-based ICP single-stage family with 6+X soft-lockout subcode architecture. Uses simpler flash codes with the 6+X compound codes identifying the last abnormal event that forced lockout. Different from Recent/Intermediate IGC platform — meanings for Code 6, 7, and reset behaviors differ.",
+      "applies_to_models": [
+        "N8MPN",
+        "H8MPN",
+        "C8MPN",
+        "N8MPL",
+        "H8MPL",
+        "C8MPL",
+        "N9MP1",
+        "N9MP2"
+      ],
+      "applies_to_years": "2000-2012",
+      "model_number_prefixes": [
+        "N8MPN",
+        "H8MPN",
+        "C8MPN",
+        "N8MPL",
+        "H8MPL",
+        "C8MPL",
+        "N9MP1",
+        "N9MP2"
+      ],
+      "visual_identification": "Single LED with 6+X soft-lockout subcode architecture (6+1, 6+2, 6+3, 6+4). Uses Honeywell SmartValve with separate diagnostic indicator. 5-minute soft lockout instead of 3-hour like newer IGC.",
+      "display_type": "single_led_flash",
+      "platform_notes": "6+X soft-lockout architecture is defining feature. 5-minute soft lockout then retry. Code 8 exists in field reports but was NOT cleanly verifiable from primary SmartValve tables and is excluded.",
+      "codes": [
+        {
+          "code_id": "code_1",
+          "code_identifier": "1 flash",
+          "code_type": "flash_count",
+          "meaning": "Not used",
+          "root_causes": [],
+          "diagnostic_path": [
+            "Do not build logic around this code",
+            "Verify actual displayed pattern is not heartbeat or another multi-part code"
+          ],
+          "escalation": "None",
+          "reset_behavior": "Not applicable.",
+          "related_codes": [
+            "code_2",
+            "code_3"
+          ],
+          "source": "Public N8MPN SmartValve-era diagnostic-code text",
+          "severity": "informational"
+        },
+        {
+          "code_id": "code_2",
+          "code_identifier": "2 flashes",
+          "code_type": "flash_count",
+          "meaning": "Pressure switch(es) closed when should be open",
+          "root_causes": [
+            "Stuck pressure switch",
+            "Pressure-switch circuit closed at startup",
+            "Tubing issue causing false closed reading"
+          ],
+          "diagnostic_path": [
+            "Verify switch state before inducer start",
+            "Inspect tubing and vent-pressure connections",
+            "Verify switch is not welded closed"
+          ],
+          "escalation": "Persistent false-closed reading with normal switch operation points toward board-input or wiring problem.",
+          "reset_behavior": "Clears when startup proving state is normal.",
+          "related_codes": [
+            "code_3",
+            "code_6_plus_3"
+          ],
+          "source": "Public N8MPN SmartValve-era diagnostic-code text",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_3",
+          "code_identifier": "3 flashes",
+          "code_type": "flash_count",
+          "meaning": "Pressure switch open when should be closed",
+          "root_causes": [
+            "Inducer not proving",
+            "Blocked vent",
+            "Pressure hose issue",
+            "Failed switch",
+            "Blocked condensate path on condensing versions"
+          ],
+          "diagnostic_path": [
+            "Verify inducer operation and pressure proving",
+            "Inspect vent/condensate/tubing path",
+            "Verify switch calibration and closure"
+          ],
+          "escalation": "Repeated proving failure after venting/tubing corrections points toward switch or board problem.",
+          "reset_behavior": "Clears when proving state is corrected.",
+          "related_codes": [
+            "code_2",
+            "code_6_plus_3"
+          ],
+          "source": "Public N8MPN SmartValve-era diagnostic-code text",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_4",
+          "code_identifier": "4 flashes",
+          "code_type": "flash_count",
+          "meaning": "Limit or rollout switch open, less than 2 minutes",
+          "root_causes": [
+            "Main limit open from low airflow",
+            "Rollout open from combustion issue",
+            "Temporary overheat condition"
+          ],
+          "diagnostic_path": [
+            "Determine whether main limit or rollout is open",
+            "Verify airflow/filter/blower",
+            "Inspect combustion and burner area if rollout is involved"
+          ],
+          "escalation": "If open condition persists beyond 2 minutes, progresses into code 7 soft lockout.",
+          "reset_behavior": "Active/live fault; if open longer than 2 minutes the platform advances to 7 soft lockout.",
+          "related_codes": [
+            "code_7",
+            "code_6_plus_4"
+          ],
+          "source": "Public N8MPN SmartValve-era diagnostic-code text",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "code_5",
+          "code_identifier": "5 flashes",
+          "code_type": "flash_count",
+          "meaning": "Flame sensed out of sequence",
+          "root_causes": [
+            "Stuck-open or leaky gas valve",
+            "False flame-sense path",
+            "Control issue"
+          ],
+          "diagnostic_path": [
+            "Verify whether flame is actually present when there is no call for gas",
+            "Inspect flame-sense circuit and grounding",
+            "Evaluate gas valve leakage"
+          ],
+          "escalation": "Persistent out-of-sequence flame indication with gas shut off points toward control or sensing problem.",
+          "reset_behavior": "Clears when false-flame condition is removed.",
+          "related_codes": [
+            "code_6",
+            "code_7"
+          ],
+          "source": "Public N8MPN SmartValve-era diagnostic-code text",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "code_6",
+          "code_identifier": "6 flashes",
+          "code_type": "flash_count",
+          "meaning": "Failure to ignite or flame sense lost while running",
+          "root_causes": [
+            "No gas",
+            "Failed igniter",
+            "Weak flame signal",
+            "Poor ground",
+            "Burner carryover problem",
+            "This is the broad active fault before the board sorts the final lockout branch"
+          ],
+          "diagnostic_path": [
+            "Verify ignition sequence and gas supply",
+            "Verify flame-sense current and grounding",
+            "Determine whether failure was initial ignition or flame loss during run"
+          ],
+          "escalation": "Repeated abnormal events move to 6+1, 6+2, 6+3, or 6+4 depending on last event that forced soft lockout.",
+          "reset_behavior": "Active/live abnormal-event fault; after repeated attempts/events system proceeds to soft lockout and shows a 6+X subcode.",
+          "related_codes": [
+            "code_6_plus_1",
+            "code_6_plus_2",
+            "code_6_plus_3",
+            "code_6_plus_4",
+            "code_7"
+          ],
+          "source": "Public N8MPN SmartValve-era diagnostic-code text",
+          "severity": "urgent",
+          "field_consensus_notes": "CROSS-GENERATION CONFLICT: ICP Recent IGC Code 6 is narrower (ignition proving failure only)."
+        },
+        {
+          "code_id": "code_6_plus_1",
+          "code_identifier": "6+1",
+          "code_type": "flash_count",
+          "meaning": "Soft lockout, maximum ignition trials reached",
+          "root_causes": [
+            "Repeated no-ignite condition",
+            "Failed igniter",
+            "No gas",
+            "Inability to prove flame in allotted trial sequence"
+          ],
+          "diagnostic_path": [
+            "Verify gas supply and gas valve state",
+            "Verify igniter warm-up and ignition",
+            "Verify flame-sense current and ground"
+          ],
+          "escalation": "Soft-lockout branch specifically for repeated ignition-trial failure.",
+          "reset_behavior": "Soft lockout; public SmartValve narrative says control exits soft lockout after 5 minutes and begins another ignition sequence.",
+          "related_codes": [
+            "code_6",
+            "code_7"
+          ],
+          "source": "Public N8MPN SmartValve-era diagnostic-code text and SmartValve ignition-sequence narrative",
+          "severity": "urgent",
+          "field_consensus_notes": "CROSS-GENERATION CONFLICT: ICP Recent IGC 6+1 has 3-hour auto-reset (not 5 minutes)."
+        },
+        {
+          "code_id": "code_6_plus_2",
+          "code_identifier": "6+2",
+          "code_type": "flash_count",
+          "meaning": "Soft lockout, flame-sense failure during run",
+          "root_causes": [
+            "Weak/intermittent flame current",
+            "Poor ground",
+            "Unstable burner flame",
+            "Gas-pressure fluctuation"
+          ],
+          "diagnostic_path": [
+            "Measure flame-sense current during run",
+            "Verify burner flame stability and ground path",
+            "Verify gas pressure under operation"
+          ],
+          "escalation": "Indicates last abnormal event driving lockout was flame loss after successful ignition, not initial no-light.",
+          "reset_behavior": "Soft lockout; clears after 5 minutes and retries.",
+          "related_codes": [
+            "code_6",
+            "code_6_plus_1",
+            "code_6_plus_4",
+            "code_7"
+          ],
+          "source": "SmartValve public narrative stating any combination of abnormal events puts control in soft lockout and flash code indicates last abnormal event",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_6_plus_3",
+          "code_identifier": "6+3",
+          "code_type": "flash_count",
+          "meaning": "Soft lockout, airflow-proving circuit open during run",
+          "root_causes": [
+            "Pressure switch opened during run",
+            "Blocked condensate path",
+            "Venting problem",
+            "Tubing issue",
+            "Marginal inducer"
+          ],
+          "diagnostic_path": [
+            "Inspect pressure-switch tubing, venting, and condensate path",
+            "Verify inducer performance and switch operation under run conditions"
+          ],
+          "escalation": "SmartValve subcode that can look like a simple pressure-switch complaint but specifically means last abnormal event that forced soft lockout was proving-circuit open during run.",
+          "reset_behavior": "Soft lockout; clears after 5 minutes and retries.",
+          "related_codes": [
+            "code_2",
+            "code_3",
+            "code_6",
+            "code_7"
+          ],
+          "source": "SmartValve public narrative identifying airflow-proving-circuit-open-during-run as one of the abnormal events that define the final 6+X code",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_6_plus_4",
+          "code_identifier": "6+4",
+          "code_type": "flash_count",
+          "meaning": "Soft lockout, limit circuit open during run",
+          "root_causes": [
+            "Repeated overheat/limit opening while operating",
+            "Blower or airflow issue",
+            "Temporary rollout/open-safety event"
+          ],
+          "diagnostic_path": [
+            "Verify airflow, filter, blower, and temperature rise",
+            "Determine whether open event was main limit or rollout-related"
+          ],
+          "escalation": "Identifies limit-circuit-open-during-run as final abnormal event that pushed board into soft lockout.",
+          "reset_behavior": "Soft lockout; clears after 5 minutes and retries.",
+          "related_codes": [
+            "code_4",
+            "code_6",
+            "code_7"
+          ],
+          "source": "SmartValve public narrative identifying limit-circuit-open-during-run as one of the abnormal events that define the final 6+X code",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_7",
+          "code_identifier": "7 flashes",
+          "code_type": "flash_count",
+          "meaning": "Soft lockout; limit or rollout switch open longer than 2 minutes",
+          "root_causes": [
+            "Main limit staying open due to airflow problem",
+            "Rollout switch open from combustion issue",
+            "Manual-reset rollout remains a special case"
+          ],
+          "diagnostic_path": [
+            "Identify whether open device is main limit or rollout",
+            "Verify airflow/blower if limit-driven",
+            "Inspect burners/venting/combustion if rollout-driven"
+          ],
+          "escalation": "Rollout involvement is the high-risk branch; persistent open longer than 2 minutes moves beyond live code-4 state into soft lockout.",
+          "reset_behavior": "1-hour soft lockout per public N8MPN text summary; rollout switch requires manual reset.",
+          "related_codes": [
+            "code_4",
+            "code_6_plus_4"
+          ],
+          "source": "Public N8MPN SmartValve-era diagnostic-code text",
+          "severity": "safety_critical",
+          "field_consensus_notes": "CROSS-GENERATION CONFLICT: Recent IGC Code 7 triggers at 3 minutes with 3-hour auto-reset (different threshold, longer reset)."
+        }
+      ]
+    },
+    {
+      "platform_id": "icp_gen1_ntv6",
+      "platform_name": "ICP Gen 1 Two-Stage/Variable-Speed (NTV6/NTP6/NDP6/VNE/TNE/TDE)",
+      "platform_description": "Early ICP staged and variable-speed platform using Honeywell gas-valve diagnostic light architecture rather than later amber-board status system. Different from Gen 2/3 SmartValve and 9MVE platforms.",
+      "applies_to_models": [
+        "NTV6",
+        "NTP6",
+        "NDP6",
+        "VNE",
+        "TNE",
+        "TDE"
+      ],
+      "applies_to_years": "2002-2010",
+      "model_number_prefixes": [
+        "NTV6",
+        "NTP6",
+        "NDP6",
+        "VNE",
+        "TNE",
+        "TDE"
+      ],
+      "visual_identification": "Diagnostic light on Honeywell gas valve (not on furnace control board). Short flash list: steady flash, then counts 2, 3, 4, 5, 6, 8, 9. No 6+X subcode architecture on this generation.",
+      "display_type": "single_led_flash",
+      "platform_notes": "Uses gas-valve diagnostic light, not board LED. Codes 1, 7, 10, and 6+X subcodes are NOT on this generation per public documentation.",
+      "codes": [
+        {
+          "code_id": "steady_flash",
+          "code_identifier": "Steady Flash",
+          "code_type": "status_display",
+          "meaning": "Normal operation",
+          "root_causes": [],
+          "diagnostic_path": [
+            "Verify call type and sequence normally"
+          ],
+          "escalation": "None",
+          "reset_behavior": "N/A",
+          "related_codes": [
+            "code_2",
+            "code_3",
+            "code_4",
+            "code_5",
+            "code_6",
+            "code_8",
+            "code_9"
+          ],
+          "source": "OEM gas-valve diagnostic code table",
+          "severity": "informational"
+        },
+        {
+          "code_id": "code_2",
+          "code_identifier": "2 Flashes",
+          "code_type": "flash_count",
+          "meaning": "Low-pressure switch stuck closed",
+          "root_causes": [
+            "Pressure switch failed closed",
+            "Tubing/wiring issue",
+            "Switch not opening at call start",
+            "Trapped condensate or misrouted tubing"
+          ],
+          "diagnostic_path": [
+            "Verify switch state before inducer start",
+            "Inspect tubing and wiring",
+            "Confirm switch opens as call begins"
+          ],
+          "escalation": "Replace switch only after tubing/port/wiring checks.",
+          "reset_behavior": "Clears when fault is corrected and call restarts.",
+          "related_codes": [
+            "code_3",
+            "code_8",
+            "code_9"
+          ],
+          "source": "OEM code table",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_3",
+          "code_identifier": "3 Flashes",
+          "code_type": "flash_count",
+          "meaning": "Low-pressure switch stuck open, or manual ON/OFF switch in OFF position, or auxiliary limit open on upflow-only applications",
+          "root_causes": [
+            "Switch not closing",
+            "Gas valve switch off",
+            "Aux limit open on upflow",
+            "Vent restriction / inducer or tubing problems"
+          ],
+          "diagnostic_path": [
+            "Confirm gas-valve ON/OFF position",
+            "Verify aux limit continuity where applicable",
+            "Verify low-pressure switch closes during inducer run"
+          ],
+          "escalation": "Escalate to inducer/venting/switch testing if switch still open under correct draft.",
+          "reset_behavior": "Retry after condition is corrected.",
+          "related_codes": [
+            "code_2",
+            "code_4",
+            "code_6",
+            "code_9"
+          ],
+          "source": "OEM code table and sequence text",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_4",
+          "code_identifier": "4 Flashes",
+          "code_type": "flash_count",
+          "meaning": "Limit switch open; downflow note calls out auxiliary limit open on downflow-only applications",
+          "root_causes": [
+            "Open main or auxiliary limit",
+            "Airflow restriction, blower issue, dirty filter, or overfire"
+          ],
+          "diagnostic_path": [
+            "Check limit continuity and application-specific auxiliary limits",
+            "If remade, confirm airflow and temperature rise"
+          ],
+          "escalation": "If limit repeats, move to airflow / blower / input check.",
+          "reset_behavior": "Clears when limit remakes and heat cycle is reattempted.",
+          "related_codes": [
+            "code_3",
+            "code_6"
+          ],
+          "source": "OEM table",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_5",
+          "code_identifier": "5 Flashes",
+          "code_type": "flash_count",
+          "meaning": "Flame sensed out of sequence",
+          "root_causes": [
+            "Gas valve leaking/stuck",
+            "False flame signal",
+            "Contaminated flame rod or grounding issues can contribute"
+          ],
+          "diagnostic_path": [
+            "Verify flame is not present with valve de-energized",
+            "Inspect flame-sense circuit and gas valve behavior"
+          ],
+          "escalation": "Escalate quickly because false flame can mask unsafe gas-valve faults.",
+          "reset_behavior": "Clears when abnormal flame signal is removed.",
+          "related_codes": [
+            "code_6"
+          ],
+          "source": "OEM table",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "code_6",
+          "code_identifier": "6 Flashes",
+          "code_type": "flash_count",
+          "meaning": "Control in soft lockout (automatic restart or retry delay)",
+          "root_causes": [
+            "Repeated ignition failure",
+            "Repeated pressure/limit interruption",
+            "Flame-proving failure"
+          ],
+          "diagnostic_path": [
+            "Pull preceding active fault from call sequence if visible",
+            "Verify gas supply, pilot ignition, pressure proving, and limits"
+          ],
+          "escalation": "Escalate to full ignition-sequence diagnosis if recurring.",
+          "reset_behavior": "Automatic restart/retry delay per OEM wording.",
+          "related_codes": [
+            "code_3",
+            "code_4",
+            "code_5",
+            "code_8",
+            "code_9"
+          ],
+          "source": "OEM code table and sequence text",
+          "severity": "urgent",
+          "field_consensus_notes": "CROSS-GENERATION CONFLICT: On ICP Gen 2/3, Code 6 is active ignition/flame-proving failure (different meaning). On ICP Recent IGC, Code 6 is narrower ignition proving failure. On ICP SmartValve legacy, Code 6 is broader."
+        },
+        {
+          "code_id": "code_8",
+          "code_identifier": "8 Flashes",
+          "code_type": "flash_count",
+          "meaning": "High-pressure switch stuck closed",
+          "root_causes": [
+            "Switch failed closed",
+            "Miswire/jumper",
+            "Tubing/condensate problems can hold switch proved"
+          ],
+          "diagnostic_path": [
+            "Verify switch is open at heat call start",
+            "Inspect switch/tubing/wiring"
+          ],
+          "escalation": "Replace switch only after tubing and wiring are ruled out.",
+          "reset_behavior": "Clears when switch state is correct on next call.",
+          "related_codes": [
+            "code_2",
+            "code_9"
+          ],
+          "source": "OEM table",
+          "severity": "urgent",
+          "field_consensus_notes": "CROSS-GENERATION CONFLICT: On ICP Gen 2/3, Code 8 is gas-heating permanent lockout (completely different)."
+        },
+        {
+          "code_id": "code_9",
+          "code_identifier": "9 Flashes",
+          "code_type": "flash_count",
+          "meaning": "High-pressure switch stuck open",
+          "root_causes": [
+            "High-pressure switch not closing",
+            "Inducer performance, vent restriction, or tubing issues"
+          ],
+          "diagnostic_path": [
+            "Verify high-fire proving path during high-stage transition",
+            "Inspect tubing and venting"
+          ],
+          "escalation": "Escalate to inducer/vent draft diagnosis if switch remains open.",
+          "reset_behavior": "Retries after correction.",
+          "related_codes": [
+            "code_2",
+            "code_3",
+            "code_8"
+          ],
+          "source": "OEM table",
+          "severity": "urgent"
+        }
+      ]
+    },
+    {
+      "platform_id": "icp_gen2_smartvalve_staged",
+      "platform_name": "ICP Gen 2 SmartValve Legacy Staged (*9MPT/*9MPV)",
+      "platform_description": "SmartValve-era staged furnace platform using FCB diagnostic light and 6+X soft-lockout subcode architecture. Precursor to Gen 3 (F/G)9MVE variable-speed ECM platform. More granular subcodes than Gen 1 NTV6.",
+      "applies_to_models": [
+        "*9MPT family",
+        "*9MPV family"
+      ],
+      "applies_to_years": "2005-2015",
+      "model_number_prefixes": [
+        "N9MPT",
+        "H9MPT",
+        "C9MPT",
+        "T9MPT",
+        "N9MPV",
+        "H9MPV",
+        "C9MPV",
+        "T9MPV"
+      ],
+      "visual_identification": "FCB (furnace control board) diagnostic light with 6+X soft-lockout subcodes (6+1, 6+2, 6+3, 6+4). Distinct from Gen 1 NTV6 which uses gas-valve diagnostic light instead.",
+      "display_type": "single_led_flash",
+      "platform_notes": "6+X soft-lockout architecture with 5-minute retry delay. Code 7 transitions to 1-hour soft lockout. Code 8 = pressure switch fault (different from Gen 3 where Code 8 = gas heating lockout).",
+      "codes": [
+        {
+          "code_id": "off_heartbeat_on_solid",
+          "code_identifier": "OFF / Heartbeat / ON SOLID",
+          "code_type": "status_display",
+          "meaning": "OFF = no 24/115V or open fuse; Heartbeat = normal/no previous diagnostic; ON SOLID = soft lockout, furnace control error",
+          "root_causes": [
+            "OFF = lost power/open fuse",
+            "ON SOLID = control error"
+          ],
+          "diagnostic_path": [
+            "Verify line voltage, 24V, fuse, and control if ON SOLID repeats after reset"
+          ],
+          "escalation": "Replace control if ON SOLID repeats immediately after power reset.",
+          "reset_behavior": "ON SOLID = 1-hour delay in verified table.",
+          "related_codes": [],
+          "source": "OEM FCB diagnostic list",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_2",
+          "code_identifier": "2 Flashes",
+          "code_type": "flash_count",
+          "meaning": "Pressure switch(es) closed when should be open",
+          "root_causes": [
+            "Stuck-closed switch",
+            "Miswire/jumper"
+          ],
+          "diagnostic_path": [
+            "Verify switch state before call",
+            "Inspect tubing and wiring",
+            "Remove jumpers/miswires"
+          ],
+          "escalation": "Replace switch only after proving circuit checks.",
+          "reset_behavior": "Clears when proper open state is restored.",
+          "related_codes": [
+            "code_3",
+            "code_8",
+            "code_9"
+          ],
+          "source": "OEM FCB list and SmartValve troubleshooting table",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_3",
+          "code_identifier": "3 Flashes",
+          "code_type": "flash_count",
+          "meaning": "Low-pressure switch open when should be closed",
+          "root_causes": [
+            "Pressure switch/tubing/wiring",
+            "Vent or intake restriction"
+          ],
+          "diagnostic_path": [
+            "Check switch operation, tubing, wiring, and restrictions in air intake/vent piping"
+          ],
+          "escalation": "Escalate to inducer/vent diagnosis if proving never establishes.",
+          "reset_behavior": "System enters 5-minute delay, then begins another cycle.",
+          "related_codes": [
+            "code_2",
+            "code_6_plus_3",
+            "code_9"
+          ],
+          "source": "OEM FCB table and troubleshooting check/repair list",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_4",
+          "code_identifier": "4 Flashes",
+          "code_type": "flash_count",
+          "meaning": "Limit or flame roll-out switch open",
+          "root_causes": [
+            "Main limit or rollout open",
+            "Airflow or blower problems sit behind it"
+          ],
+          "diagnostic_path": [
+            "Check main limit, rollout, and wiring continuity",
+            "If repeated, verify airflow and duct restriction"
+          ],
+          "escalation": "Manual-reset rollout demands flame-path/combustion review before return to service.",
+          "reset_behavior": "If open less than 2 minutes, stays as active fault rather than long lockout.",
+          "related_codes": [
+            "code_7",
+            "code_6_plus_4"
+          ],
+          "source": "OEM table and check/repair list",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "code_5",
+          "code_identifier": "5 Flashes",
+          "code_type": "flash_count",
+          "meaning": "Flame sensed out of sequence",
+          "root_causes": [
+            "Flame present when not expected",
+            "Leaking/stuck gas valve",
+            "Flame-sense contamination/grounding can contribute"
+          ],
+          "diagnostic_path": [
+            "Verify no flame with valve de-energized",
+            "Inspect gas valve and flame-sense circuit"
+          ],
+          "escalation": "Escalate promptly for gas-valve verification.",
+          "reset_behavior": "Clears when false flame condition is removed.",
+          "related_codes": [
+            "code_6",
+            "code_8"
+          ],
+          "source": "OEM diagnostic list",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "code_6",
+          "code_identifier": "6 Flashes",
+          "code_type": "flash_count",
+          "meaning": "Failure to ignite or flame sense lost while running",
+          "root_causes": [
+            "Gas off/low-high pressure",
+            "HSI/pilot issues",
+            "Grounding",
+            "Flame rod contamination",
+            "Pilot position",
+            "Pressure-switch interruption",
+            "Blocked condensate"
+          ],
+          "diagnostic_path": [
+            "Follow OEM gas supply, HSI, earth ground, flame rod position/cleanliness, pilot position, pressure switch/tubing/wiring, and condensate drain blockage path"
+          ],
+          "escalation": "If it accumulates to 6+1/6+2/6+3/6+4, follow last-failure subcode.",
+          "reset_behavior": "Active fault before soft-lockout escalation.",
+          "related_codes": [
+            "code_6_plus_1",
+            "code_6_plus_2",
+            "code_6_plus_3",
+            "code_6_plus_4"
+          ],
+          "source": "OEM FCB list and SmartValve troubleshooting matrix",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_6_plus_1",
+          "code_identifier": "6 + 1 Flashes",
+          "code_type": "flash_count",
+          "meaning": "Max four trials for ignition reached",
+          "root_causes": [
+            "Failed light-off: gas, igniter, pilot/flame sense, grounding"
+          ],
+          "diagnostic_path": [
+            "Follow OEM ignition checks first: gas supply, HSI/pilot, flame rod, ground"
+          ],
+          "escalation": "Replace failed ignition component only after proving gas and control sequence.",
+          "reset_behavior": "3-hour delay; after delay system retries if call remains.",
+          "related_codes": [
+            "code_6",
+            "code_6_plus_2",
+            "code_6_plus_3",
+            "code_6_plus_4"
+          ],
+          "source": "OEM subcode table and heating-with-gas-shutoff sequence",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_6_plus_2",
+          "code_identifier": "6 + 2 Flashes",
+          "code_type": "flash_count",
+          "meaning": "Max recycle count exceeded; last failure was flame sense lost during run",
+          "root_causes": [
+            "Flame sense lost during run",
+            "Gas-supply issues",
+            "Grounding",
+            "Pilot/flame-sense problems"
+          ],
+          "diagnostic_path": [
+            "Focus on flame-sense microamps, ground path, pilot stability, gas pressure stability"
+          ],
+          "escalation": "Move to control/gas-valve review if flame current and burner stability are normal.",
+          "reset_behavior": "5-minute delay then reset/initiate new ignition sequence.",
+          "related_codes": [
+            "code_6",
+            "code_6_plus_1"
+          ],
+          "source": "OEM 6+X table",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_6_plus_3",
+          "code_identifier": "6 + 3 Flashes",
+          "code_type": "flash_count",
+          "meaning": "Max recycle count exceeded; last failure was pressure-switch failure during run",
+          "root_causes": [
+            "Pressure switch operation, tubing, wiring",
+            "Vent/intake restriction",
+            "High winds",
+            "Blocked condensate"
+          ],
+          "diagnostic_path": [
+            "Verify proving switches under live run conditions",
+            "Inspect condensate and vent path"
+          ],
+          "escalation": "Escalate to inducer and venting analysis if intermittent.",
+          "reset_behavior": "5-minute delay then retry.",
+          "related_codes": [
+            "code_2",
+            "code_3",
+            "code_9"
+          ],
+          "source": "OEM 6+X table and check/repair list",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_6_plus_4",
+          "code_identifier": "6 + 4 Flashes",
+          "code_type": "flash_count",
+          "meaning": "Max recycle count exceeded; last failure was limit circuit opened during run",
+          "root_causes": [
+            "Main limit or rollout opened during run",
+            "Blower/airflow issues"
+          ],
+          "diagnostic_path": [
+            "Check limit/rollout continuity",
+            "Then airflow, filter, duct restriction, blower"
+          ],
+          "escalation": "Any rollout trip demands combustion/burner review before reset.",
+          "reset_behavior": "5-minute delay then retry.",
+          "related_codes": [
+            "code_4",
+            "code_7"
+          ],
+          "source": "OEM 6+X table and continuation page",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "code_7",
+          "code_identifier": "7 Flashes",
+          "code_type": "flash_count",
+          "meaning": "Limit or rollout switch open longer than 2 minutes",
+          "root_causes": [
+            "Limit circuit stays open",
+            "Restriction in ductwork, dirty filter, dead blower, blocked ductwork"
+          ],
+          "diagnostic_path": [
+            "Check limit/rollout, wiring, blower operation, filter, duct restriction"
+          ],
+          "escalation": "Rollout = manual reset and combustion investigation.",
+          "reset_behavior": "1-hour delay; system starts new ignition sequence after 1 hour if call remains.",
+          "related_codes": [
+            "code_4",
+            "code_6_plus_4"
+          ],
+          "source": "OEM FCB table and check/repair list",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "code_8",
+          "code_identifier": "8 Flashes",
+          "code_type": "flash_count",
+          "meaning": "High-pressure switch closed when should be open",
+          "root_causes": [
+            "Stuck-closed switch",
+            "Miswire/jumper"
+          ],
+          "diagnostic_path": [
+            "Verify switch open at call start",
+            "Inspect tubing and wiring"
+          ],
+          "escalation": "Replace switch only after proving circuit checks.",
+          "reset_behavior": "Waits for switch to open before energizing combustion blower.",
+          "related_codes": [
+            "code_2",
+            "code_9"
+          ],
+          "source": "OEM continuation table",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_9",
+          "code_identifier": "9 Flashes",
+          "code_type": "flash_count",
+          "meaning": "High-pressure switch open when should be closed",
+          "root_causes": [
+            "Pressure switch/tubing/wiring",
+            "Restrictions in vent/intake piping"
+          ],
+          "diagnostic_path": [
+            "Verify high-fire proving path and vent/inducer operation"
+          ],
+          "escalation": "Escalate to high-fire inducer/vent analysis if intermittent.",
+          "reset_behavior": "5-minute delay, then another cycle.",
+          "related_codes": [
+            "code_3",
+            "code_8",
+            "code_6_plus_3"
+          ],
+          "source": "OEM continuation table",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_10",
+          "code_identifier": "10 Flashes",
+          "code_type": "flash_count",
+          "meaning": "Improper transformer phasing on twinned applications or improper line-voltage polarity",
+          "root_causes": [
+            "Reversed polarity",
+            "Twinning phasing issue"
+          ],
+          "diagnostic_path": [
+            "Confirm line polarity and transformer phasing on twinned furnaces"
+          ],
+          "escalation": "Rework wiring/twinning phasing before condemning board.",
+          "reset_behavior": "Clears when wiring fault is corrected.",
+          "related_codes": [],
+          "source": "OEM FCB code list",
+          "severity": "urgent"
+        }
+      ]
+    },
+    {
+      "platform_id": "icp_gen3_9mve",
+      "platform_name": "ICP Gen 3 (F/G)9MVE A3/A4 35-inch Variable-Speed ECM",
+      "platform_description": "Latest ICP noncommunicating two-stage variable-speed ECM board platform. 35-inch high-efficiency condensing gas furnace. Uses service-label flow chart with compound codes like 1+2, 2+5, 4+3 plus 6+1 ignition lockout subcode.",
+      "applies_to_models": [
+        "F9MVE A3",
+        "F9MVE A4",
+        "G9MVE A3",
+        "G9MVE A4"
+      ],
+      "applies_to_years": "2015-2026",
+      "model_number_prefixes": [
+        "F9MVE",
+        "G9MVE"
+      ],
+      "visual_identification": "Service label flow chart with OFF, HEARTBEAT, ON SOLID plus numeric codes and compound codes (1+2, 2+5, 4+3, 6+1). SW1-1 for history recall, SW1-6 for component self-test mode.",
+      "display_type": "single_led_flash",
+      "platform_notes": "Component self-test mode (SW1-6 ON) runs: inducer high-speed, HSI 15 sec, blower 15 sec, inducer low-speed 10 sec, then post-test indication. Non-modulating board requires software version V24 or later for 2+5 setup code support.",
+      "codes": [
+        {
+          "code_id": "heartbeat",
+          "code_identifier": "HEARTBEAT",
+          "code_type": "status_display",
+          "meaning": "Normal operation / no fault",
+          "root_causes": [],
+          "diagnostic_path": [
+            "Verify normal operation"
+          ],
+          "escalation": "None",
+          "reset_behavior": "Steady while normal.",
+          "related_codes": [],
+          "source": "ICP (F/G)9MVE A3/A4 Service Manual Figure 15 Service Label",
+          "severity": "informational"
+        },
+        {
+          "code_id": "off",
+          "code_identifier": "OFF",
+          "code_type": "status_display",
+          "meaning": "Secondary voltage fuse is open",
+          "root_causes": [
+            "Short circuit in secondary-voltage (24VAC) wiring"
+          ],
+          "diagnostic_path": [
+            "Inspect 24VAC circuit for shorts before replacing fuse",
+            "Replace fuse and disconnect thermostat leads to isolate short circuit"
+          ],
+          "escalation": "Escalate only after isolating field low-voltage wiring and accessories if fuse continues to open.",
+          "reset_behavior": "Restores when short is corrected and fuse is replaced.",
+          "related_codes": [],
+          "source": "ICP (F/G)9MVE A3/A4 Service Manual Figure 15 Service Label and Figure 17 Troubleshooting Guide",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "on_solid",
+          "code_identifier": "ON SOLID",
+          "code_type": "status_display",
+          "meaning": "Control locked out, auto-reset after 1 hour, possible gas valve relay stuck open / flame sense circuit failure / software check error",
+          "root_causes": [
+            "Fuse/wiring fault",
+            "Control fault",
+            "Flame-sense circuit failure"
+          ],
+          "diagnostic_path": [
+            "Verify 115V, 24V at SEC-1/SEC-2, fuse, and model plug",
+            "If ON SOLID repeats after reset, condemn control"
+          ],
+          "escalation": "Replace control if repeating immediately after reset.",
+          "reset_behavior": "Auto-reset after 1 hour for ON SOLID.",
+          "related_codes": [
+            "code_2_plus_5"
+          ],
+          "source": "OEM service label / flow chart",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_2",
+          "code_identifier": "2",
+          "code_type": "flash_count",
+          "meaning": "Pressure switch did not open",
+          "root_causes": [
+            "Obstructed pressure tubing",
+            "Pressure switch stuck closed"
+          ],
+          "diagnostic_path": [
+            "Verify switch open before call",
+            "Inspect tubing and switch"
+          ],
+          "escalation": "Replace switch only after tubing inspection.",
+          "reset_behavior": "Clears when normal open state returns.",
+          "related_codes": [
+            "code_3",
+            "code_9",
+            "code_4_plus_3"
+          ],
+          "source": "OEM flow chart/service label",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_3",
+          "code_identifier": "3",
+          "code_type": "flash_count",
+          "meaning": "Low-heat pressure switch did not close or reopened",
+          "root_causes": [
+            "Proper vent sizing issue",
+            "Air leak between vestibule/blower compartment",
+            "Low inlet gas pressure if LGPS used",
+            "Restricted vent",
+            "Disconnected/obstructed tubing",
+            "Defective/miswired switch",
+            "Excessive wind",
+            "Plugged condensate drain",
+            "Water in vent",
+            "Defective inducer",
+            "Low inducer voltage"
+          ],
+          "diagnostic_path": [
+            "Run proving circuit live at low heat and work through OEM list above"
+          ],
+          "escalation": "Escalate to inducer or vent system if switch and tubing check good.",
+          "reset_behavior": "If open longer than 5 minutes inducer shuts off for 15 minutes before retry.",
+          "related_codes": [
+            "code_2",
+            "code_9",
+            "code_4_plus_3"
+          ],
+          "source": "OEM flow chart/service label",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_4",
+          "code_identifier": "4",
+          "code_type": "flash_count",
+          "meaning": "Limit or flame rollout switch open, or furnace forced into high-heat-only mode due to two successive low-heat limit trips",
+          "root_causes": [
+            "Loose blower wheel",
+            "Defective switch/connections",
+            "Improper low/high gas input adjustment",
+            "Improper limit switch/no gasket",
+            "Dirty filter",
+            "Restricted duct system"
+          ],
+          "diagnostic_path": [
+            "Check whether it is actual open limit/rollout versus high-heat-only fallback",
+            "Then check airflow and gas input"
+          ],
+          "escalation": "Rollout requires manual reset and combustion review.",
+          "reset_behavior": "If open >3 minutes changes to code 7; if shorter, code 4 continues until blower shuts off.",
+          "related_codes": [
+            "code_7"
+          ],
+          "source": "OEM flow chart/service label",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "code_5",
+          "code_identifier": "5",
+          "code_type": "flash_count",
+          "meaning": "Abnormal flame-proving signal; flame proved while gas valve is de-energized",
+          "root_causes": [
+            "Leaky gas valve",
+            "Stuck-open gas valve"
+          ],
+          "diagnostic_path": [
+            "Verify no flame with gas valve de-energized",
+            "Inspect valve leakage"
+          ],
+          "escalation": "Gas valve safety fault, not just a sensor nuisance.",
+          "reset_behavior": "Inducer runs until fault clears.",
+          "related_codes": [
+            "code_6",
+            "code_8"
+          ],
+          "source": "OEM flow chart/service label",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "code_6",
+          "code_identifier": "6",
+          "code_type": "flash_count",
+          "meaning": "Flame not sensed during trial for ignition, or flame signal lost during blower-on delay",
+          "root_causes": [
+            "Gas valve off",
+            "Manual shutoff valve",
+            "Missing green/yellow ground wire to furnace sheet metal",
+            "Grounded flame sensor",
+            "Oxide buildup on flame sensor",
+            "Inadequate flame carryover/rough ignition",
+            "Defective HSI",
+            "Low inlet gas pressure"
+          ],
+          "diagnostic_path": [
+            "OEM sequence: component test for igniter",
+            "Verify 115V to igniter",
+            "Verify 24V to gas valve",
+            "Observe burner ignition/stability",
+            "Measure flame current"
+          ],
+          "escalation": "If four attempts fail, progresses to 6+1.",
+          "reset_behavior": "Repeats ignition sequence 3 more times before 6+1 lockout.",
+          "related_codes": [
+            "code_6_plus_1"
+          ],
+          "source": "OEM flow chart/service label",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_6_plus_1",
+          "code_identifier": "6+1",
+          "code_type": "flash_count",
+          "meaning": "System failed to ignite gas and prove flame in 4 attempts",
+          "root_causes": [
+            "Same buckets as code 6, unresolved through four tries"
+          ],
+          "diagnostic_path": [
+            "Refer back to code 6 root cause chain"
+          ],
+          "escalation": "Control/valve/HSI/flame-sense resolution required before return.",
+          "reset_behavior": "Auto-reset after 3 hours.",
+          "related_codes": [
+            "code_6"
+          ],
+          "source": "OEM flow chart/service label",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_7",
+          "code_identifier": "7",
+          "code_type": "flash_count",
+          "meaning": "Limit or rollout open longer than 3 minutes, or 10 successive limit trips occurred during high heat",
+          "root_causes": [
+            "Same underlying causes as code 4, but persistent/repetitive"
+          ],
+          "diagnostic_path": [
+            "Work code 4 chain first, then determine why fault persisted or repeated"
+          ],
+          "escalation": "Persistent lockout = airflow/gas input/limit integrity review before release.",
+          "reset_behavior": "Auto-reset after 3 hours.",
+          "related_codes": [
+            "code_4"
+          ],
+          "source": "OEM flow chart/service label",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "code_8",
+          "code_identifier": "8",
+          "code_type": "flash_count",
+          "meaning": "Gas heating lockout",
+          "root_causes": [
+            "Stuck-closed gas valve relay on control",
+            "Miswire/short to gas valve wire"
+          ],
+          "diagnostic_path": [
+            "Verify valve not being backfed or miswired",
+            "Verify control relay state"
+          ],
+          "escalation": "Hard safety/electrical isolation issue.",
+          "reset_behavior": "Does not auto-reset; power off and wait 5 minutes to retry.",
+          "related_codes": [
+            "code_5"
+          ],
+          "source": "OEM flow chart/service label",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "code_9",
+          "code_identifier": "9",
+          "code_type": "flash_count",
+          "meaning": "High-heat pressure switch or relay did not close or reopened",
+          "root_causes": [
+            "Control relay defective",
+            "Gas valve miswired",
+            "Low-heat proving issues carried forward from code 3"
+          ],
+          "diagnostic_path": [
+            "Check high-fire proving path and refer to code 3 chain"
+          ],
+          "escalation": "Escalate to control relay or high-stage proving circuit if low-stage proves normally.",
+          "reset_behavior": "Clears when proving path is restored.",
+          "related_codes": [
+            "code_3",
+            "code_4_plus_3"
+          ],
+          "source": "OEM flow chart/service label",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_10",
+          "code_identifier": "10",
+          "code_type": "flash_count",
+          "meaning": "Polarity fault; if twinned, also check low-voltage transformer phasing",
+          "root_causes": [
+            "Reversed line polarity",
+            "Misphased twinning transformers"
+          ],
+          "diagnostic_path": [
+            "Check line polarity first, then twinning phasing if applicable"
+          ],
+          "escalation": "Correct supply wiring before deeper board diagnosis.",
+          "reset_behavior": "Clears after wiring correction.",
+          "related_codes": [],
+          "source": "OEM flow chart/service label",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_1_plus_2",
+          "code_identifier": "1+2",
+          "code_type": "flash_count",
+          "meaning": "Blower on after power up (115VAC or 24VAC). Blower runs 90 seconds if unit powered up during call for heat, or when R-W/W1 opens during blower on-delay period.",
+          "root_causes": [
+            "Not a fault; typical triggers are power restoration during active heat call, or loss/opening of heat call during blower on-delay period"
+          ],
+          "diagnostic_path": [
+            "Verify whether power was just restored during heat call, or whether R-W/W1 opened during blower on-delay",
+            "If yes, treat as normal 90-second blower-only operation"
+          ],
+          "escalation": "No escalation if behavior matches OEM conditions and clears after 90-second interval.",
+          "reset_behavior": "Self-clearing. After 90-second period, LED returns to heartbeat if no faults detected.",
+          "related_codes": [
+            "heartbeat"
+          ],
+          "source": "ICP Service and Technical Support Manual, Gas Furnace: (F/G)9MVE A3/A4, Figure 15 Service Label and Figure 17 / Sequence of Operation",
+          "severity": "informational"
+        },
+        {
+          "code_id": "code_2_plus_5",
+          "code_identifier": "2+5",
+          "code_type": "flash_count",
+          "meaning": "MODEL SELECTION OR SETUP ERROR. Either model plug (PL4) is missing or incorrect, or setup switch SW1-1 or SW1-6 is positioned improperly.",
+          "root_causes": [
+            "Missing PL4 model plug",
+            "Wrong PL4 model plug",
+            "SW1-1 left ON after code recall",
+            "SW1-6 left ON after component test",
+            "Simultaneous SW1-1 and SW1-6 ON",
+            "Mismatched twinned furnace models",
+            "Wrong replacement control"
+          ],
+          "diagnostic_path": [
+            "Confirm correct PL4 is installed",
+            "Check whether code flashed only 4 times at power-up or flashes continuously",
+            "Verify SW1-1 is OFF unless intentionally retrieving history",
+            "Verify SW1-6 is OFF unless intentionally running component test",
+            "Check for mismatched twinning",
+            "Confirm replacement board type and software level"
+          ],
+          "escalation": "Escalate to board/parts verification if PL4 is correct, switches are correctly positioned, twinning is valid, and code persists.",
+          "reset_behavior": "No timed auto-reset. Clear by correcting model-plug/setup condition. In component-test context: turn SW1-6 OFF and then back ON to repeat test.",
+          "related_codes": [
+            "on_solid"
+          ],
+          "source": "ICP (F/G)9MVE A3/A4 Service Manual Figure 15 Service Label, Figure 17 Troubleshooting Guide, and Component Self-Test section",
+          "severity": "urgent",
+          "field_consensus_notes": "Unique to Gen 3 platform — not present on Gen 1 NTV6 or Gen 2 *9MPT/*9MPV. Requires non-modulating board software version V24 or later."
+        },
+        {
+          "code_id": "code_4_plus_3",
+          "code_identifier": "4+3",
+          "code_type": "flash_count",
+          "meaning": "Low-heat pressure switch open while high-heat pressure switch is closed",
+          "root_causes": [
+            "Plugged condensate drain",
+            "Low inlet gas pressure if LGPS used",
+            "Improper pressure-switch wiring",
+            "Water in vent piping, possibly sagging pipe",
+            "Disconnected or obstructed pressure tubing",
+            "Stuck open low-heat pressure switch"
+          ],
+          "diagnostic_path": [
+            "Check condensate drainage first",
+            "Verify inlet gas pressure if low-gas-pressure switch is used",
+            "Inspect pressure-switch wiring",
+            "Inspect vent piping for water/sagging",
+            "Inspect pressure tubing for disconnection or obstruction",
+            "Test low-heat pressure switch for open/stuck-open condition"
+          ],
+          "escalation": "Escalate to control/pressure-proving circuit diagnosis only after condensate, venting, tubing, wiring, gas-pressure, and low-heat switch condition are verified.",
+          "reset_behavior": "No distinct timed auto-reset; treat as active status that should clear when contradictory pressure-switch condition is corrected.",
+          "related_codes": [
+            "code_3",
+            "code_9"
+          ],
+          "source": "ICP (F/G)9MVE A3/A4 Service Manual Figure 15 Service Label",
+          "severity": "urgent",
+          "field_consensus_notes": "Unique to Gen 3 platform."
+        },
+        {
+          "code_id": "component_test_heartbeat",
+          "code_identifier": "HEARTBEAT (component-test post-indication)",
+          "code_type": "status_display",
+          "meaning": "Post-component-test indication: no errors detected. Visual check of hot surface igniter, inducer, and blower motor required.",
+          "root_causes": [
+            "Normal post-component-test result when no setup error is present and visual component sequence completes"
+          ],
+          "diagnostic_path": [
+            "Run component test with R disconnected and SW1-6 ON",
+            "Observe inducer high-speed, igniter ON, blower ON, then inducer low-speed",
+            "If heartbeat is post-test indication, verify visually that those components actually operated"
+          ],
+          "escalation": "No escalation if observed sequence matches OEM component-test sequence. Escalate only if heartbeat appears but a component visibly failed to operate.",
+          "reset_behavior": "After testing, put SW1-6 in OFF position and reconnect R thermostat lead.",
+          "related_codes": [
+            "component_test_2_plus_5"
+          ],
+          "source": "ICP (F/G)9MVE A3/A4 Service Manual Component Self-Test section and Figure 15 Service Label component-test box",
+          "severity": "informational"
+        },
+        {
+          "code_id": "component_test_2_plus_5",
+          "code_identifier": "2+5 (component-test post-indication)",
+          "code_type": "flash_count",
+          "meaning": "SETUP ERROR during component test — same as normal code 2+5",
+          "root_causes": [
+            "Same as normal code 2+5: PL4/model selection error or improper switch/setup state"
+          ],
+          "diagnostic_path": [
+            "Correct setup/model issue per normal 2+5 diagnostics",
+            "To repeat component test, turn SW1-6 OFF and then back ON"
+          ],
+          "escalation": "Escalate to board/model-plug verification if setup looks correct but indication remains.",
+          "reset_behavior": "To repeat component test, turn SW1-6 OFF and then back ON. After component test completed, put SW1-6 in OFF position and reconnect R thermostat lead.",
+          "related_codes": [
+            "code_2_plus_5"
+          ],
+          "source": "ICP (F/G)9MVE A3/A4 Service Manual Figure 15 Service Label component-test box and Component Self-Test section",
+          "severity": "urgent"
+        }
+      ]
+    },
+    {
+      "platform_id": "infinity_evolution_communicating",
+      "platform_name": "Carrier Infinity / Bryant Evolution Communicating Systems",
+      "platform_description": "Carrier Infinity / Bryant Evolution communicating ecosystem using Connex wall control and ABCD communication bus. Includes two-part wall-control codes (e.g., 41-13, 88-55), inverter/VFD code families (82/84/87/88), and equipment-board Status Code 16 variants on fan coils and outdoor units. Dual-surface platform — codes may appear at wall control, equipment board, or both. 186CNV/284ANV inverter outdoor uses COMM light / matrix display instead of traditional flash codes.",
+      "applies_to_models": [
+        "Communicating outdoor: 24ANB, 25HCB, 24VNA6, 25VNA4, 180CNV, 280ANV, 186CNV, 284ANV",
+        "Communicating fan coils: FE4A, FE5A, FV4C",
+        "Connex wall controls: SYSTXCCNNC, SYSTXCCITC, SYSTXBBECC"
+      ],
+      "applies_to_years": "2005-2026",
+      "model_number_prefixes": [
+        "24ANB",
+        "25HCB",
+        "24VNA",
+        "25VNA",
+        "186CNV",
+        "284ANV",
+        "FE4A",
+        "FE5A",
+        "FV4C",
+        "25VNA0",
+        "24VNA0",
+        "24VNA6",
+        "25VNA4",
+        "180CNV",
+        "280ANV"
+      ],
+      "visual_identification": "Infinity or Evolution branded wall control with color touchscreen (Connex) OR simple older Infinity Touch. System speaks on ABCD communication bus. Outdoor unit may have COMM light, VFD Comm light, amber Status LED, and matrix display (on inverter platforms). Fan coils show Status Code 16 on amber board LED.",
+      "display_type": "alphanumeric",
+      "platform_notes": "Three distinct display surfaces: (1) Connex wall control shows two-part codes like 41-13, 88-55; (2) Equipment board amber LED on fan coils and legacy communicating outdoor shows Status Code 16 variants; (3) 186CNV/284ANV inverter outdoor shows COMM light state and matrix display. Same fault can surface on multiple displays. Model plug critical for board replacements.",
+      "codes": [
+        {
+          "code_id": "code_41_13",
+          "code_identifier": "41-13",
+          "code_type": "alphanumeric",
+          "meaning": "Defrost timeout / defrost cycle did not complete properly",
+          "root_causes": [
+            "Failed defrost sensor/thermistor",
+            "Refrigerant issue preventing proper defrost",
+            "Reversing valve problem",
+            "Outdoor fan issue during defrost",
+            "Low ambient conditions"
+          ],
+          "diagnostic_path": [
+            "Verify reversing valve operation",
+            "Verify outdoor coil thermistor",
+            "Check refrigerant charge",
+            "Inspect outdoor fan during defrost cycle"
+          ],
+          "escalation": "Persistent defrost timeouts with verified sensors indicate refrigeration or reversing-valve issue.",
+          "reset_behavior": "Clears when defrost completes successfully on next attempt.",
+          "related_codes": [
+            "code_44_13",
+            "code_54_01",
+            "code_54_02"
+          ],
+          "source": "Carrier 25VNA0/24VNA0 service manual event tables",
+          "severity": "service_soon",
+          "surface": "wall_control"
+        },
+        {
+          "code_id": "code_44_13",
+          "code_identifier": "44-13",
+          "code_type": "alphanumeric",
+          "meaning": "Pressure equalization valve (PEV) timeout",
+          "root_causes": [
+            "PEV solenoid failure",
+            "PEV mechanical stuck",
+            "Refrigerant restriction"
+          ],
+          "diagnostic_path": [
+            "Verify PEV solenoid operation",
+            "Inspect for refrigerant-line restrictions"
+          ],
+          "escalation": "Replace PEV only after confirming wiring and supply integrity.",
+          "reset_behavior": "Clears when PEV completes equalization on retry.",
+          "related_codes": [
+            "code_62_01",
+            "code_41_13"
+          ],
+          "source": "Carrier 25VNA0/24VNA0 service manual",
+          "severity": "service_soon",
+          "surface": "wall_control"
+        },
+        {
+          "code_id": "code_51_01",
+          "code_identifier": "51-01",
+          "code_type": "alphanumeric",
+          "meaning": "Outdoor air temperature (OAT) sensor open",
+          "root_causes": [
+            "Failed OAT thermistor",
+            "Broken sensor wire",
+            "Poor connection at board"
+          ],
+          "diagnostic_path": [
+            "Measure OAT sensor resistance",
+            "Verify wiring continuity to board"
+          ],
+          "escalation": "Replace sensor after wiring confirmed good.",
+          "reset_behavior": "Clears when sensor reading returns to valid range.",
+          "related_codes": [
+            "code_51_02",
+            "code_52_01",
+            "code_52_02"
+          ],
+          "source": "Carrier inverter/Connex service manual event tables",
+          "severity": "service_soon",
+          "surface": "wall_control"
+        },
+        {
+          "code_id": "code_51_02",
+          "code_identifier": "51-02",
+          "code_type": "alphanumeric",
+          "meaning": "Outdoor air temperature (OAT) sensor shorted",
+          "root_causes": [
+            "Failed OAT thermistor",
+            "Short in sensor wiring",
+            "Moisture in connection"
+          ],
+          "diagnostic_path": [
+            "Measure OAT sensor resistance",
+            "Inspect wiring for shorts"
+          ],
+          "escalation": "Replace sensor after wiring confirmed good.",
+          "reset_behavior": "Clears when sensor reading returns to valid range.",
+          "related_codes": [
+            "code_51_01",
+            "code_52_01",
+            "code_52_02"
+          ],
+          "source": "Carrier inverter/Connex service manual event tables",
+          "severity": "service_soon",
+          "surface": "wall_control"
+        },
+        {
+          "code_id": "code_52_01",
+          "code_identifier": "52-01",
+          "code_type": "alphanumeric",
+          "meaning": "Outdoor coil temperature (OCT) sensor open",
+          "root_causes": [
+            "Failed OCT thermistor",
+            "Broken sensor wire",
+            "Connection fault"
+          ],
+          "diagnostic_path": [
+            "Measure OCT sensor resistance",
+            "Verify wiring continuity to board"
+          ],
+          "escalation": "Replace sensor after wiring confirmed good.",
+          "reset_behavior": "Clears when sensor reading returns to valid range.",
+          "related_codes": [
+            "code_52_02",
+            "code_51_01",
+            "code_54_01"
+          ],
+          "source": "Carrier inverter/Connex service manual event tables",
+          "severity": "service_soon",
+          "surface": "wall_control"
+        },
+        {
+          "code_id": "code_52_02",
+          "code_identifier": "52-02",
+          "code_type": "alphanumeric",
+          "meaning": "Outdoor coil temperature (OCT) sensor shorted",
+          "root_causes": [
+            "Failed OCT thermistor",
+            "Short in sensor wiring"
+          ],
+          "diagnostic_path": [
+            "Measure OCT sensor resistance",
+            "Inspect wiring for shorts"
+          ],
+          "escalation": "Replace sensor after wiring confirmed good.",
+          "reset_behavior": "Clears when sensor reading returns to valid range.",
+          "related_codes": [
+            "code_52_01",
+            "code_51_02"
+          ],
+          "source": "Carrier inverter/Connex service manual event tables",
+          "severity": "service_soon",
+          "surface": "wall_control"
+        },
+        {
+          "code_id": "code_53_41",
+          "code_identifier": "53-41",
+          "code_type": "alphanumeric",
+          "meaning": "Outdoor suction temperature (OST) sensor open (heat pump)",
+          "root_causes": [
+            "Failed OST thermistor",
+            "Broken sensor wire"
+          ],
+          "diagnostic_path": [
+            "Measure OST resistance",
+            "Verify wiring"
+          ],
+          "escalation": "Replace sensor after wiring confirmed good.",
+          "reset_behavior": "Clears when sensor reading returns to valid range.",
+          "related_codes": [
+            "code_53_42"
+          ],
+          "source": "Carrier inverter heat pump service manual",
+          "severity": "service_soon",
+          "surface": "wall_control"
+        },
+        {
+          "code_id": "code_53_42",
+          "code_identifier": "53-42",
+          "code_type": "alphanumeric",
+          "meaning": "Outdoor suction temperature (OST) sensor shorted (heat pump)",
+          "root_causes": [
+            "Failed OST thermistor",
+            "Short in wiring"
+          ],
+          "diagnostic_path": [
+            "Measure OST resistance",
+            "Inspect wiring for shorts"
+          ],
+          "escalation": "Replace sensor after wiring confirmed good.",
+          "reset_behavior": "Clears when sensor reading returns to valid range.",
+          "related_codes": [
+            "code_53_41"
+          ],
+          "source": "Carrier inverter heat pump service manual",
+          "severity": "service_soon",
+          "surface": "wall_control"
+        },
+        {
+          "code_id": "code_54_01",
+          "code_identifier": "54-01",
+          "code_type": "alphanumeric",
+          "meaning": "Outdoor discharge temperature (ODT) sensor open",
+          "root_causes": [
+            "Failed ODT thermistor",
+            "Broken sensor wire"
+          ],
+          "diagnostic_path": [
+            "Measure ODT resistance",
+            "Verify wiring continuity"
+          ],
+          "escalation": "Replace sensor after wiring confirmed good.",
+          "reset_behavior": "Clears when sensor reading returns to valid range.",
+          "related_codes": [
+            "code_54_02",
+            "code_52_01"
+          ],
+          "source": "Carrier inverter/Connex service manual event tables",
+          "severity": "service_soon",
+          "surface": "wall_control"
+        },
+        {
+          "code_id": "code_54_02",
+          "code_identifier": "54-02",
+          "code_type": "alphanumeric",
+          "meaning": "Outdoor discharge temperature (ODT) sensor shorted",
+          "root_causes": [
+            "Failed ODT thermistor",
+            "Short in wiring"
+          ],
+          "diagnostic_path": [
+            "Measure ODT resistance",
+            "Inspect wiring for shorts"
+          ],
+          "escalation": "Replace sensor after wiring confirmed good.",
+          "reset_behavior": "Clears when sensor reading returns to valid range.",
+          "related_codes": [
+            "code_54_01",
+            "code_52_02"
+          ],
+          "source": "Carrier inverter/Connex service manual event tables",
+          "severity": "service_soon",
+          "surface": "wall_control"
+        },
+        {
+          "code_id": "code_38_18",
+          "code_identifier": "38-18",
+          "code_type": "alphanumeric",
+          "meaning": "High differential pressure start disable",
+          "root_causes": [
+            "High standing pressure differential preventing safe compressor start",
+            "System not equalized",
+            "PEV issue"
+          ],
+          "diagnostic_path": [
+            "Verify PEV operation",
+            "Allow system to equalize",
+            "Verify refrigerant charge and standing pressures"
+          ],
+          "escalation": "Investigate PEV or system refrigerant issues if persistent.",
+          "reset_behavior": "Clears when pressures equalize for safe start.",
+          "related_codes": [
+            "code_44_13",
+            "code_62_01"
+          ],
+          "source": "Carrier inverter service manual",
+          "severity": "service_soon",
+          "surface": "wall_control"
+        },
+        {
+          "code_id": "code_62_01",
+          "code_identifier": "62-01",
+          "code_type": "alphanumeric",
+          "meaning": "PEV solenoid open",
+          "root_causes": [
+            "PEV solenoid coil failure",
+            "Broken wire to solenoid",
+            "Connection fault"
+          ],
+          "diagnostic_path": [
+            "Verify voltage to PEV solenoid",
+            "Measure solenoid coil resistance",
+            "Inspect wiring"
+          ],
+          "escalation": "Replace PEV solenoid after confirming wiring and voltage.",
+          "reset_behavior": "Clears when solenoid circuit restored.",
+          "related_codes": [
+            "code_44_13",
+            "code_38_18"
+          ],
+          "source": "Carrier inverter service manual",
+          "severity": "service_soon",
+          "surface": "wall_control"
+        },
+        {
+          "code_id": "code_15_94",
+          "code_identifier": "15-94",
+          "code_type": "alphanumeric",
+          "meaning": "Line voltage high (legacy non-VFD communicating outdoor)",
+          "root_causes": [
+            "High utility line voltage",
+            "Poor power quality at site"
+          ],
+          "diagnostic_path": [
+            "Measure line voltage with power quality meter",
+            "Verify utility supply"
+          ],
+          "escalation": "If high voltage verified at supply, utility intervention needed.",
+          "reset_behavior": "Clears when line voltage returns to spec.",
+          "related_codes": [
+            "code_82_17",
+            "code_82_57"
+          ],
+          "source": "Carrier legacy communicating outdoor service manual",
+          "severity": "urgent",
+          "surface": "wall_control"
+        },
+        {
+          "code_id": "code_82_16",
+          "code_identifier": "82-16",
+          "code_type": "alphanumeric",
+          "meaning": "VFD low line voltage (inverter outdoor)",
+          "root_causes": [
+            "Low utility supply voltage",
+            "Loose connection creating voltage drop",
+            "Poor power quality"
+          ],
+          "diagnostic_path": [
+            "Measure line voltage at inverter input",
+            "Inspect power connections"
+          ],
+          "escalation": "4 occurrences in 1 hour escalate to 82-56 lockout.",
+          "reset_behavior": "Shutdown/reset with retry after 5-minute compressor protection delay.",
+          "related_codes": [
+            "code_82_56",
+            "code_82_17",
+            "code_82_57"
+          ],
+          "source": "186CNV/284ANV service manual",
+          "severity": "urgent",
+          "surface": "wall_control"
+        },
+        {
+          "code_id": "code_82_17",
+          "code_identifier": "82-17",
+          "code_type": "alphanumeric",
+          "meaning": "High line voltage (VFD)",
+          "root_causes": [
+            "High utility line voltage",
+            "Poor power quality"
+          ],
+          "diagnostic_path": [
+            "Measure line voltage with power quality meter",
+            "Verify utility supply"
+          ],
+          "escalation": "4 occurrences in 1 hour escalate to 82-57 lockout.",
+          "reset_behavior": "Shutdown with retry after 5-minute compressor protection delay.",
+          "related_codes": [
+            "code_82_57",
+            "code_15_94",
+            "code_82_16"
+          ],
+          "source": "186CNV/284ANV service manual",
+          "severity": "urgent",
+          "surface": "wall_control"
+        },
+        {
+          "code_id": "code_82_56",
+          "code_identifier": "82-56",
+          "code_type": "alphanumeric",
+          "meaning": "Low line voltage lockout",
+          "root_causes": [
+            "Input line voltage sag below threshold",
+            "Poor power quality",
+            "Utility-side low voltage"
+          ],
+          "diagnostic_path": [
+            "Measure input voltage with power quality analyzer",
+            "Verify supply and utility quality"
+          ],
+          "escalation": "2-hour equipment lockout.",
+          "reset_behavior": "2-hour lockout. Clears after lockout if underlying issue resolved.",
+          "related_codes": [
+            "code_82_16",
+            "code_82_17",
+            "code_82_57"
+          ],
+          "source": "186CNV/284ANV service manual",
+          "severity": "urgent",
+          "surface": "wall_control"
+        },
+        {
+          "code_id": "code_82_57",
+          "code_identifier": "82-57",
+          "code_type": "alphanumeric",
+          "meaning": "High line voltage lockout",
+          "root_causes": [
+            "Sustained high utility voltage",
+            "Poor power quality"
+          ],
+          "diagnostic_path": [
+            "Measure line voltage with power quality analyzer",
+            "Verify utility supply quality"
+          ],
+          "escalation": "2-hour equipment lockout.",
+          "reset_behavior": "2-hour lockout. Clears after lockout if voltage returns to spec.",
+          "related_codes": [
+            "code_82_17",
+            "code_82_56"
+          ],
+          "source": "186CNV/284ANV service manual",
+          "severity": "urgent",
+          "surface": "wall_control"
+        },
+        {
+          "code_id": "code_84_11",
+          "code_identifier": "84-11",
+          "code_type": "alphanumeric",
+          "meaning": "VFD heatsink overtemp",
+          "root_causes": [
+            "Dirty heatsink",
+            "Poor airflow over VFD",
+            "Failed VFD cooling fan (if equipped)",
+            "High ambient temperature"
+          ],
+          "diagnostic_path": [
+            "Inspect VFD heatsink for debris/obstruction",
+            "Verify airflow path",
+            "Check ambient conditions"
+          ],
+          "escalation": "Repeated occurrences escalate to 84-58 malfunction lockout.",
+          "reset_behavior": "Retries after temperature drops; sustained fault leads to 84-58.",
+          "related_codes": [
+            "code_84_58"
+          ],
+          "source": "186CNV/284ANV service manual",
+          "severity": "urgent",
+          "surface": "wall_control"
+        },
+        {
+          "code_id": "code_84_58",
+          "code_identifier": "84-58",
+          "code_type": "alphanumeric",
+          "meaning": "VFD heatsink overtemp malfunction",
+          "root_causes": [
+            "Persistent heatsink overtemperature condition",
+            "Severe airflow restriction",
+            "Failed VFD thermal management"
+          ],
+          "diagnostic_path": [
+            "Clear heatsink obstruction",
+            "Verify airflow path completely",
+            "Replace VFD if malfunction persists"
+          ],
+          "escalation": "Extended lockout condition.",
+          "reset_behavior": "Lockout condition until cleared manually or by extended cooldown.",
+          "related_codes": [
+            "code_84_11"
+          ],
+          "source": "186CNV/284ANV service manual",
+          "severity": "urgent",
+          "surface": "wall_control"
+        },
+        {
+          "code_id": "code_86_06",
+          "code_identifier": "86-06",
+          "code_type": "alphanumeric",
+          "meaning": "PCM-VFD communication fault",
+          "root_causes": [
+            "Loose/damaged PCM-to-VFD harness",
+            "Failed VFD communication electronics",
+            "Connection fault"
+          ],
+          "diagnostic_path": [
+            "Inspect PCM-to-VFD harness for damage",
+            "Verify harness seating at both ends",
+            "Replace harness if faulty"
+          ],
+          "escalation": "Repeated occurrences escalate to 86-46 lockout.",
+          "reset_behavior": "Retries after 5-minute compressor protection delay.",
+          "related_codes": [
+            "code_86_46",
+            "code_88_15",
+            "code_88_55"
+          ],
+          "source": "186CNV/284ANV service manual",
+          "severity": "urgent",
+          "surface": "wall_control",
+          "field_consensus_notes": "Carrier/Bryant Connex software note: 86-06 can be incorrectly activated in certain software conditions."
+        },
+        {
+          "code_id": "code_86_46",
+          "code_identifier": "86-46",
+          "code_type": "alphanumeric",
+          "meaning": "PCM-VFD communication lockout",
+          "root_causes": [
+            "Persistent PCM-VFD communication failure",
+            "Failed harness or VFD electronics"
+          ],
+          "diagnostic_path": [
+            "Replace PCM-VFD harness",
+            "If fault persists after harness replacement, replace VFD"
+          ],
+          "escalation": "Extended lockout condition.",
+          "reset_behavior": "Lockout condition; clears after VFD/harness replacement.",
+          "related_codes": [
+            "code_86_06"
+          ],
+          "source": "186CNV/284ANV service manual",
+          "severity": "urgent",
+          "surface": "wall_control"
+        },
+        {
+          "code_id": "code_87_13",
+          "code_identifier": "87-13",
+          "code_type": "alphanumeric",
+          "meaning": "VFD initialization fault",
+          "root_causes": [
+            "VFD startup self-test failure",
+            "VFD electronics issue"
+          ],
+          "diagnostic_path": [
+            "Power cycle at disconnect",
+            "If persists, escalate to VFD replacement"
+          ],
+          "escalation": "Repeated occurrences escalate to 87-53 lockout.",
+          "reset_behavior": "Retries after 5-minute compressor protection delay.",
+          "related_codes": [
+            "code_87_53",
+            "code_88_15"
+          ],
+          "source": "186CNV/284ANV service manual",
+          "severity": "urgent",
+          "surface": "wall_control"
+        },
+        {
+          "code_id": "code_87_53",
+          "code_identifier": "87-53",
+          "code_type": "alphanumeric",
+          "meaning": "VFD system lockout - initialization",
+          "root_causes": [
+            "Persistent VFD initialization failure",
+            "Failed VFD electronics"
+          ],
+          "diagnostic_path": [
+            "Manual power cycle",
+            "Replace VFD if fault persists"
+          ],
+          "escalation": "Extended lockout condition.",
+          "reset_behavior": "Lockout condition.",
+          "related_codes": [
+            "code_87_13"
+          ],
+          "source": "186CNV/284ANV service manual",
+          "severity": "urgent",
+          "surface": "wall_control"
+        },
+        {
+          "code_id": "code_88_15",
+          "code_identifier": "88-15",
+          "code_type": "alphanumeric",
+          "meaning": "VFD internal fault - unexpected reset",
+          "root_causes": [
+            "Loss of reliable PCM-VFD communication",
+            "Damaged PCM-VFD harness",
+            "Failed VFD communicating electronics"
+          ],
+          "diagnostic_path": [
+            "Check PCM-VFD harness for damage",
+            "Replace harness if needed",
+            "If harness good and fault persists, replace VFD"
+          ],
+          "escalation": "3 occurrences within 1 hour escalate to 88-55 lockout.",
+          "reset_behavior": "Retries after 5-minute compressor protection delay.",
+          "related_codes": [
+            "code_88_55",
+            "code_86_06"
+          ],
+          "source": "186CNV/284ANV service manual",
+          "severity": "urgent",
+          "surface": "wall_control"
+        },
+        {
+          "code_id": "code_88_27",
+          "code_identifier": "88-27",
+          "code_type": "alphanumeric",
+          "meaning": "VFD reprogramming failure",
+          "root_causes": [
+            "Failed firmware update to VFD",
+            "Corrupted VFD firmware"
+          ],
+          "diagnostic_path": [
+            "Retry firmware update per Carrier/Bryant procedure",
+            "Escalate to factory support if reprogramming continues to fail"
+          ],
+          "escalation": "Factory support involvement may be required.",
+          "reset_behavior": "Clears after successful reprogramming.",
+          "related_codes": [
+            "code_26_27"
+          ],
+          "source": "186CNV/284ANV service manual",
+          "severity": "urgent",
+          "surface": "wall_control"
+        },
+        {
+          "code_id": "code_26_27",
+          "code_identifier": "26-27",
+          "code_type": "alphanumeric",
+          "meaning": "PCM reprogramming failure",
+          "root_causes": [
+            "Failed firmware update to PCM",
+            "Corrupted PCM firmware"
+          ],
+          "diagnostic_path": [
+            "Retry firmware update",
+            "Escalate to factory support if fails"
+          ],
+          "escalation": "Factory support involvement may be required.",
+          "reset_behavior": "Clears after successful reprogramming.",
+          "related_codes": [
+            "code_88_27"
+          ],
+          "source": "Carrier communicating service manual",
+          "severity": "urgent",
+          "surface": "wall_control"
+        },
+        {
+          "code_id": "code_88_55",
+          "code_identifier": "88-55",
+          "code_type": "alphanumeric",
+          "meaning": "VFD lockout due to unexpected reset",
+          "root_causes": [
+            "Loss of reliable PCM-VFD communication",
+            "Damaged PCM-VFD harness",
+            "Failed VFD communicating electronics"
+          ],
+          "diagnostic_path": [
+            "Check PCM-VFD communication harness",
+            "Replace harness if damaged",
+            "Replace VFD if harness is good and fault persists"
+          ],
+          "escalation": "2-hour equipment lockout.",
+          "reset_behavior": "2-hour lockout duration. If underlying communication/reset issue remains, code recurs after lockout.",
+          "related_codes": [
+            "code_88_15",
+            "code_86_06",
+            "code_86_46"
+          ],
+          "source": "186CNV/284ANV service manual",
+          "severity": "urgent",
+          "surface": "wall_control",
+          "field_consensus_notes": "Carrier/Bryant Connex software note: 88-15 can be incorrectly activated in certain software conditions."
+        },
+        {
+          "code_id": "code_88_31",
+          "code_identifier": "88-31",
+          "code_type": "alphanumeric",
+          "meaning": "VFD current sensor fault",
+          "root_causes": [
+            "Failed internal compressor current sensing inside VFD",
+            "Damaged VFD electronics"
+          ],
+          "diagnostic_path": [
+            "Manual power cycle at disconnect",
+            "If persists, replace VFD"
+          ],
+          "escalation": "3 occurrences within 4 hours escalate to 88-71 lockout.",
+          "reset_behavior": "Retries after 5-minute compressor protection delay. Carrier warns malfunction unlikely to clear if real.",
+          "related_codes": [
+            "code_88_71"
+          ],
+          "source": "186CNV/284ANV service manual",
+          "severity": "urgent",
+          "surface": "wall_control"
+        },
+        {
+          "code_id": "code_88_32",
+          "code_identifier": "88-32",
+          "code_type": "alphanumeric",
+          "meaning": "VFD IPM temperature sensor fault",
+          "root_causes": [
+            "Failed IPM thermal sensor",
+            "VFD internal electronics fault"
+          ],
+          "diagnostic_path": [
+            "Power cycle",
+            "Replace VFD if persists"
+          ],
+          "escalation": "Retries with compressor protection delay.",
+          "reset_behavior": "Retries after 5-minute compressor protection delay.",
+          "related_codes": [
+            "code_88_33"
+          ],
+          "source": "186CNV/284ANV service manual",
+          "severity": "urgent",
+          "surface": "wall_control"
+        },
+        {
+          "code_id": "code_88_33",
+          "code_identifier": "88-33",
+          "code_type": "alphanumeric",
+          "meaning": "VFD DC link sensor fault",
+          "root_causes": [
+            "Failed internal DC-voltage measurement in VFD",
+            "Damaged VFD electronics"
+          ],
+          "diagnostic_path": [
+            "Manual power cycle",
+            "Replace VFD if malfunction persists"
+          ],
+          "escalation": "3 occurrences within 4 hours escalate to 88-73 lockout.",
+          "reset_behavior": "Retries after 5-minute compressor protection delay.",
+          "related_codes": [
+            "code_88_73"
+          ],
+          "source": "186CNV/284ANV service manual",
+          "severity": "urgent",
+          "surface": "wall_control"
+        },
+        {
+          "code_id": "code_88_34",
+          "code_identifier": "88-34",
+          "code_type": "alphanumeric",
+          "meaning": "VFD PFCM Sensor A fault",
+          "root_causes": [
+            "Internal PFC current-sensing failure/excess in VFD"
+          ],
+          "diagnostic_path": [
+            "Manual power cycle",
+            "Replace VFD if persists"
+          ],
+          "escalation": "3 occurrences within 4 hours escalate to 88-74 lockout.",
+          "reset_behavior": "Retries after 5-minute compressor protection delay.",
+          "related_codes": [
+            "code_88_74"
+          ],
+          "source": "186CNV/284ANV service manual",
+          "severity": "urgent",
+          "surface": "wall_control"
+        },
+        {
+          "code_id": "code_88_35",
+          "code_identifier": "88-35",
+          "code_type": "alphanumeric",
+          "meaning": "VFD PFCM Sensor B fault",
+          "root_causes": [
+            "Internal PFC current-sensing failure/excess in VFD"
+          ],
+          "diagnostic_path": [
+            "Manual power cycle",
+            "Replace VFD if persists"
+          ],
+          "escalation": "3 occurrences within 4 hours escalate to 88-75 lockout.",
+          "reset_behavior": "Retries after 5-minute compressor protection delay.",
+          "related_codes": [
+            "code_88_75"
+          ],
+          "source": "186CNV/284ANV service manual",
+          "severity": "urgent",
+          "surface": "wall_control"
+        },
+        {
+          "code_id": "code_88_36",
+          "code_identifier": "88-36",
+          "code_type": "alphanumeric",
+          "meaning": "VFD line voltage sensor fault",
+          "root_causes": [
+            "Failed internal VFD line-voltage sensing",
+            "Damaged VFD electronics"
+          ],
+          "diagnostic_path": [
+            "Manual power cycle",
+            "Replace VFD if persists"
+          ],
+          "escalation": "3 occurrences within 4 hours escalate to 88-76 lockout.",
+          "reset_behavior": "Retries after 5-minute compressor protection delay.",
+          "related_codes": [
+            "code_88_76"
+          ],
+          "source": "186CNV/284ANV service manual",
+          "severity": "urgent",
+          "surface": "wall_control"
+        },
+        {
+          "code_id": "code_88_37",
+          "code_identifier": "88-37",
+          "code_type": "alphanumeric",
+          "meaning": "VFD PFCM temperature sensor fault",
+          "root_causes": [
+            "Failed PFC temperature sensor",
+            "VFD electronics fault"
+          ],
+          "diagnostic_path": [
+            "Power cycle",
+            "Replace VFD if persists"
+          ],
+          "escalation": "Retries with compressor protection delay.",
+          "reset_behavior": "Retries after 5-minute compressor protection delay.",
+          "related_codes": [
+            "code_88_34",
+            "code_88_35"
+          ],
+          "source": "186CNV/284ANV service manual",
+          "severity": "urgent",
+          "surface": "wall_control"
+        },
+        {
+          "code_id": "code_88_38",
+          "code_identifier": "88-38",
+          "code_type": "alphanumeric",
+          "meaning": "VFD DC discharge fault",
+          "root_causes": [
+            "DC voltage shorted to ground",
+            "VFD power relay opened due to internal discharge fault"
+          ],
+          "diagnostic_path": [
+            "Manual power cycle at disconnect",
+            "Replace VFD if malfunction persists"
+          ],
+          "escalation": "Escalates to 88-78 lockout.",
+          "reset_behavior": "VFD attempts automatic reset; persistent fault escalates to 4-hour lockout.",
+          "related_codes": [
+            "code_88_78"
+          ],
+          "source": "186CNV/284ANV service manual",
+          "severity": "urgent",
+          "surface": "wall_control"
+        },
+        {
+          "code_id": "code_88_71",
+          "code_identifier": "88-71",
+          "code_type": "alphanumeric",
+          "meaning": "Compressor current sensor lockout",
+          "root_causes": [
+            "Failed internal compressor current sensing inside VFD",
+            "Damaged VFD electronics"
+          ],
+          "diagnostic_path": [
+            "Manual power cycle outdoor unit",
+            "Replace VFD if malfunction persists"
+          ],
+          "escalation": "4-hour lockout.",
+          "reset_behavior": "4-hour lockout. Malfunction unlikely to clear if real per Carrier/Bryant.",
+          "related_codes": [
+            "code_88_31"
+          ],
+          "source": "186CNV/284ANV service manual",
+          "severity": "urgent",
+          "surface": "wall_control"
+        },
+        {
+          "code_id": "code_88_73",
+          "code_identifier": "88-73",
+          "code_type": "alphanumeric",
+          "meaning": "DC link sensor lockout",
+          "root_causes": [
+            "Failed internal DC-voltage measurement in VFD",
+            "Damaged VFD electronics"
+          ],
+          "diagnostic_path": [
+            "Manual power cycle at disconnect",
+            "Replace VFD if malfunction persists"
+          ],
+          "escalation": "4-hour lockout.",
+          "reset_behavior": "4-hour lockout. Carrier/Bryant say malfunction unlikely to go away once set.",
+          "related_codes": [
+            "code_88_33"
+          ],
+          "source": "186CNV/284ANV service manual",
+          "severity": "urgent",
+          "surface": "wall_control"
+        },
+        {
+          "code_id": "code_88_74",
+          "code_identifier": "88-74",
+          "code_type": "alphanumeric",
+          "meaning": "PFCM Sensor A lockout",
+          "root_causes": [
+            "Internal PFC current-sensing failure/excess in VFD"
+          ],
+          "diagnostic_path": [
+            "Manual power cycle",
+            "Replace VFD if persists"
+          ],
+          "escalation": "4-hour lockout.",
+          "reset_behavior": "4-hour lockout.",
+          "related_codes": [
+            "code_88_34"
+          ],
+          "source": "186CNV/284ANV service manual",
+          "severity": "urgent",
+          "surface": "wall_control"
+        },
+        {
+          "code_id": "code_88_75",
+          "code_identifier": "88-75",
+          "code_type": "alphanumeric",
+          "meaning": "PFCM Sensor B lockout",
+          "root_causes": [
+            "Internal PFC current-sensing failure/excess in VFD"
+          ],
+          "diagnostic_path": [
+            "Manual power cycle",
+            "Replace VFD if persists"
+          ],
+          "escalation": "4-hour lockout.",
+          "reset_behavior": "4-hour lockout.",
+          "related_codes": [
+            "code_88_35"
+          ],
+          "source": "186CNV/284ANV service manual",
+          "severity": "urgent",
+          "surface": "wall_control"
+        },
+        {
+          "code_id": "code_88_76",
+          "code_identifier": "88-76",
+          "code_type": "alphanumeric",
+          "meaning": "Line voltage sensor lockout",
+          "root_causes": [
+            "Failed internal VFD line-voltage sensing",
+            "Damaged VFD electronics"
+          ],
+          "diagnostic_path": [
+            "Manual power cycle outdoor unit",
+            "Replace VFD if malfunction persists"
+          ],
+          "escalation": "4-hour lockout.",
+          "reset_behavior": "4-hour lockout.",
+          "related_codes": [
+            "code_88_36"
+          ],
+          "source": "186CNV/284ANV service manual",
+          "severity": "urgent",
+          "surface": "wall_control"
+        },
+        {
+          "code_id": "code_88_78",
+          "code_identifier": "88-78",
+          "code_type": "alphanumeric",
+          "meaning": "Internal DC discharge lockout",
+          "root_causes": [
+            "Internal VFD DC discharge / short-to-ground failure",
+            "Damaged VFD power section"
+          ],
+          "diagnostic_path": [
+            "Manual power cycle at disconnect",
+            "Replace VFD if malfunction persists"
+          ],
+          "escalation": "4-hour lockout.",
+          "reset_behavior": "4-hour lockout. VFD attempts automatic reset; persistent fault escalates.",
+          "related_codes": [
+            "code_88_38"
+          ],
+          "source": "186CNV/284ANV service manual",
+          "severity": "urgent",
+          "surface": "wall_control"
+        },
+        {
+          "code_id": "code_127",
+          "code_identifier": "127",
+          "code_type": "alphanumeric",
+          "meaning": "Equipment Update Failure — firmware update to equipment did not complete successfully",
+          "root_causes": [
+            "Interrupted firmware update during download or installation",
+            "Corrupted firmware update package",
+            "Communication loss during update process",
+            "Power interruption during firmware installation"
+          ],
+          "diagnostic_path": [
+            "Retry firmware update per Carrier/Bryant Connex procedure",
+            "Ensure stable ABCD communication during update",
+            "Ensure uninterrupted power to all equipment during update",
+            "Escalate to factory support if reprogramming continues to fail"
+          ],
+          "escalation": "Factory support involvement required if multiple update attempts fail.",
+          "reset_behavior": "Active 127 fault clears after next successful firmware update per Carrier/Bryant PTC bulletin.",
+          "related_codes": [
+            "code_88_27",
+            "code_26_27"
+          ],
+          "source": "Carrier/Bryant PTC (Public Technical Communication) bulletins for Infinity/Evolution Extreme 24/26 platform firmware behavior.",
+          "severity": "service_soon",
+          "surface": "wall_control",
+          "field_consensus_notes": "Clears automatically after successful update — do not treat as persistent lockout. If it won't clear, the update itself isn't completing."
+        },
+        {
+          "code_id": "code_178",
+          "code_identifier": "178",
+          "code_type": "alphanumeric",
+          "meaning": "Indoor unit communication fault / loss of communication with indoor unit (FIELD CONSENSUS — no public OEM definition located)",
+          "root_causes": [
+            "ABCD communication bus issue",
+            "Failed indoor board dragging down the bus",
+            "High-resistance or shorted comm wiring",
+            "Intermittent power loss to indoor unit"
+          ],
+          "diagnostic_path": [
+            "Start at the wall control and work inward",
+            "Verify indoor unit power first",
+            "Then ABCD bus continuity/polarity/shorts",
+            "Then isolate indoor board vs wiring"
+          ],
+          "escalation": "No public OEM escalation rule found. Treat as event/fault surfaced by wall control rather than publicly documented timed lockout family.",
+          "reset_behavior": "Often clears after restoring communication and power-cycling. May recur if indoor board or bus wiring remains unstable.",
+          "related_codes": [
+            "board_code_16_fan_coil",
+            "board_code_16_legacy_outdoor"
+          ],
+          "source": "Field consensus — distributor training, field discussions, non-OEM Bryant Connex explainer. Not found in public Carrier/Bryant OEM manual set.",
+          "severity": "urgent",
+          "surface": "wall_control",
+          "field_consensus_notes": "FIELD CONSENSUS, not OEM-confirmed. No public Carrier/Bryant manual was located in this research pass that officially defines code 178. Diagnostic approach consistent with public code-16 troubleshooting."
+        },
+        {
+          "code_id": "board_code_16_fan_coil",
+          "code_identifier": "16 (fan coil)",
+          "code_type": "status_display",
+          "meaning": "System Communication Fault on communicating fan coil (FE4A/FE5A/FV4C). If system communications unsuccessful for >2 minutes, fan coil displays Status Code 16 and drops into emergency-operable state that can only run with common thermostat wiring and non-communicating outdoor unit.",
+          "root_causes": [
+            "ABCD bus miswire",
+            "Open/shorted ABCD conductors",
+            "Loss of UI power",
+            "Failed device loading communication bus",
+            "Loss of communication long enough to force emergency operation"
+          ],
+          "diagnostic_path": [
+            "Check fan coil COMM LED — should light during startup",
+            "Verify UI is powered",
+            "Inspect ABCD wiring end-to-end",
+            "Confirm conductor-to-conductor continuity and no shorts",
+            "Verify correct polarity/landing"
+          ],
+          "escalation": "Public docs allow temporary emergency heating/cooling fallback using common heat/cool thermostat wired to R, Y, W, C and non-communicating outdoor unit — temporary measure only.",
+          "reset_behavior": "Not a manual-reset lockout. Local board indication clears when communications are restored. Emergency-mode operation remains available while board is powered and displaying 16.",
+          "related_codes": [
+            "board_code_16_legacy_outdoor",
+            "board_code_16_inverter",
+            "code_178"
+          ],
+          "source": "Carrier FV4C Service Manual, FE4A/FE5A installation instructions, Carrier fan-coil wiring diagram/troubleshooting legend, Sigler NorCal public master fault code list.",
+          "severity": "urgent",
+          "surface": "equipment_board",
+          "field_consensus_notes": "Equipment-board primary surface; fault also surfaces at wall control as system communication event but local board presentation is the amber STATUS LED showing 16."
+        },
+        {
+          "code_id": "board_code_16_legacy_outdoor",
+          "code_identifier": "16 (legacy communicating outdoor)",
+          "code_type": "status_display",
+          "meaning": "Communication with User Interface lost on legacy communicating outdoor (24ANB, 25HCB, similar Infinity/Evolution non-inverter communicating ODU families).",
+          "root_causes": [
+            "ABCD bus wiring fault",
+            "UI power loss",
+            "Indoor-outdoor communication break",
+            "Device on comm bus dragging communications down"
+          ],
+          "diagnostic_path": [
+            "Read amber status light on outdoor control board",
+            "Verify ABCD communication path from wall control to indoor to outdoor",
+            "Check terminations and power to communicating UI"
+          ],
+          "escalation": "No special local-board-only recovery mode documented for these legacy non-inverter outdoor units comparable to inverter platform's emergency communicating mode. Restore comm path.",
+          "reset_behavior": "Clears when communication is re-established. Not documented as a manual-reset outdoor-board lockout.",
+          "related_codes": [
+            "board_code_16_fan_coil",
+            "board_code_16_inverter",
+            "code_178"
+          ],
+          "source": "Carrier/Bryant 24ANB communicating outdoor service manual status code table, 25VNA service manual communication-loss section, Sigler NorCal public master fault code list.",
+          "severity": "urgent",
+          "surface": "equipment_board",
+          "field_consensus_notes": "Equipment-board primary surface; same underlying failure also visible at wall control."
+        },
+        {
+          "code_id": "board_code_16_inverter",
+          "code_identifier": "COMM light OFF (186CNV/284ANV inverter outdoor)",
+          "code_type": "status_display",
+          "meaning": "If COMM light is OFF, communication has not been received within the last 2 minutes and equipment is operating in emergency communicating mode. Public 186CNV/284ANV service manual documents this board-level interpretation — NOT a traditional Status Code 16 flash code.",
+          "root_causes": [
+            "Loss of comms from communicating control",
+            "ABCD/network wiring issue upstream",
+            "Device/network fault preventing valid communication messages within last 2 minutes"
+          ],
+          "diagnostic_path": [
+            "Inspect COMM light at outdoor unit — ON = normal communication, OFF = emergency communicating mode",
+            "Inspect VFD Comm light — blinks with message traffic, green for error-free, red for errors/missing messages",
+            "Board's matrix display can scroll active diagnostic codes"
+          ],
+          "escalation": "Platform's outdoor logic designed to continue in emergency communicating mode when comm messages haven't been received within last 2 minutes. Restore communicating path.",
+          "reset_behavior": "Returns to normal communication mode when valid communication resumes. Public manual frames this as mode-state change based on whether comm received within last 2 minutes, not as conventional manual-reset outdoor flash-code lockout.",
+          "related_codes": [
+            "board_code_16_fan_coil",
+            "board_code_16_legacy_outdoor",
+            "code_86_06",
+            "code_88_15"
+          ],
+          "source": "Carrier/Bryant 186CNV/284ANV service manual COMM-light and VFD Comm-light descriptions, public 24VNA0/25VNA0 service manual event table showing Event 16 communication loss, Sigler NorCal public master fault code list.",
+          "severity": "urgent",
+          "surface": "equipment_board",
+          "field_consensus_notes": "NOT a traditional board flash code. Public documentation does not cleanly show a conventional outdoor-board Status Code 16 presentation for 186CNV/284ANV. Board-level indicator is COMM light state and matrix display behavior. Same underlying fault surfaces at wall control as communication-loss event family."
+        },
+        {
+          "code_id": "commissioning_indoor_unit_not_found",
+          "code_identifier": "Indoor unit not found",
+          "code_type": "alphanumeric",
+          "meaning": "Wall control cannot find indoor unit on ABCD communication bus during initial Connex discovery/commissioning. COMMISSIONING-TIME DIAGNOSTIC — not a runtime fault. Appears during initial system setup, not during normal operation.",
+          "root_causes": [
+            "ABCD wiring not connected between wall control and indoor unit",
+            "Indoor unit power not available during discovery",
+            "Wrong order of unit power-up during commissioning",
+            "ABCD polarity reversed (A swapped with B)",
+            "Open or shorted communication conductors",
+            "Failed indoor board preventing communication at startup"
+          ],
+          "diagnostic_path": [
+            "Verify 24V power at indoor unit board",
+            "Verify ABCD wiring from wall control to indoor unit, correct polarity and landing",
+            "Verify no shorts, opens, or high resistance on comm conductors",
+            "Retry Connex discovery sequence from wall control",
+            "If indoor still not found, escalate to indoor board diagnosis"
+          ],
+          "escalation": "If wiring and power confirmed but indoor still not discovered, indoor board failure becomes likely.",
+          "reset_behavior": "Clears when indoor unit is successfully discovered during next commissioning attempt.",
+          "related_codes": [
+            "commissioning_outdoor_unit_not_found",
+            "board_code_16_fan_coil",
+            "code_178"
+          ],
+          "source": "Carrier/Bryant Infinity/Evolution Connex wall control installation instructions — commissioning/discovery section.",
+          "severity": "urgent",
+          "surface": "wall_control",
+          "field_consensus_notes": "COMMISSIONING-ONLY. Keep separate from runtime fault dictionary — techs troubleshooting a running system should not find this in runtime fault history."
+        },
+        {
+          "code_id": "commissioning_outdoor_unit_not_found",
+          "code_identifier": "Outdoor unit not found",
+          "code_type": "alphanumeric",
+          "meaning": "Wall control cannot find outdoor unit on ABCD communication bus during initial Connex discovery/commissioning. COMMISSIONING-TIME DIAGNOSTIC — not a runtime fault. Appears during initial system setup, not during normal operation.",
+          "root_causes": [
+            "ABCD wiring not connected between indoor unit/wall control and outdoor unit",
+            "Outdoor unit disconnect not turned on during discovery",
+            "Outdoor unit power not yet established (e.g., 24V transformer issue)",
+            "ABCD polarity reversed at outdoor unit",
+            "Open or shorted ABCD conductors between indoor and outdoor",
+            "Failed outdoor board or VFD preventing communication at startup",
+            "Wrong model plug installed preventing outdoor from responding properly"
+          ],
+          "diagnostic_path": [
+            "Verify outdoor disconnect is ON and line voltage is present",
+            "Verify 24V power at outdoor control board",
+            "Verify ABCD wiring from indoor to outdoor with correct polarity",
+            "Verify correct model plug is installed on outdoor board",
+            "Verify no shorts, opens, or high resistance on ABCD between indoor and outdoor",
+            "On 186CNV/284ANV inverter outdoor, check COMM light and VFD Comm light state",
+            "Retry Connex discovery sequence"
+          ],
+          "escalation": "If wiring, power, and model plug verified but outdoor still not discovered, outdoor board or VFD failure becomes likely.",
+          "reset_behavior": "Clears when outdoor unit is successfully discovered during next commissioning attempt.",
+          "related_codes": [
+            "commissioning_indoor_unit_not_found",
+            "board_code_16_legacy_outdoor",
+            "board_code_16_inverter"
+          ],
+          "source": "Carrier/Bryant Infinity/Evolution Connex wall control installation instructions — commissioning/discovery section.",
+          "severity": "urgent",
+          "surface": "wall_control",
+          "field_consensus_notes": "COMMISSIONING-ONLY. Keep separate from runtime fault dictionary. Model-plug issues are a common cause on board replacements during commissioning."
+        }
+      ]
+    }
+  ],
+  "cross_generation_conflicts": [
+    {
+      "code_identifier": "6",
+      "conflict_description": "Code 6 has four distinct meanings across Carrier Global platforms. On ICP Recent/Intermediate IGC (N9MSB/N9MSE): ignition proving failure — retries 3 more times before 6+1 lockout. On ICP SmartValve legacy single-stage: failure to ignite OR flame sense lost while running (broader, active before 6+X soft lockout). On ICP Gen 1 NTV6/NTP6/NDP6/VNE two-stage: soft lockout status (automatic restart/retry delay, NOT active ignition fault). On ICP Gen 2/3 (*9MPT/*9MPV and (F/G)9MVE): active ignition/flame-proving failure before 6+1 lockout.",
+      "platforms_affected": [
+        "icp_single_stage_igc",
+        "icp_smartvalve_single_stage",
+        "icp_gen1_ntv6",
+        "icp_gen2_smartvalve_staged",
+        "icp_gen3_9mve"
+      ],
+      "disambiguation_guidance": "Identify platform before diagnosing. Legacy SmartValve and Gen 1 two-stage treat Code 6 very differently from Recent IGC and Gen 2/3 staged. The 6+X subcode architecture only exists on SmartValve legacy, Gen 2, and Gen 3."
+    },
+    {
+      "code_identifier": "8",
+      "conflict_description": "Code 8 means gas heating lockout on ICP Recent IGC and ICP Gen 2/3 staged (stuck-closed gas valve relay, miswire, or short to gas valve wire). On ICP Gen 1 NTV6/NTP6/NDP6/VNE, Code 8 = high-pressure switch stuck closed — completely different diagnostic path (pressure-switch circuit, not gas valve).",
+      "platforms_affected": [
+        "icp_single_stage_igc",
+        "icp_gen1_ntv6",
+        "icp_gen2_smartvalve_staged",
+        "icp_gen3_9mve"
+      ],
+      "disambiguation_guidance": "Confirm platform generation first. Gen 1 staged/variable Code 8 requires pressure-switch investigation; Recent IGC and Gen 2/3 Code 8 requires gas-valve/board investigation."
+    },
+    {
+      "code_identifier": "16",
+      "conflict_description": "Code 16 has three distinct meanings across Infinity/Evolution communicating equipment. On communicating fan coils (FE4A/FE5A/FV4C): System Communication Fault — fan coil has lost comm for >2 minutes and drops into emergency-operable mode. On legacy communicating outdoor (24ANB/25HCB pre-inverter): Communication with User Interface lost. On Extreme/Greenspeed inverter (24VNA6/25VNA4 wall-control event): Communication Loss event number. Additionally, on 186CNV/284ANV inverter outdoor, Code 16 does NOT appear as a traditional board flash code — the equivalent indicator is COMM light OFF.",
+      "platforms_affected": [
+        "infinity_evolution_communicating"
+      ],
+      "disambiguation_guidance": "Identify which equipment is showing the 16. Fan coil vs legacy outdoor vs inverter outdoor all differ in troubleshooting approach. On 186CNV/284ANV specifically, look for COMM light state rather than a flash code."
+    },
+    {
+      "code_identifier": "23",
+      "conflict_description": "On Carrier/Bryant/Payne legacy 58MVP/58MVC: Code 23 = pressure switch did not open (switch stuck closed). On Carrier 58SC0B newer 3-digit platform: Code 23.1 = stuck main pressure switch (same underlying fault, but decimal format matters for platform identification).",
+      "platforms_affected": [
+        "carrier_58mvp_legacy",
+        "carrier_58sc0b_3digit"
+      ],
+      "disambiguation_guidance": "The decimal in 23.1 is the platform identifier. Tool must key on exact format including decimal, not just base number."
+    },
+    {
+      "code_identifier": "31",
+      "conflict_description": "On Carrier 58MVP/58MVC legacy variable-speed: Code 31 = high-heat pressure switch or relay did not close/reopened (tied to staged two-stage logic). On Carrier 58SC0B newer single-stage: Code 31.1 = open main pressure switch / pressure switch did not function properly (single-stage broader meaning).",
+      "platforms_affected": [
+        "carrier_58mvp_legacy",
+        "carrier_58sc0b_3digit"
+      ],
+      "disambiguation_guidance": "Legacy 58MVP handles this as high-heat-specific staging logic; 58SC0B is a broader general pressure-switch fault since it's single-stage equipment."
+    },
+    {
+      "code_identifier": "45",
+      "conflict_description": "On Carrier 58MVP/58MVC legacy: Code 45 = control circuitry lockout (broad diagnosis, replace control if repeated). On Carrier 58SC0B newer: Split into 45.1 (flame circuit fault/memory mismatch), 45.2 (gas valve relay won't close), and 45.3 (EEPROM memory issue) — much more granular.",
+      "platforms_affected": [
+        "carrier_58mvp_legacy",
+        "carrier_58sc0b_3digit"
+      ],
+      "disambiguation_guidance": "58SC0B subcodes (45.1, 45.2, 45.3) give specific failure mode. Legacy 58MVP 45 is blanket 'replace control' guidance."
+    },
+    {
+      "code_identifier": "6+1",
+      "conflict_description": "On ICP SmartValve legacy single-stage (N8MPN family): Code 6+1 = soft lockout, max ignition trials reached — 5-minute delay then retry. On ICP Gen 2 staged SmartValve (*9MPT/*9MPV): Code 6+1 = ignition lockout after 4 trials — 3-hour delay. Both are ignition-failure lockouts but with different reset behaviors.",
+      "platforms_affected": [
+        "icp_smartvalve_single_stage",
+        "icp_gen2_smartvalve_staged"
+      ],
+      "disambiguation_guidance": "Platform determines whether 6+1 clears in 5 minutes or 3 hours. Tell customer accordingly."
+    },
+    {
+      "code_identifier": "7",
+      "conflict_description": "On ICP Recent/Intermediate IGC: Code 7 = limit circuit lockout after limit/rollout open >3 minutes. Auto-reset after 3 hours. On ICP SmartValve legacy: Code 7 = soft lockout after limit/rollout open >2 minutes. 1-hour delay. On ICP Gen 2/3 staged: Code 7 = limit circuit lockout. Auto-reset after 3 hours. Timing thresholds differ across generations.",
+      "platforms_affected": [
+        "icp_single_stage_igc",
+        "icp_smartvalve_single_stage",
+        "icp_gen2_smartvalve_staged",
+        "icp_gen3_9mve"
+      ],
+      "disambiguation_guidance": "All Code 7 events are limit-related, but the timing threshold and reset behavior differ by platform."
+    }
+  ],
+  "electric_heat_notes": {
+    "conventional_electric_furnace_codes": "Carrier/Bryant/Payne and ICP-branded air handlers use simpler electric-heat element and sequencer logic. Public manuals rarely document a formal electric-heat fault code dictionary. Most electric-heat service calls are for component-level failures (element burnout, sequencer stuck, limit trip, open transformer) without specific fault codes. Communicating fan coils (FE4A/FE5A/FV4C) may show Status Code 16 if electric-heat operation is attempted during a communication failure that forces emergency mode.",
+    "common_non_code_electric_service_calls": [
+      "Open element (one or more of 3-5 elements in a typical 10-20 kW package)",
+      "Failed heater relay/sequencer",
+      "Limit trip from low airflow",
+      "Miswired or failed thermostat staging on multi-stage heat",
+      "Open 24V fuse on indoor board",
+      "Failed transformer secondary",
+      "Contactor coil failure on high-kW packages"
+    ],
+    "manufactured_home_specifics": "Not applicable — Carrier Global brands (except some ICP models) do not primarily serve manufactured-home market."
+  }
+}

@@ -1,83 +1,72 @@
 {
-  "version": "1.1.0",
-  "last_updated": "2026-04-19",
-  "total_records": 485,
-  "scope": "residential_hvac",
-  "equipment_types": ["gas_furnace", "electric_furnace"],
-  "future_equipment_types": ["heat_pump", "ac_inverter", "mini_split"],
-  "schema_notes": "v1.1.0 adds model_number_prefixes and visual_identification fields to platform definitions for nameplate-based disambiguation. Backwards-compatible with v1.0.0 data.",
-  "brand_families": [
+  "$comment": "Index of all brand families in the fault codes dataset. Updated when a new family is normalized.",
+  "schema_version": "1.1.0",
+  "families": [
     {
-      "id": "carrier_global",
-      "name": "Carrier Global",
-      "corporate_owner": "Carrier Global Corporation",
-      "brands": ["Carrier", "Bryant", "Payne", "Comfortmaker", "Day & Night", "Heil", "Tempstar", "Arcoaire", "KeepRite"],
-      "gas_records": 122,
-      "electric_records": 3,
-      "status": "research_complete_normalization_pending",
-      "file": "carrier-global.json"
-    },
-    {
-      "id": "trane_technologies",
-      "name": "Trane Technologies",
-      "corporate_owner": "Trane Technologies plc",
-      "brands": ["Trane", "American Standard", "Ameristar"],
-      "gas_records": 41,
-      "electric_records": 4,
-      "status": "research_complete_normalization_pending",
-      "file": "trane-technologies.json"
-    },
-    {
-      "id": "lennox_allied",
-      "name": "Lennox / Allied Air",
-      "corporate_owner": "Lennox International",
-      "brands": ["Lennox", "Armstrong Air", "AirEase", "Ducane", "Concord"],
-      "gas_records": 60,
-      "electric_records": 8,
-      "status": "research_complete_normalization_pending",
-      "file": "lennox-allied.json"
-    },
-    {
-      "id": "daikin_goodman",
-      "name": "Daikin / Goodman / Amana",
-      "corporate_owner": "Daikin Industries, Ltd.",
-      "brands": ["Daikin", "Goodman", "Amana"],
-      "gas_records": 90,
-      "electric_records": 2,
-      "status": "research_complete_normalization_pending",
-      "file": "daikin-goodman.json"
-    },
-    {
-      "id": "rheem_ruud",
-      "name": "Rheem / Ruud / WeatherKing",
-      "corporate_owner": "Paloma Rheem Holdings",
-      "brands": ["Rheem", "Ruud", "WeatherKing"],
-      "gas_records": 60,
-      "electric_records": 0,
-      "status": "research_complete_normalization_pending",
-      "file": "rheem-ruud.json"
-    },
-    {
-      "id": "bosch_york",
-      "name": "Bosch / York / Coleman / Luxaire",
-      "corporate_owner": "Bosch Home Comfort Group (acquired JCI HVAC Aug 2025)",
-      "brands": ["Bosch", "York", "Coleman", "Luxaire", "Champion", "Guardian", "Fraser-Johnston", "Evcon"],
-      "gas_records": 55,
-      "electric_records": 0,
-      "status": "NORMALIZED",
-      "file": "bosch-york.json",
-      "notes": "5 platforms: Legacy JCI flash (TG8S/TG9S/TM8Y), YP9C modulating, JCI outdoor dual-LED, Affinity/Hx communicating (display-only), Bosch IDS inverter. 3 cross-generation conflicts documented (Codes 4/5/6 across legacy vs YP9C). Updated to schema v1.1.0 with model_number_prefixes and visual_identification."
-    },
-    {
-      "id": "nortek_nordyne",
-      "name": "Nortek / Nordyne",
+      "brand_family_id": "nortek_nordyne",
+      "display_name": "Nortek / Nordyne",
       "corporate_owner": "Nortek Global HVAC",
-      "brands": ["Frigidaire", "Gibson", "Maytag", "Tappan", "Westinghouse", "Philco", "Kelvinator", "Broan", "Intertherm", "Miller", "Revolv"],
-      "gas_records": 40,
-      "electric_records": 0,
-      "status": "NORMALIZED",
       "file": "nortek-nordyne.json",
-      "notes": "4 platforms: UTEC two-LED, Emerson 50V64 red-flash, MG1/MG2 legacy mobile-home, iQ Drive variable-capacity. 1 cross-generation conflict documented (3-flash Emerson vs MG1). Updated to schema v1.1.0 with model_number_prefixes and visual_identification."
+      "status": "normalized",
+      "record_count": 40,
+      "notes": "Tight platform architecture. 4 platforms. First brand family normalized."
+    },
+    {
+      "brand_family_id": "bosch_york",
+      "display_name": "Bosch / Johnson Controls (York)",
+      "corporate_owner": "Bosch Home Comfort / Johnson Controls",
+      "file": "bosch-york.json",
+      "status": "normalized",
+      "record_count": 71,
+      "notes": "4 platforms across Bosch BGH high-efficiency, York Affinity/LX, Coleman value lines. Extensive cross-generation documentation."
+    },
+    {
+      "brand_family_id": "carrier_global",
+      "display_name": "Carrier Global",
+      "corporate_owner": "Carrier Global Corporation",
+      "file": "carrier-global.json",
+      "status": "normalized",
+      "record_count": 155,
+      "notes": "LARGEST brand family. 9 platforms across Carrier/Bryant/Payne conventional, ICP single-stage, ICP two-stage/variable Gen 1/2/3, and Infinity/Evolution communicating. Dual-surface platform for Infinity/Evolution (wall control + equipment board). Most cross-generation conflicts in dataset. Includes commissioning-time diagnostics separate from runtime fault codes."
+    },
+    {
+      "brand_family_id": "trane_technologies",
+      "display_name": "Trane / American Standard",
+      "corporate_owner": "Trane Technologies",
+      "file": "trane-technologies.json",
+      "status": "pending_research",
+      "record_count": 0,
+      "notes": "Research not yet started."
+    },
+    {
+      "brand_family_id": "lennox_allied",
+      "display_name": "Lennox / Allied Air",
+      "corporate_owner": "Lennox International / Allied Air Enterprises",
+      "file": "lennox-allied.json",
+      "status": "pending_research",
+      "record_count": 0,
+      "notes": "Research not yet started."
+    },
+    {
+      "brand_family_id": "daikin_goodman",
+      "display_name": "Daikin / Goodman / Amana",
+      "corporate_owner": "Daikin Industries / Goodman Manufacturing",
+      "file": "daikin-goodman.json",
+      "status": "pending_research",
+      "record_count": 0,
+      "notes": "Research not yet started."
+    },
+    {
+      "brand_family_id": "rheem_ruud",
+      "display_name": "Rheem / Ruud",
+      "corporate_owner": "Rheem Manufacturing",
+      "file": "rheem-ruud.json",
+      "status": "pending_research",
+      "record_count": 0,
+      "notes": "Research not yet started."
     }
-  ]
+  ],
+  "total_normalized_records": 266,
+  "total_pending_records_estimated": 251,
+  "last_updated": "2026-04-19"
 }
