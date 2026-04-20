@@ -1,0 +1,2591 @@
+{
+  "brand_family_id": "lennox_allied",
+  "brand_family_name": "Lennox / Allied Air",
+  "corporate_owner": "Lennox International",
+  "brands": [
+    {
+      "name": "Lennox",
+      "slug": "lennox",
+      "notes": "Premium brand — Signature / Elite / Merit product lines"
+    },
+    {
+      "name": "Armstrong Air",
+      "slug": "armstrong-air",
+      "notes": "Allied Air sub-brand. Likely shares Platform 1/2 hardware with Lennox but public per-brand code dictionaries are thinner."
+    },
+    {
+      "name": "AirEase",
+      "slug": "airease",
+      "notes": "Allied Air sub-brand. Likely shares Platform 1/2 hardware with Lennox."
+    },
+    {
+      "name": "Concord",
+      "slug": "concord",
+      "notes": "Allied Air value sub-brand."
+    },
+    {
+      "name": "Ducane",
+      "slug": "ducane",
+      "notes": "Allied Air value sub-brand (Lennox-owned Ducane, distinct from the older pre-2005 Ducane sold to Goodman)."
+    }
+  ],
+  "structural_overview": "Lennox International residential furnace diagnostics span four distinct generations: (1) SureLight 2-LED LEGACY — dual-LED integrated furnace control on mid-2000s through early-2010s furnaces (G50DF, G61MP/G61MPV, ML180UH). Uses COMPOUND X+Y flash codes (e.g., '1+2', '2+3', '4+7'), NOT simple single-digit flash counts. Also uses Pulse and Heartbeat named status patterns. (2) 7-SEGMENT HIGH-EFFICIENCY IFC — single-digit alphanumeric display on EL296V, SL280V, SL297V, SLP99V and variants. Namespace redesign: status characters ('.', 'A', 'C', 'H', 'h', 'dF', 'U') plus E-codes spanning E105 through E370+ with soft-lockout derivatives E270-E276. Communicating-capable via RSBus. (3) LOW-GWP / RDS-ERA — K-revision furnaces (EL195UHNEK, ML196UHEK, SLP99UHVK) retain the 7-segment display and inherit most legacy E-codes, BUT add genuinely new A2L refrigerant detection family: E150, E151, E152, E154, E155, E160, E161, E163, E164, E390. (4) iCOMFORT / S30/S40 COMMUNICATING ECOSYSTEM — three-surface architecture: wall thermostat shows numeric alert codes 10-39 for commissioning/config and 400+ for equipment faults; outdoor inverter units generate inverter flash codes that bridge to thermostat alert numbers — a single event may carry THREE linked IDs (thermostat number + inverter flash count + red/green LED flash pattern); communicating indoor equipment inherits Platform 2 E-codes. Public documentation is thinner than Lennox SureLight or 7-segment — the public Residential Communicating Systems Alert Code Guide is curated rather than exhaustive. Allied Air cross-brand aliasing for Platforms 1 and 2 is LIKELY on shared hardware but public per-brand documentation is substantially thinner than Lennox's — treat carryover as platform-likely, not per-code-verified.",
+  "field_quirks": [
+    {
+      "quirk": "SureLight uses COMPOUND X+Y flash codes, not single-digit counts — a red LED flashing '1 pause 2' is code '1+2', not code '12'",
+      "applies_to": "G61MPV and similar SureLight 2-LED legacy boards",
+      "reason": "The earliest analysis of SureLight diagnostic tables frequently simplified to single-digit counts (e.g., '4 flashes = limit open'). The actual public G61MPV Installation Instructions code table publishes codes as compound patterns: '1+2' (low flame current run), '2+3' (low pressure switch failed open), '4+1' (watchguard exceeded retries), '5+2' (hard lockout board fault). Technicians counting single flashes miss the structure entirely. Also includes named status states 'Pulse' (standby) and 'Heartbeat' (heat demand active) that are not numeric codes at all."
+    },
+    {
+      "quirk": "SureLight watchguard timing is publicly specified on ML180UH",
+      "applies_to": "ML180UH and SureLight boards with similar heating sequence",
+      "reason": "Lennox ML180UH public heating sequence documents: 2.5 minutes to prove pressure switch closure, 5-minute reset period for pressure-switch watchguard, and five consecutive failed flame-proving tries lead to 60-MINUTE watchguard reset. Customers frequently call after exactly 60 minutes thinking furnace fixed itself — it's watchguard auto-reset, not a fix."
+    },
+    {
+      "quirk": "7-segment IFC has a pushbutton workflow with 'E', 'c', 'F' modes",
+      "applies_to": "K-revision EL195UHNEK and similar 7-segment boards",
+      "reason": "Pushbutton menu: 'E' displays the most recent 10 error codes from memory; 'c' clears error memory; 'F' enters flame-signal mode showing live microamp reading on the 7-segment display. Critical for diagnosing weak-flame issues — no multimeter needed at the sensor if the tech knows to invoke F-mode."
+    },
+    {
+      "quirk": "E311 reduces firing rate in 60-second steps to match available CFM rather than locking out",
+      "applies_to": "7-segment high-efficiency IFCs on two-stage and modulating furnaces",
+      "reason": "Unlike Carrier/Trane which typically hard-lock on airflow restriction, Lennox's 7-segment E311 throttles down. Two-stage controls drop to first stage; modulating controls reduce firing rate every 60 seconds until airflow matches. This is an ADAPTIVE response, not a fault lockout."
+    },
+    {
+      "quirk": "Low-GWP code E154/E155 latches blower for minimum 5 minutes even after sensor recovers",
+      "applies_to": "EL195UHNEK, ML196UHEK, and other K-revision A2L refrigerant-compliant furnaces",
+      "reason": "When refrigerant leak detector sensor loses communication (E154/E155), Lennox's A2L safety sequence latches the blower ON for at least 5 minutes regardless of thermostat call. This is a code-MANDATED behavior, not a thermostat call."
+    },
+    {
+      "quirk": "iComfort alert 429+ and inverter flash patterns are MULTIPLE IDs for the SAME EVENT on different surfaces",
+      "applies_to": "iComfort S30/S40 with communicating inverter outdoor units (XC20, XC25, XP20, XP25)",
+      "reason": "A single inverter event generates a thermostat alert number (e.g., 434) AND an outdoor-unit inverter LED flash count (e.g., Flash 53) AND a specific red/green LED flash pattern (Red 5 / Green 3). Lennox public alert guide 100017c formats them as '434 / Inverter Flash 53 / Red 5 Green 3'. Techs checking only one surface miss reset-procedure specificity."
+    },
+    {
+      "quirk": "iComfort alert 38/39 trigger a 60-minute offline retry, not an immediate lockout",
+      "applies_to": "iComfort S30/S40 with any communicating equipment",
+      "reason": "If the system cannot start heating (alert 38) or cooling (alert 39) for more than 45 minutes, thermostat marks 'System Going Offline' for 60 minutes and attempts automatic restart. Distinguishes from true lockouts that require manual reset."
+    },
+    {
+      "quirk": "A2L refrigerant detection cannot be disabled on K-revision low-GWP furnaces",
+      "applies_to": "EL195UHNEK, ML196UHEK, SLP99UHVK and other K-revision A2L-compliant furnaces",
+      "reason": "Lennox public K-revision documentation explicitly states that refrigerant detection functionality cannot be disabled on A2L systems — Lennox states disabling it is prohibited by safety codes. A tech attempting to bypass the RDS sensor circuit to silence repeated E154/E155 codes is creating a safety code violation. If RDS sensors fail repeatedly, the fix is sensor replacement, not bypass."
+    },
+    {
+      "quirk": "iComfort outdoor inverter faults publish THREE linked identifiers — store all three together",
+      "applies_to": "Lennox communicating inverter outdoor units with iComfort S30/S40/E30",
+      "reason": "Public Residential Communicating Systems Alert Code Guide 100017c formats these alerts with three IDs linked per event: thermostat alert number, inverter flash count, and exact red/green LED flash pattern. Reset procedures can also differ between service-soon and service-urgent states within the same alert code — always preserve all three identifiers."
+    }
+  ],
+  "platforms": [
+    {
+      "platform_id": "lennox_surelight_legacy",
+      "platform_name": "Lennox SureLight 2-LED Legacy (Compound Flash)",
+      "platform_description": "Lennox SureLight integrated furnace control with dual LEDs (red diagnostic + green status/CFM). Uses COMPOUND X+Y flash codes where X flashes, then a pause, then Y flashes — e.g., '2+3' means 2 flashes pause 3 flashes. Named status patterns (Pulse = standby, Heartbeat = heat demand active) are not numeric. Covers G50DF, G61MP/G61MPV, ML180UH and similar mid-2000s through early-2010s Lennox furnaces. Allied Air equivalents on shared SureLight boards likely alias these codes but public per-brand documentation is thin.",
+      "applies_to_models": [
+        "G50DF",
+        "G61MP",
+        "G61MPV",
+        "ML180UH"
+      ],
+      "applies_to_years": "2005-2013",
+      "model_number_prefixes": [
+        "G50DF",
+        "G61MP",
+        "G61MPV",
+        "ML180UH"
+      ],
+      "visual_identification": "Two LEDs on integrated furnace control board: one red diagnostic LED and one green status/CFM LED. Red LED flashes compound X+Y fault patterns (e.g., '1 flash, pause, 2 flashes' = code '1+2'). Green LED shows status patterns — Pulse (1 Hz blink) = standby, Heartbeat (steady rhythmic) = heat demand active.",
+      "display_type": "led_pattern",
+      "platform_notes": "Public sources: Lennox G61MPV Installation Instructions p.63 diagnostic table, Lennox ML180UH heating sequence pp.40-41. Compound-code format critical for accurate identification — a tech counting 'total red flashes' misreads the code entirely. Allied Air brands likely share SureLight platform on equivalent-era furnaces but public per-brand code tables are not as explicitly documented as Lennox.",
+      "codes": [
+        {
+          "code_id": "status_pulse",
+          "code_identifier": "Pulse",
+          "code_type": "led_pattern",
+          "meaning": "Power on / standby",
+          "root_causes": [
+            "No heat call present",
+            "Board energized and idle"
+          ],
+          "diagnostic_path": [
+            "Confirm 24 VAC present to control",
+            "Confirm thermostat is not calling for heat",
+            "If unit should be heating, verify W input and call path"
+          ],
+          "escalation": "None; normal standby status",
+          "reset_behavior": "Not a fault; state changes when operating demand changes.",
+          "related_codes": [
+            "status_heartbeat"
+          ],
+          "source": "Lennox G61MPV Installation Instructions, diagnostic table, p.63",
+          "severity": "informational"
+        },
+        {
+          "code_id": "status_heartbeat",
+          "code_identifier": "Heartbeat",
+          "code_type": "status_display",
+          "meaning": "Normal operation; heating demand initiated at thermostat",
+          "root_causes": [
+            "Valid thermostat heat demand",
+            "Control operating normally"
+          ],
+          "diagnostic_path": [
+            "Verify thermostat call",
+            "Verify sequence proceeds past inducer / pressure proving / ignition"
+          ],
+          "escalation": "None; normal operating status",
+          "reset_behavior": "Not a fault.",
+          "related_codes": [
+            "status_pulse"
+          ],
+          "source": "Lennox G61MPV Installation Instructions, diagnostic table, p.63",
+          "severity": "informational"
+        },
+        {
+          "code_id": "code_1_2",
+          "code_identifier": "1+2",
+          "code_type": "flash_count",
+          "meaning": "Low flame current — run mode",
+          "root_causes": [
+            "Dirty flame sensor",
+            "Weak grounding path",
+            "Marginal flame carryover",
+            "Gas quality issue"
+          ],
+          "diagnostic_path": [
+            "Check flame-rectification current",
+            "Per Lennox ML180UH heating sequence, proof target is 0.5 µA within 4 seconds after gas valve opens, and 1.5 µA or greater in run sequence",
+            "Clean or replace sensor if weak",
+            "Verify grounding path",
+            "Inspect burner carryover and gas delivery"
+          ],
+          "escalation": "Advisory; does not by itself stop operation per published sequence",
+          "reset_behavior": "Clears when flame signal returns to acceptable range.",
+          "related_codes": [
+            "code_1_3",
+            "code_4_3"
+          ],
+          "source": "Lennox G61MPV diagnostic table, p.63; Lennox ML180UH heating sequence, pp.40-41",
+          "severity": "service_soon"
+        },
+        {
+          "code_id": "code_1_3",
+          "code_identifier": "1+3",
+          "code_type": "flash_count",
+          "meaning": "Flame sensed out of sequence — flame still present",
+          "root_causes": [
+            "Leaking gas valve",
+            "False flame signal",
+            "Shorted sense path"
+          ],
+          "diagnostic_path": [
+            "Confirm burner is actually off",
+            "Verify flame is not present with valve de-energized",
+            "Check gas valve shutoff integrity",
+            "Inspect sense circuit and grounding"
+          ],
+          "escalation": "Faulted state until abnormal flame condition is gone",
+          "reset_behavior": "Clears after abnormal flame condition is removed.",
+          "related_codes": [
+            "code_4_6",
+            "code_4_3"
+          ],
+          "source": "Lennox G61MPV diagnostic table, p.63",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "code_2_3",
+          "code_identifier": "2+3",
+          "code_type": "flash_count",
+          "meaning": "Low pressure switch failed open",
+          "root_causes": [
+            "Vent restriction",
+            "Weak inducer",
+            "Tubing leak or water in tubing",
+            "Condensate trap blockage"
+          ],
+          "diagnostic_path": [
+            "Verify inducer energizes",
+            "Verify pressure switch closes within allowed proving period",
+            "Per ML180UH public sequence, 2.5 minutes to prove then pressure-switch watchguard starts with 5-minute reset period",
+            "Measure operating pressure in inches w.c. at the switch"
+          ],
+          "escalation": "Heat sequence aborted; watchguard engages if proving repeatedly missed",
+          "reset_behavior": "Auto-retry after reset period; manual thermostat interruption also resets sequence path in some branches.",
+          "related_codes": [
+            "code_2_4",
+            "code_2_7",
+            "code_4_2"
+          ],
+          "source": "Lennox G61MPV diagnostic table, p.63; Lennox ML180UH heating sequence, p.40",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_2_4",
+          "code_identifier": "2+4",
+          "code_type": "flash_count",
+          "meaning": "Low pressure switch failed closed",
+          "root_causes": [
+            "Stuck contacts",
+            "Miswired switch",
+            "False proving due to tubing or water issue"
+          ],
+          "diagnostic_path": [
+            "Verify switch is open before inducer start",
+            "Inspect tubing and porting",
+            "Confirm switch state against actual inducer operation"
+          ],
+          "escalation": "Heat sequence will not proceed correctly",
+          "reset_behavior": "Clears once switch state is corrected and sequence is restarted.",
+          "related_codes": [
+            "code_2_3",
+            "code_2_7"
+          ],
+          "source": "Lennox G61MPV diagnostic table, p.63",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_2_7",
+          "code_identifier": "2+7",
+          "code_type": "flash_count",
+          "meaning": "Low pressure switch opened during ignition trial or heating demand",
+          "root_causes": [
+            "Marginal venting",
+            "Wind effect",
+            "Intermittent inducer performance",
+            "Condensate restriction"
+          ],
+          "diagnostic_path": [
+            "Verify switch remains closed through ignition and run",
+            "Check vent, intake, and condensate path",
+            "Measure running pressure in inches w.c."
+          ],
+          "escalation": "Recycle / retry behavior; may lead to watchguard",
+          "reset_behavior": "Clears when pressure switch remains proven during a successful heat call.",
+          "related_codes": [
+            "code_4_1",
+            "code_4_2"
+          ],
+          "source": "Lennox G61MPV diagnostic table, p.63",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_3_1",
+          "code_identifier": "3+1",
+          "code_type": "flash_count",
+          "meaning": "Limit switch open",
+          "root_causes": [
+            "Airflow restriction",
+            "Overfiring / temperature rise problem",
+            "Blower issue"
+          ],
+          "diagnostic_path": [
+            "Check filter and duct restriction",
+            "Verify blower operation",
+            "Verify temperature rise and input rate"
+          ],
+          "escalation": "Burner off; blower operation continues per sequence",
+          "reset_behavior": "Auto clears after switch recloses.",
+          "related_codes": [
+            "code_4_1"
+          ],
+          "source": "Lennox G61MPV diagnostic table, p.63",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "code_4_1",
+          "code_identifier": "4+1",
+          "code_type": "flash_count",
+          "meaning": "Watchguard — exceeded maximum number of retries",
+          "root_causes": [
+            "Repeated ignition failure",
+            "Gas flow issue",
+            "Flame sensing issue"
+          ],
+          "diagnostic_path": [
+            "Per ML180UH public sequence, five consecutive failed flame-proving tries during one heat demand lead to watchguard and 60-minute reset period",
+            "Verify igniter, gas delivery, and flame current"
+          ],
+          "escalation": "Watchguard; heating inhibited until reset period completes",
+          "reset_behavior": "Auto clears after 60 minutes or after a successful subsequent heat call, depending on fault branch.",
+          "related_codes": [
+            "code_4_2",
+            "code_4_7"
+          ],
+          "source": "Lennox G61MPV diagnostic table, p.63; Lennox ML180UH heating sequence, p.41",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_4_7",
+          "code_identifier": "4+7",
+          "code_type": "flash_count",
+          "meaning": "Ignitor circuit fault — failed ignitor or triggering circuitry",
+          "root_causes": [
+            "Open HSI",
+            "Control trigger failure",
+            "Wiring fault to ignitor"
+          ],
+          "diagnostic_path": [
+            "Verify ignitor warm-up occurs",
+            "Ohm ignitor; replace if open",
+            "Verify control output to ignitor circuit"
+          ],
+          "escalation": "Watchguard / no ignition",
+          "reset_behavior": "Clears after successful ignition sequence or manual interruption of demand.",
+          "related_codes": [
+            "code_4_1"
+          ],
+          "source": "Lennox G61MPV diagnostic table, p.63",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "led_board_fault",
+          "code_identifier": "LED #1 ON / LED #2 ON",
+          "code_type": "led_pattern",
+          "meaning": "Board fault detected (internal control self-check failure)",
+          "root_causes": [
+            "Internal control self-check failure"
+          ],
+          "diagnostic_path": [
+            "Reset control by turning off main power",
+            "If state returns after power cycle, replace control"
+          ],
+          "escalation": "Heating blocked",
+          "reset_behavior": "Main power reset required.",
+          "related_codes": [
+            "code_4_1"
+          ],
+          "source": "Lennox ML180UH heating sequence, p.40",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "led_reversed_polarity",
+          "code_identifier": "LED #1 fast flash / LED #2 slow flash",
+          "code_type": "led_pattern",
+          "meaning": "Reversed line polarity",
+          "root_causes": [
+            "Line hot-neutral reversed at incoming power"
+          ],
+          "diagnostic_path": [
+            "Verify incoming polarity with meter",
+            "Correct line wiring"
+          ],
+          "escalation": "Control will not operate normally",
+          "reset_behavior": "Clears after wiring corrected.",
+          "related_codes": [
+            "led_board_fault"
+          ],
+          "source": "Lennox ML180UH heating sequence, p.40; G61MPV code table p.63",
+          "severity": "urgent"
+        }
+      ]
+    },
+    {
+      "platform_id": "lennox_7segment_highefficiency",
+      "platform_name": "Lennox 7-Segment High-Efficiency IFC",
+      "platform_description": "Current-generation Lennox residential gas furnace platform using 7-segment alphanumeric display. Covers EL296V (two-stage 96% AFUE), EL296UHV, SL280V/VN (two-stage 80% AFUE), SL297V (two-stage 97% AFUE), SLP99V (modulating 99% AFUE). Full namespace redesign from SureLight compound codes — NOT a carry-forward. Uses status characters ('.', 'A', 'C', 'H', 'h', 'dF', 'U') and E-codes spanning E105-E370+ with dedicated soft-lockout derivatives E270-E276 and reduced-capacity adaptive response E311. Communicating-capable via RSBus. Pushbutton menu exposes 'E' (recall last 10 errors), 'c' (clear error memory), 'F' (live flame-signal microamps).",
+      "applies_to_models": [
+        "EL296V",
+        "EL296UHV",
+        "SL280V",
+        "SL280VN",
+        "SL297V",
+        "SLP99V"
+      ],
+      "applies_to_years": "2015-2025 (pre-K-revision)",
+      "model_number_prefixes": [
+        "EL296V",
+        "EL296UHV",
+        "SL280V",
+        "SL280VN",
+        "SL297V",
+        "SLP99V"
+      ],
+      "visual_identification": "Single 7-segment alphanumeric display on the integrated furnace control. Pushbutton access to diagnostic menu ('E' for error recall, 'c' for clear, 'F' for flame microamp live read). Display shows status characters during normal operation: '.' = idle (1 Hz blink), 'A' = active cooling, 'C' = cooling CFM, 'H' = heat stage with CFM, 'h' = first stage heat, 'dF' = defrost, 'U' = unavailable/configuration needed. Fault codes display as 'E' followed by 3-digit code (E105, E223, E270).",
+      "display_type": "alphanumeric",
+      "platform_notes": "Primary public source: Lennox unit information doc 100027 (diagnostic code table, approximately pp.10-15). Namespace is dense with soft-lockout 'last cycle reason' codes (E270-E276) that explain WHY watchguard engaged. E311 is notable for adaptive capacity reduction in 60-second steps instead of hard lockout on airflow restriction. E347-E349 are specific to communicating furnace with non-communicating outdoor unit configurations.",
+      "codes": [
+        {
+          "code_id": "status_idle",
+          "code_identifier": ".",
+          "code_type": "status_display",
+          "meaning": "Idle mode (decimal blinks at 1 Hz)",
+          "root_causes": [
+            "No active service demand"
+          ],
+          "diagnostic_path": [
+            "Verify no W/Y/G demand if idle is unexpected"
+          ],
+          "escalation": "None",
+          "reset_behavior": "Not a fault.",
+          "related_codes": [
+            "status_heat_stage"
+          ],
+          "source": "Lennox unit information doc 100027, integrated diagnostic/status table, p.10",
+          "severity": "informational"
+        },
+        {
+          "code_id": "status_heat_stage",
+          "code_identifier": "H",
+          "code_type": "status_display",
+          "meaning": "Gas heat stage display; stage number (1 or 2) shown with CFM data",
+          "root_causes": [
+            "Normal heating operation"
+          ],
+          "diagnostic_path": [
+            "Verify stage displayed matches actual demand and airflow"
+          ],
+          "escalation": "None",
+          "reset_behavior": "Not a fault.",
+          "related_codes": [
+            "status_idle"
+          ],
+          "source": "Lennox unit information doc 100027, status table, p.10",
+          "severity": "informational"
+        },
+        {
+          "code_id": "code_e105",
+          "code_identifier": "E105",
+          "code_type": "alphanumeric",
+          "meaning": "Device communication problem — no other devices on RSBus",
+          "root_causes": [
+            "Electrical noise on RSBus",
+            "Miswired RSBus",
+            "Loose i+/i- bus connections"
+          ],
+          "diagnostic_path": [
+            "Separate high-voltage wiring from RSBus",
+            "Check miswired/loose stat-indoor-outdoor wiring",
+            "Check for nearby high-voltage noise source"
+          ],
+          "escalation": "Communication fault; clears after bus communications are restored",
+          "reset_behavior": "Auto clears after communications recover.",
+          "related_codes": [
+            "code_e120",
+            "code_e124",
+            "code_e131"
+          ],
+          "source": "Lennox unit information doc 100027, p.10",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_e110",
+          "code_identifier": "E110",
+          "code_type": "alphanumeric",
+          "meaning": "Low line voltage",
+          "root_causes": [
+            "Supply below nameplate voltage"
+          ],
+          "diagnostic_path": [
+            "Measure incoming line voltage",
+            "Correct low-supply condition"
+          ],
+          "escalation": "Normal operation resumes once voltage returns",
+          "reset_behavior": "Clears 5 seconds after recovery.",
+          "related_codes": [
+            "code_e111",
+            "code_e112",
+            "code_e113",
+            "code_e115",
+            "code_e116"
+          ],
+          "source": "Lennox unit information doc 100027, p.10",
+          "severity": "service_soon"
+        },
+        {
+          "code_id": "code_e111",
+          "code_identifier": "E111",
+          "code_type": "alphanumeric",
+          "meaning": "Line voltage polarity reversed",
+          "root_causes": [
+            "Reversed line power wiring"
+          ],
+          "diagnostic_path": [
+            "Verify and correct polarity"
+          ],
+          "escalation": "Control resumes normal operation after correction",
+          "reset_behavior": "Clears 5 seconds after recovery.",
+          "related_codes": [
+            "code_e110",
+            "code_e112"
+          ],
+          "source": "Lennox unit information doc 100027, p.10",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_e112",
+          "code_identifier": "E112",
+          "code_type": "alphanumeric",
+          "meaning": "Ground not detected",
+          "root_causes": [
+            "Missing or poor earth ground"
+          ],
+          "diagnostic_path": [
+            "Verify proper earth ground"
+          ],
+          "escalation": "System shuts down",
+          "reset_behavior": "Clears 5 seconds after fault recovers.",
+          "related_codes": [
+            "code_e111",
+            "code_e115"
+          ],
+          "source": "Lennox unit information doc 100027, p.10",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_e113",
+          "code_identifier": "E113",
+          "code_type": "alphanumeric",
+          "meaning": "High line voltage",
+          "root_causes": [
+            "Supply voltage above nameplate range"
+          ],
+          "diagnostic_path": [
+            "Measure incoming line voltage",
+            "Correct supply so line voltage returns to proper range"
+          ],
+          "escalation": "Normal operation interrupted until voltage back in range",
+          "reset_behavior": "System resumes normal operation 5 seconds after fault recovered.",
+          "related_codes": [
+            "code_e110",
+            "code_e114",
+            "code_e116"
+          ],
+          "source": "Lennox unit information doc 100027, p.11",
+          "severity": "service_soon"
+        },
+        {
+          "code_id": "code_e114",
+          "code_identifier": "E114",
+          "code_type": "alphanumeric",
+          "meaning": "Line voltage frequency out of range",
+          "root_causes": [
+            "No proper 60 Hz power",
+            "Power quality or source frequency problem"
+          ],
+          "diagnostic_path": [
+            "Check line voltage",
+            "Check line frequency",
+            "Correct voltage and frequency problem"
+          ],
+          "escalation": "Heating/cooling operation interrupted until acceptable power returns",
+          "reset_behavior": "System resumes normal operation 5 seconds after fault recovered.",
+          "related_codes": [
+            "code_e110",
+            "code_e113"
+          ],
+          "source": "Lennox unit information doc 100027, p.11",
+          "severity": "service_soon"
+        },
+        {
+          "code_id": "code_e115",
+          "code_identifier": "E115",
+          "code_type": "alphanumeric",
+          "meaning": "Low 24V — control will restart if error recovers",
+          "root_causes": [
+            "24V outside Lennox's stated 18 to 30 VAC range",
+            "Too much power-robbing load on system"
+          ],
+          "diagnostic_path": [
+            "Measure low-voltage supply",
+            "Check for added loads",
+            "Increase transformer VA if needed"
+          ],
+          "escalation": "Restart if error recovers",
+          "reset_behavior": "Clears after fault recovers.",
+          "related_codes": [
+            "code_e110",
+            "code_e116"
+          ],
+          "source": "Lennox unit information doc 100027, p.10",
+          "severity": "service_soon"
+        },
+        {
+          "code_id": "code_e116",
+          "code_identifier": "E116",
+          "code_type": "alphanumeric",
+          "meaning": "High 24V",
+          "root_causes": [
+            "24V control power above Lennox stated 18 to 30 VAC range",
+            "Improper line voltage feeding equipment transformer"
+          ],
+          "diagnostic_path": [
+            "Measure 24V control power",
+            "Check line voltage feeding the equipment transformer",
+            "Correct voltage so control senses proper range"
+          ],
+          "escalation": "Control flags overvoltage until corrected",
+          "reset_behavior": "Clears when the control senses proper voltage.",
+          "related_codes": [
+            "code_e115",
+            "code_e110",
+            "code_e111"
+          ],
+          "source": "Lennox unit information doc 100027, p.11",
+          "severity": "service_soon"
+        },
+        {
+          "code_id": "code_e120",
+          "code_identifier": "E120",
+          "code_type": "alphanumeric",
+          "meaning": "Unresponsive device",
+          "root_causes": [
+            "Outdoor unit delayed response",
+            "Wiring problem"
+          ],
+          "diagnostic_path": [
+            "Recycle power",
+            "Check all wiring connections"
+          ],
+          "escalation": "Communication fault",
+          "reset_behavior": "Clears after device responds to inquiry.",
+          "related_codes": [
+            "code_e105",
+            "code_e124"
+          ],
+          "source": "Lennox unit information doc 100027, pp.10-11",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_e124",
+          "code_identifier": "E124",
+          "code_type": "alphanumeric",
+          "meaning": "Active communicating thermostat signal missing for more than 3 minutes",
+          "root_causes": [
+            "Lost thermostat heartbeat",
+            "4-wire communication path issue"
+          ],
+          "diagnostic_path": [
+            "Check all four communicating connections",
+            "Ohm wires",
+            "Cycle power at thermostat"
+          ],
+          "escalation": "Stops services and waits for thermostat heartbeat",
+          "reset_behavior": "Clears when valid thermostat message is received.",
+          "related_codes": [
+            "code_e105",
+            "code_e120",
+            "code_e131"
+          ],
+          "source": "Lennox unit information doc 100027, p.11",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_e125",
+          "code_identifier": "E125",
+          "code_type": "alphanumeric",
+          "meaning": "Control failed self-check / internal error / failed hardware",
+          "root_causes": [
+            "Hardware error",
+            "Flame-sense circuit fault",
+            "Pin short"
+          ],
+          "diagnostic_path": [
+            "Cycle power",
+            "Replace control if persistent"
+          ],
+          "escalation": "Critical alert",
+          "reset_behavior": "Clears 300 seconds after fault recovered.",
+          "related_codes": [
+            "code_e131"
+          ],
+          "source": "Lennox unit information doc 100027, p.11",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "code_e131",
+          "code_identifier": "E131",
+          "code_type": "alphanumeric",
+          "meaning": "Corrupted control parameters",
+          "root_causes": [
+            "Bad communicating configuration"
+          ],
+          "diagnostic_path": [
+            "Reconfigure system",
+            "If needed, execute factory default mode",
+            "Replace control if heating/cooling unavailable"
+          ],
+          "escalation": "Communicating-mode configuration issue",
+          "reset_behavior": "Clears after proper configuration is restored.",
+          "related_codes": [
+            "code_e105",
+            "code_e124",
+            "code_e202",
+            "code_e203"
+          ],
+          "source": "Lennox unit information doc 100027, p.11",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_e180",
+          "code_identifier": "E180",
+          "code_type": "alphanumeric",
+          "meaning": "Outdoor air temperature sensor failure",
+          "root_causes": [
+            "Sensor shorted or out of range"
+          ],
+          "diagnostic_path": [
+            "Compare sensor resistance to Lennox temperature/resistance chart",
+            "Replace sensor pack if needed",
+            "Reconfigure if feature should be marked not installed"
+          ],
+          "escalation": "Sensor-based feature fault",
+          "reset_behavior": "Clears 30 seconds after recovery.",
+          "related_codes": [
+            "code_e310"
+          ],
+          "source": "Lennox unit information doc 100027, p.11",
+          "severity": "service_soon"
+        },
+        {
+          "code_id": "code_e200",
+          "code_identifier": "E200",
+          "code_type": "alphanumeric",
+          "meaning": "Hard lockout — rollout circuit open or previously open",
+          "root_causes": [
+            "Rollout switch trip",
+            "Open rollout circuit"
+          ],
+          "diagnostic_path": [
+            "Correct cause of rollout trip",
+            "Replace rollout switch if needed",
+            "Test furnace operation"
+          ],
+          "escalation": "Hard lockout",
+          "reset_behavior": "Clears after fault recovered.",
+          "related_codes": [
+            "code_e250",
+            "code_e274"
+          ],
+          "source": "Lennox unit information doc 100027, p.11",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "code_e201",
+          "code_identifier": "E201",
+          "code_type": "alphanumeric",
+          "meaning": "Indoor blower communication failure",
+          "root_causes": [
+            "Motor not powered",
+            "Loose blower wiring",
+            "Control-side or motor-side comm fault"
+          ],
+          "diagnostic_path": [
+            "Verify blower power",
+            "Inspect motor/control harness"
+          ],
+          "escalation": "Blower communication fault",
+          "reset_behavior": "Clears after fault recovered.",
+          "related_codes": [
+            "code_e202",
+            "code_e292"
+          ],
+          "source": "Lennox unit information doc 100027, p.11",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_e202",
+          "code_identifier": "E202",
+          "code_type": "alphanumeric",
+          "meaning": "Indoor blower motor mismatch",
+          "root_causes": [
+            "Wrong capacity code",
+            "Wrong motor/horsepower for cabinet"
+          ],
+          "diagnostic_path": [
+            "Check unit size coding",
+            "Reset and reprogram with thermostat removed while applying power"
+          ],
+          "escalation": "Fault until correct match is detected",
+          "reset_behavior": "Clears after correct match is detected following reset.",
+          "related_codes": [
+            "code_e203"
+          ],
+          "source": "Lennox unit information doc 100027, p.11",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_e203",
+          "code_identifier": "E203",
+          "code_type": "alphanumeric",
+          "meaning": "Appliance capacity/size not programmed",
+          "root_causes": [
+            "Missing or invalid unit code"
+          ],
+          "diagnostic_path": [
+            "Program valid unit size code per configuration guide"
+          ],
+          "escalation": "Critical alert",
+          "reset_behavior": "Clears after valid code is read following reset.",
+          "related_codes": [
+            "code_e202"
+          ],
+          "source": "Lennox unit information doc 100027, p.12",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_e204",
+          "code_identifier": "E204",
+          "code_type": "alphanumeric",
+          "meaning": "Gas valve mis-wired",
+          "root_causes": [
+            "Incorrect valve/control wiring"
+          ],
+          "diagnostic_path": [
+            "Check gas valve operation and wiring"
+          ],
+          "escalation": "Heating fault",
+          "reset_behavior": "Clears when repaired.",
+          "related_codes": [
+            "code_e205",
+            "code_e206"
+          ],
+          "source": "Lennox unit information doc 100027, p.12",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "code_e205",
+          "code_identifier": "E205",
+          "code_type": "alphanumeric",
+          "meaning": "Gas valve control relay contact shorted",
+          "root_causes": [
+            "Shorted relay contact",
+            "Wiring fault"
+          ],
+          "diagnostic_path": [
+            "Check control and gas-valve wiring",
+            "Replace control if wiring is correct"
+          ],
+          "escalation": "Heating fault",
+          "reset_behavior": "Clears after repair or control replacement.",
+          "related_codes": [
+            "code_e204",
+            "code_e206"
+          ],
+          "source": "Lennox unit information doc 100027, pp.12-13",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "code_e206",
+          "code_identifier": "E206",
+          "code_type": "alphanumeric",
+          "meaning": "Gas valve second-stage relay failure",
+          "root_causes": [
+            "Stage-2 relay failure on control"
+          ],
+          "diagnostic_path": [
+            "Confirm furnace only runs in first stage on call",
+            "Replace control if stage 2 cannot be restored"
+          ],
+          "escalation": "Furnace operates on first stage for remainder of demand",
+          "reset_behavior": "Clears after fault recovers.",
+          "related_codes": [
+            "code_e204",
+            "code_e205"
+          ],
+          "source": "Lennox unit information doc 100027, p.13",
+          "severity": "service_soon"
+        },
+        {
+          "code_id": "code_e207",
+          "code_identifier": "E207",
+          "code_type": "alphanumeric",
+          "meaning": "Hot surface ignitor sensed open",
+          "root_causes": [
+            "Open HSI",
+            "HSI resistance out of spec"
+          ],
+          "diagnostic_path": [
+            "Measure ignitor resistance",
+            "Replace if open or outside Lennox IOM range"
+          ],
+          "escalation": "No ignition",
+          "reset_behavior": "Resumes normal operation after fault is cleared.",
+          "related_codes": [
+            "code_e270",
+            "code_e290"
+          ],
+          "source": "Lennox unit information doc 100027, p.13",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_e223",
+          "code_identifier": "E223",
+          "code_type": "alphanumeric",
+          "meaning": "Low pressure switch failed open",
+          "root_causes": [
+            "Vent restriction",
+            "Inducer issue",
+            "Pressure tubing or switch problem"
+          ],
+          "diagnostic_path": [
+            "Check pressure switch closing pressure on heat call",
+            "Measure operating pressure in inches w.c.",
+            "Inspect vent and inducer for restriction or proper operation"
+          ],
+          "escalation": "Heat sequence fault",
+          "reset_behavior": "Resumes normal operation after fault clears.",
+          "related_codes": [
+            "code_e224",
+            "code_e227",
+            "code_e271"
+          ],
+          "source": "Lennox unit information doc 100027, p.13",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_e224",
+          "code_identifier": "E224",
+          "code_type": "alphanumeric",
+          "meaning": "Low pressure switch failed closed",
+          "root_causes": [
+            "Switch stuck closed",
+            "False proving condition"
+          ],
+          "diagnostic_path": [
+            "Check if low-pressure switch stays closed beyond 150 seconds on heat call",
+            "Measure operating pressure",
+            "Inspect vent and inducer"
+          ],
+          "escalation": "Pressure proving fault",
+          "reset_behavior": "Resumes normal operation after fault clears.",
+          "related_codes": [
+            "code_e223",
+            "code_e272"
+          ],
+          "source": "Lennox unit information doc 100027, p.13",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_e225",
+          "code_identifier": "E225",
+          "code_type": "alphanumeric",
+          "meaning": "High pressure switch failed open",
+          "root_causes": [
+            "Pressure switch not making",
+            "Vent or inducer issue"
+          ],
+          "diagnostic_path": [
+            "Measure high-pressure switch closing pressure",
+            "Measure operating pressure",
+            "Inspect vent and inducer"
+          ],
+          "escalation": "Heat sequence fault",
+          "reset_behavior": "Resumes normal operation after fault clears.",
+          "related_codes": [
+            "code_e272"
+          ],
+          "source": "Lennox unit information doc 100027, p.13",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_e227",
+          "code_identifier": "E227",
+          "code_type": "alphanumeric",
+          "meaning": "Low pressure switch open during trial for ignition or run mode",
+          "root_causes": [
+            "Intermittent venting",
+            "Marginal switch hold-in"
+          ],
+          "diagnostic_path": [
+            "Measure switch closing pressure",
+            "Measure operating pressure",
+            "Inspect vent and inducer"
+          ],
+          "escalation": "Heat sequence abort / recycle",
+          "reset_behavior": "Resumes normal operation after fault clears.",
+          "related_codes": [
+            "code_e223",
+            "code_e271"
+          ],
+          "source": "Lennox unit information doc 100027, p.13",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_e228",
+          "code_identifier": "E228",
+          "code_type": "alphanumeric",
+          "meaning": "Combustion air inducer calibration failure",
+          "root_causes": [
+            "Pressure-switch calibration could not be completed",
+            "Vent issue",
+            "Pressure-switch wiring issue"
+          ],
+          "diagnostic_path": [
+            "Check vent system",
+            "Check pressure-switch wiring connections"
+          ],
+          "escalation": "Heat sequence fault",
+          "reset_behavior": "Resumes normal operation after calibration/fault clears.",
+          "related_codes": [
+            "code_e276"
+          ],
+          "source": "Lennox unit information doc 100027, p.13",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_e229",
+          "code_identifier": "E229",
+          "code_type": "alphanumeric",
+          "meaning": "Ignition on high fire",
+          "root_causes": [
+            "IFC switched to high-fire ignition because low-fire pressure switch did not close in time"
+          ],
+          "diagnostic_path": [
+            "Verify low-fire pressure-switch proving and inducer operation"
+          ],
+          "escalation": "Informational / compensating action; Lennox says no action needed",
+          "reset_behavior": "Clears with successful operation.",
+          "related_codes": [
+            "code_e223",
+            "code_e227"
+          ],
+          "source": "Lennox unit information doc 100027, p.13",
+          "severity": "informational"
+        },
+        {
+          "code_id": "code_e240",
+          "code_identifier": "E240",
+          "code_type": "alphanumeric",
+          "meaning": "Low flame current — run mode",
+          "root_causes": [
+            "Dirty or weak flame sensor",
+            "Poor neutral-to-ground reference"
+          ],
+          "diagnostic_path": [
+            "Use control diagnostics or field-installed mode to read flame current in microamps",
+            "Clean or replace sensor",
+            "Measure neutral-to-ground voltage to verify grounding"
+          ],
+          "escalation": "Alert",
+          "reset_behavior": "Clears after current heat call completes.",
+          "related_codes": [
+            "code_e241",
+            "code_e273"
+          ],
+          "source": "Lennox unit information doc 100027, p.13; EL195UHNEK IOM p.47",
+          "severity": "service_soon"
+        },
+        {
+          "code_id": "code_e241",
+          "code_identifier": "E241",
+          "code_type": "alphanumeric",
+          "meaning": "Flame sensed out of sequence — flame still present",
+          "root_causes": [
+            "Gas valve leak"
+          ],
+          "diagnostic_path": [
+            "Shut off gas",
+            "Check for gas valve leak",
+            "Replace valve if necessary"
+          ],
+          "escalation": "Safety alert",
+          "reset_behavior": "Clears when fault is recovered.",
+          "related_codes": [
+            "code_e275"
+          ],
+          "source": "Lennox unit information doc 100027, p.13; EL195UHNEK IOM p.47",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "code_e250",
+          "code_identifier": "E250",
+          "code_type": "alphanumeric",
+          "meaning": "Limit switch circuit open",
+          "root_causes": [
+            "Overfiring",
+            "Heater blockage",
+            "Low airflow"
+          ],
+          "diagnostic_path": [
+            "Check firing rate",
+            "Check for blockage in heater",
+            "Check proper airflow"
+          ],
+          "escalation": "If limit does not close within 3 minutes, unit goes into 1-hour soft lockout",
+          "reset_behavior": "Resumes normal operation after fault clears.",
+          "related_codes": [
+            "code_e252",
+            "code_e274"
+          ],
+          "source": "Lennox unit information doc 100027, p.13; EL195UHNEK IOM p.47",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "code_e252",
+          "code_identifier": "E252",
+          "code_type": "alphanumeric",
+          "meaning": "Discharge air temperature too high (gas heat only)",
+          "root_causes": [
+            "High temperature rise",
+            "Airflow issue",
+            "Excess input rate"
+          ],
+          "diagnostic_path": [
+            "Check temperature rise",
+            "Check airflow",
+            "Check input rate"
+          ],
+          "escalation": "Heat protection alert",
+          "reset_behavior": "Clears when heat call is finished.",
+          "related_codes": [
+            "code_e250",
+            "code_e311"
+          ],
+          "source": "Lennox unit information doc 100027, p.13",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_e270",
+          "code_identifier": "E270",
+          "code_type": "alphanumeric",
+          "meaning": "Soft lockout — exceeded maximum number of retries; no flame current sensed",
+          "root_causes": [
+            "Gas flow issue",
+            "Ignitor did not light burner",
+            "Weak or no flame signal"
+          ],
+          "diagnostic_path": [
+            "Check gas flow",
+            "Confirm ignitor lights burner",
+            "Check flame sensor current"
+          ],
+          "escalation": "Soft lockout",
+          "reset_behavior": "Clears when heat call finishes successfully.",
+          "related_codes": [
+            "code_e207",
+            "code_e240",
+            "code_e290"
+          ],
+          "source": "Lennox unit information doc 100027, p.13; EL195UHNEK IOM p.47",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_e271",
+          "code_identifier": "E271",
+          "code_type": "alphanumeric",
+          "meaning": "Soft lockout — exceeded retries; last retry failed due to pressure switch opening",
+          "root_causes": [
+            "Intermittent pressure-switch opening"
+          ],
+          "diagnostic_path": [
+            "Check pressure-switch closing pressure and running pressure",
+            "Inspect vent and inducer"
+          ],
+          "escalation": "Soft lockout",
+          "reset_behavior": "Clears when heat call finishes successfully.",
+          "related_codes": [
+            "code_e223",
+            "code_e227",
+            "code_e272"
+          ],
+          "source": "Lennox unit information doc 100027, pp.13-14",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_e272",
+          "code_identifier": "E272",
+          "code_type": "alphanumeric",
+          "meaning": "Soft lockout — exceeded maximum number of recycles; last recycle due to pressure switch opening",
+          "root_causes": [
+            "Low pressure switch issue",
+            "High pressure switch issue",
+            "Vent restriction",
+            "Combustion air inducer performance problem"
+          ],
+          "diagnostic_path": [
+            "Check low pressure switch operation to see if it is stuck closed on heat call",
+            "Check high pressure switch closing pressure on heat call",
+            "Measure operating pressure in inches w.c.",
+            "Inspect vent and combustion air inducer for correct operation and restriction"
+          ],
+          "escalation": "Soft lockout condition",
+          "reset_behavior": "Clears when the heat call finishes successfully.",
+          "related_codes": [
+            "code_e223",
+            "code_e224",
+            "code_e225",
+            "code_e227",
+            "code_e271"
+          ],
+          "source": "Lennox unit information doc 100027, p.14",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_e273",
+          "code_identifier": "E273",
+          "code_type": "alphanumeric",
+          "meaning": "Soft lockout — exceeded recycles; last recycle due to flame failure",
+          "root_causes": [
+            "Flame-sense problem",
+            "Grounding issue"
+          ],
+          "diagnostic_path": [
+            "Read flame current in microamps",
+            "Clean or replace flame sensor",
+            "Measure neutral-to-ground voltage"
+          ],
+          "escalation": "Soft lockout",
+          "reset_behavior": "Clears when heat call finishes successfully.",
+          "related_codes": [
+            "code_e240",
+            "code_e270"
+          ],
+          "source": "Lennox unit information doc 100027, p.14",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_e274",
+          "code_identifier": "E274",
+          "code_type": "alphanumeric",
+          "meaning": "Soft lockout — exceeded recycles; last recycle failed due to limit opening or limit open >3 minutes",
+          "root_causes": [
+            "Airflow restriction",
+            "Overfiring",
+            "Blockage"
+          ],
+          "diagnostic_path": [
+            "Shut system down",
+            "Check firing rate and airflow",
+            "Check for blockage"
+          ],
+          "escalation": "1-hour soft lockout",
+          "reset_behavior": "Clears when heat call finishes successfully.",
+          "related_codes": [
+            "code_e250",
+            "code_e252"
+          ],
+          "source": "Lennox unit information doc 100027, p.14",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "code_e275",
+          "code_identifier": "E275",
+          "code_type": "alphanumeric",
+          "meaning": "Soft lockout — flame sensed out of sequence; flame signal is gone",
+          "root_causes": [
+            "Prior gas-valve leak",
+            "Transient false flame"
+          ],
+          "diagnostic_path": [
+            "Shut off gas",
+            "Check for gas-valve leak"
+          ],
+          "escalation": "1-hour soft lockout",
+          "reset_behavior": "Clears when flame has been proven stable.",
+          "related_codes": [
+            "code_e241"
+          ],
+          "source": "Lennox unit information doc 100027, p.14",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "code_e276",
+          "code_identifier": "E276",
+          "code_type": "alphanumeric",
+          "meaning": "Watchguard calibration failure",
+          "root_causes": [
+            "Pressure-switch calibration failure",
+            "Vent problem",
+            "Wiring issue"
+          ],
+          "diagnostic_path": [
+            "Check vent system",
+            "Check pressure-switch wiring"
+          ],
+          "escalation": "1-hour soft lockout",
+          "reset_behavior": "Clears when calibration finishes successfully.",
+          "related_codes": [
+            "code_e228"
+          ],
+          "source": "Lennox unit information doc 100027, p.14",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_e290",
+          "code_identifier": "E290",
+          "code_type": "alphanumeric",
+          "meaning": "Ignitor circuit fault — failed ignitor or triggering circuitry",
+          "root_causes": [
+            "Open or out-of-spec HSI",
+            "Triggering circuit failure"
+          ],
+          "diagnostic_path": [
+            "Measure HSI resistance",
+            "Replace if open or out of spec"
+          ],
+          "escalation": "1-hour soft lockout",
+          "reset_behavior": "Clears when flame has been proven stable.",
+          "related_codes": [
+            "code_e207",
+            "code_e270"
+          ],
+          "source": "Lennox unit information doc 100027, p.14; EL195UHNEK IOM p.47",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_e291",
+          "code_identifier": "E291",
+          "code_type": "alphanumeric",
+          "meaning": "Heat airflow restricted below the minimum",
+          "root_causes": [
+            "Dirty filter",
+            "Duct restriction",
+            "Poor blower performance"
+          ],
+          "diagnostic_path": [
+            "Check filter",
+            "Check duct restriction",
+            "Check blower performance"
+          ],
+          "escalation": "1-hour soft lockout",
+          "reset_behavior": "Clears when heat call finishes successfully.",
+          "related_codes": [
+            "code_e311",
+            "code_e312"
+          ],
+          "source": "Lennox unit information doc 100027, p.14",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_e292",
+          "code_identifier": "E292",
+          "code_type": "alphanumeric",
+          "meaning": "Indoor blower motor unable to start due to obstructed wheel / seized bearings",
+          "root_causes": [
+            "Seized bearing",
+            "Stuck wheel"
+          ],
+          "diagnostic_path": [
+            "Verify motor starts and meets performance",
+            "Replace motor or wheel if needed"
+          ],
+          "escalation": "1-hour soft lockout",
+          "reset_behavior": "Clears after circulator successfully starts.",
+          "related_codes": [
+            "code_e201"
+          ],
+          "source": "Lennox unit information doc 100027, p.14",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_e294",
+          "code_identifier": "E294",
+          "code_type": "alphanumeric",
+          "meaning": "Combustion air inducer over current",
+          "root_causes": [
+            "Inducer bearing issue",
+            "Wiring issue",
+            "High inducer amp draw"
+          ],
+          "diagnostic_path": [
+            "Check combustion blower bearings, wiring, and amperage",
+            "Replace if performance is out of range"
+          ],
+          "escalation": "Faulted heating sequence",
+          "reset_behavior": "Clears after inducer current returns in-range following ignition after soft lockout or reset.",
+          "related_codes": [
+            "code_e223",
+            "code_e228"
+          ],
+          "source": "Lennox unit information doc 100027, p.14",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_e295",
+          "code_identifier": "E295",
+          "code_type": "alphanumeric",
+          "meaning": "Indoor blower motor temperature too high",
+          "root_causes": [
+            "Motor internal protector trip",
+            "Bearing or amp issue"
+          ],
+          "diagnostic_path": [
+            "Check motor bearings and amp draw",
+            "Replace if necessary"
+          ],
+          "escalation": "Blower overtemp alert",
+          "reset_behavior": "Clears after blower demand is satisfied.",
+          "related_codes": [
+            "code_e292"
+          ],
+          "source": "Lennox unit information doc 100027, p.14",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_e310",
+          "code_identifier": "E310",
+          "code_type": "alphanumeric",
+          "meaning": "Discharge air temperature sensor failure",
+          "root_causes": [
+            "Sensor shorted or out of range"
+          ],
+          "diagnostic_path": [
+            "Compare sensor resistance to installation-chart values",
+            "Replace sensor if needed"
+          ],
+          "escalation": "Sensor fault",
+          "reset_behavior": "Communicating mode: clears 30 seconds after recovery; non-communicating mode: clears after current heat call completes.",
+          "related_codes": [
+            "code_e180"
+          ],
+          "source": "Lennox unit information doc 100027, p.14",
+          "severity": "service_soon"
+        },
+        {
+          "code_id": "code_e311",
+          "code_identifier": "E311",
+          "code_type": "alphanumeric",
+          "meaning": "Heat rate reduced to match indoor blower airflow",
+          "root_causes": [
+            "Restricted airflow causing cutback mode"
+          ],
+          "diagnostic_path": [
+            "Reduce restriction by checking filter and duct system"
+          ],
+          "escalation": "Warning only; Lennox states two-stage controls reduce to first stage, and firing rate is reduced every 60 seconds to match available CFM",
+          "reset_behavior": "Clears when heat call finishes successfully.",
+          "related_codes": [
+            "code_e252",
+            "code_e291",
+            "code_e312"
+          ],
+          "source": "Lennox unit information doc 100027, pp.14-15",
+          "severity": "service_soon"
+        },
+        {
+          "code_id": "code_e312",
+          "code_identifier": "E312",
+          "code_type": "alphanumeric",
+          "meaning": "Restricted airflow in cooling or continuous fan mode is lower than CFM setting",
+          "root_causes": [
+            "Dirty filter",
+            "Duct restriction",
+            "Indoor blower in cutback mode",
+            "Total external static outside design range"
+          ],
+          "diagnostic_path": [
+            "Check filter and duct system",
+            "Correct restriction or add/repair duct",
+            "Verify blower is not operating outside design parameters"
+          ],
+          "escalation": "Warning only; indoor blower running at reduced CFM in cutback mode",
+          "reset_behavior": "Cleared after current service demand is satisfied.",
+          "related_codes": [
+            "code_e311",
+            "code_e291"
+          ],
+          "source": "Lennox unit information doc 100027, p.15",
+          "severity": "service_soon"
+        },
+        {
+          "code_id": "code_e313",
+          "code_identifier": "E313",
+          "code_type": "alphanumeric",
+          "meaning": "Indoor or outdoor unit capacity mismatch; communication only",
+          "root_causes": [
+            "Incorrect indoor/outdoor capacity code selected"
+          ],
+          "diagnostic_path": [
+            "Check equipment configuration in installation instructions",
+            "Correct capacity coding during setup / commissioning"
+          ],
+          "escalation": "Warning only; system can still operate but may not meet intended efficiency or capacity",
+          "reset_behavior": "Alarm clears when commissioning is exited / completed.",
+          "related_codes": [
+            "code_e202",
+            "code_e203",
+            "code_e131"
+          ],
+          "source": "Lennox unit information doc 100027, p.15",
+          "severity": "service_soon"
+        },
+        {
+          "code_id": "code_e347",
+          "code_identifier": "E347",
+          "code_type": "alphanumeric",
+          "meaning": "No 24V output on Y1 of integrated control with non-communicating outdoor unit",
+          "root_causes": [
+            "Y1 relay / stage-1 pilot relay contacts did not close",
+            "Relay coil did not energize",
+            "No input back to IFC chip"
+          ],
+          "diagnostic_path": [
+            "Verify stage-1 call is present",
+            "Check Y1 output from integrated control",
+            "If relay logic/output has failed, replace integrated control"
+          ],
+          "escalation": "Critical alert; operation stopped",
+          "reset_behavior": "Cleared after reset and Y1 input is sensed.",
+          "related_codes": [
+            "code_e348",
+            "code_e349"
+          ],
+          "source": "Lennox unit information doc 100027, p.15",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_e348",
+          "code_identifier": "E348",
+          "code_type": "alphanumeric",
+          "meaning": "No 24V output on Y2 of integrated control with non-communicating outdoor unit",
+          "root_causes": [
+            "Y2 relay / stage-2 pilot relay contacts did not close",
+            "Relay coil did not energize",
+            "No input back to IFC chip"
+          ],
+          "diagnostic_path": [
+            "Verify stage-2 call is present",
+            "Check Y2 output from integrated control",
+            "Replace integrated control if relay/output fault is confirmed"
+          ],
+          "escalation": "Critical alert",
+          "reset_behavior": "Cleared after reset and Y1 input is sensed.",
+          "related_codes": [
+            "code_e347",
+            "code_e349"
+          ],
+          "source": "Lennox unit information doc 100027, p.15",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_e349",
+          "code_identifier": "E349",
+          "code_type": "alphanumeric",
+          "meaning": "No 24V between R and O on integrated control with non-communicating outdoor unit; dual-fuel module required for heat-pump application",
+          "root_causes": [
+            "R-to-O configuration link missing",
+            "Incorrect heat-pump / dual-fuel configuration"
+          ],
+          "diagnostic_path": [
+            "Verify heat-pump / dual-fuel wiring and configuration",
+            "Restore or hardwire the R-to-O link as required"
+          ],
+          "escalation": "Critical alert in applicable non-communicating configuration",
+          "reset_behavior": "Clears once the required configuration link is restored.",
+          "related_codes": [
+            "code_e347",
+            "code_e348"
+          ],
+          "source": "Lennox unit information doc 100027, p.15",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_e370",
+          "code_identifier": "E370",
+          "code_type": "alphanumeric",
+          "meaning": "Interlock switch sensed open for 2 minutes",
+          "root_causes": [
+            "Loss of 24VAC seen by the control on the DS/interlock path",
+            "Open interlock / door / safety switch circuit"
+          ],
+          "diagnostic_path": [
+            "Verify continuity of the interlock/DS circuit",
+            "Restore continuous 24VAC to the DS terminal"
+          ],
+          "escalation": "Control terminates all services and waits for interlock switch to close",
+          "reset_behavior": "Alarm clears when 24VAC is continuously sensed on DS for at least 10 seconds or on power reset.",
+          "related_codes": [
+            "code_e124",
+            "code_e125"
+          ],
+          "source": "Lennox unit information doc 100027, p.15",
+          "severity": "urgent"
+        }
+      ]
+    },
+    {
+      "platform_id": "lennox_lowgwp_rds_era",
+      "platform_name": "Lennox Low-GWP / RDS-Era K-Revision Furnaces",
+      "platform_description": "K-revision furnaces compliant with A2L refrigerant transition (R-454B). Verified public models: EL195UHNEK, ML196UHEK, SLP99UHVK. Retain 7-segment IFC and inherit most Platform 2 E-codes (E105-E370 legacy furnace codes carry forward), BUT add a genuinely new A2L refrigerant-leak-detection code family: E150, E151, E152, E154, E155, E160, E161, E163, E164, E390.",
+      "applies_to_models": [
+        "EL195UHNEK",
+        "ML196UHEK",
+        "SLP99UHVK"
+      ],
+      "applies_to_years": "2024-2026 (post-R-454B transition)",
+      "model_number_prefixes": [
+        "EL195UHNEK",
+        "ML196UHEK",
+        "SLP99UHVK"
+      ],
+      "visual_identification": "Same 7-segment display as Platform 2, but furnace has additional hardware: refrigerant leak detection (RDS) sensors typically mounted at or near the indoor coil, plus a Low GWP test pushbutton on the control board. Dedicated low-GWP dip switches on control.",
+      "display_type": "alphanumeric",
+      "platform_notes": "Public source: Lennox EL195UHNEK Installation Instructions 508575-01, pp.46-47. Legacy furnace codes (E105-E370 from Platform 2) still apply to this platform — only the E150-E164 and E390 codes are genuinely new. RDS-specific codes have mandated behaviors (E154/E155 latch blower for minimum 5 minutes regardless of thermostat call). A2L refrigerant detection CANNOT be disabled per Lennox safety code requirement.",
+      "codes": [
+        {
+          "code_id": "code_e150",
+          "code_identifier": "E150",
+          "code_type": "alphanumeric",
+          "meaning": "Refrigerant leak detected",
+          "root_causes": [
+            "Indoor coil leak",
+            "Refrigerant present at sensor",
+            "Charge issue accompanying leak"
+          ],
+          "diagnostic_path": [
+            "Repair leak at or near indoor unit coil as needed",
+            "Verify proper refrigerant charge",
+            "Do not expect code to clear while sensor still reports leak"
+          ],
+          "escalation": "Safety-related low-GWP event",
+          "reset_behavior": "Cannot be cleared while sensor still reports a leak.",
+          "related_codes": [
+            "code_e151",
+            "code_e152",
+            "code_e154",
+            "code_e155"
+          ],
+          "source": "Lennox EL195UHNEK Installation Instructions 508575-01, p.46",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "code_e151",
+          "code_identifier": "E151",
+          "code_type": "alphanumeric",
+          "meaning": "Refrigerant leak detector sensor #1 fault",
+          "root_causes": [
+            "Sensor failed or reporting internal fault"
+          ],
+          "diagnostic_path": [
+            "Replace sensor if fault persists"
+          ],
+          "escalation": "Sensor fault",
+          "reset_behavior": "Clears when sensor no longer reports fault condition.",
+          "related_codes": [
+            "code_e152",
+            "code_e154",
+            "code_e160"
+          ],
+          "source": "Lennox EL195UHNEK Installation Instructions 508575-01, p.46",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "code_e152",
+          "code_identifier": "E152",
+          "code_type": "alphanumeric",
+          "meaning": "Refrigerant leak detector sensor #2 fault",
+          "root_causes": [
+            "Sensor #2 failed or reporting a sensor fault"
+          ],
+          "diagnostic_path": [
+            "Verify sensor #2 condition",
+            "Replace sensor if the fault persists"
+          ],
+          "escalation": "Low-GWP sensor fault",
+          "reset_behavior": "Clears when sensor no longer reports the fault condition.",
+          "related_codes": [
+            "code_e151",
+            "code_e155",
+            "code_e161"
+          ],
+          "source": "Lennox EL195UHNEK Installation Instructions 508575-01, p.46",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "code_e154",
+          "code_identifier": "E154",
+          "code_type": "alphanumeric",
+          "meaning": "Refrigerant leak detector sensor #1 communication lost or invalid dip-switch configuration",
+          "root_causes": [
+            "Harness or connector issue",
+            "Sensor obstruction or damage",
+            "Incorrect low-GWP dip-switch setting"
+          ],
+          "diagnostic_path": [
+            "Check sensor harness and connector condition",
+            "Check plug for damage or debris",
+            "Verify low-GWP dip-switch settings",
+            "Retest using Low GWP test button on control board"
+          ],
+          "escalation": "Blower latches for a minimum of 5 minutes",
+          "reset_behavior": "Clears when sensor communication is reestablished; blower remains latched for at least 5 minutes regardless.",
+          "related_codes": [
+            "code_e155",
+            "code_e160",
+            "code_e164"
+          ],
+          "source": "Lennox EL195UHNEK Installation Instructions 508575-01, p.46",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "code_e155",
+          "code_identifier": "E155",
+          "code_type": "alphanumeric",
+          "meaning": "Refrigerant leak detector sensor #2 communication lost",
+          "root_causes": [
+            "Harness or connector issue on sensor #2"
+          ],
+          "diagnostic_path": [
+            "Inspect sensor #2 wiring and connector",
+            "Retest with Low GWP test button"
+          ],
+          "escalation": "Blower latches for a minimum of 5 minutes",
+          "reset_behavior": "Clears when communication is reestablished; blower remains latched for at least 5 minutes regardless.",
+          "related_codes": [
+            "code_e154",
+            "code_e161"
+          ],
+          "source": "Lennox EL195UHNEK Installation Instructions 508575-01, p.46",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "code_e160",
+          "code_identifier": "E160",
+          "code_type": "alphanumeric",
+          "meaning": "Refrigerant leak detector sensor #1 type incorrect",
+          "root_causes": [
+            "Wrong sensor type installed"
+          ],
+          "diagnostic_path": [
+            "Replace with Lennox-approved sensor",
+            "Retest with Low GWP test button"
+          ],
+          "escalation": "Blower latches for a minimum of 5 minutes",
+          "reset_behavior": "Clears when a suitable sensor is detected.",
+          "related_codes": [
+            "code_e161",
+            "code_e151"
+          ],
+          "source": "Lennox EL195UHNEK Installation Instructions 508575-01, p.46",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "code_e161",
+          "code_identifier": "E161",
+          "code_type": "alphanumeric",
+          "meaning": "Refrigerant leak detector sensor #2 type incorrect",
+          "root_causes": [
+            "Wrong sensor type installed on low-GWP input #2"
+          ],
+          "diagnostic_path": [
+            "Replace with the correct Lennox-approved sensor type",
+            "Retest using the Low GWP test button if needed"
+          ],
+          "escalation": "Low-GWP sensor/type fault",
+          "reset_behavior": "Clears when a suitable sensor is detected.",
+          "related_codes": [
+            "code_e160",
+            "code_e152",
+            "code_e155"
+          ],
+          "source": "Lennox EL195UHNEK Installation Instructions 508575-01, p.46",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "code_e163",
+          "code_identifier": "E163",
+          "code_type": "alphanumeric",
+          "meaning": "Refrigerant leak detector control failure",
+          "root_causes": [
+            "Refrigerant detection control failure / board-level low-GWP control problem"
+          ],
+          "diagnostic_path": [
+            "Verify low-GWP control functionality",
+            "Replace the failed low-GWP control / board if the fault persists"
+          ],
+          "escalation": "Low-GWP control fault",
+          "reset_behavior": "Clears when the control fault is corrected.",
+          "related_codes": [
+            "code_e151",
+            "code_e152",
+            "code_e390"
+          ],
+          "source": "Lennox EL195UHNEK Installation Instructions 508575-01, p.46",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "code_e164",
+          "code_identifier": "E164",
+          "code_type": "alphanumeric",
+          "meaning": "Low GWP Test mode active",
+          "root_causes": [
+            "Manual activation of Low GWP test button"
+          ],
+          "diagnostic_path": [
+            "Confirm code was intentionally invoked as a test function"
+          ],
+          "escalation": "Test mode only",
+          "reset_behavior": "Automatically clears after 1 minute.",
+          "related_codes": [
+            "code_e154",
+            "code_e155",
+            "code_e160"
+          ],
+          "source": "Lennox EL195UHNEK Installation Instructions 508575-01, p.47",
+          "severity": "informational"
+        },
+        {
+          "code_id": "code_e390",
+          "code_identifier": "E390",
+          "code_type": "alphanumeric",
+          "meaning": "Low GWP relay stuck",
+          "root_causes": [
+            "Furnace control low-GWP relay fault"
+          ],
+          "diagnostic_path": [
+            "Verify relay operation",
+            "Replace indoor unit control board if relay fault persists"
+          ],
+          "escalation": "Board-level low-GWP hardware fault",
+          "reset_behavior": "Clears when relay operates normally.",
+          "related_codes": [
+            "code_e163"
+          ],
+          "source": "Lennox EL195UHNEK Installation Instructions 508575-01, p.47",
+          "severity": "safety_critical"
+        }
+      ]
+    },
+    {
+      "platform_id": "lennox_icomfort_communicating",
+      "platform_name": "Lennox iComfort S30/S40 Communicating Ecosystem",
+      "platform_description": "Lennox communicating ecosystem built around S30, S40, E30 color touchscreen thermostats plus communicating indoor and outdoor equipment. Uses three-surface diagnostic architecture: (1) wall thermostat shows alert codes 10-39 for commissioning/config and 400+ for equipment-sourced faults; (2) outdoor inverter units (XC20, XC25, XP20, XP25, XP18, XC18) generate inverter flash codes that bridge to thermostat alert numbers — a single event carries THREE linked IDs: thermostat number + inverter flash count + red/green LED flash pattern; (3) communicating indoor equipment (CBX32MV air handler, communicating furnaces) inherits Platform 2 E-codes.",
+      "applies_to_models": [
+        "S30",
+        "S40",
+        "E30",
+        "XC20",
+        "XC25",
+        "XP20",
+        "XP25",
+        "XP18",
+        "XC18",
+        "CBX32MV"
+      ],
+      "applies_to_years": "2016-2026",
+      "model_number_prefixes": [
+        "S30",
+        "S40",
+        "E30",
+        "XC20",
+        "XC25",
+        "XP20",
+        "XP25",
+        "XP18",
+        "XC18",
+        "CBX32MV"
+      ],
+      "visual_identification": "Color touchscreen wall thermostat (S30/S40/E30) displays system alerts. Dealer Control Center (S30) or View Service Support Center (S40) menus expose diagnostics. Outdoor communicating inverter units have local LEDs that flash inverter-specific codes with distinct red/green flash patterns. Equipment reset paths differ by thermostat generation.",
+      "display_type": "alphanumeric",
+      "platform_notes": "Public source: Lennox Residential Communicating Systems Alert Code Guide 100017c; iComfort S30 Installation Manual and Setup Guide. Public alert guide is curated — documents most common commissioning/field alerts (10-39) and meaningful slice of outdoor inverter alerts (429-437 range plus algorithmic codes). Comprehensive per-model AOD dictionary not publicly available. A single outdoor inverter event carries THREE identifiers — thermostat number, inverter flash count, AND red/green LED flash pattern — preserve all three.",
+      "codes": [
+        {
+          "code_id": "code_alert_10",
+          "code_identifier": "10",
+          "code_type": "thermostat_display",
+          "meaning": "Unknown Device Detected",
+          "root_causes": [
+            "New communicating device added after original setup",
+            "Offending device soft-disabled by thermostat"
+          ],
+          "diagnostic_path": [
+            "Confirm wiring between thermostat, smart hub, and devices",
+            "Cycle power",
+            "Reconfigure system",
+            "S30 path: Menu > Settings > Advanced Settings > View Dealer Control Center > Equipment > Reset / Re-configure System"
+          ],
+          "escalation": "Thermostat may soft-disable the unknown device; furnace/air-handler/outdoor controls may show double horizontal lines; damper/EIM green LED may flash 3 seconds on / 1 second off",
+          "reset_behavior": "Clear by reconfiguring the system.",
+          "related_codes": [
+            "code_alert_11",
+            "code_alert_12",
+            "code_alert_14",
+            "code_alert_15"
+          ],
+          "source": "iComfort S30 Installation Manual and Setup Guide, pp.53-54; Residential Communicating Systems Alert Code Guide, p.8",
+          "severity": "service_soon",
+          "surface": "wall_control"
+        },
+        {
+          "code_id": "code_alert_11",
+          "code_identifier": "11",
+          "code_type": "thermostat_display",
+          "meaning": "Missing Device",
+          "root_causes": [
+            "Previously installed communicating component not found"
+          ],
+          "diagnostic_path": [
+            "Check all device connections and Lennox compatibility",
+            "Cycle system power",
+            "Reset HVAC equipment from thermostat"
+          ],
+          "escalation": "System-level communication problem",
+          "reset_behavior": "Cycle power; if persistent, clear by reconfiguring system.",
+          "related_codes": [
+            "code_alert_10",
+            "code_alert_12",
+            "code_alert_14"
+          ],
+          "source": "Residential Communicating Systems Alert Code Guide, pp.7-8; S30 manual p.54",
+          "severity": "urgent",
+          "surface": "wall_control"
+        },
+        {
+          "code_id": "code_alert_12",
+          "code_identifier": "12",
+          "code_type": "thermostat_display",
+          "meaning": "Indoor Unit Not Detected",
+          "root_causes": [
+            "Missing indoor unit",
+            "R/i+/i-/C wiring issue",
+            "Indoor control unresponsive"
+          ],
+          "diagnostic_path": [
+            "Check for voltage and missing component",
+            "Check R, i+, i-, C at mag-mount/subbase, smart hub, and all attached devices",
+            "Ohm conductors",
+            "Cycle power to indoor unit first, then thermostat",
+            "Verify EIM configured as furnace or air handler if used with non-communicating indoor unit",
+            "Replace indoor unit control if no response"
+          ],
+          "escalation": "Service urgent",
+          "reset_behavior": "Automatically clears when issue no longer exists.",
+          "related_codes": [
+            "code_alert_11",
+            "code_alert_13",
+            "code_alert_14"
+          ],
+          "source": "Residential Communicating Systems Alert Code Guide, p.8",
+          "severity": "urgent",
+          "surface": "wall_control"
+        },
+        {
+          "code_id": "code_alert_13",
+          "code_identifier": "13",
+          "code_type": "thermostat_display",
+          "meaning": "Duplicate Comfort Sensor ID",
+          "root_causes": [
+            "Duplicate wireless/comfort-sensor identity or duplicate device presence"
+          ],
+          "diagnostic_path": [
+            "Check wiring and remove duplicate equipment",
+            "Reset HVAC equipment from thermostat"
+          ],
+          "escalation": "Service urgent",
+          "reset_behavior": "Auto clears when issue no longer exists.",
+          "related_codes": [
+            "code_alert_14"
+          ],
+          "source": "Residential Communicating Systems Alert Code Guide, p.8; S30 manual p.55",
+          "severity": "urgent",
+          "surface": "wall_control"
+        },
+        {
+          "code_id": "code_alert_14",
+          "code_identifier": "14",
+          "code_type": "thermostat_display",
+          "meaning": "Too Many Devices of the Same Type",
+          "root_causes": [
+            "More than one thermostat, indoor unit, or outdoor unit present"
+          ],
+          "diagnostic_path": [
+            "Remove duplicate device",
+            "Reset HVAC equipment from thermostat"
+          ],
+          "escalation": "Service urgent",
+          "reset_behavior": "Auto clears when issue no longer exists.",
+          "related_codes": [
+            "code_alert_13"
+          ],
+          "source": "Residential Communicating Systems Alert Code Guide, p.8; S30 manual p.55",
+          "severity": "urgent",
+          "surface": "wall_control"
+        },
+        {
+          "code_id": "code_alert_15",
+          "code_identifier": "15",
+          "code_type": "thermostat_display",
+          "meaning": "Parameter Mismatch Detected",
+          "root_causes": [
+            "Incorrect parameter settings"
+          ],
+          "diagnostic_path": [
+            "Re-set system and start configuration again"
+          ],
+          "escalation": "Dealer-only information alert",
+          "reset_behavior": "Clears once proper configuration is completed.",
+          "related_codes": [
+            "code_alert_10",
+            "code_alert_20",
+            "code_alert_21"
+          ],
+          "source": "Residential Communicating Systems Alert Code Guide, p.8",
+          "severity": "service_soon",
+          "surface": "wall_control"
+        },
+        {
+          "code_id": "code_alert_20",
+          "code_identifier": "20",
+          "code_type": "thermostat_display",
+          "meaning": "Protocol Upgrade Required",
+          "root_causes": [
+            "Thermostat firmware too old for one of the system devices"
+          ],
+          "diagnostic_path": [
+            "Update thermostat firmware"
+          ],
+          "escalation": "Service urgent",
+          "reset_behavior": "Clears after thermostat firmware is updated.",
+          "related_codes": [
+            "code_alert_21"
+          ],
+          "source": "Residential Communicating Systems Alert Code Guide, p.8",
+          "severity": "urgent",
+          "surface": "wall_control"
+        },
+        {
+          "code_id": "code_alert_21",
+          "code_identifier": "21",
+          "code_type": "thermostat_display",
+          "meaning": "Incompatible Equipment Detected",
+          "root_causes": [
+            "Mismatch like single-stage non-variable-speed furnace with modulating outdoor unit"
+          ],
+          "diagnostic_path": [
+            "Use compatible equipment"
+          ],
+          "escalation": "Service urgent",
+          "reset_behavior": "Clears when compatible system configuration is restored.",
+          "related_codes": [
+            "code_alert_15",
+            "code_alert_34"
+          ],
+          "source": "Residential Communicating Systems Alert Code Guide, p.8",
+          "severity": "urgent",
+          "surface": "wall_control"
+        },
+        {
+          "code_id": "code_alert_34",
+          "code_identifier": "34",
+          "code_type": "thermostat_display",
+          "meaning": "Must Program Unit Capacity For Device",
+          "root_causes": [
+            "Indoor or outdoor device missing tonnage programming"
+          ],
+          "diagnostic_path": [
+            "Remove power to thermostat before programming the unit control",
+            "Program capacity manually at the applicable unit control",
+            "Reconnect thermostat wires",
+            "Reset HVAC equipment from thermostat"
+          ],
+          "escalation": "Service urgent",
+          "reset_behavior": "Automatically clears when issue no longer exists.",
+          "related_codes": [
+            "code_alert_21",
+            "code_alert_35"
+          ],
+          "source": "Residential Communicating Systems Alert Code Guide, p.9",
+          "severity": "urgent",
+          "surface": "wall_control"
+        },
+        {
+          "code_id": "code_alert_35",
+          "code_identifier": "35",
+          "code_type": "thermostat_display",
+          "meaning": "Incorrect Operation Of Device",
+          "root_causes": [
+            "Device operating in a way that does not match expected command/state"
+          ],
+          "diagnostic_path": [
+            "Run thermostat diagnostic mode",
+            "S30: Dealer Control Center > Diagnostics > Start",
+            "S40: View Service Support Center > Diagnostics > Select All > Start",
+            "Check other active alerts",
+            "Recycle power"
+          ],
+          "escalation": "Service urgent",
+          "reset_behavior": "Automatically clears when issue no longer exists.",
+          "related_codes": [
+            "code_alert_37",
+            "code_alert_38",
+            "code_alert_39"
+          ],
+          "source": "Residential Communicating Systems Alert Code Guide, p.10",
+          "severity": "urgent",
+          "surface": "wall_control"
+        },
+        {
+          "code_id": "code_alert_37",
+          "code_identifier": "37",
+          "code_type": "thermostat_display",
+          "meaning": "Cooling when not Requested",
+          "root_causes": [
+            "Cooling has run for at least 15 minutes without demand"
+          ],
+          "diagnostic_path": [
+            "Run diagnostics",
+            "Check other codes",
+            "Determine cause of unintended cooling demand",
+            "Recycle power"
+          ],
+          "escalation": "Service urgent",
+          "reset_behavior": "Auto clears when issue no longer exists.",
+          "related_codes": [
+            "code_alert_35",
+            "code_alert_39"
+          ],
+          "source": "Residential Communicating Systems Alert Code Guide, p.10",
+          "severity": "urgent",
+          "surface": "wall_control"
+        },
+        {
+          "code_id": "code_alert_38",
+          "code_identifier": "38",
+          "code_type": "thermostat_display",
+          "meaning": "Not Heating when Requested",
+          "root_causes": [
+            "System unable to start heating for more than 45 minutes"
+          ],
+          "diagnostic_path": [
+            "Run thermostat diagnostics",
+            "Check other active alerts",
+            "Determine cause of heating failure",
+            "Recycle power"
+          ],
+          "escalation": "System goes offline for 60 minutes and attempts restart",
+          "reset_behavior": "Automatically clears when issue no longer exists.",
+          "related_codes": [
+            "code_alert_39"
+          ],
+          "source": "Residential Communicating Systems Alert Code Guide, p.11",
+          "severity": "urgent",
+          "surface": "wall_control"
+        },
+        {
+          "code_id": "code_alert_39",
+          "code_identifier": "39",
+          "code_type": "thermostat_display",
+          "meaning": "No Cooling when Requested",
+          "root_causes": [
+            "System unable to start cooling for more than 45 minutes"
+          ],
+          "diagnostic_path": [
+            "Run thermostat diagnostics",
+            "Check other active alerts",
+            "Determine cause of cooling failure",
+            "Recycle power"
+          ],
+          "escalation": "System goes offline for 60 minutes and attempts restart",
+          "reset_behavior": "Automatically clears when issue no longer exists.",
+          "related_codes": [
+            "code_alert_37",
+            "code_alert_38"
+          ],
+          "source": "Residential Communicating Systems Alert Code Guide, p.11",
+          "severity": "urgent",
+          "surface": "wall_control"
+        },
+        {
+          "code_id": "status_inverter_normal",
+          "code_identifier": "Inverter Normal State — Red LED ON / Green LED OFF",
+          "code_type": "status_display",
+          "meaning": "Normal inverter operation with no error code present",
+          "root_causes": [
+            "No active inverter fault"
+          ],
+          "diagnostic_path": [
+            "If the outdoor unit is not operating normally despite this LED state, move to thermostat alert history and dealer diagnostics rather than treating the inverter LEDs themselves as faulted"
+          ],
+          "escalation": "None; normal status",
+          "reset_behavior": "Not a fault.",
+          "related_codes": [
+            "code_alert_429",
+            "code_alert_430",
+            "code_alert_431",
+            "code_alert_432",
+            "code_alert_433",
+            "code_alert_434",
+            "code_alert_435",
+            "code_alert_436",
+            "code_alert_437"
+          ],
+          "source": "Lennox Residential Communicating Systems Alert Code Guide 100017c, pp.35-41",
+          "severity": "informational",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_alert_429",
+          "code_identifier": "429 / Inverter Flash 23",
+          "code_type": "thermostat_display",
+          "meaning": "OD Inverter DC Link Low Voltage",
+          "root_causes": [
+            "Inverter/compressor power issue",
+            "Wiring problem at U/V/W"
+          ],
+          "diagnostic_path": [
+            "Check U/V/W harness to compressor",
+            "Check compressor winding resistance"
+          ],
+          "escalation": "Service soon or service urgent depending on event history",
+          "reset_behavior": "Auto clears when issue no longer exists.",
+          "related_codes": [
+            "code_alert_430",
+            "code_alert_432"
+          ],
+          "source": "Residential Communicating Systems Alert Code Guide, pp.34-35",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_alert_430",
+          "code_identifier": "430 / Inverter Flash 26",
+          "code_type": "thermostat_display",
+          "meaning": "OD Inverter Compressor Startup Fail",
+          "root_causes": [
+            "Refrigerant issue",
+            "Outdoor control board fault",
+            "Inverter fault"
+          ],
+          "diagnostic_path": [
+            "Check refrigerant",
+            "Replace outdoor control board if indicated",
+            "Replace inverter if indicated"
+          ],
+          "escalation": "Outdoor unit stops compressor and fan; anti-short-cycle starts; if this happens 10 times in 60 consecutive minutes, system locks out to service urgent",
+          "reset_behavior": "Disconnect power to outdoor unit and restart.",
+          "related_codes": [
+            "code_alert_431",
+            "code_alert_432"
+          ],
+          "source": "Residential Communicating Systems Alert Code Guide, p.35",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_alert_431",
+          "code_identifier": "431 / Inverter Flash 27",
+          "code_type": "thermostat_display",
+          "meaning": "OD Inverter PFC Fault",
+          "root_causes": [
+            "PFC circuit over-current; guide states 100A peak event threshold"
+          ],
+          "diagnostic_path": [
+            "Refer to detailed outdoor unit service procedure",
+            "Reset power after correction"
+          ],
+          "escalation": "Outdoor unit stops; anti-short-cycle starts; if repeated 10 times in 60 consecutive minutes, system locks out to service urgent",
+          "reset_behavior": "Disconnect power to outdoor unit and restart.",
+          "related_codes": [
+            "code_alert_430",
+            "code_alert_432"
+          ],
+          "source": "Residential Communicating Systems Alert Code Guide, p.35",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_alert_432",
+          "code_identifier": "432 / Inverter Flash 28",
+          "code_type": "thermostat_display",
+          "meaning": "OD Inverter DC Link High Voltage",
+          "root_causes": [
+            "DC link capacitor voltage too high; guide states greater than 480 VDC"
+          ],
+          "diagnostic_path": [
+            "Check U/V/W wiring",
+            "Check compressor winding resistance"
+          ],
+          "escalation": "Outdoor unit stops; anti-short-cycle starts; if repeated 10 times in 60 consecutive minutes, system locks out to service urgent",
+          "reset_behavior": "Disconnect power to outdoor unit and restart.",
+          "related_codes": [
+            "code_alert_429",
+            "code_alert_430"
+          ],
+          "source": "Residential Communicating Systems Alert Code Guide, p.36",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_alert_433",
+          "code_identifier": "433 / Inverter Flash 29 — Red LED 2 flashes / Green LED 9 flashes",
+          "code_type": "thermostat_display",
+          "meaning": "OD Inverter Compressor Over-Current",
+          "root_causes": [
+            "Compressor or inverter over-current condition",
+            "Wiring or connection issue",
+            "Compressor mechanical or electrical problem"
+          ],
+          "diagnostic_path": [
+            "Refer to unit service documentation for detailed troubleshooting",
+            "Check electrical connections",
+            "Check compressor and inverter condition per outdoor-unit service procedure"
+          ],
+          "escalation": "Outdoor control treats repeated occurrences as service-soon/service-urgent behavior in the communicating alert framework",
+          "reset_behavior": "To clear alert code, disconnect power to both the indoor and outdoor units, then reconnect power and restart.",
+          "related_codes": [
+            "code_alert_429",
+            "code_alert_430",
+            "code_alert_432"
+          ],
+          "source": "Lennox Residential Communicating Systems Alert Code Guide 100017c, p.38",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_alert_434",
+          "code_identifier": "434 / Inverter Flash 53 — Red LED 5 flashes / Green LED 3 flashes",
+          "code_type": "thermostat_display",
+          "meaning": "OD Inverter Communication Error",
+          "root_causes": [
+            "Loose or disconnected electrical connections",
+            "Interruption of main power to inverter"
+          ],
+          "diagnostic_path": [
+            "Check for loose or disconnected electrical connections",
+            "Verify stable power to the inverter and outdoor section",
+            "Use detailed outdoor-unit service documentation if the fault persists"
+          ],
+          "escalation": "If repeated to lockout threshold, outdoor unit locks out and displays alert code 434 as service urgent",
+          "reset_behavior": "Service-soon condition automatically clears when the system detects the issue no longer exists; if locked out with service-urgent 434, reset by cycling outdoor-unit power off/on first, then cycling indoor 24VAC power to the Lennox outdoor control off/on.",
+          "related_codes": [
+            "code_alert_433",
+            "code_alert_435"
+          ],
+          "source": "Lennox Residential Communicating Systems Alert Code Guide 100017c, p.39",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_alert_435",
+          "code_identifier": "435 / Inverter Flash 60 — Red LED 6 flashes / Green LED OFF",
+          "code_type": "thermostat_display",
+          "meaning": "OD Inverter EEPROM Checksum Fault",
+          "root_causes": [
+            "Inverter internal error"
+          ],
+          "diagnostic_path": [
+            "Follow outdoor-unit service documentation for inverter internal fault diagnosis"
+          ],
+          "escalation": "Outdoor control cycles power to the inverter by opening the contactor for 2 minutes as service-soon behavior; it will cycle power three times and then lock out the outdoor unit as service urgent",
+          "reset_behavior": "To clear alert code, disconnect power to the outdoor unit and restart.",
+          "related_codes": [
+            "code_alert_434",
+            "code_alert_436"
+          ],
+          "source": "Lennox Residential Communicating Systems Alert Code Guide 100017c, p.40",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_alert_436",
+          "code_identifier": "436 / Inverter Flash 62 — Red LED 6 flashes / Green LED 2 flashes",
+          "code_type": "thermostat_display",
+          "meaning": "OD Inverter High Heat-Sink Temperature",
+          "root_causes": [
+            "Inverter heat sink temperature exceeded limit",
+            "Loose screws reducing thermal contact between heat sink and inverter control board"
+          ],
+          "diagnostic_path": [
+            "Verify high heat-sink temperature condition",
+            "Check and tighten screws that hold the heat sink to the inverter control board",
+            "Wait 5 minutes for all capacitors to discharge before checking screws",
+            "Use outdoor-unit service documentation for further diagnosis"
+          ],
+          "escalation": "Inverter first issues alert code 13 and slows down to cool the heat sink; if temperature remains high, outdoor unit stops compressor and fan as service-soon, anti-short-cycle starts, and if the condition occurs 5 times within 1 hour the system locks out as service urgent",
+          "reset_behavior": "Service-soon condition automatically clears when the inverter sends an alert-code-clear message; service-urgent condition is cleared by disconnecting power to the outdoor unit and restarting.",
+          "related_codes": [
+            "code_alert_435",
+            "code_alert_437"
+          ],
+          "source": "Lennox Residential Communicating Systems Alert Code Guide 100017c, p.40",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_alert_437",
+          "code_identifier": "437 / Inverter Flash 65",
+          "code_type": "thermostat_display",
+          "meaning": "OD Inverter Heat-Sink Temperature Sensor Fault",
+          "root_causes": [
+            "Heat-sink sensor reading below 4°F or above 264°F after 10 minutes of operation"
+          ],
+          "diagnostic_path": [
+            "Check sensor condition and outdoor inverter section"
+          ],
+          "escalation": "Outdoor unit stops compressor and fan",
+          "reset_behavior": "Service-soon condition auto clears when inverter sends clear message; service-urgent condition clears by disconnecting and reconnecting outdoor power.",
+          "related_codes": [
+            "code_alert_436"
+          ],
+          "source": "Residential Communicating Systems Alert Code Guide, p.40",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_alert_71516",
+          "code_identifier": "71516",
+          "code_type": "thermostat_display",
+          "meaning": "OU: Outdoor Fan Motor Failure",
+          "root_causes": [
+            "Outdoor fan service issue; guide ties event to superheat/suction values not in expected range"
+          ],
+          "diagnostic_path": [
+            "Service outdoor fan"
+          ],
+          "escalation": "Service urgent",
+          "reset_behavior": "Automatically clears when system detects issue no longer exists.",
+          "related_codes": [],
+          "source": "Residential Communicating Systems Alert Code Guide, p.49",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        }
+      ]
+    }
+  ],
+  "cross_generation_conflicts": [
+    {
+      "conflict_id": "lennox_compound_vs_single_flash_surelight",
+      "description": "SureLight uses COMPOUND X+Y flash codes, NOT single-digit counts",
+      "conflict_severity": "high",
+      "involved_platforms": [
+        "lennox_surelight_legacy"
+      ],
+      "code_identifier": "Flash counting method",
+      "meanings": [
+        {
+          "platform_id": "lennox_surelight_legacy",
+          "meaning": "Compound X+Y: pattern is 'X flashes, pause, Y flashes' (e.g., '1+2' = 1 flash, pause, 2 flashes = low flame run). Techs who count total red flashes as a single number read the codes wrong."
+        }
+      ],
+      "ui_banner_text": "Lennox SureLight boards use COMPOUND flash codes, not single counts. If you see a red LED flashing 2-pause-3, that's code '2+3' (low pressure switch failed open) — NOT code 5 or code 23. Watch for the pause between flash groups."
+    },
+    {
+      "conflict_id": "lennox_low_flame_surelight_vs_7segment",
+      "description": "Low flame current (run mode) has different identifier across generations",
+      "conflict_severity": "medium",
+      "involved_platforms": [
+        "lennox_surelight_legacy",
+        "lennox_7segment_highefficiency"
+      ],
+      "code_identifier": "Low flame current",
+      "meanings": [
+        {
+          "platform_id": "lennox_surelight_legacy",
+          "meaning": "Compound code '1+2' = low flame current during run mode"
+        },
+        {
+          "platform_id": "lennox_7segment_highefficiency",
+          "meaning": "E240 = low flame current during run mode (same concept, different identifier)"
+        }
+      ],
+      "ui_banner_text": "Low flame current shows as '1+2' on SureLight boards (G61MPV, ML180UH) but as 'E240' on newer 7-segment boards (EL296V, SLP99V). Same diagnostic path — clean sensor, verify grounding, check flame microamps — but the codes look completely different."
+    },
+    {
+      "conflict_id": "lennox_pressure_switch_surelight_vs_7segment",
+      "description": "Pressure switch faults split into more granular codes on 7-segment vs SureLight",
+      "conflict_severity": "medium",
+      "involved_platforms": [
+        "lennox_surelight_legacy",
+        "lennox_7segment_highefficiency"
+      ],
+      "code_identifier": "Pressure switch faults",
+      "meanings": [
+        {
+          "platform_id": "lennox_surelight_legacy",
+          "meaning": "SureLight: '2+3' failed open, '2+4' failed closed, '2+7' opened during run"
+        },
+        {
+          "platform_id": "lennox_7segment_highefficiency",
+          "meaning": "7-segment: E223 failed open, E224 failed closed (150-second detection window explicit), E227 open during trial/run — plus dedicated soft-lockout derivatives E271 and E272"
+        }
+      ],
+      "ui_banner_text": "Pressure switch faults map across generations but the 7-segment platform adds explicit timing (150 seconds for failed-closed recognition) and separate soft-lockout codes E271/E272 that specifically name 'pressure switch' as the reason."
+    },
+    {
+      "conflict_id": "lennox_watchguard_surelight_vs_7segment",
+      "description": "Watchguard/soft-lockout terminology differs across generations",
+      "conflict_severity": "medium",
+      "involved_platforms": [
+        "lennox_surelight_legacy",
+        "lennox_7segment_highefficiency"
+      ],
+      "code_identifier": "Watchguard vs soft lockout",
+      "meanings": [
+        {
+          "platform_id": "lennox_surelight_legacy",
+          "meaning": "SureLight calls it 'Watchguard' — compound code 4+1 = exceeded max retries, 60-minute auto-reset"
+        },
+        {
+          "platform_id": "lennox_7segment_highefficiency",
+          "meaning": "7-segment calls it 'Soft Lockout' and splits by cause: E270 (no flame), E271 (pressure switch retry), E272 (pressure switch recycle), E273 (flame failure), E274 (limit), E275 (flame out of sequence), E276 (calibration)"
+        }
+      ],
+      "ui_banner_text": "SureLight watchguard (code '4+1', 60-minute reset) maps to 7-segment soft lockouts, but the newer platform names WHY: E270 through E276 each explain the specific failure mode."
+    },
+    {
+      "conflict_id": "lennox_new_lowgwp_codes_not_in_platform2",
+      "description": "Low-GWP K-revision adds entirely new A2L refrigerant detection code family not present in pre-K 7-segment",
+      "conflict_severity": "high",
+      "involved_platforms": [
+        "lennox_7segment_highefficiency",
+        "lennox_lowgwp_rds_era"
+      ],
+      "code_identifier": "E150 / E151 / E152 / E154 / E155 / E160 / E161 / E163 / E164 / E390",
+      "meanings": [
+        {
+          "platform_id": "lennox_7segment_highefficiency",
+          "meaning": "E150-E164 and E390 do NOT exist on pre-K (EL296V, SL280V, SL297V, SLP99V) platforms — throwing any of these codes indicates a K-rev board"
+        },
+        {
+          "platform_id": "lennox_lowgwp_rds_era",
+          "meaning": "E150 = leak detected (cannot clear while leak present); E151/E152 = sensor #1/#2 fault; E154/E155 = sensor #1/#2 comm lost (blower latches minimum 5 minutes); E160/E161 = sensor #1/#2 wrong type; E163 = leak detector control failure; E164 = test mode; E390 = Low GWP relay stuck"
+        }
+      ],
+      "ui_banner_text": "Codes E150, E151, E152, E154, E155, E160, E161, E163, E164, and E390 only exist on K-revision Lennox furnaces (EL195UHNEK, ML196UHEK). These are refrigerant leak detection codes for R-454B A2L compliance. E154/E155 will latch the blower ON for at least 5 minutes regardless of thermostat call — this is a code-mandated safety behavior. A2L refrigerant detection CANNOT be disabled — it's prohibited by safety codes."
+    },
+    {
+      "conflict_id": "lennox_icomfort_dual_surface_alert_vs_flash",
+      "description": "iComfort outdoor inverter events carry THREE linked identifiers on different surfaces",
+      "conflict_severity": "high",
+      "involved_platforms": [
+        "lennox_icomfort_communicating"
+      ],
+      "code_identifier": "Alert number / Inverter flash / LED flash pattern",
+      "meanings": [
+        {
+          "platform_id": "lennox_icomfort_communicating",
+          "meaning": "Same event on different surfaces with THREE identifiers: thermostat shows number (e.g., 434), outdoor inverter flashes count (e.g., Flash 53), and red/green LED pattern matches (5 red flashes / 3 green flashes for 434). Examples: 433 / Flash 29 / Red 2 Green 9 (compressor over-current); 435 / Flash 60 / Red 6 Green OFF (EEPROM checksum). Reset procedures can differ between service-soon and service-urgent — 433 requires disconnecting both indoor and outdoor units; 434 service-urgent requires two-step reset (outdoor first, then indoor 24VAC)."
+        }
+      ],
+      "ui_banner_text": "iComfort outdoor inverter faults appear on THREE linked surfaces with DIFFERENT identifiers. Thermostat shows a number (434); outdoor unit's inverter LEDs flash a count (Flash 53); red/green flash patterns match the inverter flash number (5 red / 3 green). Same event — three IDs. Always check both thermostat alert history AND outdoor inverter LED pattern."
+    },
+    {
+      "conflict_id": "lennox_icomfort_offline_vs_lockout",
+      "description": "iComfort alerts 38/39 trigger 60-minute offline retry, not lockout",
+      "conflict_severity": "medium",
+      "involved_platforms": [
+        "lennox_icomfort_communicating"
+      ],
+      "code_identifier": "Alert 38 / Alert 39",
+      "meanings": [
+        {
+          "platform_id": "lennox_icomfort_communicating",
+          "meaning": "Alert 38 (not heating after 45 minutes) and Alert 39 (not cooling after 45 minutes): system marks itself offline for 60 minutes and auto-restarts. NOT a hard lockout."
+        }
+      ],
+      "ui_banner_text": "iComfort alerts 38 and 39 trigger a 60-minute 'system offline' period with automatic restart — NOT a lockout requiring manual reset. Customer calling about 'thermostat went blank / system is dead' may actually be in the 60-minute offline retry window and will self-restart."
+    }
+  ],
+  "electric_heat_notes": {
+    "conventional_electric_furnace_codes": "Lennox CBX32MV (communicating air handler) is the primary electric-heat platform in the iComfort ecosystem. It inherits most 7-segment E-code architecture plus communicating-specific codes that flow through to the thermostat. Non-communicating Lennox/Allied electric furnaces use conventional sequencer logic without formal fault code dictionaries — service is component-level (open element, failed sequencer, limit trip). Platform 2's E250 (limit circuit open) and E291 (heat airflow restricted below minimum) are the closest equivalents for airflow-related electric-heat faults on communicating platforms.",
+    "common_non_code_electric_service_calls": [
+      "Open element on multi-stage EH packages",
+      "Failed sequencer on non-communicating air handlers",
+      "Airflow-related limit trip — on 7-segment IFC this throws E250/E274",
+      "24V transformer or fuse failure (iComfort treats as comm loss E201)",
+      "Low-voltage short causing repeated fuse failure"
+    ],
+    "manufactured_home_specifics": "Not applicable — Lennox/Allied does not have a significant manufactured-home-specific product line."
+  },
+  "metadata": {
+    "total_records": 99,
+    "total_platforms": 4,
+    "total_cross_generation_conflicts": 7,
+    "normalized_date": "2026-04-19",
+    "schema_version": "1.1.0",
+    "research_passes": 3,
+    "source_note": "Compiled from public Lennox documentation: G61MPV Installation Instructions p.63 (SureLight diagnostic table); Lennox ML180UH heating sequence pp.40-41 (watchguard timing); Lennox unit information doc 100027 pp.10-15 (7-segment diagnostic code table); Lennox EL195UHNEK Installation Instructions 508575-01 pp.46-47 (Low-GWP RDS code table); iComfort S30 Installation Manual pp.53-55; Lennox Residential Communicating Systems Alert Code Guide 100017c pp.7-49. Three research passes with final accuracy correction. Allied Air brands likely alias Platforms 1-2 on shared hardware but per-brand dictionaries are thinner in public sources."
+  }
+}

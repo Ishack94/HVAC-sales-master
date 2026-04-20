@@ -1,8 +1,8 @@
 {
   "schema_version": "1.1.0",
   "generated_date": "2026-04-19",
-  "total_normalized_brand_families": 4,
-  "total_normalized_records": 428,
+  "total_normalized_brand_families": 5,
+  "total_normalized_records": 527,
   "brand_families": [
     {
       "brand_family_id": "nortek_nordyne",
@@ -70,9 +70,9 @@
     },
     {
       "brand_family_id": "lennox_allied",
-      "brand_family_name": "Lennox/Allied Air",
-      "status": "research_pending",
-      "record_count": 0,
+      "brand_family_name": "Lennox / Allied Air",
+      "status": "normalized",
+      "record_count": 99,
       "file_path": "./lennox-allied.json",
       "corporate_owner": "Lennox International",
       "brands": [

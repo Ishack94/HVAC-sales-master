@@ -7,52 +7,33 @@ import nortekNordyne from './nortek-nordyne.json';
 import boschYork from './bosch-york.json';
 import carrierGlobal from './carrier-global.json';
 import traneTechnologies from './trane-technologies.json';
+import lennoxAllied from './lennox-allied.json';
 
-// Registry of normalized brand families
 const brandFamilyRegistry = {
   nortek_nordyne: nortekNordyne,
   bosch_york: boschYork,
   carrier_global: carrierGlobal,
   trane_technologies: traneTechnologies,
+  lennox_allied: lennoxAllied,
 };
 
-/**
- * Get a brand family by ID
- * @param {string} brandFamilyId
- * @returns {object|null} Brand family data or null if not loaded
- */
 export function getBrandFamily(brandFamilyId) {
   return brandFamilyRegistry[brandFamilyId] || null;
 }
 
-/**
- * List all loaded brand families
- * @returns {object[]} Array of brand family data objects
- */
 export function listBrandFamilies() {
   return Object.values(brandFamilyRegistry);
 }
 
-/**
- * Get the brand-families index (metadata for all known brand families)
- * @returns {object} Index with metadata
- */
 export function getBrandFamiliesIndex() {
   return brandFamiliesIndex;
 }
 
-/**
- * Identify a platform by matching the longest prefix against a model number.
- * @param {string} modelNumber — user-entered model number (case-insensitive)
- * @returns {object|null} { brandFamilyId, platformId, platformName, matchedPrefix } or null
- */
 export function identifyPlatformByModelNumber(modelNumber) {
   if (!modelNumber || typeof modelNumber !== 'string') return null;
   const cleaned = modelNumber.trim().toUpperCase().replace(/[^A-Z0-9*-]/g, '');
-
   let bestMatch = null;
   let bestPrefixLength = 0;
-
   for (const family of Object.values(brandFamilyRegistry)) {
     if (!family.platforms) continue;
     for (const platform of family.platforms) {
@@ -71,16 +52,9 @@ export function identifyPlatformByModelNumber(modelNumber) {
       }
     }
   }
-
   return bestMatch;
 }
 
-/**
- * Get visual identification options — list of platforms with their visual-ID descriptions
- * for a given brand family, to help users identify their platform visually.
- * @param {string} brandFamilyId
- * @returns {object[]} Array of { platformId, platformName, visualIdentification, displayType, appliesTo }
- */
 export function getVisualIdentificationOptions(brandFamilyId) {
   const family = getBrandFamily(brandFamilyId);
   if (!family || !family.platforms) return [];
@@ -93,11 +67,6 @@ export function getVisualIdentificationOptions(brandFamilyId) {
   }));
 }
 
-/**
- * Find a specific platform by ID across all loaded brand families
- * @param {string} platformId
- * @returns {object|null} { brandFamily, platform } or null
- */
 export function findPlatform(platformId) {
   for (const family of Object.values(brandFamilyRegistry)) {
     if (!family.platforms) continue;
@@ -109,12 +78,6 @@ export function findPlatform(platformId) {
   return null;
 }
 
-/**
- * Find a specific code within a platform
- * @param {string} platformId
- * @param {string} codeIdentifier — e.g. "33", "e04", "Err.126.00"
- * @returns {object|null} { brandFamily, platform, code } or null
- */
 export function findCode(platformId, codeIdentifier) {
   const result = findPlatform(platformId);
   if (!result) return null;
@@ -127,12 +90,6 @@ export function findCode(platformId, codeIdentifier) {
   return code ? { ...result, code } : null;
 }
 
-/**
- * Check if a code identifier is shared across multiple platforms (cross-gen conflict)
- * @param {string} brandFamilyId
- * @param {string} codeIdentifier
- * @returns {object|null} Cross-gen conflict descriptor, or null if not a conflict
- */
 export function getCrossGenerationConflict(brandFamilyId, codeIdentifier) {
   const family = getBrandFamily(brandFamilyId);
   if (!family || !family.cross_generation_conflicts) return null;
