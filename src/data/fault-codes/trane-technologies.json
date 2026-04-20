@@ -1,0 +1,4016 @@
+{
+  "brand_family_id": "trane_technologies",
+  "brand_family_name": "Trane Technologies",
+  "corporate_owner": "Trane Technologies",
+  "brands": [
+    {
+      "name": "Trane",
+      "slug": "trane",
+      "notes": "Premium brand"
+    },
+    {
+      "name": "American Standard",
+      "slug": "american-standard",
+      "notes": "Sister brand, shares most platforms with Trane. Prefix 'A' typically = American Standard, 'T' = Trane"
+    }
+  ],
+  "structural_overview": "Trane Technologies residential gas furnaces span three distinct diagnostic generations with fundamentally different UX models: (1) LEGACY 2-DIGIT LED PLATFORMS \u2014 four separate public dictionaries (UD2/DD2 fan-assisted 2-stage, UC1/DC1 single-stage condensing, AUY/TUY 2-stage VS inducer, AUH2/TUH2 later 2-stage VS inducer) with SAME code numbers meaning DIFFERENT things across platforms. *UH1/*DH1 aliases to AUH2/TUH2. (2) S-SERIES 7-SEGMENT E-CODE \u2014 namespace redesign (not a carry-forward). Uses 7-segment display with menu items (IdL, L6F, C0d) plus alphanumeric alarm codes (e01, e2.1, e6.3). Covers S8X1/S8X2/S9X1/S9X2/S9B1/S9V2/S9V2-VS. (3) COMMUNICATING ECOSYSTEM \u2014 multi-surface architecture with THREE independent diagnostic surfaces: wall control (XL850/XL1050/XL824/AZON1050), outdoor CDA (Communicating Display Assembly on XV20i/XV18 variable-speed inverter), and indoor air handler display (TAM8/*AM8). Unlike Carrier's two-surface architecture, Trane uses a discovery-based fault model centered on Summary Table Enabled/Online/Offline states, with Err.126.00 as the primary 'device missing' indicator instead of Carrier's commissioning-time 'Indoor/Outdoor unit not found' codes. Public documentation coverage varies: strong for XL850/XL1050 wall control and TAM8/*AM8 air handler (Hyperion Field Reference Data); partial for XL824 and TEM8; weaker for outdoor alert booklet beyond publicly posted distributor PDFs; TEM6 and GAF2 do not expose communicating-bus alert namespaces publicly. No single master ComfortLink II alert dictionary exists in the public domain \u2014 techs must combine wall-control, outdoor-CDA, and equipment-specific sources.",
+  "field_quirks": [
+    {
+      "quirk": "Same code number means different things across Trane legacy platforms",
+      "applies_to": "All four legacy 2-digit LED platforms (UD2/DD2, UC1/DC1, AUY/TUY, AUH2/TUH2)",
+      "reason": "Code 9 means 'check ignitor circuit and N-to-24VAC common voltage' on UD2/DD2 and UC1/DC1, but means 'open inducer limit switch' on AUY/TUY and AUH2/TUH2 \u2014 completely different diagnostic paths. Code 6 varies across all four: UD2/DD2 = polarity+grounding only; UC1/DC1 adds 'system voltage too low'; AUY/TUY adds 'ignitor triac fault'; AUH2/TUH2 narrows back to 'line reverse polarity only'. Code 10 only exists on AUY/TUY as 'inducer communication error' \u2014 NOT on AUH2/TUH2. Platform identification via model prefix is mandatory before any code lookup."
+    },
+    {
+      "quirk": "S-series 7-segment is a namespace redesign, not a carry-forward from legacy flash codes",
+      "applies_to": "S8X1, S8X2, S9X1, S9X2, S9B1, S9V2, S9V2-VS",
+      "reason": "Legacy flash '4' = open limit maps conceptually to e-code 'e04' = open limit/rollout/reverse-airflow (broader). Legacy flash '6' = polarity/grounding bucket maps to e6.1 (polarity) + e6.2 (grounding) + e6.3 (igniter relay/open). A tech used to counting LED flashes will be completely lost on a 7-segment board. Use the 7-segment menu navigation (Menu button \u2192 L6F for last 6 faults) instead of visually counting."
+    },
+    {
+      "quirk": "Trane's communicating system uses three independent diagnostic surfaces, not one",
+      "applies_to": "XV20i, XV18, TAM8/*AM8 with XL850/XL1050/XL824/AZON1050 wall control",
+      "reason": "Unlike Carrier Infinity/Evolution's wall-control + equipment-board dual-surface model, Trane ComfortLink II adds a third surface: the outdoor CDA (Communicating Display Assembly) on variable-speed inverter outdoor units has its own Home/Monitor/Alert/Alert History/Configuration/Control menus. A fault can be visible at the wall control, the outdoor CDA, AND the indoor air handler display simultaneously \u2014 but each may show different levels of detail. Always check all three surfaces during communicating-system diagnosis."
+    },
+    {
+      "quirk": "ComfortLink II uses discovery-based fault detection via Summary Table, not commissioning codes",
+      "applies_to": "XL850, XL1050, XL824, AZON1050 wall controls with any communicating equipment",
+      "reason": "Rather than Carrier's 'Indoor unit not found' / 'Outdoor unit not found' commissioning codes, Trane shows Err.126.00 (Equipment Change Alert) when a discovered device stops reporting. Techs must consult the wall-control Summary Table (showing Enabled/Disabled + Online/Offline states per device) to diagnose. Enabled+Offline = Err.126.00 is the typical pattern. This shifts troubleshooting from 'what does this code mean' to 'which device went offline on the bus'."
+    },
+    {
+      "quirk": "TAM8/*AM8 air handler has multiple independent LEDs plus alphanumeric ERR codes",
+      "applies_to": "TAM8, *AM8 communicating air handlers",
+      "reason": "Four LEDs provide diagnostic state: COMM LED (amber, flashes count of connected devices), BM LED (solid when powered), STATUS LED (flashes per 100 CFM during demand, 1/sec in idle), UNIT LED (blue, flashes every 4 seconds when comm is normal). Plus ERR codes on the thermostat display. Tech must read LEDs AND code together \u2014 either alone is incomplete. AFC STATUS LED solid-ON indicates certain faults independent of any numeric code."
+    },
+    {
+      "quirk": "184.xx lockout family has different reset procedures on Legacy vs Link systems",
+      "applies_to": "XV20i, XV18, 4TWV0, 4TWV8 variable-speed communicating outdoor",
+      "reason": "ERR.184.08 Universal Hard Lockout clears differently depending on generation: Legacy = cycle power at outdoor unit OR clear fault history via outdoor CDA; Link = reboot system from thermostat menu. Using the wrong reset procedure leaves the hard lockout in place even though underlying condition has cleared. Cycling power at disconnect does NOT always clear hard lockouts \u2014 check generation first."
+    },
+    {
+      "quirk": "Trane publishes alert severity labels (Critical/Major/Minor/User Display/Information) that affect UI presentation",
+      "applies_to": "XL850, XL1050, TAM8/*AM8, some outdoor alerts",
+      "reason": "Critical alerts show on wall-control home screen with red icon; Major alerts show with yellow icon but not on home screen; Minor alerts only appear in Diagnostics menu. User Display, Information, and lower severities may not even trigger customer-visible notifications. A homeowner may have an active fault they never saw. Always check Current Alerts menu during service, not just the home screen."
+    }
+  ],
+  "platforms": [
+    {
+      "platform_id": "trane_ud2_dd2_legacy",
+      "platform_name": "Trane/American Standard UD2/DD2 Legacy 2-Stage Fan-Assisted",
+      "platform_description": "Older 2-stage fan-assisted non-condensing furnace platform. Single LED on integrated furnace control (IFC) flashes 2-digit codes. Stores fault memory. Earliest of the four legacy Trane/AS dictionaries we document.",
+      "applies_to_models": [
+        "AUD2",
+        "TUD2",
+        "ADD2",
+        "TDD2"
+      ],
+      "applies_to_years": "1998-2008",
+      "model_number_prefixes": [
+        "AUD2",
+        "TUD2",
+        "ADD2",
+        "TDD2",
+        "UD2",
+        "DD2"
+      ],
+      "visual_identification": "Single LED on furnace control board. Status states: Flashing Slow (normal no heat), Flashing Fast (normal with heat call), Continuous ON (replace IFC), Continuous OFF (check power). Codes 2-9 for faults.",
+      "display_type": "single_led_flash",
+      "platform_notes": "Public installer guide 18-CD19D2-18 provides the code table. Code 9 means ignitor/N-to-common voltage check \u2014 different from AUY/TUY/AUH2/TUH2 Code 9 (inducer limit).",
+      "codes": [
+        {
+          "code_id": "flashing_slow",
+          "code_identifier": "Flashing Slow",
+          "code_type": "status_display",
+          "meaning": "Normal operation, no call for heat",
+          "root_causes": [],
+          "diagnostic_path": [
+            "Normal state \u2014 verify call-for-heat scenario if complaint is no heat"
+          ],
+          "escalation": "None",
+          "reset_behavior": "Normal powered state.",
+          "related_codes": [
+            "flashing_fast"
+          ],
+          "source": "Trane 18-CD19D2-18 Installer's Guide, p.23 code table",
+          "severity": "informational"
+        },
+        {
+          "code_id": "flashing_fast",
+          "code_identifier": "Flashing Fast",
+          "code_type": "status_display",
+          "meaning": "Normal operation, call for heat active",
+          "root_causes": [],
+          "diagnostic_path": [
+            "Normal state during a heat call"
+          ],
+          "escalation": "None",
+          "reset_behavior": "Normal.",
+          "related_codes": [
+            "flashing_slow"
+          ],
+          "source": "Trane 18-CD19D2-18 Installer's Guide, p.23",
+          "severity": "informational"
+        },
+        {
+          "code_id": "continuous_on",
+          "code_identifier": "Continuous ON",
+          "code_type": "status_display",
+          "meaning": "Replace IFC (integrated furnace control)",
+          "root_causes": [
+            "Internal IFC fault"
+          ],
+          "diagnostic_path": [
+            "Verify line and secondary voltage",
+            "If power is correct and LED remains solid on, replace IFC"
+          ],
+          "escalation": "Control-board level \u2014 replacement indicated",
+          "reset_behavior": "Persistent until board replaced.",
+          "related_codes": [
+            "continuous_off"
+          ],
+          "source": "Trane 18-CD19D2-18 Installer's Guide, p.23",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "continuous_off",
+          "code_identifier": "Continuous OFF",
+          "code_type": "status_display",
+          "meaning": "Check power",
+          "root_causes": [
+            "No 115 VAC to L1/L2",
+            "No 24 VAC at SEC-1/SEC-2",
+            "Blown transformer",
+            "Open door switch"
+          ],
+          "diagnostic_path": [
+            "Verify line voltage at L1/L2",
+            "Verify 24V at SEC terminals",
+            "Check door switch and transformer"
+          ],
+          "escalation": "If power is present, IFC failure likely",
+          "reset_behavior": "Clears when power is restored.",
+          "related_codes": [
+            "continuous_on"
+          ],
+          "source": "Trane 18-CD19D2-18 Installer's Guide, p.23",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_2",
+          "code_identifier": "2",
+          "code_type": "flash_count",
+          "meaning": "System Lockout (Retries or Recycles exceeded)",
+          "root_causes": [
+            "Loss of flame",
+            "Gas supply failure",
+            "Ignition not achieved after retries"
+          ],
+          "diagnostic_path": [
+            "Verify gas supply",
+            "Verify ignition sequence and flame sense",
+            "Public text says control retries up to 2 times after flame loss; then locks out if ignition not achieved"
+          ],
+          "escalation": "Lockout state",
+          "reset_behavior": "Manual reset by cycling power per lockout reset procedure.",
+          "related_codes": [
+            "code_3",
+            "code_5",
+            "code_6",
+            "code_7",
+            "code_8",
+            "code_9"
+          ],
+          "source": "Trane 18-CD19D2-18 Installer's Guide, p.22-23",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_3",
+          "code_identifier": "3",
+          "code_type": "flash_count",
+          "meaning": "Draft Pressure Error",
+          "root_causes": [
+            "Venting problem",
+            "Pressure switch problem",
+            "Inducer problem"
+          ],
+          "diagnostic_path": [
+            "Use three-way branch: venting path, pressure switch, inducer",
+            "Abnormal-condition text: if pressure not sensed, gas valve will not open; if failure during run, pressure switch causes shutdown"
+          ],
+          "escalation": "Unit will not start or shuts down during run",
+          "reset_behavior": "Clears when pressure fault corrected.",
+          "related_codes": [
+            "code_2",
+            "code_4",
+            "code_9"
+          ],
+          "source": "Trane 18-CD19D2-18 Installer's Guide, p.22-23",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_4",
+          "code_identifier": "4",
+          "code_type": "flash_count",
+          "meaning": "Open High Limit Device",
+          "root_causes": [
+            "High limit open"
+          ],
+          "diagnostic_path": [
+            "Check high limit switch continuity",
+            "Check airflow and filter if limit is tripping"
+          ],
+          "escalation": "Gas valve closed / heating interrupted",
+          "reset_behavior": "Depends on device state.",
+          "related_codes": [
+            "code_3",
+            "code_5"
+          ],
+          "source": "Trane 18-CD19D2-18 Installer's Guide, p.23",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "code_5",
+          "code_identifier": "5",
+          "code_type": "flash_count",
+          "meaning": "Flame sensed when no flame should be present",
+          "root_causes": [
+            "False flame signal",
+            "Leaky gas valve",
+            "Flame sense contamination"
+          ],
+          "diagnostic_path": [
+            "Shut off external gas and verify if code clears",
+            "If code clears, suspect leaking gas valve"
+          ],
+          "escalation": "Safety fault",
+          "reset_behavior": "Clears when false flame signal removed.",
+          "related_codes": [
+            "code_2",
+            "code_8"
+          ],
+          "source": "Trane 18-CD19D2-18 Installer's Guide, p.23",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "code_6",
+          "code_identifier": "6",
+          "code_type": "flash_count",
+          "meaning": "115 Volt AC power reversed or Poor Grounding",
+          "root_causes": [
+            "Reversed polarity",
+            "Poor grounding"
+          ],
+          "diagnostic_path": [
+            "Verify line polarity and grounding integrity"
+          ],
+          "escalation": "Safety/control fault",
+          "reset_behavior": "Clears when wiring/ground issue corrected.",
+          "related_codes": [
+            "code_9"
+          ],
+          "source": "Trane 18-CD19D2-18 Installer's Guide, p.23",
+          "severity": "urgent",
+          "field_consensus_notes": "CROSS-GENERATION CONFLICT: Code 6 meaning differs across all four Trane legacy platforms \u2014 UD2/DD2 here means polarity OR grounding; UC1/DC1 adds 'system voltage too low'; AUY/TUY adds 'ignitor triac fault'; AUH2/TUH2 narrows to 'line reverse polarity only'."
+        },
+        {
+          "code_id": "code_7",
+          "code_identifier": "7",
+          "code_type": "flash_count",
+          "meaning": "Gas valve circuit error",
+          "root_causes": [
+            "Gas valve circuit fault"
+          ],
+          "diagnostic_path": [
+            "Check gas valve wiring and circuit"
+          ],
+          "escalation": "Heating disabled",
+          "reset_behavior": "Not specified in public table.",
+          "related_codes": [
+            "code_2",
+            "code_5"
+          ],
+          "source": "Trane 18-CD19D2-18 Installer's Guide, p.23",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_8",
+          "code_identifier": "8",
+          "code_type": "flash_count",
+          "meaning": "Low flame sense signal",
+          "root_causes": [
+            "Weak flame-sense current"
+          ],
+          "diagnostic_path": [
+            "Clean flame sensor",
+            "Measure flame current",
+            "Verify ground path"
+          ],
+          "escalation": "Can contribute to recycle/lockout if flame proving fails",
+          "reset_behavior": "Clears when flame signal strengthens.",
+          "related_codes": [
+            "code_2",
+            "code_5"
+          ],
+          "source": "Trane 18-CD19D2-18 Installer's Guide, p.23",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_9",
+          "code_identifier": "9",
+          "code_type": "flash_count",
+          "meaning": "Check Ignitor circuit and Line N to 24VAC Common voltage (<2 volts) \u2014 possible grounding problem",
+          "root_causes": [
+            "Ignitor circuit fault",
+            "Line N to 24V common voltage relationship out of range",
+            "Grounding problem"
+          ],
+          "diagnostic_path": [
+            "Check ignitor circuit continuity",
+            "Measure Line N to 24VAC Common voltage (should be <2V)",
+            "Verify grounding"
+          ],
+          "escalation": "Ignition/no-heat fault",
+          "reset_behavior": "Clears when ignitor/grounding issue corrected.",
+          "related_codes": [
+            "code_6"
+          ],
+          "source": "Trane 18-CD19D2-18 Installer's Guide, p.23",
+          "severity": "urgent",
+          "field_consensus_notes": "CROSS-GENERATION CONFLICT: Code 9 on UD2/DD2 and UC1/DC1 = ignitor/grounding; but Code 9 on AUY/TUY and AUH2/TUH2 = open inducer limit switch \u2014 completely different diagnosis."
+        }
+      ]
+    },
+    {
+      "platform_id": "trane_uc1_dc1_legacy",
+      "platform_name": "Trane/American Standard UC1/DC1 Legacy Single-Stage Condensing",
+      "platform_description": "Older single-stage condensing furnace platform. Same 2-digit LED flash format as UD2/DD2 but with condensing-specific behaviors (condensate, burner-box limits, sealed combustion).",
+      "applies_to_models": [
+        "AUC1",
+        "TUC1",
+        "ADC1",
+        "TDC1"
+      ],
+      "applies_to_years": "1998-2008",
+      "model_number_prefixes": [
+        "AUC1",
+        "TUC1",
+        "ADC1",
+        "TDC1",
+        "UC1",
+        "DC1"
+      ],
+      "visual_identification": "Single LED on furnace control board. Same status states as UD2/DD2 (Flashing Slow/Fast, Continuous ON/OFF). Codes 2-9 for faults. Burner-box manual-reset thermal limit distinguishes this platform from UD2/DD2 in troubleshooting path.",
+      "display_type": "single_led_flash",
+      "platform_notes": "Public installer guide 18-CD19D5-21 provides the code table with explicit off-on-off-on within 30 seconds reset procedure. Code 4 focus includes burner-box manual-reset limit.",
+      "codes": [
+        {
+          "code_id": "flashing_slow",
+          "code_identifier": "Flashing Slow",
+          "code_type": "status_display",
+          "meaning": "Normal, no call for heat",
+          "root_causes": [],
+          "diagnostic_path": [
+            "Normal state"
+          ],
+          "escalation": "None",
+          "reset_behavior": "Normal.",
+          "related_codes": [
+            "flashing_fast"
+          ],
+          "source": "Trane 18-CD19D5-21 Installer's Guide, p.35-37",
+          "severity": "informational"
+        },
+        {
+          "code_id": "flashing_fast",
+          "code_identifier": "Flashing Fast",
+          "code_type": "status_display",
+          "meaning": "Normal, call for heat active",
+          "root_causes": [],
+          "diagnostic_path": [
+            "Normal state during heat call"
+          ],
+          "escalation": "None",
+          "reset_behavior": "Normal.",
+          "related_codes": [
+            "flashing_slow"
+          ],
+          "source": "Trane 18-CD19D5-21 Installer's Guide, p.35-37",
+          "severity": "informational"
+        },
+        {
+          "code_id": "continuous_on",
+          "code_identifier": "Continuous ON",
+          "code_type": "status_display",
+          "meaning": "Replace IFC",
+          "root_causes": [
+            "Internal IFC fault"
+          ],
+          "diagnostic_path": [
+            "Verify power; if present, replace IFC"
+          ],
+          "escalation": "Control-board level",
+          "reset_behavior": "Persistent until board replaced.",
+          "related_codes": [
+            "continuous_off"
+          ],
+          "source": "Trane 18-CD19D5-21 Installer's Guide, p.35-37",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "continuous_off",
+          "code_identifier": "Continuous OFF",
+          "code_type": "status_display",
+          "meaning": "Check power",
+          "root_causes": [
+            "No 115 VAC",
+            "No 24 VAC",
+            "Transformer",
+            "Door switch open"
+          ],
+          "diagnostic_path": [
+            "Verify line voltage, 24V, door switch, transformer"
+          ],
+          "escalation": "If power present, IFC failure likely",
+          "reset_behavior": "Clears when power restored.",
+          "related_codes": [
+            "continuous_on"
+          ],
+          "source": "Trane 18-CD19D5-21 Installer's Guide, p.35-37",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_2",
+          "code_identifier": "2",
+          "code_type": "flash_count",
+          "meaning": "System Lockout (Retries or Recycles exceeded)",
+          "root_causes": [
+            "Loss of flame",
+            "Gas supply failure",
+            "Ignition not achieved after retries"
+          ],
+          "diagnostic_path": [
+            "Verify gas and ignition; public text says control recycles and locks out if ignition not achieved"
+          ],
+          "escalation": "Lockout",
+          "reset_behavior": "Reset requires off-on-off-on within 30 seconds at unit power source or thermostat.",
+          "related_codes": [
+            "code_3",
+            "code_4",
+            "code_5",
+            "code_6",
+            "code_7",
+            "code_8",
+            "code_9"
+          ],
+          "source": "Trane 18-CD19D5-21 Installer's Guide, p.35-37",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_3",
+          "code_identifier": "3",
+          "code_type": "flash_count",
+          "meaning": "Draft Pressure Error",
+          "root_causes": [
+            "Venting problem",
+            "Pressure switch problem",
+            "Inducer problem",
+            "Condensate blockage on condensing platforms"
+          ],
+          "diagnostic_path": [
+            "Use three-branch check: venting, pressure switch, inducer",
+            "Also inspect condensate path on this condensing platform"
+          ],
+          "escalation": "No start or shutdown during run",
+          "reset_behavior": "Clears after fault correction; lockout reset with off-on-off-on within 30 sec if full lockout occurred.",
+          "related_codes": [
+            "code_2",
+            "code_4",
+            "code_9"
+          ],
+          "source": "Trane 18-CD19D5-21 Installer's Guide, p.35-37",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_4",
+          "code_identifier": "4",
+          "code_type": "flash_count",
+          "meaning": "Open Temperature Limit Circuit",
+          "root_causes": [
+            "Open temperature limit circuit",
+            "Burner-box manual-reset limit tripped",
+            "Vent/combustion-air blockage"
+          ],
+          "diagnostic_path": [
+            "Check limit continuity",
+            "Inspect burner-box manual-reset limit",
+            "Check vent and combustion-air terminations for blockage"
+          ],
+          "escalation": "Gas shutoff / heating interrupted",
+          "reset_behavior": "Burner-box manual-reset limit can be reset after blockage cleared; otherwise qualified servicer reset.",
+          "related_codes": [
+            "code_3",
+            "code_5"
+          ],
+          "source": "Trane 18-CD19D5-21 Installer's Guide, p.35-37",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "code_5",
+          "code_identifier": "5",
+          "code_type": "flash_count",
+          "meaning": "Flame sensed when no flame should be present",
+          "root_causes": [
+            "False flame signal",
+            "Leaky gas valve"
+          ],
+          "diagnostic_path": [
+            "Shut off gas and verify if code clears",
+            "Inspect flame-sense circuit"
+          ],
+          "escalation": "Safety fault",
+          "reset_behavior": "Clears when false flame removed.",
+          "related_codes": [
+            "code_2",
+            "code_8"
+          ],
+          "source": "Trane 18-CD19D5-21 Installer's Guide, p.37",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "code_6",
+          "code_identifier": "6",
+          "code_type": "flash_count",
+          "meaning": "115 volt AC power reversed, poor grounding, or system voltage too low",
+          "root_causes": [
+            "Reversed polarity",
+            "Poor ground",
+            "Low system voltage"
+          ],
+          "diagnostic_path": [
+            "Verify polarity, grounding, and system voltage"
+          ],
+          "escalation": "Control / ignition fault",
+          "reset_behavior": "Clears when electrical issue corrected.",
+          "related_codes": [
+            "code_9"
+          ],
+          "source": "Trane 18-CD19D5-21 Installer's Guide, p.37",
+          "severity": "urgent",
+          "field_consensus_notes": "CROSS-GENERATION CONFLICT: UC1/DC1 Code 6 uniquely adds 'system voltage too low' vs UD2/DD2 (polarity/grounding only), AUY/TUY (adds triac), AUH2/TUH2 (polarity only)."
+        },
+        {
+          "code_id": "code_7",
+          "code_identifier": "7",
+          "code_type": "flash_count",
+          "meaning": "Gas valve circuit error",
+          "root_causes": [
+            "Gas valve circuit fault"
+          ],
+          "diagnostic_path": [
+            "Check gas valve wiring"
+          ],
+          "escalation": "Heating disabled",
+          "reset_behavior": "Not specified in public table.",
+          "related_codes": [
+            "code_2",
+            "code_5"
+          ],
+          "source": "Trane 18-CD19D5-21 Installer's Guide, p.37",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_8",
+          "code_identifier": "8",
+          "code_type": "flash_count",
+          "meaning": "Low flame sense signal",
+          "root_causes": [
+            "Weak flame-sense current"
+          ],
+          "diagnostic_path": [
+            "Clean flame sensor",
+            "Measure flame current",
+            "Verify ground path"
+          ],
+          "escalation": "Can lead to recycle/lockout",
+          "reset_behavior": "Clears when flame signal strengthens.",
+          "related_codes": [
+            "code_2",
+            "code_5"
+          ],
+          "source": "Trane 18-CD19D5-21 Installer's Guide, p.37",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_9",
+          "code_identifier": "9",
+          "code_type": "flash_count",
+          "meaning": "Check Ignitor Circuit and Line N to 24VAC Common voltage (\u22642 volts) \u2014 possible grounding problem",
+          "root_causes": [
+            "Ignitor circuit fault",
+            "Grounding problem",
+            "Improper N-to-24VAC common relationship"
+          ],
+          "diagnostic_path": [
+            "Check ignitor circuit",
+            "Measure Line N to 24VAC Common (should be \u22642V)",
+            "Verify grounding"
+          ],
+          "escalation": "Ignition/no-heat fault",
+          "reset_behavior": "Clears when corrected.",
+          "related_codes": [
+            "code_6"
+          ],
+          "source": "Trane 18-CD19D5-21 Installer's Guide, p.37",
+          "severity": "urgent",
+          "field_consensus_notes": "CROSS-GENERATION CONFLICT: UC1/DC1 Code 9 = ignitor/grounding (same as UD2/DD2); but AUY/TUY and AUH2/TUH2 Code 9 = open inducer limit."
+        }
+      ]
+    },
+    {
+      "platform_id": "trane_auy_tuy_legacy",
+      "platform_name": "Trane/American Standard AUY/TUY/ADY/TDY Legacy 2-Stage Condensing with Variable-Speed Inducer",
+      "platform_description": "Older 2-stage condensing variable-speed-inducer platform using separate red/green LEDs. Introduced inducer-communication logic and solid-red/solid-green diagnostic states. Last-4-fault memory with R-to-W1 erase sequence.",
+      "applies_to_models": [
+        "AUY",
+        "TUY",
+        "ADY",
+        "TDY"
+      ],
+      "applies_to_years": "2005-2012",
+      "model_number_prefixes": [
+        "AUY",
+        "TUY",
+        "ADY",
+        "TDY"
+      ],
+      "visual_identification": "Dual-LED design (red + green). Green slow flash = Normal no heat; Green fast flash = Normal call for heat. Red LED flashes fault codes 2-10. Last 4 faults replay on red LED at power-up. Solid-red codes do NOT replay in last-fault recovery. Solid Red + Solid Green = continuous reset (blown fuse or internal error).",
+      "display_type": "single_led_flash",
+      "platform_notes": "Public installer guide 18-CD20D3-21 covers the platform. Last-4-fault erase: power up with G energized, apply R to W1 three times within 6 seconds; red LED turns on 2 seconds to acknowledge reset. Lockout reset: turn system power off >1 second, or remove 24VAC >1 second, or remove thermostat heat call >1 second but <20 seconds.",
+      "codes": [
+        {
+          "code_id": "green_slow_flash",
+          "code_identifier": "Green slow flash",
+          "code_type": "status_display",
+          "meaning": "Normal, no call for heat",
+          "root_causes": [],
+          "diagnostic_path": [
+            "Normal state"
+          ],
+          "escalation": "None",
+          "reset_behavior": "Normal.",
+          "related_codes": [
+            "green_fast_flash"
+          ],
+          "source": "Trane 18-CD20D3-21 Installer's Guide, p.36",
+          "severity": "informational"
+        },
+        {
+          "code_id": "green_fast_flash",
+          "code_identifier": "Green fast flash",
+          "code_type": "status_display",
+          "meaning": "Normal, call for heat active",
+          "root_causes": [],
+          "diagnostic_path": [
+            "Normal state during heat call"
+          ],
+          "escalation": "None",
+          "reset_behavior": "Normal.",
+          "related_codes": [
+            "green_slow_flash"
+          ],
+          "source": "Trane 18-CD20D3-21 Installer's Guide, p.36",
+          "severity": "informational"
+        },
+        {
+          "code_id": "code_2",
+          "code_identifier": "2",
+          "code_type": "flash_count",
+          "meaning": "System Lockout (Retries or Recycles exceeded)",
+          "root_causes": [
+            "Retry/recycle lockout from ignition failures or flame loss"
+          ],
+          "diagnostic_path": [
+            "Verify gas supply and ignition sequence",
+            "Flame loss causes recycle then lockout if ignition not achieved"
+          ],
+          "escalation": "Lockout",
+          "reset_behavior": "Reset by turning system power off >1 second, or removing 24VAC >1 second, or removing thermostat heat call >1 second but <20 seconds.",
+          "related_codes": [
+            "code_3",
+            "code_4",
+            "code_5",
+            "code_6",
+            "code_7",
+            "code_8",
+            "code_9",
+            "code_10"
+          ],
+          "source": "Trane 18-CD20D3-21 Installer's Guide, p.35-36",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_3",
+          "code_identifier": "3",
+          "code_type": "flash_count",
+          "meaning": "Draft Pressure Error",
+          "root_causes": [
+            "Venting problem",
+            "Pressure switch problem",
+            "Inducer problem"
+          ],
+          "diagnostic_path": [
+            "Three-branch check: venting, pressure switch, inducer"
+          ],
+          "escalation": "Shutdown / no start depending on when fault occurs",
+          "reset_behavior": "Clears after correction.",
+          "related_codes": [
+            "code_9",
+            "code_10"
+          ],
+          "source": "Trane 18-CD20D3-21 Installer's Guide, p.36",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_4",
+          "code_identifier": "4",
+          "code_type": "flash_count",
+          "meaning": "Open Temperature Limit Switch",
+          "root_causes": [
+            "Open temperature limit switch",
+            "Burner-box limit involvement",
+            "Vent/air termination blockage"
+          ],
+          "diagnostic_path": [
+            "Check limit continuity",
+            "Inspect burner-box limit and vent/air terminations"
+          ],
+          "escalation": "Heating interrupted / gas off",
+          "reset_behavior": "Burner-box limit may be manually reset after blockage cleared.",
+          "related_codes": [
+            "solid_red_green"
+          ],
+          "source": "Trane 18-CD20D3-21 Installer's Guide, p.35-36",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "code_5",
+          "code_identifier": "5",
+          "code_type": "flash_count",
+          "meaning": "Flame sensed when no flame should be present",
+          "root_causes": [
+            "False flame signal"
+          ],
+          "diagnostic_path": [
+            "Shut off gas and verify if code clears"
+          ],
+          "escalation": "Safety fault",
+          "reset_behavior": "Not specified in public table.",
+          "related_codes": [
+            "code_8"
+          ],
+          "source": "Trane 18-CD20D3-21 Installer's Guide, p.36",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "code_6",
+          "code_identifier": "6",
+          "code_type": "flash_count",
+          "meaning": "115 volt AC power reversed, ignitor (Triac) fault, poor grounding, or system voltage too low",
+          "root_causes": [
+            "Reversed polarity",
+            "Ignitor triac fault",
+            "Poor grounding",
+            "Low system voltage"
+          ],
+          "diagnostic_path": [
+            "Verify polarity, ignitor/triac condition, grounding, system voltage"
+          ],
+          "escalation": "Ignition/control fault",
+          "reset_behavior": "Clears when electrical fault corrected.",
+          "related_codes": [
+            "code_10",
+            "solid_red"
+          ],
+          "source": "Trane 18-CD20D3-21 Installer's Guide, p.36",
+          "severity": "urgent",
+          "field_consensus_notes": "CROSS-GENERATION CONFLICT: AUY/TUY Code 6 uniquely adds 'ignitor triac fault' vs UD2/DD2 (polarity/grounding only), UC1/DC1 (adds low voltage), AUH2/TUH2 (polarity only)."
+        },
+        {
+          "code_id": "code_7",
+          "code_identifier": "7",
+          "code_type": "flash_count",
+          "meaning": "Gas valve circuit error",
+          "root_causes": [
+            "Gas valve circuit fault"
+          ],
+          "diagnostic_path": [
+            "Check gas valve wiring"
+          ],
+          "escalation": "Heating disabled",
+          "reset_behavior": "Not specified.",
+          "related_codes": [
+            "solid_red"
+          ],
+          "source": "Trane 18-CD20D3-21 Installer's Guide, p.36",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_8",
+          "code_identifier": "8",
+          "code_type": "flash_count",
+          "meaning": "Low flame sense",
+          "root_causes": [
+            "Weak flame-sense signal"
+          ],
+          "diagnostic_path": [
+            "Clean flame sensor",
+            "Measure flame current"
+          ],
+          "escalation": "Can produce recycle/lockout",
+          "reset_behavior": "Clears when flame signal strengthens.",
+          "related_codes": [
+            "code_2",
+            "code_5"
+          ],
+          "source": "Trane 18-CD20D3-21 Installer's Guide, p.36",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_9",
+          "code_identifier": "9",
+          "code_type": "flash_count",
+          "meaning": "Open Inducer Limit switch",
+          "root_causes": [
+            "Open inducer limit switch"
+          ],
+          "diagnostic_path": [
+            "Check inducer limit continuity",
+            "Public abnormal-condition text also points to variable-speed draft inducer troubleshooting manual"
+          ],
+          "escalation": "Heating interrupted",
+          "reset_behavior": "Device must cool/clear.",
+          "related_codes": [
+            "code_3",
+            "code_10"
+          ],
+          "source": "Trane 18-CD20D3-21 Installer's Guide, p.35-36",
+          "severity": "urgent",
+          "field_consensus_notes": "CROSS-GENERATION CONFLICT: Code 9 on AUY/TUY = inducer limit; but Code 9 on UD2/DD2 and UC1/DC1 = ignitor/grounding check."
+        },
+        {
+          "code_id": "code_10",
+          "code_identifier": "10",
+          "code_type": "flash_count",
+          "meaning": "Inducer communication error",
+          "root_causes": [
+            "Communication error involving inducer assembly / control path"
+          ],
+          "diagnostic_path": [
+            "Refer to variable-speed draft inducer troubleshooting manual per OEM"
+          ],
+          "escalation": "Heating fault / shutdown",
+          "reset_behavior": "Clears when communication fault corrected.",
+          "related_codes": [
+            "code_3",
+            "code_9",
+            "code_6"
+          ],
+          "source": "Trane 18-CD20D3-21 Installer's Guide, p.35-36",
+          "severity": "urgent",
+          "field_consensus_notes": "CROSS-GENERATION CONFLICT: Code 10 exists ONLY on AUY/TUY in the public dictionary. AUH2/TUH2 does NOT publish a Code 10 entry."
+        },
+        {
+          "code_id": "solid_red",
+          "code_identifier": "Solid Red",
+          "code_type": "status_display",
+          "meaning": "Internal GV error or Low TH voltage",
+          "root_causes": [
+            "Internal gas-valve/control-side error",
+            "Low thermostat voltage"
+          ],
+          "diagnostic_path": [
+            "Verify thermostat voltage and internal control state"
+          ],
+          "escalation": "Control fault",
+          "reset_behavior": "Not replayed in fault-code recovery.",
+          "related_codes": [
+            "solid_red_green"
+          ],
+          "source": "Trane 18-CD20D3-21 Installer's Guide, p.36",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "solid_red_green",
+          "code_identifier": "Solid Red + Solid Green",
+          "code_type": "status_display",
+          "meaning": "Continuous Reset caused by a blown fuse or internal error",
+          "root_causes": [
+            "Blown fuse",
+            "Internal error"
+          ],
+          "diagnostic_path": [
+            "Check 24V fuse and internal control"
+          ],
+          "escalation": "Continuous reset condition",
+          "reset_behavior": "Solid-red codes are not displayed during fault-code recovery replay.",
+          "related_codes": [
+            "solid_red"
+          ],
+          "source": "Trane 18-CD20D3-21 Installer's Guide, p.36",
+          "severity": "urgent"
+        }
+      ]
+    },
+    {
+      "platform_id": "trane_auh2_tuh2_legacy",
+      "platform_name": "Trane/American Standard AUH2/TUH2/ADH2/TDH2 + *UH1/*DH1 Later Legacy 2-Stage Condensing with VS Inducer",
+      "platform_description": "Later legacy 2-stage condensing variable-speed-inducer platform. Simplified dictionary vs AUY/TUY \u2014 no Code 10, Code 6 narrowed to polarity only, Code 3 now explicitly 'Inducer OR Pressure Switch Error' with stage-dependent retry behavior. The *UH1/*DH1 platform aliases to this dictionary (public guide 18-CD29D1-14-EN has no separate flash-code namespace) \u2014 same codes, same status indicators.",
+      "applies_to_models": [
+        "AUH2",
+        "TUH2",
+        "ADH2",
+        "TDH2",
+        "*UH1",
+        "*DH1"
+      ],
+      "applies_to_years": "2010-2018",
+      "model_number_prefixes": [
+        "AUH2",
+        "TUH2",
+        "ADH2",
+        "TDH2",
+        "AUH1",
+        "TUH1",
+        "ADH1",
+        "TDH1",
+        "UH2",
+        "DH2",
+        "UH1",
+        "DH1"
+      ],
+      "visual_identification": "Dual-LED design (green + red). Green slow flash = Normal no heat; Green fast flash = Normal with heat call. Red LED for fault codes 2-9. Last 4 faults replay on red LED at power-up. Green + Red continuous ON = fuse open or internal control failure.",
+      "display_type": "single_led_flash",
+      "platform_notes": "Public installer guides 18-CD26D1-13 (AUH2) and 18-CD29D1-14-EN (*UH1) share the same dictionary. Same last-4-fault erase: power up with G energized, apply R to W1 three times within 6 seconds; red LED acknowledges for 2 seconds. Lockout reset same as AUY/TUY: power off >1s, or remove 24VAC >1s, or remove heat call >1s but <20s.",
+      "codes": [
+        {
+          "code_id": "green_slow_flash",
+          "code_identifier": "Green slow flash",
+          "code_type": "status_display",
+          "meaning": "Normal, no call for heat",
+          "root_causes": [],
+          "diagnostic_path": [
+            "Normal state"
+          ],
+          "escalation": "None",
+          "reset_behavior": "Normal.",
+          "related_codes": [
+            "green_fast_flash"
+          ],
+          "source": "Trane 18-CD26D1-13 Installer's Guide, p.42-43",
+          "severity": "informational"
+        },
+        {
+          "code_id": "green_fast_flash",
+          "code_identifier": "Green fast flash",
+          "code_type": "status_display",
+          "meaning": "Normal, call for heat active",
+          "root_causes": [],
+          "diagnostic_path": [
+            "Normal state during heat call"
+          ],
+          "escalation": "None",
+          "reset_behavior": "Normal.",
+          "related_codes": [
+            "green_slow_flash"
+          ],
+          "source": "Trane 18-CD26D1-13 Installer's Guide, p.42-43",
+          "severity": "informational"
+        },
+        {
+          "code_id": "code_2",
+          "code_identifier": "2",
+          "code_type": "flash_count",
+          "meaning": "Retries or recycles exceeded",
+          "root_causes": [
+            "Ignition retries exceeded or flame-loss recycles exceeded"
+          ],
+          "diagnostic_path": [
+            "Verify gas supply and ignition sequence"
+          ],
+          "escalation": "Lockout",
+          "reset_behavior": "Reset by power off >1s, or remove 24VAC >1s, or remove thermostat heat call >1s but <20s.",
+          "related_codes": [
+            "code_3",
+            "code_4",
+            "code_5",
+            "code_6",
+            "code_7",
+            "code_8",
+            "code_9"
+          ],
+          "source": "Trane 18-CD26D1-13 Installer's Guide, p.42-43",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_3",
+          "code_identifier": "3",
+          "code_type": "flash_count",
+          "meaning": "Inducer or Pressure Switch Error",
+          "root_causes": [
+            "Inducer fault",
+            "Pressure-switch fault"
+          ],
+          "diagnostic_path": [
+            "Check pressure switch closing/opening behavior",
+            "Verify inducer operation"
+          ],
+          "escalation": "In 2nd stage: inducer fault forces transition to 1st stage for 10 minutes before retry. In 1st stage: system shuts down and waits 30 seconds before attempting first-stage reestablishment.",
+          "reset_behavior": "Automatic retry per above; full lockout reset if needed.",
+          "related_codes": [
+            "code_9"
+          ],
+          "source": "Trane 18-CD26D1-13 Installer's Guide, p.42-43",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_4",
+          "code_identifier": "4",
+          "code_type": "flash_count",
+          "meaning": "Open Limit or Rollout Switch",
+          "root_causes": [
+            "Open limit",
+            "Rollout switch open"
+          ],
+          "diagnostic_path": [
+            "Check limit and rollout continuity",
+            "Inspect burner-box manual-reset limit",
+            "Check vent/combustion-air blockage"
+          ],
+          "escalation": "Heating interrupted / gas off",
+          "reset_behavior": "Manual-reset burner-box limit after blockage correction, or qualified-servicer reset.",
+          "related_codes": [
+            "code_3"
+          ],
+          "source": "Trane 18-CD26D1-13 Installer's Guide, p.42-43",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "code_5",
+          "code_identifier": "5",
+          "code_type": "flash_count",
+          "meaning": "Flame sensed when no flame should be present",
+          "root_causes": [
+            "False flame signal"
+          ],
+          "diagnostic_path": [
+            "Shut off gas and verify if code clears"
+          ],
+          "escalation": "Safety fault",
+          "reset_behavior": "Not specified.",
+          "related_codes": [
+            "code_8"
+          ],
+          "source": "Trane 18-CD26D1-13 Installer's Guide, p.43",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "code_6",
+          "code_identifier": "6",
+          "code_type": "flash_count",
+          "meaning": "Line Reverse Polarity",
+          "root_causes": [
+            "Reverse polarity"
+          ],
+          "diagnostic_path": [
+            "Verify incoming line polarity"
+          ],
+          "escalation": "Control/ignition fault",
+          "reset_behavior": "Clears when polarity corrected.",
+          "related_codes": [],
+          "source": "Trane 18-CD26D1-13 Installer's Guide, p.43",
+          "severity": "urgent",
+          "field_consensus_notes": "CROSS-GENERATION CONFLICT: AUH2/TUH2 Code 6 is NARROWER than predecessors \u2014 polarity only. AUY/TUY Code 6 also covered ignitor triac fault, grounding, and low voltage; UD2/DD2 and UC1/DC1 Code 6 also covered grounding."
+        },
+        {
+          "code_id": "code_7",
+          "code_identifier": "7",
+          "code_type": "flash_count",
+          "meaning": "Gas Valve Circuit Error",
+          "root_causes": [
+            "Gas valve circuit fault"
+          ],
+          "diagnostic_path": [
+            "Check gas valve wiring"
+          ],
+          "escalation": "Heating disabled",
+          "reset_behavior": "Not specified.",
+          "related_codes": [
+            "code_2"
+          ],
+          "source": "Trane 18-CD26D1-13 Installer's Guide, p.43",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_8",
+          "code_identifier": "8",
+          "code_type": "flash_count",
+          "meaning": "Weak Flame",
+          "root_causes": [
+            "Weak flame-sense signal"
+          ],
+          "diagnostic_path": [
+            "Clean flame sensor",
+            "Measure flame current"
+          ],
+          "escalation": "Can produce recycles/lockout",
+          "reset_behavior": "Clears when flame-sense issue corrected.",
+          "related_codes": [
+            "code_5"
+          ],
+          "source": "Trane 18-CD26D1-13 Installer's Guide, p.43",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_9",
+          "code_identifier": "9",
+          "code_type": "flash_count",
+          "meaning": "Open Inducer Limit Error",
+          "root_causes": [
+            "Open inducer limit"
+          ],
+          "diagnostic_path": [
+            "Check inducer limit",
+            "Inducer retry behavior documented in abnormal-condition section"
+          ],
+          "escalation": "Heating fault; stage fallback/retry behavior documented separately",
+          "reset_behavior": "Clears when inducer limit condition clears.",
+          "related_codes": [
+            "code_3"
+          ],
+          "source": "Trane 18-CD26D1-13 Installer's Guide, p.42-43",
+          "severity": "urgent",
+          "field_consensus_notes": "CROSS-GENERATION CONFLICT: Code 9 on AUH2/TUH2 = inducer limit (same as AUY/TUY); but Code 9 on UD2/DD2 and UC1/DC1 = ignitor/grounding check."
+        },
+        {
+          "code_id": "green_red_continuous",
+          "code_identifier": "Green + Red continuous",
+          "code_type": "status_display",
+          "meaning": "Fuse open or internal control failure",
+          "root_causes": [
+            "Open fuse",
+            "Internal control failure"
+          ],
+          "diagnostic_path": [
+            "Check 24V fuse",
+            "Inspect wiring for shorts",
+            "Replace control if fuse tests good and fault persists"
+          ],
+          "escalation": "Control failure / no heat",
+          "reset_behavior": "Not replayed as a solid-red fault in last-fault recovery.",
+          "related_codes": [],
+          "source": "Trane 18-CD26D1-13 Installer's Guide, p.43",
+          "severity": "urgent"
+        }
+      ]
+    },
+    {
+      "platform_id": "trane_s_series_7segment",
+      "platform_name": "Trane/American Standard S-Series 7-Segment E-Code IFC",
+      "platform_description": "Current-generation Trane/AS residential gas furnace platform using 7-segment alphanumeric display. Complete namespace redesign from legacy flash-count boards \u2014 NOT a carry-forward. Uses menu system (Menu button \u2192 IdL, L6F, C0d, etc.) plus alphanumeric alarm codes (e01, e2.1, e04, e6.1). Covers S8X1/S8X2 non-condensing, S9X1/S9X2/S9B1 condensing high-efficiency-motor, S9V2 variable-speed, and S9V2-VS variable-speed-inducer. Shared code namespace across these model lines with minor branch-specific differences (e3.3/e3.4 only on 2-stage S8X2-type logic).",
+      "applies_to_models": [
+        "S8X1",
+        "S8X2",
+        "S9X1",
+        "S9X2",
+        "S9B1",
+        "S9V2",
+        "S9V2-VS",
+        "American Standard Platinum/Gold S-series siblings"
+      ],
+      "applies_to_years": "2018-2026",
+      "model_number_prefixes": [
+        "S8X1",
+        "S8X2",
+        "S9X1",
+        "S9X2",
+        "S9B1",
+        "S9V2"
+      ],
+      "visual_identification": "7-segment alphanumeric display showing menu items (IdL = idle, L6F = last 6 faults menu, C0d = cooling off delay, etc.) and alarm codes (e01, e2.1, e3.1, e04, e05, e6.1, e6.2, e6.3, e7.1, e08, e11, e12). Menu and Option buttons for navigation. Last 6 faults viewable via L6F; clear by holding Option 5+ seconds (shows three dashes three times). Factory reset: hold Menu + Option 15 seconds (display flashes FD three times).",
+      "display_type": "alphanumeric",
+      "platform_notes": "Public guides: 18-CE04D1-1D-EN (S8X1/S8X2), 18-CE12D1-1D-EN (S9X2/S9B1), 18-CE19D1-1B-EN (S9V2), 18-CE03D1-1F-EN (S9V2-VS). e3.3 and e3.4 are 2-stage pressure-switch-only codes (S8X2 family). Menu/status items (IdL, L6F, etc.) are NOT faults \u2014 they are display states and service menu labels.",
+      "codes": [
+        {
+          "code_id": "menu_idl",
+          "code_identifier": "IdL",
+          "code_type": "menu_display",
+          "meaning": "Idle state \u2014 furnace is powered and idle with no active call",
+          "root_causes": [],
+          "diagnostic_path": [
+            "Normal state \u2014 no action required"
+          ],
+          "escalation": "None",
+          "reset_behavior": "Normal.",
+          "related_codes": [
+            "menu_err",
+            "menu_l6f",
+            "menu_run"
+          ],
+          "source": "S-series 7-segment IFC display code pages",
+          "severity": "informational"
+        },
+        {
+          "code_id": "menu_err",
+          "code_identifier": "err",
+          "code_type": "menu_display",
+          "meaning": "Active alarm menu \u2014 use Option button to navigate active alarms",
+          "root_causes": [],
+          "diagnostic_path": [
+            "Press Option to view active alarm codes"
+          ],
+          "escalation": "None by itself",
+          "reset_behavior": "Normal menu label.",
+          "related_codes": [
+            "menu_l6f"
+          ],
+          "source": "S-series 7-segment IFC display code pages",
+          "severity": "informational"
+        },
+        {
+          "code_id": "menu_l6f",
+          "code_identifier": "L6F",
+          "code_type": "menu_display",
+          "meaning": "Last 6 faults menu \u2014 historical fault recall",
+          "root_causes": [],
+          "diagnostic_path": [
+            "Press Menu until L6F displays, enter with Option, scroll last six faults",
+            "To clear: enter L6F, hold Option at least 5 seconds; display shows three dashes three times"
+          ],
+          "escalation": "None",
+          "reset_behavior": "Menu label \u2014 not a fault.",
+          "related_codes": [
+            "menu_err"
+          ],
+          "source": "S-series 7-segment IFC display code pages",
+          "severity": "informational"
+        },
+        {
+          "code_id": "menu_cr",
+          "code_identifier": "Cr",
+          "code_type": "menu_display",
+          "meaning": "Code release number (firmware version identifier)",
+          "root_causes": [],
+          "diagnostic_path": [
+            "Normal service-menu label \u2014 displays firmware version"
+          ],
+          "escalation": "None",
+          "reset_behavior": "Menu label.",
+          "related_codes": [],
+          "source": "S-series 7-segment IFC display code pages",
+          "severity": "informational"
+        },
+        {
+          "code_id": "menu_c0d",
+          "code_identifier": "C0d",
+          "code_type": "menu_display",
+          "meaning": "Cooling off delay \u2014 service menu for cooling-off-delay setting",
+          "root_causes": [],
+          "diagnostic_path": [
+            "Normal service menu"
+          ],
+          "escalation": "None",
+          "reset_behavior": "Menu label.",
+          "related_codes": [
+            "menu_x0d"
+          ],
+          "source": "S-series 7-segment IFC display code pages",
+          "severity": "informational"
+        },
+        {
+          "code_id": "menu_0du",
+          "code_identifier": "0du",
+          "code_type": "menu_display",
+          "meaning": "Outdoor unit type \u2014 service menu for outdoor unit type selection",
+          "root_causes": [],
+          "diagnostic_path": [
+            "Normal service menu"
+          ],
+          "escalation": "None",
+          "reset_behavior": "Menu label.",
+          "related_codes": [],
+          "source": "S-series 7-segment IFC display code pages",
+          "severity": "informational"
+        },
+        {
+          "code_id": "menu_c0f",
+          "code_identifier": "C0f",
+          "code_type": "menu_display",
+          "meaning": "Blower constant fan airflow \u2014 service menu for constant-fan CFM setting",
+          "root_causes": [],
+          "diagnostic_path": [
+            "Normal service menu"
+          ],
+          "escalation": "None",
+          "reset_behavior": "Menu label.",
+          "related_codes": [],
+          "source": "S-series 7-segment IFC display code pages",
+          "severity": "informational"
+        },
+        {
+          "code_id": "menu_x0d",
+          "code_identifier": "X0d",
+          "code_type": "menu_display",
+          "meaning": "Heat off delay \u2014 service menu for heat-off-delay setting",
+          "root_causes": [],
+          "diagnostic_path": [
+            "Normal service menu"
+          ],
+          "escalation": "None",
+          "reset_behavior": "Menu label.",
+          "related_codes": [
+            "menu_c0d"
+          ],
+          "source": "S-series 7-segment IFC display code pages",
+          "severity": "informational"
+        },
+        {
+          "code_id": "menu_sd",
+          "code_identifier": "!sd",
+          "code_type": "menu_display",
+          "meaning": "Inter-stage delay \u2014 service menu for staging delay setting",
+          "root_causes": [],
+          "diagnostic_path": [
+            "Normal service menu"
+          ],
+          "escalation": "None",
+          "reset_behavior": "Menu label.",
+          "related_codes": [],
+          "source": "S-series 7-segment IFC display code pages",
+          "severity": "informational"
+        },
+        {
+          "code_id": "menu_gxc",
+          "code_identifier": "gXC",
+          "code_type": "menu_display",
+          "meaning": "Gas heating CFM \u2014 service menu for gas-heat airflow setting",
+          "root_causes": [],
+          "diagnostic_path": [
+            "Normal service menu"
+          ],
+          "escalation": "None",
+          "reset_behavior": "Menu label.",
+          "related_codes": [],
+          "source": "S-series 7-segment IFC display code pages",
+          "severity": "informational"
+        },
+        {
+          "code_id": "menu_run",
+          "code_identifier": "run",
+          "code_type": "menu_display",
+          "meaning": "Test mode / run menu context",
+          "root_causes": [],
+          "diagnostic_path": [
+            "Normal test-mode label"
+          ],
+          "escalation": "None",
+          "reset_behavior": "Menu label.",
+          "related_codes": [
+            "menu_idl"
+          ],
+          "source": "S-series 7-segment IFC display code pages",
+          "severity": "informational"
+        },
+        {
+          "code_id": "code_e01",
+          "code_identifier": "e01",
+          "code_type": "alphanumeric",
+          "meaning": "Loss of IRQ or other internal failures (Internal IFC error)",
+          "root_causes": [
+            "Internal IFC failure",
+            "IRQ fault"
+          ],
+          "diagnostic_path": [
+            "Cycle power",
+            "If fault persists, replace IFC"
+          ],
+          "escalation": "Control fault \u2014 no normal heat sequence",
+          "reset_behavior": "Active-alarm display clears only when condition clears. Last-6-fault memory cleared separately via L6F.",
+          "related_codes": [
+            "code_e12",
+            "menu_l6f"
+          ],
+          "source": "Trane 18-CE04D1-1D-EN, display codes page 58",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_e2_1",
+          "code_identifier": "e2.1",
+          "code_type": "alphanumeric",
+          "meaning": "Retry Exceeded \u2014 flame never sensed",
+          "root_causes": [
+            "No flame established during ignition trials",
+            "Gas supply issue",
+            "Ignitor fault",
+            "Flame-sense fault"
+          ],
+          "diagnostic_path": [
+            "Verify gas supply",
+            "Verify ignitor operation",
+            "Verify flame sense current and ground"
+          ],
+          "escalation": "One-hour lockout after 3 times",
+          "reset_behavior": "One-hour lockout per public table; historical fault handled through L6F.",
+          "related_codes": [
+            "code_e2_2",
+            "code_e2_3",
+            "code_e08"
+          ],
+          "source": "Trane 18-CE04D1-1D-EN, code table page 58",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_e2_2",
+          "code_identifier": "e2.2",
+          "code_type": "alphanumeric",
+          "meaning": "Recycles Exceeded \u2014 flame sensed then lost",
+          "root_causes": [
+            "Flame established then lost during run",
+            "Weak flame sense",
+            "Gas pressure fluctuation",
+            "Rough ignition"
+          ],
+          "diagnostic_path": [
+            "Measure flame current under run conditions",
+            "Verify gas pressure stability",
+            "Verify ignition carryover"
+          ],
+          "escalation": "One-hour lockout after 10 times",
+          "reset_behavior": "One-hour lockout per public table.",
+          "related_codes": [
+            "code_e2_1",
+            "code_e2_3",
+            "code_e08"
+          ],
+          "source": "Trane 18-CE04D1-1D-EN, code table page 58",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_e2_3",
+          "code_identifier": "e2.3",
+          "code_type": "alphanumeric",
+          "meaning": "Flame current is low, but still strong enough to allow operation",
+          "root_causes": [
+            "Low flame current"
+          ],
+          "diagnostic_path": [
+            "Clean flame sensor",
+            "Verify ground path",
+            "Check flame sense microamps"
+          ],
+          "escalation": "Advisory \u2014 operation still allowed",
+          "reset_behavior": "Clears when flame current recovers.",
+          "related_codes": [
+            "code_e2_1",
+            "code_e2_2",
+            "code_e08"
+          ],
+          "source": "Trane 18-CE04D1-1D-EN, code table page 58",
+          "severity": "service_soon"
+        },
+        {
+          "code_id": "code_e3_1",
+          "code_identifier": "e3.1",
+          "code_type": "alphanumeric",
+          "meaning": "Shorted Pressure Switch, 1st Stage",
+          "root_causes": [
+            "1st-stage pressure switch shorted/stuck closed"
+          ],
+          "diagnostic_path": [
+            "Verify switch state before inducer starts",
+            "If PS1 does not close within 60 seconds, control reports e3.1 and increases inducer to high speed to try to close PS1"
+          ],
+          "escalation": "Inducer speed-up retry attempt",
+          "reset_behavior": "Clears when pressure-switch state normalizes.",
+          "related_codes": [
+            "code_e3_2",
+            "code_e3_3",
+            "code_e3_4"
+          ],
+          "source": "Trane 18-CE04D1-1D-EN, code table page 58 and sequence pages 60-61",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_e3_2",
+          "code_identifier": "e3.2",
+          "code_type": "alphanumeric",
+          "meaning": "Open Pressure Switch, 1st Stage",
+          "root_causes": [
+            "1st-stage pressure switch open",
+            "Venting fault",
+            "Inducer fault"
+          ],
+          "diagnostic_path": [
+            "Verify inducer operation",
+            "Inspect venting/condensate path",
+            "Verify pressure switch closure"
+          ],
+          "escalation": "Heat sequence interrupted until switch state correct",
+          "reset_behavior": "Clears when pressure switch closes correctly.",
+          "related_codes": [
+            "code_e3_1",
+            "code_e3_3",
+            "code_e3_4"
+          ],
+          "source": "Trane 18-CE04D1-1D-EN, code table page 58",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_e3_3",
+          "code_identifier": "e3.3",
+          "code_type": "alphanumeric",
+          "meaning": "Shorted Pressure Switch, 2nd Stage (S8X2 2-stage only)",
+          "root_causes": [
+            "2nd-stage pressure switch shorted/stuck closed"
+          ],
+          "diagnostic_path": [
+            "Verify 2nd-stage switch state before 2nd-stage proving"
+          ],
+          "escalation": "2nd-stage operation fault",
+          "reset_behavior": "Clears when switch state normalizes.",
+          "related_codes": [
+            "code_e3_1",
+            "code_e3_2",
+            "code_e3_4"
+          ],
+          "source": "Trane 18-CE04D1-1D-EN, code table page 58",
+          "severity": "urgent",
+          "field_consensus_notes": "Branch-specific: present only on 2-stage S8X2-type logic."
+        },
+        {
+          "code_id": "code_e3_4",
+          "code_identifier": "e3.4",
+          "code_type": "alphanumeric",
+          "meaning": "Open Pressure Switch, 2nd Stage (S8X2 2-stage only)",
+          "root_causes": [
+            "2nd-stage pressure switch open"
+          ],
+          "diagnostic_path": [
+            "If PS2 does not close within 45 seconds, PS2-open error is declared and furnace operates in 1 stage"
+          ],
+          "escalation": "Falls back to 1-stage heat",
+          "reset_behavior": "Clears when PS2 proves closed correctly.",
+          "related_codes": [
+            "code_e3_1",
+            "code_e3_2",
+            "code_e3_3"
+          ],
+          "source": "Trane 18-CE04D1-1D-EN, code table page 58 and sequence pages 60-61",
+          "severity": "urgent",
+          "field_consensus_notes": "Branch-specific: present only on 2-stage S8X2-type logic."
+        },
+        {
+          "code_id": "code_e04",
+          "code_identifier": "e04",
+          "code_type": "alphanumeric",
+          "meaning": "Open Limit (Main Thermal, Rollout Switch, or Reverse Airflow Switch)",
+          "root_causes": [
+            "Main thermal limit open",
+            "Rollout switch open",
+            "Reverse-airflow switch open"
+          ],
+          "diagnostic_path": [
+            "Identify which device in the safety chain is open",
+            "Check airflow, filter, blower if main limit",
+            "Check burners, venting, HX if rollout",
+            "Check blower direction/wiring if reverse airflow"
+          ],
+          "escalation": "Heat interrupted by safety opening",
+          "reset_behavior": "Depends on device; clears when safety circuit restores. Manual-reset devices require manual reset after correction.",
+          "related_codes": [
+            "code_e3_1",
+            "code_e3_2",
+            "code_e05"
+          ],
+          "source": "Trane 18-CE12D1-1D-EN code-table snippet; same namespace in 18-CE04D1-1D-EN",
+          "severity": "safety_critical",
+          "field_consensus_notes": "CROSS-GENERATION CONFLICT: Legacy Code 4 = open limit; e04 broadens to include rollout AND reverse-airflow switch. Diagnostic path must branch on which device opened."
+        },
+        {
+          "code_id": "code_e05",
+          "code_identifier": "e05",
+          "code_type": "alphanumeric",
+          "meaning": "Flame detected, should not be present",
+          "root_causes": [
+            "False flame signal",
+            "Leaky gas valve"
+          ],
+          "diagnostic_path": [
+            "Shut off gas and verify if code clears"
+          ],
+          "escalation": "Safety fault",
+          "reset_behavior": "Clears when false-flame condition removed.",
+          "related_codes": [
+            "code_e2_1",
+            "code_e2_2",
+            "code_e08"
+          ],
+          "source": "Trane 18-CE12D1-1D-EN code table; same namespace in 18-CE04D1-1D-EN",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "code_e6_1",
+          "code_identifier": "e6.1",
+          "code_type": "alphanumeric",
+          "meaning": "Voltage reversed polarity",
+          "root_causes": [
+            "Reversed line-voltage polarity"
+          ],
+          "diagnostic_path": [
+            "Verify line polarity"
+          ],
+          "escalation": "Electrical/control fault",
+          "reset_behavior": "Clears when polarity corrected.",
+          "related_codes": [
+            "code_e6_2",
+            "code_e6_3"
+          ],
+          "source": "Trane 18-CE12D1-1D-EN code table; same namespace in 18-CE04D1-1D-EN",
+          "severity": "urgent",
+          "field_consensus_notes": "CROSS-GENERATION CONFLICT: Legacy Code 6 was a combined polarity/grounding/low-voltage/triac bucket. E-code generation splits into e6.1 (polarity only), e6.2 (grounding only), e6.3 (igniter relay/open). Different diagnostic paths for each subcode."
+        },
+        {
+          "code_id": "code_e6_2",
+          "code_identifier": "e6.2",
+          "code_type": "alphanumeric",
+          "meaning": "Bad grounding",
+          "root_causes": [
+            "Poor/bad grounding"
+          ],
+          "diagnostic_path": [
+            "Verify chassis grounding",
+            "Inspect ground path"
+          ],
+          "escalation": "Electrical/control fault",
+          "reset_behavior": "Clears when grounding corrected.",
+          "related_codes": [
+            "code_e6_1",
+            "code_e6_3"
+          ],
+          "source": "Trane 18-CE12D1-1D-EN code table; same namespace in 18-CE04D1-1D-EN",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_e6_3",
+          "code_identifier": "e6.3",
+          "code_type": "alphanumeric",
+          "meaning": "Igniter relay fails OR igniter open",
+          "root_causes": [
+            "Igniter relay failure",
+            "Igniter open"
+          ],
+          "diagnostic_path": [
+            "Test ignitor continuity/resistance",
+            "Verify igniter relay operation on board"
+          ],
+          "escalation": "Ignition fault / no heat",
+          "reset_behavior": "Clears when igniter circuit restored.",
+          "related_codes": [
+            "code_e2_1",
+            "code_e6_1",
+            "code_e6_2"
+          ],
+          "source": "Trane 18-CE04D1-1D-EN, code table page 58",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_e7_1",
+          "code_identifier": "e7.1",
+          "code_type": "alphanumeric",
+          "meaning": "1st stage gas valve (MVL) is energized when it should be off",
+          "root_causes": [
+            "1st-stage gas valve energized when it should be off"
+          ],
+          "diagnostic_path": [
+            "Verify gas valve wiring",
+            "Inspect for backfeed or control fault"
+          ],
+          "escalation": "Gas-valve safety fault",
+          "reset_behavior": "Clears when gas-valve control fault corrected.",
+          "related_codes": [
+            "code_e11",
+            "code_e05"
+          ],
+          "source": "Trane 18-CE04D1-1D-EN, code table page 58",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "code_e08",
+          "code_identifier": "e08",
+          "code_type": "alphanumeric",
+          "meaning": "Flame current is low, but still strong enough to allow operation",
+          "root_causes": [
+            "Weak flame current"
+          ],
+          "diagnostic_path": [
+            "Clean flame sensor",
+            "Measure flame current",
+            "Verify ground path"
+          ],
+          "escalation": "Advisory \u2014 may precede recycle/retry faults",
+          "reset_behavior": "Clears when flame signal strengthens.",
+          "related_codes": [
+            "code_e2_1",
+            "code_e2_2",
+            "code_e2_3"
+          ],
+          "source": "Trane 18-CE12D1-1D-EN code table",
+          "severity": "service_soon"
+        },
+        {
+          "code_id": "code_e11",
+          "code_identifier": "e11",
+          "code_type": "alphanumeric",
+          "meaning": "Gas valve relay/control fault \u2014 5 branches: (1) 1st stage gas valve not energized when it should be, (2) 1st stage gas valve relay stuck closed, (3) 2nd stage gas valve relay stuck closed, (4) 2nd stage gas valve energized when it should not be, (5) 2nd stage gas valve not energized when it should be",
+          "root_causes": [
+            "Gas-valve relay fault on 1st or 2nd stage",
+            "Gas-valve control circuit fault"
+          ],
+          "diagnostic_path": [
+            "Verify gas valve wiring to schematic",
+            "Test both 1st and 2nd stage gas-valve relays on board",
+            "Verify no shorts or backfeed in gas-valve circuit"
+          ],
+          "escalation": "Gas-valve/control safety fault",
+          "reset_behavior": "Clears when valve/control fault corrected. Historical entry remains in L6F until cleared.",
+          "related_codes": [
+            "code_e7_1",
+            "code_e05",
+            "code_e12"
+          ],
+          "source": "Trane 18-CE04D1-1D-EN, code table page 58",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "code_e12",
+          "code_identifier": "e12",
+          "code_type": "alphanumeric",
+          "meaning": "Open fuse",
+          "root_causes": [
+            "Open control fuse",
+            "24V low-voltage short"
+          ],
+          "diagnostic_path": [
+            "Isolate 24V circuit short",
+            "Replace fuse",
+            "Check thermostat, outdoor contactor, accessories"
+          ],
+          "escalation": "Control interruption / no heat",
+          "reset_behavior": "Clears when fuse replaced and short corrected. Fault memory remains in L6F until cleared.",
+          "related_codes": [
+            "code_e01",
+            "code_e11"
+          ],
+          "source": "Trane 18-CE12D1-1D-EN, code table page 109; same in 18-CE04D1-1D-EN page 58",
+          "severity": "urgent"
+        }
+      ]
+    },
+    {
+      "platform_id": "trane_comfortlink_ii_wall_control",
+      "platform_name": "Trane ComfortLink II / American Standard AccuLink Wall Controls",
+      "platform_description": "ComfortLink II / AccuLink communicating wall controls (XL850, XL1050, XL824, AccuLink Platinum 1050/AZON1050). Multi-touch color displays with discovered-device Summary Table, Current Alerts (active), Alert History (cleared alerts from last 30 days), and severity-tagged alerts (Critical/Major/Minor). Critical alerts appear on home screen (red icon); Major alerts appear with yellow icon but NOT on home screen; Minor alerts only appear in Diagnostics.",
+      "applies_to_models": [
+        "XL850",
+        "XL1050",
+        "XL824",
+        "AccuLink Platinum 1050",
+        "AZON1050"
+      ],
+      "applies_to_years": "2013-2026",
+      "model_number_prefixes": [
+        "XL824",
+        "XL850",
+        "XL1050",
+        "AZON1050",
+        "SYSTXCCACO1",
+        "SYSTXCCACO2",
+        "SYSTXCCITO1"
+      ],
+      "visual_identification": "Color touchscreen wall control. Shows Current Alerts and Alert History in Diagnostics screen. Discovered-device Summary Table lists all communicating devices on bus with Enabled/Disabled and Online/Offline states. Severity badges: red icon (Critical), yellow icon (Major), in-menu-only (Minor).",
+      "display_type": "alphanumeric",
+      "platform_notes": "Public documentation: 18-HD80D1-6F-EN (XL1050), 18-HD73D1-9E-EN (XL850), 11-HD15D1-5-EN (AccuLink Platinum 1050). XL824 alert dictionary is thinner in public sources than XL850/XL1050. The wall-control alert surface is FRAGMENTED \u2014 it shows system-level alerts like Err.126.00 but passes through equipment-level codes from outdoor CDA and indoor air handler. No single OEM booklet covers the complete wall-control dictionary.",
+      "codes": [
+        {
+          "code_id": "ui_current_alerts",
+          "code_identifier": "Current Alerts",
+          "code_type": "menu_display",
+          "meaning": "Active alerts menu \u2014 shows currently active system alerts",
+          "root_causes": [],
+          "diagnostic_path": [
+            "Diagnostics menu \u2192 Current Alerts to view active alerts"
+          ],
+          "escalation": "None",
+          "reset_behavior": "Menu label.",
+          "related_codes": [
+            "ui_alert_history",
+            "ui_summary_table"
+          ],
+          "source": "XL1050 18-HD80D1-6F-EN, XL850 18-HD73D1-9E-EN",
+          "severity": "informational"
+        },
+        {
+          "code_id": "ui_alert_history",
+          "code_identifier": "Alert History",
+          "code_type": "menu_display",
+          "meaning": "Historical alerts from last 30 days \u2014 stores cleared alerts",
+          "root_causes": [],
+          "diagnostic_path": [
+            "Diagnostics menu \u2192 Alert History to review cleared alerts"
+          ],
+          "escalation": "None",
+          "reset_behavior": "Menu label.",
+          "related_codes": [
+            "ui_current_alerts"
+          ],
+          "source": "XL1050 18-HD80D1-6F-EN, XL850 18-HD73D1-9E-EN",
+          "severity": "informational"
+        },
+        {
+          "code_id": "ui_summary_table",
+          "code_identifier": "Summary Table",
+          "code_type": "menu_display",
+          "meaning": "Discovered-device summary showing all communicating devices with Enabled/Disabled and Online/Offline states",
+          "root_causes": [],
+          "diagnostic_path": [
+            "Use Summary Table to identify which device(s) are offline or unexpectedly disabled",
+            "Offline devices that are Enabled typically trigger Err.126.00"
+          ],
+          "escalation": "None by itself \u2014 informational",
+          "reset_behavior": "Menu label.",
+          "related_codes": [
+            "code_err_126_00",
+            "ui_current_alerts"
+          ],
+          "source": "XL1050 18-HD80D1-6F-EN, XL850 18-HD73D1-9E-EN, AccuLink 11-HD15D1-5-EN",
+          "severity": "informational"
+        },
+        {
+          "code_id": "ui_restore_factory",
+          "code_identifier": "Restore Factory Defaults",
+          "code_type": "menu_display",
+          "meaning": "Factory default reset menu",
+          "root_causes": [],
+          "diagnostic_path": [
+            "Service menu label \u2014 only use intentionally during troubleshooting or replacement"
+          ],
+          "escalation": "None",
+          "reset_behavior": "Menu action \u2014 clears all settings.",
+          "related_codes": [],
+          "source": "XL1050 18-HD80D1-6F-EN, XL850 18-HD73D1-9E-EN",
+          "severity": "informational"
+        },
+        {
+          "code_id": "ui_install_wizard",
+          "code_identifier": "Installation Wizard",
+          "code_type": "menu_display",
+          "meaning": "Initial setup / commissioning wizard",
+          "root_causes": [],
+          "diagnostic_path": [
+            "Used during initial system setup or after factory reset"
+          ],
+          "escalation": "None",
+          "reset_behavior": "Menu label.",
+          "related_codes": [],
+          "source": "XL1050 18-HD80D1-6F-EN, XL850 18-HD73D1-9E-EN",
+          "severity": "informational"
+        },
+        {
+          "code_id": "ui_device_states",
+          "code_identifier": "Online/Offline/Enabled/Disabled",
+          "code_type": "menu_display",
+          "meaning": "Device state indicators in Summary Table \u2014 Online = communicating normally; Offline = not reporting; Enabled = system expects device on bus; Disabled = system ignores device",
+          "root_causes": [],
+          "diagnostic_path": [
+            "Enabled + Offline = typically triggers Err.126.00 Equipment Change Alert",
+            "Disabled + Offline = normal (device intentionally not in use)",
+            "Enabled + Online = normal operation"
+          ],
+          "escalation": "Enabled+Offline combination triggers system alert",
+          "reset_behavior": "State indicators update dynamically.",
+          "related_codes": [
+            "code_err_126_00"
+          ],
+          "source": "XL1050 18-HD80D1-6F-EN, XL850 18-HD73D1-9E-EN",
+          "severity": "informational"
+        },
+        {
+          "code_id": "code_err_126_00",
+          "code_identifier": "Err.126.00",
+          "code_type": "alphanumeric",
+          "meaning": "Equipment Change Alert \u2014 equipment reporting does not match equipment originally discovered; enabled device is offline or not reporting on bus",
+          "root_causes": [
+            "Communicating device not reporting on bus",
+            "Power flicker to device (equipment stopped reporting)",
+            "ABCD bus wiring fault",
+            "Failed communicating board on a discovered device",
+            "Outdoor unit not reporting"
+          ],
+          "diagnostic_path": [
+            "Check wall-control Summary Table to identify which device is offline",
+            "If outdoor unit offline and heat pump not running (system falls back to furnace/electric heat): verify outdoor power, comm wiring, and board state",
+            "Cycle/restore reporting status of missing device",
+            "If device was removed intentionally, set to Disabled in Summary Table"
+          ],
+          "escalation": "On heat-pump systems: compressor operation may be lost, system may fall back to furnace or electric heat only",
+          "reset_behavior": "Clears when missing/offline device returns to reporting status on the bus. No unique reset button \u2014 alert self-clears on device reconnection.",
+          "related_codes": [
+            "ui_summary_table",
+            "ui_device_states"
+          ],
+          "source": "XL1050 18-HD80D1-6F-EN Diagnostics/Summary Table, XL850 18-HD73D1-9E-EN Diagnostics, AccuLink Platinum 1050 11-HD15D1-5-EN diagnostics troubleshooting, Trane System Alert Guide public distributor PDF p.25",
+          "severity": "urgent",
+          "surface": "wall_control",
+          "field_consensus_notes": "Primary 'device missing' indicator in Trane ecosystem \u2014 analog to Carrier 'Indoor/Outdoor unit not found' commissioning codes but with different architecture. Read it through Summary Table, not as a standalone slogan. Often indicates outdoor unit offline after power flicker."
+        }
+      ]
+    },
+    {
+      "platform_id": "trane_xv_communicating_outdoor",
+      "platform_name": "Trane XV20i / XV18 / American Standard Platinum Variable-Speed Communicating Outdoor",
+      "platform_description": "Communicating variable-speed outdoor inverter platform using Communicating Display Assembly (CDA) as local diagnostic surface. Covers XV20i (4TWV0 family, TruComfort variable-speed modulating), XV18 (4TWV8 family, TruComfort variable-speed two-stage), American Standard AccuComfort Platinum variable-speed siblings. Outdoor faults visible at the wall control AND at the outdoor CDA. 184.xx family is drive-protection; 185.xx family is drive-modulation; 068.xx is defrost; 126.00 is system-level equipment-change. Lockouts escalate from soft (5-15 min) to Universal Hard Lockout (184.08).",
+      "applies_to_models": [
+        "XV20i",
+        "XV18",
+        "4TWV0",
+        "4TWV8",
+        "American Standard AccuComfort Platinum 4A6V0 / 4A6V8 siblings"
+      ],
+      "applies_to_years": "2013-2026",
+      "model_number_prefixes": [
+        "4TWV0",
+        "4TWV8",
+        "4A6V0",
+        "4A6V8",
+        "XV20",
+        "XV18"
+      ],
+      "visual_identification": "Outdoor Communicating Display Assembly (CDA) inside heat pump control box. Home/Status screen + Monitor Menu + Alert Menu + Alert History + Configuration Menu + Control Menu. CDA displays alert codes locally AND codes are passed to wall control. COMM light behavior independent of CDA screen. Variable-speed modulating compressor distinguishes this platform from two-stage communicating outdoor.",
+      "display_type": "alphanumeric",
+      "platform_notes": "Public source: Trane System Alert Guide (TR_Alarm-Guide-Booklet_8-5-2020.pdf) public distributor-posted PDF. Pages 18 (068.xx defrost), 25 (126.00 equipment change), 41 (184.xx drive protection), 42 (185.xx drive modulation). 184.08 Universal Hard Lockout has DIFFERENT reset procedures on Legacy (cycle power or clear CDA fault history) vs Link (thermostat reboot menu). 184.07 is separate Max Protection Hard Lockout trigger.",
+      "codes": [
+        {
+          "code_id": "cda_monitor_menu",
+          "code_identifier": "Monitor Menu",
+          "code_type": "menu_display",
+          "meaning": "Outdoor CDA real-time status menu",
+          "root_causes": [],
+          "diagnostic_path": [
+            "Use Monitor Menu to observe live system state, suction pressure, superheat, etc."
+          ],
+          "escalation": "None",
+          "reset_behavior": "Menu label.",
+          "related_codes": [
+            "cda_alert_menu",
+            "cda_alert_history"
+          ],
+          "source": "Trane XV20i/XV18 installer/service documentation",
+          "severity": "informational"
+        },
+        {
+          "code_id": "cda_alert_menu",
+          "code_identifier": "Alert Menu",
+          "code_type": "menu_display",
+          "meaning": "Outdoor CDA active alerts menu",
+          "root_causes": [],
+          "diagnostic_path": [
+            "Use Alert Menu to view active outdoor faults at CDA"
+          ],
+          "escalation": "None",
+          "reset_behavior": "Menu label.",
+          "related_codes": [
+            "cda_alert_history"
+          ],
+          "source": "Trane XV20i/XV18 installer/service documentation",
+          "severity": "informational"
+        },
+        {
+          "code_id": "cda_alert_history",
+          "code_identifier": "Alert History",
+          "code_type": "menu_display",
+          "meaning": "Outdoor CDA historical faults list",
+          "root_causes": [],
+          "diagnostic_path": [
+            "Use to review past outdoor faults at CDA",
+            "On Legacy systems, clearing CDA fault history is part of 184.08 hard-lockout reset procedure"
+          ],
+          "escalation": "None",
+          "reset_behavior": "Menu label. Can be cleared as part of hard-lockout reset on Legacy systems.",
+          "related_codes": [
+            "cda_alert_menu",
+            "code_err_184_08"
+          ],
+          "source": "Trane XV20i/XV18 installer/service documentation",
+          "severity": "informational"
+        },
+        {
+          "code_id": "cda_config_menu",
+          "code_identifier": "Configuration Menu",
+          "code_type": "menu_display",
+          "meaning": "Outdoor CDA configuration/setup menu",
+          "root_causes": [],
+          "diagnostic_path": [
+            "Service-only menu for outdoor configuration"
+          ],
+          "escalation": "None",
+          "reset_behavior": "Menu label.",
+          "related_codes": [
+            "cda_control_menu"
+          ],
+          "source": "Trane XV20i/XV18 installer/service documentation",
+          "severity": "informational"
+        },
+        {
+          "code_id": "cda_control_menu",
+          "code_identifier": "Control Menu",
+          "code_type": "menu_display",
+          "meaning": "Outdoor CDA test/control functions menu",
+          "root_causes": [],
+          "diagnostic_path": [
+            "Service-only menu for forced defrost, compressor tests, etc."
+          ],
+          "escalation": "None",
+          "reset_behavior": "Menu label.",
+          "related_codes": [
+            "cda_config_menu"
+          ],
+          "source": "Trane XV20i/XV18 installer/service documentation",
+          "severity": "informational"
+        },
+        {
+          "code_id": "cda_defrost_status",
+          "code_identifier": "DEFROST",
+          "code_type": "menu_display",
+          "meaning": "Active defrost cycle indicator shown on CDA screen",
+          "root_causes": [],
+          "diagnostic_path": [
+            "Normal state during defrost \u2014 not a fault"
+          ],
+          "escalation": "None",
+          "reset_behavior": "Clears when defrost completes.",
+          "related_codes": [
+            "code_err_068_01",
+            "code_err_068_02"
+          ],
+          "source": "Trane XV20i/XV18 installer/service documentation",
+          "severity": "informational"
+        },
+        {
+          "code_id": "cda_test_complete",
+          "code_identifier": "TEST COMPLETE",
+          "code_type": "menu_display",
+          "meaning": "Shown on CDA after completion of certain tests/diagnostics",
+          "root_causes": [],
+          "diagnostic_path": [
+            "Normal post-test indicator"
+          ],
+          "escalation": "None",
+          "reset_behavior": "Normal.",
+          "related_codes": [
+            "cda_control_menu"
+          ],
+          "source": "Trane XV20i/XV18 installer/service documentation",
+          "severity": "informational"
+        },
+        {
+          "code_id": "code_err_068_01",
+          "code_identifier": "ERR.068.01",
+          "code_type": "alphanumeric",
+          "meaning": "Defrost Fault B and/or C",
+          "root_causes": [
+            "Very high delta T",
+            "Defrost terminated at least 10 times in a row on maximum defrost time"
+          ],
+          "diagnostic_path": [
+            "Investigate max-time defrost terminations pattern",
+            "Check refrigerant charge and coil condition",
+            "Check outdoor fan operation during defrost"
+          ],
+          "escalation": "Not explicitly exposed in the accessible public snippet",
+          "reset_behavior": "Not explicitly exposed in public snippet.",
+          "related_codes": [
+            "code_err_068_02"
+          ],
+          "source": "Trane System Alert Guide public distributor-posted PDF, 068.xx family (page 18 for related snippet)",
+          "severity": "service_soon",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_err_068_02",
+          "code_identifier": "ERR.068.02",
+          "code_type": "alphanumeric",
+          "meaning": "Defrost Fault A and (B and/or C) \u2014 combined defrost-fault condition",
+          "root_causes": [
+            "Outdoor fan failure",
+            "Outdoor fan running during defrost when it should not be"
+          ],
+          "diagnostic_path": [
+            "Verify outdoor fan operation during defrost",
+            "Check fan motor and relay",
+            "Check defrost sensor and reversing valve"
+          ],
+          "escalation": "Not explicitly exposed in accessible public snippet",
+          "reset_behavior": "Not explicitly exposed in public snippet.",
+          "related_codes": [
+            "code_err_068_01"
+          ],
+          "source": "Trane System Alert Guide public distributor-posted PDF p.18",
+          "severity": "service_soon",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_err_184_01",
+          "code_identifier": "ERR.184.01",
+          "code_type": "alphanumeric",
+          "meaning": "Compressor Dome Temperature Protection \u2014 High Speed",
+          "root_causes": [
+            "Low charge",
+            "Restricted metering device / high superheat",
+            "Indoor expansion valve in cooling mode",
+            "Outdoor expansion valve in heating mode",
+            "Restricted condenser airflow in cooling",
+            "Dome temperature sensor calibration issue",
+            "High indoor ambient in heat mode"
+          ],
+          "diagnostic_path": [
+            "Check refrigerant charge",
+            "Check metering device and superheat",
+            "Verify condenser airflow",
+            "Verify dome sensor calibration",
+            "Increase indoor airflow"
+          ],
+          "escalation": "15-minute soft lockout; 5 occurrences within approximately 5 hours result in Universal Hard Lockout (184.08)",
+          "reset_behavior": "Soft lockout clears after timer; repeated occurrences escalate to 184.08 hard lockout.",
+          "related_codes": [
+            "code_err_184_02",
+            "code_err_184_08"
+          ],
+          "source": "Trane System Alert Guide p.41, public distributor-posted PDF",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_err_184_02",
+          "code_identifier": "ERR.184.02",
+          "code_type": "alphanumeric",
+          "meaning": "Compressor Dome Temperature Protection \u2014 Low Speed",
+          "root_causes": [
+            "Low charge",
+            "Restricted metering device / high superheat",
+            "Indoor expansion valve in cooling mode",
+            "Outdoor expansion valve in heating mode",
+            "Restricted condenser airflow in cooling",
+            "Dome temperature sensor calibration",
+            "High indoor ambient in heat mode"
+          ],
+          "diagnostic_path": [
+            "Same diagnostic path as 184.01 but triggered at low speed"
+          ],
+          "escalation": "15-minute soft lockout; 5 occurrences within approximately 5 hours result in Universal Hard Lockout (184.08)",
+          "reset_behavior": "Soft lockout clears after timer; repeated occurrences escalate.",
+          "related_codes": [
+            "code_err_184_01",
+            "code_err_184_08"
+          ],
+          "source": "Trane System Alert Guide p.41, public distributor-posted PDF",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_err_184_03",
+          "code_identifier": "ERR.184.03",
+          "code_type": "alphanumeric",
+          "meaning": "Low Suction Pressure Cooling Protection",
+          "root_causes": [
+            "Low charge",
+            "EEV pump down",
+            "Low-side restriction",
+            "Pressure transducer out of calibration or failure"
+          ],
+          "diagnostic_path": [
+            "Check charge",
+            "Check for low-side restriction/pump-down",
+            "Verify suction pressure transducer"
+          ],
+          "escalation": "5-minute soft lockout",
+          "reset_behavior": "Soft lockout clears after timer; repeated 184.xx events can escalate to hard lockout.",
+          "related_codes": [
+            "code_err_184_04",
+            "code_err_184_07",
+            "code_err_184_08"
+          ],
+          "source": "Trane System Alert Guide p.41, public distributor-posted PDF",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_err_184_04",
+          "code_identifier": "ERR.184.04",
+          "code_type": "alphanumeric",
+          "meaning": "Low Suction Pressure Heating Protection",
+          "root_causes": [
+            "Low charge",
+            "EEV pump down",
+            "Low-side restriction",
+            "Pressure transducer calibration/failure",
+            "Outdoor ambient below -10\u00b0F",
+            "Outdoor coil iced up",
+            "Low/no outdoor airflow"
+          ],
+          "diagnostic_path": [
+            "Check charge and low-side",
+            "Inspect outdoor coil for ice",
+            "Verify outdoor airflow",
+            "Check ambient conditions"
+          ],
+          "escalation": "5-minute soft lockout",
+          "reset_behavior": "Soft lockout clears; repeated events escalate.",
+          "related_codes": [
+            "code_err_184_03",
+            "code_err_184_07",
+            "code_err_184_08"
+          ],
+          "source": "Trane System Alert Guide p.41, public distributor-posted PDF",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_err_184_05",
+          "code_identifier": "ERR.184.05",
+          "code_type": "alphanumeric",
+          "meaning": "Max Current Limit Protection",
+          "root_causes": [
+            "Drive has reached maximum allowed current at low-speed operation"
+          ],
+          "diagnostic_path": [
+            "Public System Alert Guide snippet confirms the protection event",
+            "Deeper cause tree in full alert booklet/TSM"
+          ],
+          "escalation": "5-minute soft lockout; 5 occurrences within approximately 5 hours result in Universal Hard Lockout",
+          "reset_behavior": "Soft lockout clears after timer; repeated escalate.",
+          "related_codes": [
+            "code_err_185_06"
+          ],
+          "source": "Trane System Alert Guide public distributor-posted PDF",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_err_184_06",
+          "code_identifier": "ERR.184.06",
+          "code_type": "alphanumeric",
+          "meaning": "Diagonal Current Protection",
+          "root_causes": [
+            "High indoor load conditions",
+            "Low indoor airflow",
+            "High indoor blower static",
+            "Refrigerant overcharge"
+          ],
+          "diagnostic_path": [
+            "Check indoor load and airflow",
+            "Verify blower static pressure",
+            "Verify refrigerant charge"
+          ],
+          "escalation": "5-minute soft lockout; 5 occurrences within approximately 5 hours result in Universal Hard Lockout (184.08)",
+          "reset_behavior": "Soft lockout clears; repeated escalate.",
+          "related_codes": [
+            "code_err_184_05",
+            "code_err_184_07",
+            "code_err_184_08"
+          ],
+          "source": "Trane System Alert Guide p.41, public distributor-posted PDF",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_err_184_07",
+          "code_identifier": "ERR.184.07",
+          "code_type": "alphanumeric",
+          "meaning": "Max Protection Hard Lockout",
+          "root_causes": [
+            "Maximum number of protection shutdowns (184.xx) have occurred"
+          ],
+          "diagnostic_path": [
+            "Review preceding 184.xx fault history to identify root cause of repeated protection events"
+          ],
+          "escalation": "Hard lockout",
+          "reset_behavior": "Clearing procedure per 184.08: Legacy = cycle power to outdoor unit OR clear fault history in outdoor CDA; Link = thermostat reboot menu. Power cycling at disconnect alone may not clear.",
+          "related_codes": [
+            "code_err_184_01",
+            "code_err_184_02",
+            "code_err_184_03",
+            "code_err_184_04",
+            "code_err_184_05",
+            "code_err_184_06",
+            "code_err_184_08"
+          ],
+          "source": "Trane System Alert Guide p.41, public distributor-posted PDF",
+          "severity": "urgent",
+          "surface": "outdoor_cda",
+          "field_consensus_notes": "Separate hard-lockout trigger from 184.08. Same reset procedure but triggered by different threshold."
+        },
+        {
+          "code_id": "code_err_184_08",
+          "code_identifier": "ERR.184.08",
+          "code_type": "alphanumeric",
+          "meaning": "Universal Hard Lockout \u2014 system entered hard lockout after repeated protection shutdowns",
+          "root_causes": [
+            "Repeated 184.xx protection events reached universal hard-lockout threshold"
+          ],
+          "diagnostic_path": [
+            "Investigate alerts leading to the hard lockout",
+            "Legacy systems: cycle power to outdoor unit OR clear fault history in outdoor CDA",
+            "Link systems: reboot system from thermostat menu"
+          ],
+          "escalation": "Hard lockout",
+          "reset_behavior": "LEGACY: cycle power to outdoor unit or clear fault history in outdoor CDA. LINK: reboot system from thermostat menu. DIFFERENT PROCEDURES \u2014 use the one matching your system generation.",
+          "related_codes": [
+            "code_err_184_07"
+          ],
+          "source": "Trane System Alert Guide p.41, public distributor-posted PDF",
+          "severity": "urgent",
+          "surface": "outdoor_cda",
+          "field_consensus_notes": "CRITICAL: Reset procedure differs Legacy vs Link. Using the wrong procedure leaves the hard lockout in place even though underlying condition has cleared."
+        },
+        {
+          "code_id": "code_err_184_09",
+          "code_identifier": "ERR.184.09",
+          "code_type": "alphanumeric",
+          "meaning": "Internal Lube Failure",
+          "root_causes": [
+            "Three consecutive internal lube cycles were missed",
+            "Internal communication fault within drive software"
+          ],
+          "diagnostic_path": [
+            "Drive will reboot to reset software code \u2014 no field action required per public snippet"
+          ],
+          "escalation": "5-minute soft lockout",
+          "reset_behavior": "Drive will reboot to reset software code.",
+          "related_codes": [
+            "code_err_185_05",
+            "code_err_185_09"
+          ],
+          "source": "Trane System Alert Guide p.41, public distributor-posted PDF",
+          "severity": "service_soon",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_err_184_10",
+          "code_identifier": "ERR.184.10",
+          "code_type": "alphanumeric",
+          "meaning": "SOV (switch-over valve) in Wrong Mode",
+          "root_causes": [
+            "Switch-over valve is in heating mode while system is calling for cooling",
+            "Outdated outdoor VSPD software / thermostat software",
+            "SOV disconnected or broken wiring"
+          ],
+          "diagnostic_path": [
+            "Reprogram drive to latest outdoor-unit VSPD software",
+            "Update thermostat software",
+            "Check SOV wiring and connections to drive"
+          ],
+          "escalation": "5-minute soft lockout",
+          "reset_behavior": "Clears when mode/wiring/software issue corrected.",
+          "related_codes": [],
+          "source": "Trane System Alert Guide p.41, public distributor-posted PDF",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_err_185_01",
+          "code_identifier": "ERR.185.01",
+          "code_type": "alphanumeric",
+          "meaning": "Compressor Dome Temp Protect Down (speed reduction response)",
+          "root_causes": [
+            "Excessive compressor dome temperature protection",
+            "Low ambient conditions"
+          ],
+          "diagnostic_path": [
+            "Check dome temperature and ambient conditions",
+            "Fuller cause tree in full alert booklet"
+          ],
+          "escalation": "Compressor speed reduced",
+          "reset_behavior": "Not explicitly exposed in accessible snippet.",
+          "related_codes": [
+            "code_err_185_02",
+            "code_err_185_03",
+            "code_err_184_01",
+            "code_err_184_02"
+          ],
+          "source": "Trane System Alert Guide p.42, public distributor-posted PDF",
+          "severity": "service_soon",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_err_185_02",
+          "code_identifier": "ERR.185.02",
+          "code_type": "alphanumeric",
+          "meaning": "Compressor Dome Temp Protect Up (speed increase response)",
+          "root_causes": [
+            "Excessive compressor dome temperature protection"
+          ],
+          "diagnostic_path": [
+            "Check dome temperature behavior"
+          ],
+          "escalation": "Compressor speed increased",
+          "reset_behavior": "Not explicitly exposed in accessible snippet.",
+          "related_codes": [
+            "code_err_185_01",
+            "code_err_185_03",
+            "code_err_184_01",
+            "code_err_184_02"
+          ],
+          "source": "Trane System Alert Guide p.42, public distributor-posted PDF",
+          "severity": "service_soon",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_err_185_03",
+          "code_identifier": "ERR.185.03",
+          "code_type": "alphanumeric",
+          "meaning": "Compressor Dome Temp Protect \u2014 Low Hold",
+          "root_causes": [
+            "Excessive compressor dome temperature protection"
+          ],
+          "diagnostic_path": [
+            "Hold response version of low-speed dome-temperature control"
+          ],
+          "escalation": "Compressor speed held",
+          "reset_behavior": "Not explicitly exposed in accessible snippet.",
+          "related_codes": [
+            "code_err_185_01",
+            "code_err_185_02"
+          ],
+          "source": "Trane System Alert Guide p.42, public distributor-posted PDF",
+          "severity": "service_soon",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_err_185_05",
+          "code_identifier": "ERR.185.05",
+          "code_type": "alphanumeric",
+          "meaning": "Compressor Lubrication Active",
+          "root_causes": [
+            "Compressor internal lubrication cycle active"
+          ],
+          "diagnostic_path": [
+            "Informational \u2014 compressor lubrication running"
+          ],
+          "escalation": "Not explicitly exposed in accessible snippet",
+          "reset_behavior": "Not explicitly exposed.",
+          "related_codes": [
+            "code_err_184_09",
+            "code_err_185_09"
+          ],
+          "source": "Trane System Alert Guide p.42, public distributor-posted PDF",
+          "severity": "informational",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_err_185_06",
+          "code_identifier": "ERR.185.06",
+          "code_type": "alphanumeric",
+          "meaning": "Drive Current Protect Up",
+          "root_causes": [
+            "High compressor load during low-speed operation"
+          ],
+          "diagnostic_path": [
+            "Check compressor load and system conditions causing high current draw"
+          ],
+          "escalation": "Compressor speed increased",
+          "reset_behavior": "Not cleanly documented in public snippet.",
+          "related_codes": [
+            "code_err_184_05"
+          ],
+          "source": "Trane System Alert Guide public distributor-posted PDF",
+          "severity": "service_soon",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_err_185_07",
+          "code_identifier": "ERR.185.07",
+          "code_type": "alphanumeric",
+          "meaning": "Drive Current Protect Hold",
+          "root_causes": [
+            "High compressor load"
+          ],
+          "diagnostic_path": [
+            "Hold response to drive-current protection"
+          ],
+          "escalation": "High compressor load held response",
+          "reset_behavior": "Not explicitly exposed.",
+          "related_codes": [
+            "code_err_185_06",
+            "code_err_184_05",
+            "code_err_184_06"
+          ],
+          "source": "Trane System Alert Guide p.42, public distributor-posted PDF",
+          "severity": "service_soon",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_err_185_09",
+          "code_identifier": "ERR.185.09",
+          "code_type": "alphanumeric",
+          "meaning": "System Oil Return Active",
+          "root_causes": [
+            "System Oil Return function active to bring oil back to compressor",
+            "Low dome temperature with ON condition"
+          ],
+          "diagnostic_path": [
+            "Informational \u2014 oil return function active"
+          ],
+          "escalation": "Not explicitly exposed",
+          "reset_behavior": "Not explicitly exposed.",
+          "related_codes": [
+            "code_err_184_09",
+            "code_err_185_05"
+          ],
+          "source": "Trane System Alert Guide p.42, public distributor-posted PDF",
+          "severity": "informational",
+          "surface": "outdoor_cda"
+        }
+      ]
+    },
+    {
+      "platform_id": "trane_tam8_am8_air_handler",
+      "platform_name": "Trane TAM8 / American Standard *AM8 Communicating Air Handler",
+      "platform_description": "Hyperion-era communicating air handler family with comprehensive ERR code dictionary + 4-LED local diagnostic system + indoor electronic expansion valve (EEV) support + hydronic heat option (HHC) + electric heat control (EHC). Richest public indoor alert dictionary in the Trane ecosystem. Codes span communication faults (91, 159, 171), electric-heat faults (104, 105, 152, 153, 154), EEV faults (155, 160, 163, 164, 166), sensor faults (52, 161), configuration faults (114, 123, 160), and hydronic-heat faults (168, 169, 170, 173). Fault severity labels on the public page: Critical, User Display, Information.",
+      "applies_to_models": [
+        "TAM8",
+        "*AM8A0A24V21CA",
+        "*AM8A0B30V21CA",
+        "*AM8A0C36V21CA",
+        "*AM8A0C42V21CA",
+        "*AM8A0C48V21CA",
+        "*AM8A0C60V21CA"
+      ],
+      "applies_to_years": "2015-2026",
+      "model_number_prefixes": [
+        "TAM8",
+        "AM8",
+        "TAM9",
+        "AAM8"
+      ],
+      "visual_identification": "Convertible air handler with four local LEDs on distribution board: COMM LED (amber) flashes count of communicating devices connected; BM LED (solid ON when powered); STATUS LED (flashes 1/sec in idle, flashes 1/100 CFM during demand); UNIT LED (blue, flashes once every 4 seconds when comm is normal). ERR codes display on thermostat (A/TCONT900, A/TZONE950). AFC STATUS LED solid-ON during certain faults.",
+      "display_type": "alphanumeric",
+      "platform_notes": "Public source: Trane Hyperion *AM8/TAM8 Field Reference Data, Alert Codes page 22. Multi-LED architecture means tech must read LEDs AND code together \u2014 either alone is incomplete. Subcodes like 91.02, 104.01, 114.05, 159.01 are stored as separate records. Fault levels from public page (Critical/User Display/Information) embedded in severity + escalation.",
+      "codes": [
+        {
+          "code_id": "led_comm",
+          "code_identifier": "COMM LED (amber)",
+          "code_type": "menu_display",
+          "meaning": "Flashes the number of communicating devices connected on bus",
+          "root_causes": [],
+          "diagnostic_path": [
+            "Count flashes to verify expected number of devices connected",
+            "If count is wrong, check bus wiring and device power"
+          ],
+          "escalation": "None by itself \u2014 diagnostic aid",
+          "reset_behavior": "Updates dynamically with bus state.",
+          "related_codes": [
+            "led_bm",
+            "led_status",
+            "led_unit"
+          ],
+          "source": "Trane Hyperion *AM8/TAM8 Field Reference Data, Alert Codes, p.22",
+          "severity": "informational",
+          "surface": "indoor_led"
+        },
+        {
+          "code_id": "led_bm",
+          "code_identifier": "BM LED",
+          "code_type": "menu_display",
+          "meaning": "Solid ON when power is applied to the air handler",
+          "root_causes": [],
+          "diagnostic_path": [
+            "If BM LED is OFF when power expected, check 24V supply and board power"
+          ],
+          "escalation": "None",
+          "reset_behavior": "Reflects power state.",
+          "related_codes": [
+            "led_comm",
+            "led_status",
+            "led_unit"
+          ],
+          "source": "Trane Hyperion *AM8/TAM8 Field Reference Data, p.22",
+          "severity": "informational",
+          "surface": "indoor_led"
+        },
+        {
+          "code_id": "led_status",
+          "code_identifier": "STATUS LED",
+          "code_type": "menu_display",
+          "meaning": "Flashes once per second in Idle mode; during thermostat demand, flashes 1 time per 100 CFM requested. Note: AFC STATUS LED will be solid ON during certain faults.",
+          "root_causes": [],
+          "diagnostic_path": [
+            "Count flashes during demand to verify requested CFM matches thermostat call",
+            "Solid ON = fault condition; cross-reference active ERR code"
+          ],
+          "escalation": "Solid ON indicates fault",
+          "reset_behavior": "Reflects real-time system state.",
+          "related_codes": [
+            "led_comm",
+            "led_bm",
+            "led_unit"
+          ],
+          "source": "Trane Hyperion *AM8/TAM8 Field Reference Data, p.22",
+          "severity": "informational",
+          "surface": "indoor_led"
+        },
+        {
+          "code_id": "led_unit",
+          "code_identifier": "UNIT LED (blue)",
+          "code_type": "menu_display",
+          "meaning": "Flashes once every four seconds when communications are normal",
+          "root_causes": [],
+          "diagnostic_path": [
+            "If UNIT LED not blinking or blinking irregularly, check ABCD bus communication"
+          ],
+          "escalation": "Irregular pattern = communication issue",
+          "reset_behavior": "Reflects bus comm state.",
+          "related_codes": [
+            "led_comm",
+            "code_err_91_02",
+            "code_err_159_00"
+          ],
+          "source": "Trane Hyperion *AM8/TAM8 Field Reference Data, p.22",
+          "severity": "informational",
+          "surface": "indoor_led"
+        },
+        {
+          "code_id": "code_err_18",
+          "code_identifier": "ERR18",
+          "code_type": "alphanumeric",
+          "meaning": "Control failure / Internal Control Error",
+          "root_causes": [
+            "Control fault"
+          ],
+          "diagnostic_path": [
+            "Replace AFC per public field-reference page"
+          ],
+          "escalation": "Critical",
+          "reset_behavior": "Not separately stated in public row.",
+          "related_codes": [
+            "code_err_19",
+            "code_err_91_02",
+            "code_err_159_00"
+          ],
+          "source": "Trane Hyperion *AM8/TAM8 Field Reference Data, p.22",
+          "severity": "safety_critical",
+          "surface": "indoor_display"
+        },
+        {
+          "code_id": "code_err_19",
+          "code_identifier": "ERR19",
+          "code_type": "alphanumeric",
+          "meaning": "Twinning fault / Air handler twinning error",
+          "root_causes": [
+            "More than one indoor unit connected on communicating bus \u2014 not allowed"
+          ],
+          "diagnostic_path": [
+            "Public page identifies multiple ID units on bus as the cause",
+            "Remove extra indoor unit from communicating bus"
+          ],
+          "escalation": "Critical",
+          "reset_behavior": "Clears when invalid twinning/bus configuration corrected.",
+          "related_codes": [
+            "code_err_91_02",
+            "code_err_159_00"
+          ],
+          "source": "Trane Hyperion *AM8/TAM8 Field Reference Data, p.22",
+          "severity": "safety_critical",
+          "surface": "indoor_display"
+        },
+        {
+          "code_id": "code_52_open",
+          "code_identifier": "52 (ICAS OPEN)",
+          "code_type": "alphanumeric",
+          "meaning": "Indoor air sensor error \u2014 ICAS OPEN",
+          "root_causes": [
+            "Sensor open",
+            "Unplugged",
+            "Wiring harness"
+          ],
+          "diagnostic_path": [
+            "Check indoor air sensor circuit for open condition, unplugged sensor, or harness fault"
+          ],
+          "escalation": "Information",
+          "reset_behavior": "Clears when indoor air sensor circuit returns to normal.",
+          "related_codes": [
+            "code_52_short"
+          ],
+          "source": "Trane Hyperion *AM8/TAM8 Field Reference Data, p.22",
+          "severity": "informational",
+          "surface": "indoor_display"
+        },
+        {
+          "code_id": "code_52_short",
+          "code_identifier": "52 (ICAS SHORT)",
+          "code_type": "alphanumeric",
+          "meaning": "Indoor air sensor error \u2014 ICAS SHORT",
+          "root_causes": [
+            "Sensor shorted",
+            "Wiring harness"
+          ],
+          "diagnostic_path": [
+            "Check indoor air sensor circuit for shorted sensor or shorted harness"
+          ],
+          "escalation": "Information",
+          "reset_behavior": "Clears when indoor air sensor circuit returns to normal.",
+          "related_codes": [
+            "code_52_open"
+          ],
+          "source": "Trane Hyperion *AM8/TAM8 Field Reference Data, p.22",
+          "severity": "informational",
+          "surface": "indoor_display"
+        },
+        {
+          "code_id": "code_90",
+          "code_identifier": "90 (SYS COM CRC)",
+          "code_type": "alphanumeric",
+          "meaning": "Communication busy fault \u2014 SYS COM CRC / SYS COMM",
+          "root_causes": [
+            "R & B to thermostat reversed polarity",
+            "Open/shorted data line",
+            "CCM communication error"
+          ],
+          "diagnostic_path": [
+            "Verify thermostat polarity",
+            "Inspect data line for open/short",
+            "Check CCM communications"
+          ],
+          "escalation": "Information",
+          "reset_behavior": "Clears when communication busy / CRC condition corrected.",
+          "related_codes": [
+            "code_err_91_02",
+            "code_err_91_03",
+            "code_err_159_00"
+          ],
+          "source": "Trane Hyperion *AM8/TAM8 Field Reference Data, p.22",
+          "severity": "informational",
+          "surface": "indoor_display"
+        },
+        {
+          "code_id": "code_err_91_02",
+          "code_identifier": "ERR91.02",
+          "code_type": "alphanumeric",
+          "meaning": "Communication inactive fault / excessive communication errors",
+          "root_causes": [
+            "R and B reversed polarity at thermostat",
+            "Open/shorted data line",
+            "CCM communication error"
+          ],
+          "diagnostic_path": [
+            "Verify thermostat polarity, data line, and CCM communications"
+          ],
+          "escalation": "Critical",
+          "reset_behavior": "Clears when bus communication restored.",
+          "related_codes": [
+            "code_err_91_03",
+            "code_err_159_00",
+            "led_comm"
+          ],
+          "source": "Trane Hyperion *AM8/TAM8 Field Reference Data, p.22",
+          "severity": "safety_critical",
+          "surface": "indoor_display"
+        },
+        {
+          "code_id": "code_err_91_03",
+          "code_identifier": "ERR91.03",
+          "code_type": "alphanumeric",
+          "meaning": "Communication inactive fault / loss of heat-cool demand message",
+          "root_causes": [
+            "Loss of Bit Master / communication source"
+          ],
+          "diagnostic_path": [
+            "Identify source of comm demand message loss on bus"
+          ],
+          "escalation": "Critical",
+          "reset_behavior": "Clears when bus communication restored.",
+          "related_codes": [
+            "code_err_91_02",
+            "code_err_171_00"
+          ],
+          "source": "Trane Hyperion *AM8/TAM8 Field Reference Data, p.22",
+          "severity": "safety_critical",
+          "surface": "indoor_display"
+        },
+        {
+          "code_id": "code_err_92",
+          "code_identifier": "ERR92",
+          "code_type": "alphanumeric",
+          "meaning": "Fuse failure / CHECK FUSE",
+          "root_causes": [
+            "24VAC circuit short"
+          ],
+          "diagnostic_path": [
+            "Check low-voltage short / fuse condition",
+            "Isolate 24V branches until short is found"
+          ],
+          "escalation": "Critical",
+          "reset_behavior": "Clears after fuse/short issue corrected.",
+          "related_codes": [
+            "code_err_18",
+            "code_err_159_00"
+          ],
+          "source": "Trane Hyperion *AM8/TAM8 Field Reference Data, p.22",
+          "severity": "safety_critical",
+          "surface": "indoor_display"
+        },
+        {
+          "code_id": "code_err_104_00",
+          "code_identifier": "ERR104.00",
+          "code_type": "alphanumeric",
+          "meaning": "Heater relay fault / EH RLY",
+          "root_causes": [
+            "Heater relay failure"
+          ],
+          "diagnostic_path": [
+            "Test heater relay operation"
+          ],
+          "escalation": "Critical",
+          "reset_behavior": "Not separately stated.",
+          "related_codes": [
+            "code_err_104_01",
+            "code_err_104_02",
+            "code_err_105_00"
+          ],
+          "source": "Trane Hyperion *AM8/TAM8 Field Reference Data, p.22",
+          "severity": "safety_critical",
+          "surface": "indoor_display"
+        },
+        {
+          "code_id": "code_err_104_01",
+          "code_identifier": "ERR104.01",
+          "code_type": "alphanumeric",
+          "meaning": "Heater Relay Stuck Closed Error / EK RLY WELD#",
+          "root_causes": [
+            "Heater relay failure - welded contacts"
+          ],
+          "diagnostic_path": [
+            "Verify relay not welded closed",
+            "Replace heater relay"
+          ],
+          "escalation": "Critical",
+          "reset_behavior": "Not separately stated.",
+          "related_codes": [
+            "code_err_104_00",
+            "code_err_104_02"
+          ],
+          "source": "Trane Hyperion *AM8/TAM8 Field Reference Data, p.22",
+          "severity": "safety_critical",
+          "surface": "indoor_display"
+        },
+        {
+          "code_id": "code_err_104_02",
+          "code_identifier": "ERR104.02",
+          "code_type": "alphanumeric",
+          "meaning": "All heater relay stuck open error / OPEN#",
+          "root_causes": [
+            "Heater relay failure",
+            "Open element",
+            "Open non-cycling limit switch"
+          ],
+          "diagnostic_path": [
+            "Check relay, heater element, and non-cycling limit"
+          ],
+          "escalation": "Critical",
+          "reset_behavior": "Not separately stated.",
+          "related_codes": [
+            "code_err_104_00",
+            "code_err_153_00"
+          ],
+          "source": "Trane Hyperion *AM8/TAM8 Field Reference Data, p.22",
+          "severity": "safety_critical",
+          "surface": "indoor_display"
+        },
+        {
+          "code_id": "code_err_105_00",
+          "code_identifier": "ERR105.00",
+          "code_type": "alphanumeric",
+          "meaning": "Heater interlock relay fault / blower interlock relay stuck open",
+          "root_causes": [
+            "Blower interlock relay failure"
+          ],
+          "diagnostic_path": [
+            "Test blower interlock relay"
+          ],
+          "escalation": "Critical",
+          "reset_behavior": "Not separately stated.",
+          "related_codes": [
+            "code_err_105_01"
+          ],
+          "source": "Trane Hyperion *AM8/TAM8 Field Reference Data, p.22",
+          "severity": "safety_critical",
+          "surface": "indoor_display"
+        },
+        {
+          "code_id": "code_err_105_01",
+          "code_identifier": "ERR105.01",
+          "code_type": "alphanumeric",
+          "meaning": "Heater interlock relay fault / blower interlock relay stuck closed",
+          "root_causes": [
+            "Blower interlock relay failure"
+          ],
+          "diagnostic_path": [
+            "Test blower interlock relay"
+          ],
+          "escalation": "Critical",
+          "reset_behavior": "Not separately stated.",
+          "related_codes": [
+            "code_err_105_00"
+          ],
+          "source": "Trane Hyperion *AM8/TAM8 Field Reference Data, p.22",
+          "severity": "safety_critical",
+          "surface": "indoor_display"
+        },
+        {
+          "code_id": "code_err_106_00",
+          "code_identifier": "ERR106.00",
+          "code_type": "alphanumeric",
+          "meaning": "External shutdown fault / EXT SW OPEN",
+          "root_causes": [
+            "External float switch or other device open"
+          ],
+          "diagnostic_path": [
+            "Check external shutdown/float device and wiring"
+          ],
+          "escalation": "Critical",
+          "reset_behavior": "Clears when external shutdown input closes normally.",
+          "related_codes": [
+            "code_err_157_00",
+            "code_err_92"
+          ],
+          "source": "Trane Hyperion *AM8/TAM8 Field Reference Data, p.22",
+          "severity": "safety_critical",
+          "surface": "indoor_display"
+        },
+        {
+          "code_id": "code_err_114_02",
+          "code_identifier": "ERR114.02",
+          "code_type": "alphanumeric",
+          "meaning": "PM data corrupt / PM DATA ERR",
+          "root_causes": [
+            "Incorrect VS motor or PM installed"
+          ],
+          "diagnostic_path": [
+            "Verify proper motor / personality module (PM) pairing"
+          ],
+          "escalation": "Information \u2014 operation allowed",
+          "reset_behavior": "Not separately stated.",
+          "related_codes": [
+            "code_err_114_03",
+            "code_err_114_05",
+            "code_err_114_06",
+            "code_err_114_07"
+          ],
+          "source": "Trane Hyperion *AM8/TAM8 Field Reference Data, p.22",
+          "severity": "informational",
+          "surface": "indoor_display"
+        },
+        {
+          "code_id": "code_err_114_03",
+          "code_identifier": "ERR114.03",
+          "code_type": "alphanumeric",
+          "meaning": "ID motor error / ID MTR ERR",
+          "root_causes": [
+            "Motor HP value less than PM value",
+            "Incorrect VS motor or PM installed"
+          ],
+          "diagnostic_path": [
+            "Verify installed motor / PM data compatibility"
+          ],
+          "escalation": "Information \u2014 operation allowed",
+          "reset_behavior": "Not separately stated.",
+          "related_codes": [
+            "code_err_114_02",
+            "code_err_114_07"
+          ],
+          "source": "Trane Hyperion *AM8/TAM8 Field Reference Data, p.22",
+          "severity": "informational",
+          "surface": "indoor_display"
+        },
+        {
+          "code_id": "code_err_114_05",
+          "code_identifier": "ERR114.05",
+          "code_type": "alphanumeric",
+          "meaning": "PM bad or missing fault / PM MISSING",
+          "root_causes": [
+            "PM missing with good local copy"
+          ],
+          "diagnostic_path": [
+            "Verify PM presence and readability"
+          ],
+          "escalation": "Information",
+          "reset_behavior": "Clears when PM presence/data issue corrected.",
+          "related_codes": [
+            "code_err_114_02",
+            "code_err_114_06",
+            "code_err_114_07"
+          ],
+          "source": "Trane Hyperion *AM8/TAM8 Field Reference Data, p.22",
+          "severity": "informational",
+          "surface": "indoor_display"
+        },
+        {
+          "code_id": "code_err_114_06",
+          "code_identifier": "ERR114.06",
+          "code_type": "alphanumeric",
+          "meaning": "PM bad or missing fault / PM UNIT ERR",
+          "root_causes": [
+            "Bad data in PM with good local copy"
+          ],
+          "diagnostic_path": [
+            "Verify PM data integrity"
+          ],
+          "escalation": "Information",
+          "reset_behavior": "Clears when PM data issue corrected.",
+          "related_codes": [
+            "code_err_114_02",
+            "code_err_114_05",
+            "code_err_114_07"
+          ],
+          "source": "Trane Hyperion *AM8/TAM8 Field Reference Data, p.22",
+          "severity": "informational",
+          "surface": "indoor_display"
+        },
+        {
+          "code_id": "code_err_114_07",
+          "code_identifier": "ERR114.07",
+          "code_type": "alphanumeric",
+          "meaning": "ID motor error / MTR PWR HI",
+          "root_causes": [
+            "Motor HP is greater than PM value",
+            "Incorrect VS motor or PM installed"
+          ],
+          "diagnostic_path": [
+            "Verify installed motor horsepower against PM value",
+            "Confirm correct VS motor / PM pairing"
+          ],
+          "escalation": "User Display",
+          "reset_behavior": "Clears when motor / PM mismatch corrected.",
+          "related_codes": [
+            "code_err_114_02",
+            "code_err_114_03",
+            "code_err_114_05",
+            "code_err_114_06"
+          ],
+          "source": "Trane Hyperion *AM8/TAM8 Field Reference Data, p.22",
+          "severity": "service_soon",
+          "surface": "indoor_display"
+        },
+        {
+          "code_id": "code_err_123_00",
+          "code_identifier": "ERR123.00",
+          "code_type": "alphanumeric",
+          "meaning": "Demand configuration fault / EH CONFIG",
+          "root_causes": [
+            "New unprogrammed EHC installed with KW jumper on PARK",
+            "Electric heat configuration error"
+          ],
+          "diagnostic_path": [
+            "Set KW jumper to match model / heater configuration"
+          ],
+          "escalation": "User Display / configuration fault",
+          "reset_behavior": "Clears after correct configuration.",
+          "related_codes": [
+            "code_err_152_00",
+            "code_err_153_00",
+            "code_err_154_00",
+            "code_err_154_01"
+          ],
+          "source": "Trane Hyperion *AM8/TAM8 Field Reference Data, p.22",
+          "severity": "service_soon",
+          "surface": "indoor_display"
+        },
+        {
+          "code_id": "code_err_152_00",
+          "code_identifier": "ERR152.00",
+          "code_type": "alphanumeric",
+          "meaning": "Heater element fault / EH ELMNT OP#",
+          "root_causes": [
+            "Heater element open"
+          ],
+          "diagnostic_path": [
+            "Check heater element continuity",
+            "Check heater bank"
+          ],
+          "escalation": "User Display",
+          "reset_behavior": "Clears when heater-element fault corrected.",
+          "related_codes": [
+            "code_err_104_00",
+            "code_err_104_01",
+            "code_err_104_02",
+            "code_err_153_00"
+          ],
+          "source": "Trane Hyperion *AM8/TAM8 Field Reference Data, p.22",
+          "severity": "service_soon",
+          "surface": "indoor_display"
+        },
+        {
+          "code_id": "code_err_153_00",
+          "code_identifier": "ERR153.00",
+          "code_type": "alphanumeric",
+          "meaning": "Thermal limit switch fault / EH CTCO TRIP",
+          "root_causes": [
+            "Low airflow",
+            "Dirty coil/filter",
+            "Cycling thermal cut-out (CTCO) trip has occurred"
+          ],
+          "diagnostic_path": [
+            "Check airflow, coil, filter",
+            "Inspect electric-heat thermal cutout chain"
+          ],
+          "escalation": "Normal / trip event noted in public alert guide",
+          "reset_behavior": "Public alert-guide snippet says cycle power to clear this alert.",
+          "related_codes": [
+            "code_err_154_00",
+            "code_err_154_01"
+          ],
+          "source": "Trane Hyperion *AM8/TAM8 Field Reference Data, p.22 and public alert-code snippet",
+          "severity": "urgent",
+          "surface": "indoor_display"
+        },
+        {
+          "code_id": "code_err_154_00",
+          "code_identifier": "ERR154.00",
+          "code_type": "alphanumeric",
+          "meaning": "EH airflow limit fault / EH OFF/NO AF",
+          "root_causes": [
+            "Electric heat control locked out because minimum airflow request has not been met",
+            "Low airflow",
+            "Dirty coil/filter",
+            "Airflow below required minimum"
+          ],
+          "diagnostic_path": [
+            "Verify external static / airflow table against minimum airflow requirement",
+            "Check for low airflow conditions"
+          ],
+          "escalation": "Critical \u2014 EHC locked out",
+          "reset_behavior": "Public alert-code snippet says cycle power to air handler to clear the alert.",
+          "related_codes": [
+            "code_err_153_00",
+            "code_err_154_01"
+          ],
+          "source": "Trane Hyperion *AM8/TAM8 Field Reference Data, p.22",
+          "severity": "safety_critical",
+          "surface": "indoor_display"
+        },
+        {
+          "code_id": "code_err_154_01",
+          "code_identifier": "ERR154.01",
+          "code_type": "alphanumeric",
+          "meaning": "EH airflow limit fault / EH LIM/NO AF",
+          "root_causes": [
+            "Inadequate airflow",
+            "Electric heat stages limited because minimum airflow cannot be met"
+          ],
+          "diagnostic_path": [
+            "Verify external static / airflow against required minimum"
+          ],
+          "escalation": "Major \u2014 electric heat limited rather than fully locked out",
+          "reset_behavior": "Clears when airflow requirement met.",
+          "related_codes": [
+            "code_err_154_00",
+            "code_err_153_00"
+          ],
+          "source": "Trane Hyperion *AM8/TAM8 Field Reference Data, p.22",
+          "severity": "urgent",
+          "surface": "indoor_display"
+        },
+        {
+          "code_id": "code_err_155_00",
+          "code_identifier": "ERR155.00",
+          "code_type": "alphanumeric",
+          "meaning": "Indoor EEV motor fault / EEV MTR ERR",
+          "root_causes": [
+            "EEV motor fault detected for 8 consecutive times",
+            "Faulty EEV motor / harness"
+          ],
+          "diagnostic_path": [
+            "Verify motor resistance against Service Facts",
+            "Inspect EEV motor windings / harness"
+          ],
+          "escalation": "Major \u2014 valve locked out",
+          "reset_behavior": "Not separately stated.",
+          "related_codes": [
+            "code_err_155_01",
+            "code_err_160_00",
+            "code_err_163_00",
+            "code_err_164_00"
+          ],
+          "source": "Trane Hyperion *AM8/TAM8 Field Reference Data, p.22",
+          "severity": "urgent",
+          "surface": "indoor_display"
+        },
+        {
+          "code_id": "code_err_155_01",
+          "code_identifier": "ERR155.01",
+          "code_type": "alphanumeric",
+          "meaning": "Indoor electronic expansion valve motor fault / EEV MTR ERR",
+          "root_causes": [
+            "EEV electric motor current indicates open or short",
+            "Faulty EEV motor / wiring harness"
+          ],
+          "diagnostic_path": [
+            "Check EEV motor winding/current signature",
+            "Inspect motor wiring harness"
+          ],
+          "escalation": "User Display",
+          "reset_behavior": "Clears when EEV motor open/short fault corrected.",
+          "related_codes": [
+            "code_err_155_00",
+            "code_err_163_00",
+            "code_err_164_00"
+          ],
+          "source": "Trane Hyperion *AM8/TAM8 Field Reference Data, p.22",
+          "severity": "service_soon",
+          "surface": "indoor_display"
+        },
+        {
+          "code_id": "code_err_156_00",
+          "code_identifier": "ERR156.00",
+          "code_type": "alphanumeric",
+          "meaning": "System low on charge fault / SYSTEM1 \u2014 high superheat condition",
+          "root_causes": [
+            "System low on charge",
+            "Liquid-line restriction",
+            "ET/GT sensor calibration"
+          ],
+          "diagnostic_path": [
+            "Check charge",
+            "Check for restriction",
+            "Verify sensor calibration"
+          ],
+          "escalation": "Critical",
+          "reset_behavior": "Not separately stated.",
+          "related_codes": [
+            "code_err_158_00",
+            "code_err_166_00",
+            "code_err_167_00"
+          ],
+          "source": "Trane Hyperion *AM8/TAM8 Field Reference Data, p.22",
+          "severity": "safety_critical",
+          "surface": "indoor_display"
+        },
+        {
+          "code_id": "code_err_157_00",
+          "code_identifier": "ERR157.00",
+          "code_type": "alphanumeric",
+          "meaning": "Condensate fault / ERR FLT",
+          "root_causes": [
+            "Condensate overflow condition detected",
+            "Clogged condensate line"
+          ],
+          "diagnostic_path": [
+            "Check condensate overflow switch, line, and drainage"
+          ],
+          "escalation": "User Display",
+          "reset_behavior": "Clears when condensate fault corrected.",
+          "related_codes": [
+            "code_err_106_00"
+          ],
+          "source": "Trane Hyperion *AM8/TAM8 Field Reference Data, p.22",
+          "severity": "service_soon",
+          "surface": "indoor_display"
+        },
+        {
+          "code_id": "code_err_158_00",
+          "code_identifier": "ERR158.00",
+          "code_type": "alphanumeric",
+          "meaning": "Coil freeze fault / ID COIL FRST",
+          "root_causes": [
+            "Low / incorrect airflow",
+            "Low refrigerant charge",
+            "ET sensor calibration"
+          ],
+          "diagnostic_path": [
+            "Check airflow",
+            "Check charge",
+            "Verify evaporator temperature sensor calibration"
+          ],
+          "escalation": "User Display",
+          "reset_behavior": "Clears when freeze condition corrected.",
+          "related_codes": [
+            "code_err_156_00",
+            "code_err_161_00",
+            "code_err_163_00"
+          ],
+          "source": "Trane Hyperion *AM8/TAM8 Field Reference Data, p.22",
+          "severity": "service_soon",
+          "surface": "indoor_display"
+        },
+        {
+          "code_id": "code_err_159_00",
+          "code_identifier": "ERR159.00",
+          "code_type": "alphanumeric",
+          "meaning": "Unit Bus fault / AFC COMM",
+          "root_causes": [
+            "Wire harness between AFC and distribution board",
+            "AFC communication error"
+          ],
+          "diagnostic_path": [
+            "Inspect harness between AFC and distribution board",
+            "Verify AFC communications"
+          ],
+          "escalation": "User Display",
+          "reset_behavior": "Clears when AFC communication restored.",
+          "related_codes": [
+            "code_err_159_01",
+            "code_err_159_02",
+            "code_err_159_03",
+            "code_err_159_04"
+          ],
+          "source": "Trane Hyperion *AM8/TAM8 Field Reference Data, p.22",
+          "severity": "service_soon",
+          "surface": "indoor_display"
+        },
+        {
+          "code_id": "code_err_159_01",
+          "code_identifier": "ERR159.01",
+          "code_type": "alphanumeric",
+          "meaning": "Unit Bus fault / EHC COMM",
+          "root_causes": [
+            "Wire harness between EHC and distribution board",
+            "EHC communication error"
+          ],
+          "diagnostic_path": [
+            "Inspect harness between EHC and distribution board",
+            "Verify EHC communications"
+          ],
+          "escalation": "User Display",
+          "reset_behavior": "Clears when EHC communication restored.",
+          "related_codes": [
+            "code_err_159_00",
+            "code_err_159_02",
+            "code_err_159_03",
+            "code_err_159_04"
+          ],
+          "source": "Trane Hyperion *AM8/TAM8 Field Reference Data, p.22",
+          "severity": "service_soon",
+          "surface": "indoor_display"
+        },
+        {
+          "code_id": "code_err_159_02",
+          "code_identifier": "ERR159.02",
+          "code_type": "alphanumeric",
+          "meaning": "Unit Bus fault / HHC COMM",
+          "root_causes": [
+            "Wire harness between HHC and distribution board",
+            "HHC communication error"
+          ],
+          "diagnostic_path": [
+            "Inspect harness between HHC and distribution board",
+            "Verify HHC communications"
+          ],
+          "escalation": "User Display",
+          "reset_behavior": "Clears when HHC communication restored.",
+          "related_codes": [
+            "code_err_159_00",
+            "code_err_159_01",
+            "code_err_159_03",
+            "code_err_159_04"
+          ],
+          "source": "Trane Hyperion *AM8/TAM8 Field Reference Data, p.22",
+          "severity": "service_soon",
+          "surface": "indoor_display"
+        },
+        {
+          "code_id": "code_err_159_03",
+          "code_identifier": "ERR159.03",
+          "code_type": "alphanumeric",
+          "meaning": "Unit Bus fault / EVC COMM",
+          "root_causes": [
+            "Wire harness between EVC and distribution board",
+            "EVC communication error"
+          ],
+          "diagnostic_path": [
+            "Inspect harness between EVC and distribution board",
+            "Verify EVC communications"
+          ],
+          "escalation": "User Display",
+          "reset_behavior": "Clears when EVC communication restored.",
+          "related_codes": [
+            "code_err_159_00",
+            "code_err_159_01",
+            "code_err_159_02",
+            "code_err_159_04"
+          ],
+          "source": "Trane Hyperion *AM8/TAM8 Field Reference Data, p.22",
+          "severity": "service_soon",
+          "surface": "indoor_display"
+        },
+        {
+          "code_id": "code_err_159_04",
+          "code_identifier": "ERR159.04",
+          "code_type": "alphanumeric",
+          "meaning": "Unit Bus fault / CDA COMM \u2014 Display Assembly communication error",
+          "root_causes": [
+            "Wire harness between Display Assembly and distribution board"
+          ],
+          "diagnostic_path": [
+            "Check display-assembly communication harness"
+          ],
+          "escalation": "Information",
+          "reset_behavior": "Clears when bus communication restored.",
+          "related_codes": [
+            "code_err_91_02",
+            "code_err_159_00",
+            "code_err_159_01",
+            "code_err_159_02",
+            "code_err_159_03"
+          ],
+          "source": "Trane Hyperion *AM8/TAM8 Field Reference Data, p.22",
+          "severity": "informational",
+          "surface": "indoor_display"
+        },
+        {
+          "code_id": "code_err_160_00",
+          "code_identifier": "ERR160.00",
+          "code_type": "alphanumeric",
+          "meaning": "Indoor EEV control configuration error / CONFIG FLT",
+          "root_causes": [
+            "Configuration group index or evaporator temperature sensor type not configured correctly",
+            "PM programming or internal communication error"
+          ],
+          "diagnostic_path": [
+            "Verify EEV / sensor configuration",
+            "Verify PM programming"
+          ],
+          "escalation": "User Display",
+          "reset_behavior": "Clears after configuration corrected.",
+          "related_codes": [
+            "code_err_155_00",
+            "code_err_161_00",
+            "code_err_163_00",
+            "code_err_164_00"
+          ],
+          "source": "Trane Hyperion *AM8/TAM8 Field Reference Data, p.22",
+          "severity": "service_soon",
+          "surface": "indoor_display"
+        },
+        {
+          "code_id": "code_err_161_00",
+          "code_identifier": "ERR161.00",
+          "code_type": "alphanumeric",
+          "meaning": "Evaporator temperature sensor fault / ET SEN ERR",
+          "root_causes": [
+            "Sensor open/shorted",
+            "Unplugged",
+            "Harness problem"
+          ],
+          "diagnostic_path": [
+            "Verify ET sensor resistance",
+            "Inspect harness"
+          ],
+          "escalation": "User Display",
+          "reset_behavior": "Clears when sensor circuit corrected.",
+          "related_codes": [
+            "code_err_161_01",
+            "code_err_158_00",
+            "code_err_160_00"
+          ],
+          "source": "Trane Hyperion *AM8/TAM8 Field Reference Data, p.22",
+          "severity": "service_soon",
+          "surface": "indoor_display"
+        },
+        {
+          "code_id": "code_err_161_01",
+          "code_identifier": "ERR161.01",
+          "code_type": "alphanumeric",
+          "meaning": "Gas temperature sensor fault / GT SEN ERR",
+          "root_causes": [
+            "Sensor open/shorted",
+            "Unplugged",
+            "Harness problem"
+          ],
+          "diagnostic_path": [
+            "Verify GT sensor resistance",
+            "Inspect harness"
+          ],
+          "escalation": "User Display",
+          "reset_behavior": "Clears when sensor circuit corrected.",
+          "related_codes": [
+            "code_err_161_00",
+            "code_err_156_00",
+            "code_err_166_00"
+          ],
+          "source": "Trane Hyperion *AM8/TAM8 Field Reference Data, p.22",
+          "severity": "service_soon",
+          "surface": "indoor_display"
+        },
+        {
+          "code_id": "code_err_163_00",
+          "code_identifier": "ERR163.00",
+          "code_type": "alphanumeric",
+          "meaning": "Indoor EEV control fault / EEV CNTL FLT",
+          "root_causes": [
+            "EEV motor drive, feedback, or 12V failure detected"
+          ],
+          "diagnostic_path": [
+            "Check EEV motor drive",
+            "Check feedback",
+            "Verify 12V supply"
+          ],
+          "escalation": "User Display",
+          "reset_behavior": "Clears when EEV control fault corrected.",
+          "related_codes": [
+            "code_err_155_00",
+            "code_err_160_00",
+            "code_err_164_00"
+          ],
+          "source": "Trane Hyperion *AM8/TAM8 Field Reference Data, p.22",
+          "severity": "service_soon",
+          "surface": "indoor_display"
+        },
+        {
+          "code_id": "code_err_164_00",
+          "code_identifier": "ERR164.00",
+          "code_type": "alphanumeric",
+          "meaning": "Indoor EEV fault / EEV CLSE ERR",
+          "root_causes": [
+            "EEV migrated to close position but superheat is not at desired setpoint",
+            "Valve not responding",
+            "Possible stuck valve",
+            "ET/GT sensor calibration issue"
+          ],
+          "diagnostic_path": [
+            "Check valve response",
+            "Verify ET/GT sensor calibration"
+          ],
+          "escalation": "User Display",
+          "reset_behavior": "Clears when EEV response fault corrected.",
+          "related_codes": [
+            "code_err_164_01",
+            "code_err_163_00",
+            "code_err_166_00"
+          ],
+          "source": "Trane Hyperion *AM8/TAM8 Field Reference Data, p.22",
+          "severity": "service_soon",
+          "surface": "indoor_display"
+        },
+        {
+          "code_id": "code_err_164_01",
+          "code_identifier": "ERR164.01",
+          "code_type": "alphanumeric",
+          "meaning": "Indoor EEV error / EEV OPEN ERR",
+          "root_causes": [
+            "EEV motor at open position but valve/system response is incorrect"
+          ],
+          "diagnostic_path": [
+            "Check for stuck-open valve behavior",
+            "Verify sensor calibration"
+          ],
+          "escalation": "Major",
+          "reset_behavior": "Clears when valve/system response returns normal.",
+          "related_codes": [
+            "code_err_164_00",
+            "code_err_163_00",
+            "code_err_166_00"
+          ],
+          "source": "Trane Hyperion *AM8/TAM8 Field Reference Data, p.22",
+          "severity": "urgent",
+          "surface": "indoor_display"
+        },
+        {
+          "code_id": "code_err_166_00",
+          "code_identifier": "ERR166.00",
+          "code_type": "alphanumeric",
+          "meaning": "Superheat is flooding fault / SYSTEM4 ERR",
+          "root_causes": [
+            "Stuck valve",
+            "ET/GT sensor calibration",
+            "Restricted distributor line"
+          ],
+          "diagnostic_path": [
+            "Check EEV behavior",
+            "Verify sensor calibration"
+          ],
+          "escalation": "User Display",
+          "reset_behavior": "Clears when flooding/superheat control issue corrected.",
+          "related_codes": [
+            "code_err_156_00",
+            "code_err_164_00",
+            "code_err_167_00"
+          ],
+          "source": "Trane Hyperion *AM8/TAM8 Field Reference Data, p.22",
+          "severity": "service_soon",
+          "surface": "indoor_display"
+        },
+        {
+          "code_id": "code_err_167_00",
+          "code_identifier": "ERR167.00",
+          "code_type": "alphanumeric",
+          "meaning": "OD data missing / outdoor status unknown to EVC",
+          "root_causes": [
+            "Outdoor status unknown",
+            "If COMM LED on OD is flashing the correct device count, replace AFC"
+          ],
+          "diagnostic_path": [
+            "Verify outdoor communication / status reporting",
+            "Compare OD COMM LED behavior",
+            "If OD COMM is flashing correct count, replace AFC"
+          ],
+          "escalation": "User Display",
+          "reset_behavior": "Clears when outdoor status becomes known to EVC.",
+          "related_codes": [
+            "code_err_126_00",
+            "code_err_91_02",
+            "code_err_159_00"
+          ],
+          "source": "Trane Hyperion *AM8/TAM8 Field Reference Data, p.22",
+          "severity": "service_soon",
+          "surface": "indoor_display"
+        },
+        {
+          "code_id": "code_err_168_00",
+          "code_identifier": "ERR168.00",
+          "code_type": "alphanumeric",
+          "meaning": "Indoor heat demand is not available to hydronic heat control \u2014 HH FAULT",
+          "root_causes": [
+            "Hydronic Heat is not controlling because indoor heat demand is not received"
+          ],
+          "diagnostic_path": [
+            "Verify hydronic heat control is receiving indoor heat demand on communicating system"
+          ],
+          "escalation": "User Display",
+          "reset_behavior": "Clears when indoor heat demand properly received by HHC.",
+          "related_codes": [
+            "code_err_169_00",
+            "code_err_170_00",
+            "code_err_173_00"
+          ],
+          "source": "Trane Hyperion *AM8/TAM8 Field Reference Data, p.22",
+          "severity": "service_soon",
+          "surface": "indoor_display"
+        },
+        {
+          "code_id": "code_err_169_00",
+          "code_identifier": "ERR169.00",
+          "code_type": "alphanumeric",
+          "meaning": "Hydronic heat control configuration fault \u2014 HH CONFIG",
+          "root_causes": [
+            "Hydronic heat capacity is unknown to hydronic heat control",
+            "Dip switch on HHC not set on replacement control only"
+          ],
+          "diagnostic_path": [
+            "Verify hydronic heat capacity/configuration",
+            "Verify HHC dip-switch settings on replacement control"
+          ],
+          "escalation": "User Display",
+          "reset_behavior": "Clears when HHC configuration corrected.",
+          "related_codes": [
+            "code_err_168_00",
+            "code_err_170_00",
+            "code_err_173_00"
+          ],
+          "source": "Trane Hyperion *AM8/TAM8 Field Reference Data, p.22",
+          "severity": "service_soon",
+          "surface": "indoor_display"
+        },
+        {
+          "code_id": "code_err_170_00",
+          "code_identifier": "ERR170.00",
+          "code_type": "alphanumeric",
+          "meaning": "Hydronic heat control freeze condition detected \u2014 HH FRZ DET",
+          "root_causes": [
+            "Hydronic heat coil freeze inlet temperature sensor reading is less than 38\u00b0F"
+          ],
+          "diagnostic_path": [
+            "Verify hydronic freeze sensor reading",
+            "Inspect for actual freeze condition at the hydronic coil"
+          ],
+          "escalation": "User Display",
+          "reset_behavior": "Clears when freeze condition / freeze-sensor returns to normal.",
+          "related_codes": [
+            "code_err_168_00",
+            "code_err_169_00",
+            "code_err_173_00",
+            "code_err_173_01"
+          ],
+          "source": "Trane Hyperion *AM8/TAM8 Field Reference Data, p.22",
+          "severity": "service_soon",
+          "surface": "indoor_display"
+        },
+        {
+          "code_id": "code_err_171_00",
+          "code_identifier": "ERR171.00",
+          "code_type": "alphanumeric",
+          "meaning": "Communication inactive fault / BLW COMM \u2014 blower communication not detected",
+          "root_causes": [
+            "Faulty wiring harness",
+            "VS motor communication problem"
+          ],
+          "diagnostic_path": [
+            "Check blower communication",
+            "Inspect harness",
+            "Verify VS motor"
+          ],
+          "escalation": "Critical",
+          "reset_behavior": "Clears when blower communication restored.",
+          "related_codes": [
+            "code_err_91_02",
+            "code_err_114_02",
+            "code_err_114_03"
+          ],
+          "source": "Trane Hyperion *AM8/TAM8 Field Reference Data, p.22",
+          "severity": "safety_critical",
+          "surface": "indoor_display"
+        },
+        {
+          "code_id": "code_err_172_00",
+          "code_identifier": "ERR172.00",
+          "code_type": "alphanumeric",
+          "meaning": "Display Assembly stuck key / KEY FAULT",
+          "root_causes": [
+            "Faulty Display Assembly"
+          ],
+          "diagnostic_path": [
+            "Check/replace display assembly"
+          ],
+          "escalation": "User Display",
+          "reset_behavior": "Clears when stuck-key/display fault corrected.",
+          "related_codes": [
+            "code_err_159_04"
+          ],
+          "source": "Trane Hyperion *AM8/TAM8 Field Reference Data, p.22",
+          "severity": "service_soon",
+          "surface": "indoor_display"
+        },
+        {
+          "code_id": "code_err_173_00",
+          "code_identifier": "ERR173.00",
+          "code_type": "alphanumeric",
+          "meaning": "Hydronic coil freeze inlet temperature sensor short \u2014 HH FRZ SHORT",
+          "root_causes": [
+            "Sensor short",
+            "Unplugged / wiring harness issue"
+          ],
+          "diagnostic_path": [
+            "Verify hydronic freeze sensor for short",
+            "Inspect harness"
+          ],
+          "escalation": "User Display",
+          "reset_behavior": "Clears when sensor circuit corrected.",
+          "related_codes": [
+            "code_err_173_01",
+            "code_err_168_00",
+            "code_err_169_00",
+            "code_err_170_00"
+          ],
+          "source": "Trane Hyperion *AM8/TAM8 Field Reference Data, p.22",
+          "severity": "service_soon",
+          "surface": "indoor_display"
+        },
+        {
+          "code_id": "code_err_173_01",
+          "code_identifier": "ERR173.01",
+          "code_type": "alphanumeric",
+          "meaning": "Hydronic coil freeze inlet temperature sensor open \u2014 HH FRZ OPEN",
+          "root_causes": [
+            "Sensor open",
+            "Unplugged / wiring harness issue"
+          ],
+          "diagnostic_path": [
+            "Verify hydronic freeze sensor for open",
+            "Inspect harness"
+          ],
+          "escalation": "User Display",
+          "reset_behavior": "Clears when sensor circuit corrected.",
+          "related_codes": [
+            "code_err_173_00",
+            "code_err_168_00",
+            "code_err_169_00",
+            "code_err_170_00"
+          ],
+          "source": "Trane Hyperion *AM8/TAM8 Field Reference Data, p.22",
+          "severity": "service_soon",
+          "surface": "indoor_display"
+        }
+      ]
+    }
+  ],
+  "cross_generation_conflicts": [
+    {
+      "conflict_id": "trane_code_6_across_legacy_platforms",
+      "description": "Code 6 meaning varies across all four Trane legacy flash-code platforms",
+      "conflict_severity": "high",
+      "involved_platforms": [
+        "trane_ud2_dd2_legacy",
+        "trane_uc1_dc1_legacy",
+        "trane_auy_tuy_legacy",
+        "trane_auh2_tuh2_legacy"
+      ],
+      "code_identifier": "6",
+      "meanings": [
+        {
+          "platform_id": "trane_ud2_dd2_legacy",
+          "meaning": "115V AC power reversed OR poor grounding"
+        },
+        {
+          "platform_id": "trane_uc1_dc1_legacy",
+          "meaning": "115V AC power reversed, poor grounding, OR system voltage too low"
+        },
+        {
+          "platform_id": "trane_auy_tuy_legacy",
+          "meaning": "115V AC power reversed, ignitor (triac) fault, poor grounding, OR low voltage"
+        },
+        {
+          "platform_id": "trane_auh2_tuh2_legacy",
+          "meaning": "Line reverse polarity only (narrowest)"
+        }
+      ],
+      "ui_banner_text": "Code 6 on your Trane/American Standard furnace means different things depending on platform. On UD2/DD2 it's polarity or grounding. On UC1/DC1 it adds 'low voltage'. On AUY/TUY it also adds 'ignitor triac fault'. On AUH2/TUH2 it's only reverse polarity. Your model prefix determines the exact diagnosis."
+    },
+    {
+      "conflict_id": "trane_code_9_across_legacy_platforms",
+      "description": "Code 9 has fundamentally different meaning on early vs later legacy platforms",
+      "conflict_severity": "high",
+      "involved_platforms": [
+        "trane_ud2_dd2_legacy",
+        "trane_uc1_dc1_legacy",
+        "trane_auy_tuy_legacy",
+        "trane_auh2_tuh2_legacy"
+      ],
+      "code_identifier": "9",
+      "meanings": [
+        {
+          "platform_id": "trane_ud2_dd2_legacy",
+          "meaning": "Check ignitor circuit and Line N to 24VAC Common voltage \u2014 possible grounding problem"
+        },
+        {
+          "platform_id": "trane_uc1_dc1_legacy",
+          "meaning": "Check ignitor circuit and Line N to 24VAC Common voltage \u2014 possible grounding problem"
+        },
+        {
+          "platform_id": "trane_auy_tuy_legacy",
+          "meaning": "Open inducer limit switch"
+        },
+        {
+          "platform_id": "trane_auh2_tuh2_legacy",
+          "meaning": "Open inducer limit error"
+        }
+      ],
+      "ui_banner_text": "Code 9 means completely different things across Trane/American Standard legacy platforms. On UD2/DD2 and UC1/DC1, it's an ignitor/grounding fault. On AUY/TUY and AUH2/TUH2, it's an open inducer limit \u2014 totally different diagnostic path. Your model prefix determines which it is."
+    },
+    {
+      "conflict_id": "trane_code_10_only_on_auy_tuy",
+      "description": "Code 10 exists only on AUY/TUY platform \u2014 not on AUH2/TUH2 despite shared architecture",
+      "conflict_severity": "medium",
+      "involved_platforms": [
+        "trane_auy_tuy_legacy",
+        "trane_auh2_tuh2_legacy"
+      ],
+      "code_identifier": "10",
+      "meanings": [
+        {
+          "platform_id": "trane_auy_tuy_legacy",
+          "meaning": "Inducer communication error"
+        },
+        {
+          "platform_id": "trane_auh2_tuh2_legacy",
+          "meaning": "Code 10 not present in published table \u2014 AUH2/TUH2 dictionary stops at Code 9"
+        }
+      ],
+      "ui_banner_text": "Code 10 only exists on Trane/American Standard AUY/TUY platforms. If your AUH2/TUH2 is flashing 10, it's not a published code \u2014 check service documentation or verify flash count."
+    },
+    {
+      "conflict_id": "trane_legacy_code_4_vs_e04",
+      "description": "Legacy Code 4 vs S-series E04: same concept but E04 broadened to include rollout and reverse-airflow",
+      "conflict_severity": "medium",
+      "involved_platforms": [
+        "trane_ud2_dd2_legacy",
+        "trane_uc1_dc1_legacy",
+        "trane_auy_tuy_legacy",
+        "trane_auh2_tuh2_legacy",
+        "trane_s_series_7segment"
+      ],
+      "code_identifier": "4 / e04",
+      "meanings": [
+        {
+          "platform_id": "trane_ud2_dd2_legacy",
+          "meaning": "Open High Limit Device"
+        },
+        {
+          "platform_id": "trane_uc1_dc1_legacy",
+          "meaning": "Open Temperature Limit Circuit"
+        },
+        {
+          "platform_id": "trane_auy_tuy_legacy",
+          "meaning": "Open Temperature Limit Switch"
+        },
+        {
+          "platform_id": "trane_auh2_tuh2_legacy",
+          "meaning": "Open Limit or Rollout Switch"
+        },
+        {
+          "platform_id": "trane_s_series_7segment",
+          "meaning": "Open Limit (Main Thermal, Rollout, OR Reverse Airflow Switch) \u2014 broader scope"
+        }
+      ],
+      "ui_banner_text": "Legacy Code 4 was 'open limit'. The newer S-series e04 includes rollout and reverse-airflow switches in the same code \u2014 diagnostic path must branch on which device opened."
+    },
+    {
+      "conflict_id": "trane_legacy_code_6_vs_e6_series",
+      "description": "Legacy Code 6 combined polarity/grounding/voltage/triac \u2014 S-series splits into separate e6.1, e6.2, e6.3 subcodes",
+      "conflict_severity": "medium",
+      "involved_platforms": [
+        "trane_ud2_dd2_legacy",
+        "trane_uc1_dc1_legacy",
+        "trane_auy_tuy_legacy",
+        "trane_auh2_tuh2_legacy",
+        "trane_s_series_7segment"
+      ],
+      "code_identifier": "6 / e6.1 / e6.2 / e6.3",
+      "meanings": [
+        {
+          "platform_id": "trane_ud2_dd2_legacy",
+          "meaning": "Combined: polarity OR grounding"
+        },
+        {
+          "platform_id": "trane_uc1_dc1_legacy",
+          "meaning": "Combined: polarity, grounding, or low voltage"
+        },
+        {
+          "platform_id": "trane_auy_tuy_legacy",
+          "meaning": "Combined: polarity, triac, grounding, or low voltage"
+        },
+        {
+          "platform_id": "trane_auh2_tuh2_legacy",
+          "meaning": "Polarity only"
+        },
+        {
+          "platform_id": "trane_s_series_7segment",
+          "meaning": "Split into 3 codes: e6.1 polarity, e6.2 grounding, e6.3 igniter relay/open"
+        }
+      ],
+      "ui_banner_text": "Legacy Code 6 bundled multiple electrical issues into one code. The newer S-series splits the same territory into e6.1 (polarity), e6.2 (grounding), and e6.3 (igniter relay/open) \u2014 more precise diagnosis."
+    },
+    {
+      "conflict_id": "trane_err_126_00_vs_carrier_commissioning",
+      "description": "Trane uses single Err.126.00 Equipment Change Alert vs Carrier's separate 'Indoor/Outdoor unit not found' commissioning codes",
+      "conflict_severity": "medium",
+      "involved_platforms": [
+        "trane_comfortlink_ii_wall_control"
+      ],
+      "code_identifier": "Err.126.00",
+      "meanings": [
+        {
+          "platform_id": "trane_comfortlink_ii_wall_control",
+          "meaning": "Equipment Change Alert \u2014 any enabled device that stopped reporting on bus (one code, read Summary Table to identify which device)"
+        }
+      ],
+      "ui_banner_text": "Trane uses discovery-based fault detection via the wall-control Summary Table. Err.126.00 is a single code that fires whenever any enabled device goes offline on the communicating bus \u2014 unlike Carrier's separate 'Indoor/Outdoor unit not found' commissioning codes, you must read the Summary Table to identify which device is offline."
+    },
+    {
+      "conflict_id": "trane_184_08_reset_legacy_vs_link",
+      "description": "Universal Hard Lockout 184.08 has DIFFERENT reset procedures depending on system generation",
+      "conflict_severity": "high",
+      "involved_platforms": [
+        "trane_xv_communicating_outdoor"
+      ],
+      "code_identifier": "ERR.184.08",
+      "meanings": [
+        {
+          "platform_id": "trane_xv_communicating_outdoor (Legacy)",
+          "meaning": "Clear by cycling power to outdoor unit OR clearing fault history in outdoor CDA"
+        },
+        {
+          "platform_id": "trane_xv_communicating_outdoor (Link)",
+          "meaning": "Clear by rebooting system from thermostat menu"
+        }
+      ],
+      "ui_banner_text": "CRITICAL FIELD QUIRK: ERR.184.08 Universal Hard Lockout on XV20i/XV18 outdoor requires different reset procedures on Legacy vs Link systems. Using the wrong procedure leaves the hard lockout active even when the underlying condition has cleared. Confirm system generation before attempting reset."
+    }
+  ],
+  "electric_heat_notes": {
+    "conventional_electric_furnace_codes": "Trane/American Standard communicating air handlers (TAM8/*AM8) have the most developed electric-heat code coverage in this brand family. Key electric-heat-specific codes include ERR104.00/.01/.02 (heater relay faults), ERR105.00/.01 (heater interlock relay faults), ERR152.00 (heater element open), ERR153.00 (thermal limit / CTCO trip from low airflow), ERR154.00 (EH locked out - minimum airflow not met), ERR154.01 (EH limited - partial airflow). Non-communicating electric furnaces and legacy air handlers (GAF2, TEM6, older generations) use conventional sequencer/element logic without formal fault code dictionaries \u2014 service calls are component-level (open element, failed sequencer, limit trip, contactor).",
+    "common_non_code_electric_service_calls": [
+      "Open element on multi-stage EH packages (3-stage, 5-stage, etc.)",
+      "Failed heater relay or sequencer \u2014 on TAM8 this will throw ERR104.xx",
+      "Airflow-related limit trip \u2014 on TAM8 this throws ERR153.00",
+      "24V transformer or fuse failure (TAM8 = ERR92)",
+      "Low-voltage wiring short causing repeated fuse failure",
+      "CTCO (cycle thermal cutout) trip from dirty coil/filter"
+    ],
+    "manufactured_home_specifics": "Not applicable \u2014 Trane Technologies does not have a significant manufactured-home-specific product line."
+  },
+  "metadata": {
+    "total_records": 162,
+    "total_platforms": 8,
+    "total_cross_generation_conflicts": 7,
+    "normalized_date": "2026-04-19",
+    "schema_version": "1.1.0",
+    "research_passes": 4,
+    "source_note": "Compiled from Trane installer/service documentation (18-CD19D2-18, 18-CD19D5-21, 18-CD20D3-21, 18-CD26D1-13, 18-CD29D1-14-EN, 18-CE04D1-1D-EN, 18-CE12D1-1D-EN, 18-CE19D1-1B-EN, 18-CE03D1-1F-EN, 18-HD80D1-6F-EN, 18-HD73D1-9E-EN, 11-HD15D1-5-EN), Trane System Alert Guide public distributor PDF, and Trane Hyperion *AM8/TAM8 Field Reference Data."
+  }
+}

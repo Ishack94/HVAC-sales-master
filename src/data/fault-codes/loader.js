@@ -1,83 +1,73 @@
-/**
- * Fault Code Loader
- *
- * Lazy-loads brand family data on demand.
- * Each brand family is a separate JSON file in this directory.
- *
- * Schema version: 1.1.0
- * - Added model_number_prefixes (array) for nameplate model number matching
- * - Added visual_identification (string) for visual picker fallback
- * - Added identifyPlatformByModelNumber() helper
- * - Added getVisualIdentificationOptions() helper
- */
+// src/data/fault-codes/loader.js
+// Fault code brand-family loader with model-prefix identification
+// Schema v1.1.0
 
-// Brand family registry - maps brand_family_id to dynamic import
+import brandFamiliesIndex from './brand-families-index.json';
+import nortekNordyne from './nortek-nordyne.json';
+import boschYork from './bosch-york.json';
+import carrierGlobal from './carrier-global.json';
+import traneTechnologies from './trane-technologies.json';
+
+// Registry of normalized brand families
 const brandFamilyRegistry = {
-  nortek_nordyne: () => import('./nortek-nordyne.json'),
-  bosch_york: () => import('./bosch-york.json'),
-  carrier_global: () => import('./carrier-global.json'),
-  // trane_technologies: () => import('./trane-technologies.json'),
-  // lennox_allied: () => import('./lennox-allied.json'),
-  // daikin_goodman: () => import('./daikin-goodman.json'),
-  // rheem_ruud: () => import('./rheem-ruud.json'),
+  nortek_nordyne: nortekNordyne,
+  bosch_york: boschYork,
+  carrier_global: carrierGlobal,
+  trane_technologies: traneTechnologies,
 };
 
-// Cache loaded brand families in memory (session-scoped)
-const loadedFamilies = new Map();
-
 /**
- * Load a brand family by ID. Returns the full brand family data object.
- * Lazy-loads on first request, caches for subsequent calls.
+ * Get a brand family by ID
+ * @param {string} brandFamilyId
+ * @returns {object|null} Brand family data or null if not loaded
  */
-export async function loadBrandFamily(brandFamilyId) {
-  if (loadedFamilies.has(brandFamilyId)) {
-    return loadedFamilies.get(brandFamilyId);
-  }
-
-  const loader = brandFamilyRegistry[brandFamilyId];
-  if (!loader) {
-    throw new Error(`Unknown brand family: ${brandFamilyId}`);
-  }
-
-  const mod = await loader();
-  const data = mod.default || mod;
-  loadedFamilies.set(brandFamilyId, data);
-  return data;
+export function getBrandFamily(brandFamilyId) {
+  return brandFamilyRegistry[brandFamilyId] || null;
 }
 
 /**
- * Normalize a model number for prefix matching.
- * Case-insensitive, strips whitespace and common separators (-, _, /).
+ * List all loaded brand families
+ * @returns {object[]} Array of brand family data objects
  */
-function normalizeModelNumber(modelNumber) {
-  if (!modelNumber || typeof modelNumber !== 'string') return '';
-  return modelNumber.toUpperCase().replace(/[\s\-_/]/g, '');
+export function listBrandFamilies() {
+  return Object.values(brandFamilyRegistry);
 }
 
 /**
- * Identify platform by model number prefix match.
- * Uses longest-prefix-wins logic across all platforms in a brand family.
- *
- * @param {object} brandFamilyData - loaded brand family data
- * @param {string} modelNumber - user-entered model number
- * @returns {object|null} - matching platform object, or null if no match
+ * Get the brand-families index (metadata for all known brand families)
+ * @returns {object} Index with metadata
  */
-export function identifyPlatformByModelNumber(brandFamilyData, modelNumber) {
-  if (!brandFamilyData || !brandFamilyData.platforms) return null;
-  const normalized = normalizeModelNumber(modelNumber);
-  if (!normalized) return null;
+export function getBrandFamiliesIndex() {
+  return brandFamiliesIndex;
+}
+
+/**
+ * Identify a platform by matching the longest prefix against a model number.
+ * @param {string} modelNumber — user-entered model number (case-insensitive)
+ * @returns {object|null} { brandFamilyId, platformId, platformName, matchedPrefix } or null
+ */
+export function identifyPlatformByModelNumber(modelNumber) {
+  if (!modelNumber || typeof modelNumber !== 'string') return null;
+  const cleaned = modelNumber.trim().toUpperCase().replace(/[^A-Z0-9*-]/g, '');
 
   let bestMatch = null;
-  let bestMatchLength = 0;
+  let bestPrefixLength = 0;
 
-  for (const platform of brandFamilyData.platforms) {
-    if (!platform.model_number_prefixes) continue;
-
-    for (const prefix of platform.model_number_prefixes) {
-      const normalizedPrefix = normalizeModelNumber(prefix);
-      if (normalized.startsWith(normalizedPrefix) && normalizedPrefix.length > bestMatchLength) {
-        bestMatch = platform;
-        bestMatchLength = normalizedPrefix.length;
+  for (const family of Object.values(brandFamilyRegistry)) {
+    if (!family.platforms) continue;
+    for (const platform of family.platforms) {
+      const prefixes = platform.model_number_prefixes || [];
+      for (const prefix of prefixes) {
+        const cleanedPrefix = prefix.trim().toUpperCase().replace(/[^A-Z0-9*-]/g, '');
+        if (cleanedPrefix && cleaned.startsWith(cleanedPrefix) && cleanedPrefix.length > bestPrefixLength) {
+          bestMatch = {
+            brandFamilyId: family.brand_family_id,
+            platformId: platform.platform_id,
+            platformName: platform.platform_name,
+            matchedPrefix: prefix,
+          };
+          bestPrefixLength = cleanedPrefix.length;
+        }
       }
     }
   }
@@ -86,53 +76,70 @@ export function identifyPlatformByModelNumber(brandFamilyData, modelNumber) {
 }
 
 /**
- * Get visual identification options for a brand family.
- * Returns array of { platform_id, platform_name, visual_identification, display_type }
- * for showing a visual picker when user doesn't know model number.
- *
- * @param {object} brandFamilyData - loaded brand family data
- * @returns {array} - array of visual identification options
+ * Get visual identification options — list of platforms with their visual-ID descriptions
+ * for a given brand family, to help users identify their platform visually.
+ * @param {string} brandFamilyId
+ * @returns {object[]} Array of { platformId, platformName, visualIdentification, displayType, appliesTo }
  */
-export function getVisualIdentificationOptions(brandFamilyData) {
-  if (!brandFamilyData || !brandFamilyData.platforms) return [];
-
-  return brandFamilyData.platforms
-    .filter(p => p.visual_identification)
-    .map(p => ({
-      platform_id: p.platform_id,
-      platform_name: p.platform_name,
-      visual_identification: p.visual_identification,
-      display_type: p.display_type,
-    }));
+export function getVisualIdentificationOptions(brandFamilyId) {
+  const family = getBrandFamily(brandFamilyId);
+  if (!family || !family.platforms) return [];
+  return family.platforms.map((p) => ({
+    platformId: p.platform_id,
+    platformName: p.platform_name,
+    visualIdentification: p.visual_identification || '',
+    displayType: p.display_type || '',
+    appliesTo: p.applies_to_models || [],
+  }));
 }
 
 /**
- * Look up a specific code within a platform.
- * Returns the code record, or null if not found.
+ * Find a specific platform by ID across all loaded brand families
+ * @param {string} platformId
+ * @returns {object|null} { brandFamily, platform } or null
  */
-export function findCode(platform, codeIdentifier) {
-  if (!platform || !platform.codes) return null;
-  const normalized = String(codeIdentifier).trim().toUpperCase();
-  return platform.codes.find(c =>
-    String(c.code_identifier).trim().toUpperCase() === normalized
-  ) || null;
+export function findPlatform(platformId) {
+  for (const family of Object.values(brandFamilyRegistry)) {
+    if (!family.platforms) continue;
+    const platform = family.platforms.find((p) => p.platform_id === platformId);
+    if (platform) {
+      return { brandFamily: family, platform };
+    }
+  }
+  return null;
 }
 
 /**
- * Get all platforms for a brand family (for UI listing).
+ * Find a specific code within a platform
+ * @param {string} platformId
+ * @param {string} codeIdentifier — e.g. "33", "e04", "Err.126.00"
+ * @returns {object|null} { brandFamily, platform, code } or null
  */
-export function getPlatforms(brandFamilyData) {
-  return brandFamilyData && brandFamilyData.platforms ? brandFamilyData.platforms : [];
+export function findCode(platformId, codeIdentifier) {
+  const result = findPlatform(platformId);
+  if (!result) return null;
+  const normalized = codeIdentifier.trim().toLowerCase();
+  const code = result.platform.codes.find(
+    (c) =>
+      c.code_identifier.trim().toLowerCase() === normalized ||
+      c.code_id.trim().toLowerCase() === normalized,
+  );
+  return code ? { ...result, code } : null;
 }
 
 /**
- * Get cross-generation conflicts for a specific code.
- * Returns matching conflict entries, useful for UI banner display.
+ * Check if a code identifier is shared across multiple platforms (cross-gen conflict)
+ * @param {string} brandFamilyId
+ * @param {string} codeIdentifier
+ * @returns {object|null} Cross-gen conflict descriptor, or null if not a conflict
  */
-export function getCrossGenerationConflicts(brandFamilyData, codeIdentifier) {
-  if (!brandFamilyData || !brandFamilyData.cross_generation_conflicts) return [];
-  const normalized = String(codeIdentifier).trim().toUpperCase();
-  return brandFamilyData.cross_generation_conflicts.filter(conflict =>
-    String(conflict.code_identifier).trim().toUpperCase() === normalized
+export function getCrossGenerationConflict(brandFamilyId, codeIdentifier) {
+  const family = getBrandFamily(brandFamilyId);
+  if (!family || !family.cross_generation_conflicts) return null;
+  const normalized = codeIdentifier.trim().toLowerCase();
+  return (
+    family.cross_generation_conflicts.find((c) =>
+      c.code_identifier.toLowerCase().split(/\s*[\/,]\s*/).some((id) => id === normalized),
+    ) || null
   );
 }
