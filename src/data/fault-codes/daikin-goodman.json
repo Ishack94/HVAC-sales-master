@@ -1,0 +1,2702 @@
+{
+  "brand_family_id": "daikin_goodman",
+  "brand_family_name": "Daikin / Goodman / Amana",
+  "corporate_owner": "Daikin Industries, Ltd.",
+  "brands": [
+    {
+      "name": "Daikin",
+      "slug": "daikin",
+      "notes": "Premium brand (Daikin Fit inverter platform + DM96VC/DM97MC Goodman-platform rebadges + Daikin One+ smart thermostat)"
+    },
+    {
+      "name": "Goodman",
+      "slug": "goodman",
+      "notes": "Primary residential furnace/heat pump platform (Daikin-owned since 2012). Shares most hardware with Amana."
+    },
+    {
+      "name": "Amana",
+      "slug": "amana",
+      "notes": "Value sibling to Goodman, Daikin-owned. Largely Goodman-platform aliases (AMVC96 = GMVC96 hardware)."
+    }
+  ],
+  "structural_overview": "Daikin Industries US residential diagnostics span four distinct platforms with fundamentally different lineages: (1) GOODMAN/AMANA LEGACY SINGLE-LED — pre-2012 furnaces with single red LED flash codes (1-8 flashes) plus steady-on / off / continuous-rapid polarity states. Published flash legend is concise — steady on normal, 2 flashes pressure switch stuck closed, 3 flashes pressure switch stuck open, 4 flashes open high limit, 5 flashes flame without gas valve, 6 flashes open rollout or open fuse, 7 flashes low flame signal, 8 flashes check igniter or improper grounding, continuous flashes reversed polarity. (2) MODERN GOODMAN/AMANA/DAIKIN DUAL 7-SEGMENT IFC — DC96VC/DM96VC and aliases (GMVC96, AMVC96, DM96SC, DM97MC) use E-code namespace (E0-EA) plus d-codes for shared data (d0, d4) plus b-codes for blower motor faults (b0-b5, b7, b9). Hardware redesign from legacy, not a carry-forward. (3) COMFORTNET / DAIKIN ONE+ COMMUNICATING ECOSYSTEM — CTK04 ComfortNet thermostat and Daikin One+ smart thermostat surface equipment faults through 'Call for Service' icon and 'Check Furnace' scroll text rather than publishing a rich thermostat-native code dictionary. Public diagnostics menus confirm last-6-faults storage with consecutive repeats capped at 3. Daikin One+ exposes Error History under System Optimization menu with color-coded alerts (white = not critical, yellow = critical). (4) DAIKIN FIT INVERTER OUTDOOR — DZ17VSA/DZ18VSA/DX17/DX18/DZ20 platform uses distinct numeric namespace E25-E59 + B0/B9 + D0-D4 + thermostat-only E11 via 3-digit onboard mode display with LEARN/RECALL/TEST buttons. Japanese-style L-codes and U-codes (L1, L3, L5, U0, U2, U4) were NOT found in US residential Fit public documentation — that namespace belongs to Daikin's commercial/mini-split product lines, not US Fit residential. Cross-platform code conflicts are real and dangerous: legacy '3 flashes' (pressure switch stuck open) vs modern E3 (open primary/aux/rollout limit) are completely different fault families; modern furnace E4 (flame sensed no call for heat) vs Fit E41 (low refrigerant) share the E-prefix letter but have nothing else in common.",
+  "field_quirks": [
+    {
+      "quirk": "Ignition lockout timing: 3 tries, 1-hour auto-reset, manual reset by thermostat off 5-20 seconds or power off minimum 5 seconds",
+      "applies_to": "DC96VC/DM96VC and Goodman/Amana modern 7-segment IFC family",
+      "reason": "Published reset procedure in DC96VC/DM96VC Service Instructions p.41: control allows 3 total ignition tries before lockout; auto-reset after 1 hour; manual reset requires thermostat off more than 5 seconds AND less than 20 seconds, or power off for at least 5 seconds. Getting the manual reset window wrong — either too short or too long — fails to clear the lockout and technician is left troubleshooting a phantom repeat fault."
+    },
+    {
+      "quirk": "Modern furnace diagnostics menu stores last 6 faults with consecutive repeats capped at 3",
+      "applies_to": "DM96VC/DC96VC diagnostic menu",
+      "reason": "Accessible via Fault 1 through Fault 6 menu entries on the dual 7-segment board. CLEAR = YES erases stored history. Consecutively repeated faults are shown a maximum of 3 times to prevent a single recurring event from consuming all six memory slots. A fault history showing the same code three times consecutively means it repeated at least 3 times — probably more, but 3 is the ceiling."
+    },
+    {
+      "quirk": "Daikin Fit onboard 3-digit display uses Screen 0-4 mode workflow via LEARN/RECALL/TEST buttons",
+      "applies_to": "Daikin Fit outdoor inverter (DZ17VSA, DZ18VSA, DX17, DX18, DZ20, DX20) — all models with the 3-digit outdoor PCB display",
+      "reason": "Screen 0 shows most recent fault. Hold RECALL 5 seconds from Screen 0 to reach Screen 1 (fault history — last 6 faults). Hold RECALL 5 seconds from Screen 1 to reach Screen 2 (monitoring). Hold RECALL 5 seconds from Screen 2 to reach Screen 3 (setting mode 1). Hold RECALL + TEST simultaneously 5 seconds to reach Screen 4 (setting mode 2). Press LEARN to return to Screen 0. This is a distinct service workflow that doesn't appear on any Goodman/Amana platform."
+    },
+    {
+      "quirk": "LEARN button reset timing differs between Daikin Fit outdoor (~5 seconds) and ComfortNet indoor (~2 seconds)",
+      "applies_to": "Network reset on Daikin Fit outdoor vs ComfortNet communicating air handler/modular blower indoor controls",
+      "reason": "Fit Outdoor Unit Installation Manual 3P515859-5S p.38 specifies ~5-second LEARN button hold to reset the network. Goodman ComfortNet modular blower public manual p.12 specifies ~2-second hold. Using the wrong timing either fails to trigger reset (too short) or moves the control into a different state like out-of-box reset (too long). Platform-specific timing — not a universal ComfortNet standard."
+    },
+    {
+      "quirk": "L-codes and U-codes (Japanese-style) are NOT part of US residential Daikin Fit namespace",
+      "applies_to": "US residential Daikin Fit DZ17VSA/DZ18VSA/DX17/DX18/DZ20/DX20 models",
+      "reason": "Public US residential Fit documentation (3P515859-5S and related) exposes E-prefixed numeric codes (E25-E59, Eb0, Eb9, Ed0-Ed4, E11) — NOT the L1/L3/L5/U0/U2/U4 namespace common to Daikin's Japanese commercial and US mini-split (DZ series ductless) product lines. If a technician encounters an L-code or U-code, it's either a Daikin mini-split or commercial product, not US residential Fit. Do not publish L/U records to this dataset unless confirmed by a US-residential OEM public document."
+    },
+    {
+      "quirk": "Daikin Fit network troubleshooting includes DS1 dip-switch toggle as last-resort step",
+      "applies_to": "Daikin Fit outdoor inverter (DZ17VSA, DZ18VSA, DX17, DX18, DZ20, DX20)",
+      "reason": "Public Fit outdoor installation manual specifies a network troubleshooting workflow: after wiring changes or DS1 dip-switch changes, apply power and see if the error code cleared. If not, confirm low-voltage wiring correct, check for miswiring including terminal 1 and 2 reversed, inspect wire damage, perform continuity checks, and THEN change both DS1 dip switches on the outdoor control board to the opposite position. This DS1 toggle is a platform-specific last-resort reset that doesn't exist on Goodman/Amana furnace platforms."
+    },
+    {
+      "quirk": "Daikin One+ wiring validation: 0.6 VDC between Data 1 and 2, 24 VDC between R and C; reversed power makes PWR LED flash green",
+      "applies_to": "Daikin One+ S21 smart thermostat installations",
+      "reason": "Public S21 installation guide specifies these voltage checkpoints: 0.6 VDC between Data 1 and Data 2 terminals (communication bus) and 24 VDC between R and C (thermostat power). If power wires are reversed, the PWR LED flashes GREEN — a specific field indicator a technician can read without a meter. This is the only thermostat-side wiring fault indicator publicly documented for the Daikin One+ platform."
+    },
+    {
+      "quirk": "Legacy Goodman/Amana ignition control auto-resets after one hour — anchored to GMH8/GMS8/GDH8/GDS8 public installation instructions",
+      "applies_to": "Goodman GMH8, GMS8, GDH8, GDS8, and similar pre-2012 single-LED legacy furnaces",
+      "reason": "Public Goodman GMH8/GMS8/GDH8/GDS8 installation instructions spell out that the integrated control will automatically attempt reset after one hour on ignition lockout conditions. This is a better documentation anchor than spec-sheet brochure legends alone, and confirms the 1-hour auto-reset is consistent across both legacy single-LED and modern 7-segment platforms."
+    }
+  ],
+  "platforms": [
+    {
+      "platform_id": "daikin_goodman_legacy_led",
+      "platform_name": "Goodman / Amana Legacy Single-LED Flash",
+      "platform_description": "Pre-2012 Goodman and Amana residential gas furnace platform with single red LED on integrated furnace control. Flash-count codes (1-8 flashes) plus steady-on and continuous/rapid polarity states. Simple namespace, no menu system, no digital display. Public flash legend published on Amana AMH95 product specification p.5 and Goodman GMH95/GCH95 spec sheets.",
+      "applies_to_models": [
+        "GMH95",
+        "GCH95",
+        "AMH95",
+        "GMV",
+        "GMS",
+        "GMP",
+        "GMSS",
+        "GHS",
+        "GDS",
+        "AMV",
+        "AMS",
+        "AMSS"
+      ],
+      "applies_to_years": "Pre-2012",
+      "model_number_prefixes": [
+        "GMH95",
+        "GCH95",
+        "AMH95",
+        "GMV",
+        "GMS",
+        "GMP",
+        "GMSS",
+        "GDS",
+        "AMV",
+        "AMS",
+        "AMSS",
+        "GHS"
+      ],
+      "visual_identification": "Single red LED on integrated furnace control board. No digital display. Flash codes read as count of red LED pulses: 2 through 8 flashes map to specific faults. Steady ON = normal. Off = no control signal or failure. Continuous/rapid flashing = reversed line polarity.",
+      "display_type": "led_pattern",
+      "platform_notes": "Public documentation uses a concise flash legend without detailed per-flash cause trees — the legend exposes the meaning clearly but root-cause and diagnostic-path detail is implied from general furnace service practice rather than per-code published text. Records below honestly note 'Not explicitly detailed in accessible legacy brochure snippet' where public coverage is thin.",
+      "codes": [
+        {
+          "code_id": "status_steady_on",
+          "code_identifier": "steady on",
+          "code_type": "status_display",
+          "meaning": "Normal operation",
+          "root_causes": [
+            "None; published as the normal operating indication"
+          ],
+          "diagnostic_path": [
+            "Confirm furnace is operating normally; if customer complaint persists, continue troubleshooting by symptom because the LED itself is not flagging a fault"
+          ],
+          "escalation": "None",
+          "reset_behavior": "Not applicable.",
+          "related_codes": [
+            "status_off",
+            "code_1_flash",
+            "code_2_flashes",
+            "code_3_flashes",
+            "code_4_flashes",
+            "code_5_flashes",
+            "code_6_flashes",
+            "code_7_flashes",
+            "code_8_flashes",
+            "status_continuous_rapid"
+          ],
+          "source": "Amana AMH95 product specification flash legend p.5; Goodman GMH95/GCH95 product specification flash legend",
+          "severity": "informational"
+        },
+        {
+          "code_id": "status_off",
+          "code_identifier": "off",
+          "code_type": "status_display",
+          "meaning": "Internal control failure / no control signal",
+          "root_causes": [
+            "No 115 V power to furnace",
+            "No 24 V power to integrated control",
+            "Blown fuse or breaker",
+            "Internal control fault"
+          ],
+          "diagnostic_path": [
+            "Check 115 V power to furnace",
+            "Check 24 V low-voltage power at control",
+            "Inspect control fuse",
+            "Inspect breaker/disconnect",
+            "Replace control only after power/fuse checks are verified"
+          ],
+          "escalation": "Control enters locked-out state if internal fault is confirmed",
+          "reset_behavior": "Restore power/fuse condition if external power loss caused the state; replace control if internal fault is confirmed.",
+          "related_codes": [
+            "status_steady_on",
+            "code_1_flash"
+          ],
+          "source": "DC96VC/DM96VC Service Instructions troubleshooting chart entry for no LED signal, p.45 (used for board-level interpretation of 'off' state since legacy brochure legend does not expand 'off' into a cause tree)",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_1_flash",
+          "code_identifier": "1 flash",
+          "code_type": "flash_count",
+          "meaning": "System lockout (retries exceeded)",
+          "root_causes": [
+            "Flame not sensed during ignition trials leading to lockout after repeated retries"
+          ],
+          "diagnostic_path": [
+            "Check ignition sequence",
+            "Verify flame establishment",
+            "Inspect gas interruption, igniter, flame sensor, pressure-switch proving, and induced-draft performance per applicable service manual"
+          ],
+          "escalation": "Three ignition tries total, then lockout",
+          "reset_behavior": "Reset by turning thermostat off for more than 5 seconds and less than 20 seconds and back on, or by turning furnace power off for a minimum of 5 seconds; automatic reset after one hour.",
+          "related_codes": [
+            "code_5_flashes",
+            "code_7_flashes",
+            "code_8_flashes"
+          ],
+          "source": "Amana AMH95 flash legend p.5; DC96VC/DM96VC Service Instructions p.41",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_2_flashes",
+          "code_identifier": "2 flashes",
+          "code_type": "flash_count",
+          "meaning": "Pressure switch stuck closed",
+          "root_causes": [
+            "Not explicitly detailed in accessible legacy brochure snippet"
+          ],
+          "diagnostic_path": [
+            "Verify pressure switch is not closed at call start",
+            "Inspect switch and circuit/wiring per applicable furnace service manual"
+          ],
+          "escalation": "Furnace heat cycle inhibited until fault is corrected",
+          "reset_behavior": "Clears when pressure-switch fault is corrected and control sees normal startup condition.",
+          "related_codes": [
+            "code_3_flashes",
+            "code_1_flash"
+          ],
+          "source": "Amana AMH95 product specification flash legend p.5; Goodman GMH95/GCH95 public flash legend",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_3_flashes",
+          "code_identifier": "3 flashes",
+          "code_type": "flash_count",
+          "meaning": "Pressure switch stuck open",
+          "root_causes": [
+            "Not explicitly detailed in accessible legacy brochure snippet"
+          ],
+          "diagnostic_path": [
+            "Verify inducer operation",
+            "Inspect pressure-switch hose, vent/intake blockage, drain issues on condensing units if applicable, and pressure-switch wiring"
+          ],
+          "escalation": "Furnace heat cycle inhibited until pressure-switch proving is restored",
+          "reset_behavior": "Clears when the pressure-switch circuit closes properly during heat call.",
+          "related_codes": [
+            "code_2_flashes",
+            "code_4_flashes"
+          ],
+          "source": "Amana AMH95 product specification flash legend p.5; Goodman GMH95/GCH95 public flash legend",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_4_flashes",
+          "code_identifier": "4 flashes",
+          "code_type": "flash_count",
+          "meaning": "Open high limit",
+          "root_causes": [
+            "Not explicitly detailed in accessible legacy brochure snippet"
+          ],
+          "diagnostic_path": [
+            "Check airflow restriction",
+            "Filter condition",
+            "Blower operation/speed",
+            "Duct restriction",
+            "Limit circuit"
+          ],
+          "escalation": "Burner shutoff / heating interruption until limit closes or fault is corrected",
+          "reset_behavior": "Clears after limit circuit returns to normal and control allows operation.",
+          "related_codes": [
+            "code_3_flashes",
+            "code_6_flashes"
+          ],
+          "source": "Amana AMH95 product specification flash legend p.5; Goodman GMH95/GCH95 public flash legend",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "code_5_flashes",
+          "code_identifier": "5 flashes",
+          "code_type": "flash_count",
+          "meaning": "Flame sensed without gas valve",
+          "root_causes": [
+            "Not explicitly detailed in accessible legacy brochure snippet"
+          ],
+          "diagnostic_path": [
+            "Inspect flame-sense circuit",
+            "Verify gas valve is not leaking or lingering open",
+            "Inspect low-voltage short/ground issues as applicable to the platform"
+          ],
+          "escalation": "Fault advisory/heat interruption until false flame condition is removed",
+          "reset_behavior": "Clears once false flame condition is removed and control sees normal state.",
+          "related_codes": [
+            "code_1_flash",
+            "code_7_flashes"
+          ],
+          "source": "Amana AMH95 product specification flash legend p.5; Goodman GMH95/GCH95 public flash legend",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "code_6_flashes",
+          "code_identifier": "6 flashes",
+          "code_type": "flash_count",
+          "meaning": "Open rollout or open fuse",
+          "root_causes": [
+            "Not explicitly detailed in accessible legacy brochure snippet"
+          ],
+          "diagnostic_path": [
+            "Verify rollout circuit continuity and integrated fuse condition",
+            "Determine whether rollout opened from combustion/venting issue before reset or part replacement"
+          ],
+          "escalation": "Furnace fails to operate until safety/fuse issue is corrected",
+          "reset_behavior": "Restore fuse or correct rollout fault; manual rollout reset (if used on the appliance) must follow unit-specific instructions.",
+          "related_codes": [
+            "code_4_flashes",
+            "status_off"
+          ],
+          "source": "Amana AMH95 product specification flash legend p.5; Goodman GMH95/GCH95 public flash legend",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "code_7_flashes",
+          "code_identifier": "7 flashes",
+          "code_type": "flash_count",
+          "meaning": "Low flame signal",
+          "root_causes": [
+            "Not explicitly detailed in accessible legacy brochure snippet"
+          ],
+          "diagnostic_path": [
+            "Inspect and clean flame sensor",
+            "Verify sensor position and grounding",
+            "Verify gas pressure/combustion quality if flame carryover is weak"
+          ],
+          "escalation": "Advisory first; can progress to ignition failure/lockout if flame sense becomes inadequate",
+          "reset_behavior": "Clears after flame-sense signal returns to acceptable level.",
+          "related_codes": [
+            "code_1_flash",
+            "code_5_flashes",
+            "code_8_flashes"
+          ],
+          "source": "Amana AMH95 product specification flash legend p.5; Goodman GMH95/GCH95 public flash legend",
+          "severity": "service_soon"
+        },
+        {
+          "code_id": "code_8_flashes",
+          "code_identifier": "8 flashes",
+          "code_type": "flash_count",
+          "meaning": "Check igniter or improper grounding",
+          "root_causes": [
+            "Not explicitly detailed in accessible legacy brochure snippet"
+          ],
+          "diagnostic_path": [
+            "Inspect igniter continuity/condition",
+            "Verify unit grounding",
+            "Inspect igniter wiring and control output"
+          ],
+          "escalation": "Heat cycle inhibited until igniter/ground problem is corrected",
+          "reset_behavior": "Clears after normal igniter circuit and grounding are restored.",
+          "related_codes": [
+            "code_1_flash",
+            "code_7_flashes"
+          ],
+          "source": "Goodman GMH95/GCH95 public flash legend explicitly includes '8 flashes = check igniter / improper grounding'; Amana family flash legend is the cross-brand alias reference",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "status_continuous_rapid",
+          "code_identifier": "continuous/rapid flashes",
+          "code_type": "led_pattern",
+          "meaning": "Reversed 115 VAC polarity",
+          "root_causes": [
+            "Reversed line polarity",
+            "Poor grounding condition"
+          ],
+          "diagnostic_path": [
+            "Verify line/hot-neutral polarity to furnace",
+            "Verify equipment grounding and wiring correctness"
+          ],
+          "escalation": "Furnace fault indication; operation may be inhibited or unreliable until corrected",
+          "reset_behavior": "Clears once polarity/grounding issue is corrected.",
+          "related_codes": [
+            "code_8_flashes",
+            "status_off"
+          ],
+          "source": "Amana AMH95 product specification flash legend p.5; Goodman GMH95/GCH95 public flash legend",
+          "severity": "urgent"
+        }
+      ]
+    },
+    {
+      "platform_id": "daikin_goodman_7segment_modern",
+      "platform_name": "Modern Goodman/Amana/Daikin Dual 7-Segment IFC",
+      "platform_description": "Modern Goodman, Amana, and Daikin-rebadged residential gas furnaces using dual 7-segment alphanumeric display on integrated furnace control. Covers DC96VC/DM96VC and equivalents (GMVC96, AMVC96, GMVM96, AMVM96, GMVM97, AMVM97, GCVC96, ACVC96, GMES96, AMES96). ComfortNet-capable but also operates in traditional non-communicating mode. Ignition lockout: 3 tries, 1-hour auto-reset. Fault history: last 6 with consecutive repeats capped at 3. Board REQUIRES correct shared-data memory card for communicating operation — d0 = no shared data, d4 = invalid shared data.",
+      "applies_to_models": [
+        "DC96VC",
+        "DM96VC",
+        "GMVC96",
+        "AMVC96",
+        "GMVM96",
+        "AMVM96",
+        "GMVM97",
+        "AMVM97",
+        "GCVC96",
+        "ACVC96",
+        "GMES96",
+        "AMES96",
+        "GMVC8",
+        "AMVC8",
+        "DM96SC",
+        "DM97MC"
+      ],
+      "applies_to_years": "2012-2026",
+      "model_number_prefixes": [
+        "DC96VC",
+        "DM96VC",
+        "GMVC96",
+        "AMVC96",
+        "GMVM96",
+        "AMVM96",
+        "GMVM97",
+        "AMVM97",
+        "GCVC96",
+        "ACVC96",
+        "GMES96",
+        "AMES96",
+        "GMVC8",
+        "AMVC8",
+        "DM96SC",
+        "DM97MC"
+      ],
+      "visual_identification": "Dual 7-segment alphanumeric display on integrated furnace control. Normal operation shows '--' or blower status. E-prefix codes (E0-E9, EA) for primary faults. d-prefix codes (d0, d4) for communicating shared-data issues. b-prefix codes (b0-b5, b7, b9) for blower motor faults. ComfortNet thermostat (CTK04 or Daikin One+) may show 'Call for Service' icon or 'Check Furnace' scroll text mirroring active board code.",
+      "display_type": "alphanumeric",
+      "platform_notes": "Primary public source: DC96VC/DM96VC Service Instructions troubleshooting chart, pp.41-48. Ignition lockout procedure details on p.41. Diagnostics menu structure and Fault 1-Fault 6 recall on p.53. Cross-platform conflict: 'E3' here = open primary/aux/rollout limit; on Daikin Fit inverter platform 'E3' does NOT exist but 'E4' (flame sensed no call) vs Fit 'E41' (low refrigerant) create namespace confusion. b4, b5, b7 rows had incomplete public snippet coverage — full cause trees not fully exposed; records honestly note this rather than padding.",
+      "codes": [
+        {
+          "code_id": "code_e0",
+          "code_identifier": "E0",
+          "code_type": "alphanumeric",
+          "meaning": "Furnace lockout due to excessive number of ignition retries",
+          "root_causes": [
+            "Failure to establish flame",
+            "No gas to burners",
+            "Front cover pressure switch stuck open",
+            "Bad igniter or igniter alignment",
+            "Improper orifices",
+            "Coated/oxidized or improperly connected flame sensor",
+            "Intermittent gas supply",
+            "Lazy burner flames from improper gas pressure or restricted flue/combustion air",
+            "Improper induced-draft blower performance"
+          ],
+          "diagnostic_path": [
+            "Locate/correct gas interruption",
+            "Check front-cover pressure switch operation and wiring",
+            "Replace or realign igniter",
+            "Check/clean flame-sense signal",
+            "Inspect flue piping for blockage/length/elbows/termination",
+            "Verify induced-draft performance"
+          ],
+          "escalation": "Three total ignition tries, then lockout; auto-reset after one hour",
+          "reset_behavior": "Thermostat off for more than 5 seconds and less than 20 seconds, then back on; or disconnect power for at least 5 seconds; auto-reset after one hour.",
+          "related_codes": [
+            "code_e6",
+            "code_e7",
+            "code_e2"
+          ],
+          "source": "DC96VC/DM96VC Service Instructions, abnormal operation and troubleshooting chart, pp.41, 45",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_e1",
+          "code_identifier": "E1",
+          "code_type": "alphanumeric",
+          "meaning": "Low-stage pressure switch circuit is closed at start of heating cycle",
+          "root_causes": [
+            "Low-stage pressure-switch contacts sticking",
+            "Short in pressure-switch circuit wiring"
+          ],
+          "diagnostic_path": [
+            "Replace low-stage pressure switch if contacts are sticking",
+            "Repair short in wiring"
+          ],
+          "escalation": "Furnace fails to operate until startup condition is corrected",
+          "reset_behavior": "Clears after switch/wiring fault is corrected and startup proves normal.",
+          "related_codes": [
+            "code_e2",
+            "code_e8",
+            "code_e9"
+          ],
+          "source": "DC96VC/DM96VC Service Instructions troubleshooting chart, p.45",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_e2",
+          "code_identifier": "E2",
+          "code_type": "alphanumeric",
+          "meaning": "Low-stage pressure switch circuit is not closed",
+          "root_causes": [
+            "Pressure-switch hose blocked/pinched/improperly connected",
+            "Blocked flue or inlet air pipe",
+            "Blocked drain system",
+            "Weak induced-draft blower",
+            "Incorrect pressure-switch set point or malfunctioning contacts",
+            "Loose/improperly connected wiring"
+          ],
+          "diagnostic_path": [
+            "Inspect pressure-switch hose",
+            "Inspect flue and/or inlet air piping for blockage/length/elbows/termination",
+            "Check drain system",
+            "Check induced-draft blower performance",
+            "Correct pressure-switch set point/contact issue",
+            "Tighten/correct wiring"
+          ],
+          "escalation": "Induced-draft blower runs continuously with no further furnace operation",
+          "reset_behavior": "Clears after pressure-switch proving is restored.",
+          "related_codes": [
+            "code_e1",
+            "code_e3",
+            "code_e9"
+          ],
+          "source": "DC96VC/DM96VC Service Instructions troubleshooting chart, p.46",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_e3",
+          "code_identifier": "E3",
+          "code_type": "alphanumeric",
+          "meaning": "Primary limit or auxiliary limit circuit is open; rollout limit circuit is open",
+          "root_causes": [
+            "Insufficient conditioned airflow",
+            "Blocked filters",
+            "Restrictive or improper ductwork",
+            "Blower speed too low",
+            "Failed blower motor",
+            "Flame rollout",
+            "Misaligned burners",
+            "Blocked flue/air inlet",
+            "Failed induced-draft blower",
+            "Loose/improper wiring"
+          ],
+          "diagnostic_path": [
+            "Check filters/ductwork",
+            "Check circulator blower speed/performance",
+            "Check burners for proper alignment",
+            "Check flue and inlet piping",
+            "Check induced-draft blower",
+            "Tighten/correct wiring"
+          ],
+          "escalation": "Circulator blower runs continuously; no furnace operation until limit condition clears",
+          "reset_behavior": "Clears after the open limit/rollout circuit returns to normal and underlying cause is corrected.",
+          "related_codes": [
+            "code_e2",
+            "code_e4",
+            "code_b9"
+          ],
+          "source": "DC96VC/DM96VC Service Instructions troubleshooting chart, p.46",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "code_e4",
+          "code_identifier": "E4",
+          "code_type": "alphanumeric",
+          "meaning": "Flame sensed with no call for heat",
+          "root_causes": [
+            "Short to ground in flame-sense circuit",
+            "Lingering burner flame",
+            "Slow-closing gas valve"
+          ],
+          "diagnostic_path": [
+            "Correct short at flame sensor/flame-sensor wiring",
+            "Check for lingering flame",
+            "Verify proper gas-valve operation"
+          ],
+          "escalation": "Induced-draft blower and circulator blower run continuously; no furnace operation",
+          "reset_behavior": "Clears after false-flame condition is removed.",
+          "related_codes": [
+            "code_e0",
+            "code_e5",
+            "code_e6"
+          ],
+          "source": "DC96VC/DM96VC Service Instructions troubleshooting chart, p.46",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "code_e5",
+          "code_identifier": "E5",
+          "code_type": "alphanumeric",
+          "meaning": "Open fuse",
+          "root_causes": [
+            "Short in low-voltage wiring"
+          ],
+          "diagnostic_path": [
+            "Locate and correct short in low-voltage wiring",
+            "Replace 3-amp automotive-type fuse"
+          ],
+          "escalation": "No furnace operation",
+          "reset_behavior": "Restore fuse after short is corrected.",
+          "related_codes": [
+            "code_e4"
+          ],
+          "source": "DC96VC/DM96VC Service Instructions troubleshooting chart, p.46",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_e6",
+          "code_identifier": "E6",
+          "code_type": "alphanumeric",
+          "meaning": "Flame sense microamp signal is low",
+          "root_causes": [
+            "Coated/oxidized flame sensor",
+            "Flame sensor incorrectly positioned in burner flame",
+            "Lazy burner flame due to improper gas pressure or combustion air"
+          ],
+          "diagnostic_path": [
+            "Clean flame sensor",
+            "Inspect sensor alignment",
+            "Inspect air inlet piping",
+            "Compare gas pressure to rating plate and adjust as needed"
+          ],
+          "escalation": "Furnace may continue to run with reduced flame-sense margin; can progress to ignition failure/lockout",
+          "reset_behavior": "Clears when flame-sense signal returns to acceptable range.",
+          "related_codes": [
+            "code_e0",
+            "code_e4",
+            "code_e7"
+          ],
+          "source": "DC96VC/DM96VC Service Instructions troubleshooting chart, p.46",
+          "severity": "service_soon"
+        },
+        {
+          "code_id": "code_e7",
+          "code_identifier": "E7",
+          "code_type": "alphanumeric",
+          "meaning": "Problem with igniter circuit",
+          "root_causes": [
+            "Improperly connected igniter",
+            "Shorted igniter",
+            "Poor unit ground",
+            "Igniter relay fault on integrated control module"
+          ],
+          "diagnostic_path": [
+            "Check/correct wiring from control to igniter",
+            "Replace shorted igniter",
+            "Check/correct unit grounding",
+            "Check igniter output from control and replace control if necessary"
+          ],
+          "escalation": "Furnace fails to operate",
+          "reset_behavior": "Clears after igniter circuit fault is corrected.",
+          "related_codes": [
+            "code_e0",
+            "code_e6",
+            "code_e8"
+          ],
+          "source": "DC96VC/DM96VC Service Instructions troubleshooting chart, p.47",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_e8",
+          "code_identifier": "E8",
+          "code_type": "alphanumeric",
+          "meaning": "High-stage pressure-switch circuit is closed at start of heating cycle; furnace operates in low stage only",
+          "root_causes": [
+            "High-stage pressure-switch contacts sticking",
+            "Short in pressure-switch circuit wiring"
+          ],
+          "diagnostic_path": [
+            "Replace high-stage pressure switch",
+            "Repair short in wiring"
+          ],
+          "escalation": "Furnace fails to operate on high stage and runs low stage only",
+          "reset_behavior": "Clears after switch/wiring fault is corrected.",
+          "related_codes": [
+            "code_e1",
+            "code_e9"
+          ],
+          "source": "DC96VC/DM96VC Service Instructions troubleshooting chart, p.47",
+          "severity": "service_soon"
+        },
+        {
+          "code_id": "code_e9",
+          "code_identifier": "E9",
+          "code_type": "alphanumeric",
+          "meaning": "High-stage pressure-switch circuit is not closed; furnace operates in low stage only",
+          "root_causes": [
+            "Pressure-switch hose blocked/pinched/improperly connected",
+            "Blocked flue/inlet air pipe",
+            "Blocked drain",
+            "Weak induced-draft blower",
+            "Incorrect pressure-switch set point or malfunctioning contacts",
+            "Loose/improper wiring"
+          ],
+          "diagnostic_path": [
+            "Inspect hose and venting/intake/drain",
+            "Verify induced-draft performance",
+            "Correct pressure-switch set point/contact issue",
+            "Tighten/correct wiring"
+          ],
+          "escalation": "Furnace fails to operate on high stage and remains in low stage only",
+          "reset_behavior": "Clears after high-stage pressure-switch proving is restored.",
+          "related_codes": [
+            "code_e2",
+            "code_e8"
+          ],
+          "source": "DC96VC/DM96VC Service Instructions troubleshooting chart, p.47",
+          "severity": "service_soon"
+        },
+        {
+          "code_id": "code_ea",
+          "code_identifier": "EA",
+          "code_type": "alphanumeric",
+          "meaning": "Polarity of 115 V AC is reversed",
+          "root_causes": [
+            "Reversed line polarity to furnace or control module",
+            "Poor unit ground"
+          ],
+          "diagnostic_path": [
+            "Review wiring diagram to correct polarity",
+            "Verify proper ground",
+            "Check/correct wiring"
+          ],
+          "escalation": "Furnace fails to operate until corrected",
+          "reset_behavior": "Clears after polarity/ground issue is corrected.",
+          "related_codes": [],
+          "source": "DC96VC/DM96VC Service Instructions troubleshooting chart, p.47",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_d0",
+          "code_identifier": "d0",
+          "code_type": "alphanumeric",
+          "meaning": "Data not yet on network / no net data",
+          "root_causes": [
+            "Furnace does not contain any shared data"
+          ],
+          "diagnostic_path": [
+            "Populate shared data set using memory card",
+            "Use memory card for the specific model",
+            "Insert memory card before turning power on",
+            "Remove only after data is loaded and power is turned off"
+          ],
+          "escalation": "Furnace fails to operate in communicating context until required shared data is present",
+          "reset_behavior": "Error clears once data is loaded.",
+          "related_codes": [
+            "code_d4"
+          ],
+          "source": "DC96VC/DM96VC Service Instructions troubleshooting chart, pp.47-48",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_d4",
+          "code_identifier": "d4",
+          "code_type": "alphanumeric",
+          "meaning": "Invalid memory-card data",
+          "root_causes": [
+            "Shared data set on memory card rejected by integrated control module"
+          ],
+          "diagnostic_path": [
+            "Verify shared data set is correct for the specific model",
+            "Repopulate using correct memory card if required"
+          ],
+          "escalation": "Operation different than expected or no operation until valid shared data is accepted",
+          "reset_behavior": "Error clears once valid data is loaded and power is cycled per procedure.",
+          "related_codes": [
+            "code_d0",
+            "code_b2"
+          ],
+          "source": "DC96VC/DM96VC Service Instructions troubleshooting chart, p.48",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_b0",
+          "code_identifier": "b0",
+          "code_type": "alphanumeric",
+          "meaning": "Circulator blower motor is not running when it should be running",
+          "root_causes": [
+            "Loose wiring connection at blower motor power leads or disconnected leads",
+            "Open circuit in inductor or loose wiring connection at inductor (3/4 HP and 1 HP models only)",
+            "Failed circulator blower motor"
+          ],
+          "diagnostic_path": [
+            "Tighten/correct wiring connection",
+            "Verify continuity through inductor and replace if open/short",
+            "Check circulator blower motor and replace if necessary"
+          ],
+          "escalation": "Furnace fails to operate",
+          "reset_behavior": "Clears after blower-motor power fault is corrected.",
+          "related_codes": [
+            "code_b1",
+            "code_b3",
+            "code_b4",
+            "code_b9"
+          ],
+          "source": "DC96VC/DM96VC Service Instructions troubleshooting chart, p.48",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_b1",
+          "code_identifier": "b1",
+          "code_type": "alphanumeric",
+          "meaning": "Integrated control module has lost communications with circulator blower motor",
+          "root_causes": [
+            "Loose wiring connection at blower motor control leads",
+            "Failed circulator blower motor",
+            "Failed integrated control module"
+          ],
+          "diagnostic_path": [
+            "Tighten/correct wiring",
+            "Check blower motor and replace if necessary",
+            "Check integrated control module and replace if necessary"
+          ],
+          "escalation": "Furnace fails to operate",
+          "reset_behavior": "Clears after blower communication path is restored.",
+          "related_codes": [
+            "code_b0",
+            "code_b2",
+            "code_b4"
+          ],
+          "source": "DC96VC/DM96VC Service Instructions troubleshooting chart, p.48",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_b2",
+          "code_identifier": "b2",
+          "code_type": "alphanumeric",
+          "meaning": "Circulator blower motor horsepower in shared data set does not match blower motor horsepower",
+          "root_causes": [
+            "Incorrect blower motor in furnace",
+            "Incorrect shared-data set in integrated control module"
+          ],
+          "diagnostic_path": [
+            "Verify blower motor horsepower is correct for furnace model",
+            "Verify shared data set is correct for model and repopulate using correct memory card if required"
+          ],
+          "escalation": "Furnace fails to operate",
+          "reset_behavior": "Error clears once shared data and motor horsepower match.",
+          "related_codes": [
+            "code_d4",
+            "code_b0",
+            "code_b1"
+          ],
+          "source": "DC96VC/DM96VC Service Instructions troubleshooting chart, p.48",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_b3",
+          "code_identifier": "b3",
+          "code_type": "alphanumeric",
+          "meaning": "Circulator blower motor is operating in a power, temperature, or speed limiting condition",
+          "root_causes": [
+            "Blocked filters",
+            "Restrictive ductwork",
+            "Undersized ductwork",
+            "High ambient temperatures"
+          ],
+          "diagnostic_path": [
+            "Check filters for blockage",
+            "Check ductwork and remove obstruction",
+            "Verify all registers are fully open",
+            "Verify ductwork is appropriately sized and resize/replace if necessary"
+          ],
+          "escalation": "Furnace operates at reduced performance; airflow delivered is less than expected",
+          "reset_behavior": "Clears after limiting condition is removed.",
+          "related_codes": [
+            "code_b9",
+            "code_e3"
+          ],
+          "source": "DC96VC/DM96VC Service Instructions troubleshooting chart, p.48",
+          "severity": "service_soon"
+        },
+        {
+          "code_id": "code_b4",
+          "code_identifier": "b4",
+          "code_type": "alphanumeric",
+          "meaning": "Motor trips",
+          "root_causes": [
+            "Accessible public snippet confirms the code and failure state, but the full cause list is not fully exposed in the accessible snippet"
+          ],
+          "diagnostic_path": [
+            "Turn power off prior to repair",
+            "Use full troubleshooting chart in the public service manual for the unit-specific cause tree"
+          ],
+          "escalation": "Furnace fails to operate",
+          "reset_behavior": "Not explicitly detailed in accessible public snippet.",
+          "related_codes": [
+            "code_b0",
+            "code_b1",
+            "code_b5"
+          ],
+          "source": "DM80VC/DC80VC installation manual troubleshooting chart snippet and DC96VC-family troubleshooting section confirm b4 'motor trips', but the complete row was not fully exposed in the accessible snippet",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_b5",
+          "code_identifier": "b5",
+          "code_type": "alphanumeric",
+          "meaning": "Blower motor rotor locked",
+          "root_causes": [
+            "Accessible public snippet confirms the code meaning, but the full row with detailed causes/actions was not fully exposed in the accessible snippet"
+          ],
+          "diagnostic_path": [
+            "Turn power off prior to repair",
+            "Use full public troubleshooting chart in the service manual for the complete cause tree"
+          ],
+          "escalation": "Furnace fails to operate",
+          "reset_behavior": "Not explicitly detailed in accessible public snippet.",
+          "related_codes": [
+            "code_b4",
+            "code_b7"
+          ],
+          "source": "Goodman ComfortNet modular blower public manual lists b5 as 'blower motor rotor locked'; DC96VC-family platform uses the same blower fault namespace, but the complete DC96VC row was not fully exposed in the accessible snippet",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_b7",
+          "code_identifier": "b7",
+          "code_type": "alphanumeric",
+          "meaning": "Motor parameters fault / incomplete parameter sent to motor",
+          "root_causes": [
+            "Accessible public snippet confirms the code meaning, but the complete cause list for the furnace row was not fully exposed in the accessible snippet"
+          ],
+          "diagnostic_path": [
+            "Verify correct parameter/shared-data configuration and blower/control compatibility using the applicable public service manual"
+          ],
+          "escalation": "Furnace fails to operate or operates with reduced performance depending on fault state",
+          "reset_behavior": "Not explicitly detailed in accessible public snippet.",
+          "related_codes": [
+            "code_b2",
+            "code_d4",
+            "code_b5"
+          ],
+          "source": "DC96VC/DM96VC troubleshooting section confirms b7 'MOTOR PARAMS'; Goodman ComfortNet modular blower public manual lists b7 as 'incomplete parameter sent to motor'",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_b9",
+          "code_identifier": "b9",
+          "code_type": "alphanumeric",
+          "meaning": "Low indoor airflow",
+          "root_causes": [
+            "Blocked filters",
+            "Restrictive ductwork",
+            "Undersized ductwork"
+          ],
+          "diagnostic_path": [
+            "Check filters for blockage",
+            "Check ductwork for restriction or obstruction",
+            "Correct duct sizing issue as required"
+          ],
+          "escalation": "Furnace operates at reduced performance or airflow below requirement",
+          "reset_behavior": "Clears when airflow deficiency is corrected.",
+          "related_codes": [
+            "code_e3",
+            "code_b3"
+          ],
+          "source": "DC96VC/DM96VC Service Instructions troubleshooting chart, p.48",
+          "severity": "service_soon"
+        },
+        {
+          "code_id": "code_ef",
+          "code_identifier": "EF",
+          "code_type": "alphanumeric",
+          "meaning": "Auxiliary switch open",
+          "root_causes": [
+            "Auxiliary limit switch tripped",
+            "Wiring fault on auxiliary switch circuit",
+            "Heat exchanger or cabinet temperature issue triggering auxiliary limit"
+          ],
+          "diagnostic_path": [
+            "Check auxiliary switch continuity and reset if possible",
+            "Inspect wiring on auxiliary limit circuit",
+            "Investigate underlying temperature/airflow cause before clearing"
+          ],
+          "escalation": "Furnace operation inhibited until auxiliary switch closes or fault is corrected",
+          "reset_behavior": "Clears after auxiliary switch circuit returns to normal.",
+          "related_codes": [
+            "code_e3"
+          ],
+          "source": "DC96VC/DM96VC Service Instructions status code page; public furnace status-code reference",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "code_b6",
+          "code_identifier": "b6",
+          "code_type": "alphanumeric",
+          "meaning": "Over/under-voltage trip or over-temperature trip on blower motor",
+          "root_causes": [
+            "Line voltage outside motor operating range (too high or too low)",
+            "Motor internal over-temperature condition",
+            "Bearing or load condition causing overheating"
+          ],
+          "diagnostic_path": [
+            "Measure line voltage at furnace and compare to motor nameplate operating range",
+            "Check blower motor amp draw and compare to nameplate",
+            "Inspect blower wheel for obstruction or bearing issues",
+            "Verify motor cooling path is not obstructed"
+          ],
+          "escalation": "Blower motor trips; furnace fails to operate until voltage/temperature condition is corrected",
+          "reset_behavior": "Clears after voltage/temperature condition returns to normal.",
+          "related_codes": [
+            "code_b0",
+            "code_b1",
+            "code_b4",
+            "code_b5"
+          ],
+          "source": "DC96VC/DM96VC Service Instructions status code page; public furnace status-code reference",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "status_on",
+          "code_identifier": "On",
+          "code_type": "status_display",
+          "meaning": "Normal operation — no active fault",
+          "root_causes": [
+            "Furnace operating normally; board self-check passed"
+          ],
+          "diagnostic_path": [
+            "If symptom persists with 'On' displayed, continue troubleshooting by symptom because the board itself is not flagging a fault"
+          ],
+          "escalation": "None; informational status",
+          "reset_behavior": "Not applicable.",
+          "related_codes": [],
+          "source": "DC96VC/DM96VC Service Instructions status code page; alternates with numeric airflow value during operation",
+          "severity": "informational"
+        },
+        {
+          "code_id": "status_c1",
+          "code_identifier": "C1",
+          "code_type": "status_display",
+          "meaning": "Active cooling — low stage (first-stage cool)",
+          "root_causes": [
+            "Normal operation: thermostat cooling call on Y1 stage"
+          ],
+          "diagnostic_path": [
+            "If unexpected, verify thermostat is not calling for cooling"
+          ],
+          "escalation": "None; informational status",
+          "reset_behavior": "Not applicable.",
+          "related_codes": [
+            "status_c2"
+          ],
+          "source": "DC96VC/DM96VC Service Instructions status code page; alternates with airflow CFM value",
+          "severity": "informational"
+        },
+        {
+          "code_id": "status_c2",
+          "code_identifier": "C2",
+          "code_type": "status_display",
+          "meaning": "Active cooling — high stage (second-stage cool)",
+          "root_causes": [
+            "Normal operation: thermostat cooling call on Y2 stage"
+          ],
+          "diagnostic_path": [
+            "If unexpected, verify thermostat is not calling for high-stage cooling"
+          ],
+          "escalation": "None; informational status",
+          "reset_behavior": "Not applicable.",
+          "related_codes": [
+            "status_c1"
+          ],
+          "source": "DC96VC/DM96VC Service Instructions status code page; alternates with airflow CFM value",
+          "severity": "informational"
+        },
+        {
+          "code_id": "status_p1",
+          "code_identifier": "P1",
+          "code_type": "status_display",
+          "meaning": "Active heat-pump heat — low stage (first-stage heat pump)",
+          "root_causes": [
+            "Normal operation: heat-pump heating call on Y1 stage"
+          ],
+          "diagnostic_path": [
+            "If unexpected, verify heat pump is actually running and thermostat is calling"
+          ],
+          "escalation": "None; informational status",
+          "reset_behavior": "Not applicable.",
+          "related_codes": [
+            "status_p2"
+          ],
+          "source": "DC96VC/DM96VC Service Instructions status code page; applies when furnace is part of dual-fuel or heat-pump system",
+          "severity": "informational"
+        },
+        {
+          "code_id": "status_p2",
+          "code_identifier": "P2",
+          "code_type": "status_display",
+          "meaning": "Active heat-pump heat — high stage (second-stage heat pump)",
+          "root_causes": [
+            "Normal operation: heat-pump heating call on Y2 stage"
+          ],
+          "diagnostic_path": [
+            "If unexpected, verify heat pump is actually running and thermostat is calling for high stage"
+          ],
+          "escalation": "None; informational status",
+          "reset_behavior": "Not applicable.",
+          "related_codes": [
+            "status_p1"
+          ],
+          "source": "DC96VC/DM96VC Service Instructions status code page; applies when furnace is part of dual-fuel or heat-pump system",
+          "severity": "informational"
+        },
+        {
+          "code_id": "status_l0",
+          "code_identifier": "L0",
+          "code_type": "status_display",
+          "meaning": "Active gas heat — low stage (first-stage gas heat)",
+          "root_causes": [
+            "Normal operation: low-stage gas heat call and firing"
+          ],
+          "diagnostic_path": [
+            "If unexpected, verify thermostat is not calling for heat"
+          ],
+          "escalation": "None; informational status",
+          "reset_behavior": "Not applicable.",
+          "related_codes": [
+            "status_hi"
+          ],
+          "source": "DC96VC/DM96VC Service Instructions status code page; indicates first-stage gas valve energized",
+          "severity": "informational"
+        },
+        {
+          "code_id": "status_hi",
+          "code_identifier": "HI",
+          "code_type": "status_display",
+          "meaning": "Active gas heat — high stage (second-stage gas heat)",
+          "root_causes": [
+            "Normal operation: high-stage gas heat call and firing"
+          ],
+          "diagnostic_path": [
+            "If unexpected, verify high-stage call from thermostat"
+          ],
+          "escalation": "None; informational status",
+          "reset_behavior": "Not applicable.",
+          "related_codes": [
+            "status_l0"
+          ],
+          "source": "DC96VC/DM96VC Service Instructions status code page; indicates second-stage gas valve energized",
+          "severity": "informational"
+        },
+        {
+          "code_id": "status_f",
+          "code_identifier": "F",
+          "code_type": "status_display",
+          "meaning": "Continuous fan mode — blower running without heating or cooling call",
+          "root_causes": [
+            "Normal operation: thermostat G call active without W or Y call"
+          ],
+          "diagnostic_path": [
+            "If unexpected, verify thermostat fan switch position"
+          ],
+          "escalation": "None; informational status",
+          "reset_behavior": "Not applicable.",
+          "related_codes": [
+            "status_on"
+          ],
+          "source": "DC96VC/DM96VC Service Instructions status code page",
+          "severity": "informational"
+        }
+      ]
+    },
+    {
+      "platform_id": "daikin_goodman_comfortnet_communicating",
+      "platform_name": "ComfortNet / Daikin One+ Communicating Ecosystem",
+      "platform_description": "Daikin/Goodman/Amana communicating ecosystem surfacing equipment faults through CTK04 ComfortNet thermostat and Daikin One+ smart thermostat. Public documentation confirms multi-surface architecture: thermostat shows 'Call for Service' icon and 'Check Furnace' scroll text; equipment boards retain detailed E/d/b code display. Daikin One+ exposes Error History under System Optimization menu with color-coded alerts (white = not critical, yellow = critical). Public thermostat-native code dictionary is thin — most fault detail lives at equipment level. Fault history: last 6 with consecutive repeats capped at 3.",
+      "applies_to_models": [
+        "CTK03",
+        "CTK04",
+        "CTK05",
+        "Daikin One+ S21",
+        "DTST-STAT01"
+      ],
+      "applies_to_years": "2014-2026",
+      "model_number_prefixes": [
+        "CTK03",
+        "CTK04",
+        "CTK05",
+        "S21",
+        "DTST"
+      ],
+      "visual_identification": "CTK04 ComfortNet thermostat is a small monochrome display with equipment diagnostics menus. Daikin One+ is a color touchscreen smart thermostat with System Optimization menu including Error History. Both thermostat types show 'Call for Service' icon when equipment has active fault.",
+      "display_type": "alphanumeric",
+      "platform_notes": "Public source coverage is thinner for Platform 3 than Platforms 1-2 or 4. DC96VC/DM96VC Service Instructions pp.45-48 confirm 'Call for Service' and 'Check Furnace' appear with equipment faults. Daikin One+ S21 Installation Guide p.28 confirms Error History menu. Goodman ComfortNet modular blower p.12 confirms LEARN-button reset and LED status interpretation. Public docs don't expose a rich thermostat-native code dictionary comparable to equipment board charts — records here honestly represent what IS publicly documented without padding.",
+      "codes": [
+        {
+          "code_id": "thermostat_call_for_service",
+          "code_identifier": "Call for Service icon",
+          "code_type": "thermostat_display",
+          "meaning": "Thermostat-level service alert indicating active equipment fault",
+          "root_causes": [
+            "Mirrors active equipment fault from connected indoor or outdoor unit",
+            "Public docs show it paired with board codes such as E0, E1, E2, E3, E4, E7, E8, E9, d0, d4, b0, b1, b2, b3, b7"
+          ],
+          "diagnostic_path": [
+            "Read active equipment-board code on indoor/outdoor unit",
+            "Use thermostat service alert as pointer, not the final fault definition",
+            "Use the applicable equipment troubleshooting chart"
+          ],
+          "escalation": "Service alert remains while active equipment fault is present",
+          "reset_behavior": "Clears when underlying equipment fault clears.",
+          "related_codes": [
+            "thermostat_check_furnace"
+          ],
+          "source": "DC96VC/DM96VC Service Instructions troubleshooting chart entries repeatedly show ComfortNet thermostat 'Call for Service' icon illuminated for active furnace faults, pp.45-48",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "thermostat_check_furnace",
+          "code_identifier": "Check Furnace",
+          "code_type": "thermostat_display",
+          "meaning": "Thermostat scroll message indicating the connected furnace has an active fault requiring service lookup at equipment level",
+          "root_causes": [
+            "Mirrors active furnace faults such as E0 through E9, d0, d4, b0 through b3, b7, b9"
+          ],
+          "diagnostic_path": [
+            "Note thermostat message",
+            "Go to furnace board dual 7-segment display",
+            "Read exact equipment code",
+            "Troubleshoot from furnace manual"
+          ],
+          "escalation": "Service-call state while active equipment fault is present",
+          "reset_behavior": "Clears when the underlying furnace fault clears.",
+          "related_codes": [
+            "thermostat_call_for_service"
+          ],
+          "source": "DC96VC/DM96VC Service Instructions troubleshooting chart, multiple entries on pp.45-48",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "menu_error_history",
+          "code_identifier": "Error History",
+          "code_type": "menu_display",
+          "meaning": "Daikin One+ System Optimization menu item that logs alerts with an error code",
+          "root_causes": [
+            "Not a fault itself; menu for reviewing stored equipment alerts",
+            "Public guide states entries are color-coded white = not critical, yellow = critical"
+          ],
+          "diagnostic_path": [
+            "Navigate to System Optimization > Error History",
+            "Review logged alerts and their error codes",
+            "Inspect corresponding indoor/outdoor equipment status and service literature"
+          ],
+          "escalation": "None by itself; depends on the logged equipment alert",
+          "reset_behavior": "Not explicitly detailed in accessible public snippet.",
+          "related_codes": [],
+          "source": "Daikin One+ S21 Installation Guide, Step 4 — System Optimization, p.28; Daikin One+ public installation/commissioning literature also describes Error History under System Optimization",
+          "severity": "informational"
+        },
+        {
+          "code_id": "menu_fault_history_clear",
+          "code_identifier": "Fault 1-Fault 6 / CLEAR",
+          "code_type": "menu_display",
+          "meaning": "Diagnostic history menu showing last six faults, most recent to least recent; CLEAR deletes stored history",
+          "root_causes": [
+            "Not a fault itself; record structure for stored equipment faults"
+          ],
+          "diagnostic_path": [
+            "Access diagnostics menu",
+            "Read Fault 1 through Fault 6 in order",
+            "Use CLEAR = YES to erase history after service"
+          ],
+          "escalation": "None by itself",
+          "reset_behavior": "Selecting YES clears fault history.",
+          "related_codes": [],
+          "source": "DM96VC/DC96VC installation literature diagnostics menu, p.53; Goodman ComfortNet modular blower advanced-features menu, pp.11-12 equivalent structure",
+          "severity": "informational"
+        },
+        {
+          "code_id": "menu_learn_button_reset",
+          "code_identifier": "Learn button reset",
+          "code_type": "menu_display",
+          "meaning": "Network reset function on communicating indoor control",
+          "root_causes": [
+            "Used when troubleshooting network communication issues"
+          ],
+          "diagnostic_path": [
+            "Use onboard network tools: red communications LED, green Rx LED, and LEARN button",
+            "Depress button for approximately 2 seconds to reset network on indoor communicating control",
+            "Reevaluate communication LED states"
+          ],
+          "escalation": "None by itself; used during network troubleshooting",
+          "reset_behavior": "Depress approximately 2 seconds for network reset on indoor ComfortNet controls; the same public table also distinguishes quick press vs hold for out-of-box reset on some indoor communicating controls.",
+          "related_codes": [],
+          "source": "Goodman ComfortNet modular blower public installation manual, network troubleshooting and communications status LEDs, p.12",
+          "severity": "informational"
+        }
+      ]
+    },
+    {
+      "platform_id": "daikin_fit_inverter_outdoor",
+      "platform_name": "Daikin Fit Inverter Outdoor",
+      "platform_description": "Daikin Fit inverter-driven outdoor unit platform. Distinct engineering lineage from Goodman/Amana furnace platform — uses numeric E-code namespace (E25-E59, B0/B9, D0-D4) plus thermostat-only E11. 3-digit onboard PCB display with LEARN/RECALL/TEST button service workflow (Screen 0-4 modes). Network troubleshooting via red communications LED (H1P/H2P) and green receive LED (H3P). Cross-platform conflict: Fit E41 = low refrigerant, while Platform 2 E4 = flame sensed no call — same E-prefix, completely different fault families. US residential Fit does NOT use L-codes or U-codes (that Japanese-style namespace is commercial/mini-split territory).",
+      "applies_to_models": [
+        "DZ17VSA",
+        "DZ18VSA",
+        "DX17VSS",
+        "DX18TC",
+        "DZ20VC",
+        "DZ20TC",
+        "DX20VC"
+      ],
+      "applies_to_years": "2019-2026",
+      "model_number_prefixes": [
+        "DZ17VSA",
+        "DZ18VSA",
+        "DX17VSS",
+        "DX18TC",
+        "DZ20VC",
+        "DZ20TC",
+        "DX20VC",
+        "DZ17",
+        "DZ18",
+        "DX17",
+        "DX18",
+        "DZ20",
+        "DX20"
+      ],
+      "visual_identification": "Outdoor unit has 3-digit alphanumeric PCB display visible through service panel. LEARN / RECALL / TEST buttons on PCB. H1P and H2P red communications LEDs, H3P green receive LED. Numeric codes display with or without E-prefix (e.g., '25' or 'E25'). Letter-prefix codes B0/B9 display as 'B0'/'B9' or 'Eb0'/'Eb9'; D-codes as 'D0'-'D4' or 'Ed0'-'Ed4'. Thermostat (Daikin One+) shows E11 during commissioning/test workflow.",
+      "display_type": "alphanumeric",
+      "platform_notes": "Primary public source: Daikin Fit Outdoor Unit Installation Manual 3P515859-5S, troubleshooting table pp.35-37, network LED table pp.37-38, Mode Display Introduction pp.38-40. Platform uses the same shared-data memory-card architecture as Platform 2 furnaces (D0/D1/D3/D4 mirror Platform 2 d0/d4). L/U codes are NOT part of US residential Fit namespace — any encounter indicates a different Daikin product line.",
+      "codes": [
+        {
+          "code_id": "code_e25",
+          "code_identifier": "25 / E25",
+          "code_type": "alphanumeric",
+          "meaning": "Outdoor air temperature sensor is open or shorted",
+          "root_causes": [
+            "Faulty outdoor thermistor sensor or disconnect"
+          ],
+          "diagnostic_path": [
+            "Inspect and test sensor",
+            "Replace sensor if needed"
+          ],
+          "escalation": "Outdoor fault indication",
+          "reset_behavior": "Clears after sensor circuit returns to normal.",
+          "related_codes": [
+            "code_e27",
+            "code_e28",
+            "code_e29"
+          ],
+          "source": "Daikin Fit Outdoor Unit Installation Manual 3P515859-5S, troubleshooting table, p.35",
+          "severity": "service_soon",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_e26",
+          "code_identifier": "26 / E26",
+          "code_type": "alphanumeric",
+          "meaning": "Control determines that the pressure sensor is not reacting properly",
+          "root_causes": [
+            "Pressure sensor inoperable or not properly connected"
+          ],
+          "diagnostic_path": [
+            "Check connection to pressure sensor",
+            "Repair/replace if needed"
+          ],
+          "escalation": "Outdoor fault indication",
+          "reset_behavior": "Clears after pressure-sensor response returns to normal.",
+          "related_codes": [
+            "code_e41"
+          ],
+          "source": "Daikin Fit Outdoor Unit Installation Manual 3P515859-5S, troubleshooting table, p.35",
+          "severity": "service_soon",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_e27",
+          "code_identifier": "27 / E27",
+          "code_type": "alphanumeric",
+          "meaning": "Outdoor coil defrost temperature sensor is out of range",
+          "root_causes": [
+            "Outdoor defrost thermistor inoperable or not properly connected"
+          ],
+          "diagnostic_path": [
+            "Check connection to outdoor defrost thermistor",
+            "Repair/replace if needed"
+          ],
+          "escalation": "Outdoor fault indication",
+          "reset_behavior": "Clears after sensor input returns to normal.",
+          "related_codes": [
+            "code_e25",
+            "code_e28"
+          ],
+          "source": "Daikin Fit Outdoor Unit Installation Manual 3P515859-5S, troubleshooting table, p.35",
+          "severity": "service_soon",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_e28",
+          "code_identifier": "28 / E28",
+          "code_type": "alphanumeric",
+          "meaning": "Outdoor coil temperature sensor is out of range",
+          "root_causes": [
+            "Outdoor coil thermistor inoperable or not properly connected"
+          ],
+          "diagnostic_path": [
+            "Check connection to outdoor coil thermistor",
+            "Repair/replace if needed"
+          ],
+          "escalation": "Outdoor fault indication",
+          "reset_behavior": "Clears after sensor input returns to normal.",
+          "related_codes": [
+            "code_e25",
+            "code_e27"
+          ],
+          "source": "Daikin Fit Outdoor Unit Installation Manual 3P515859-5S, troubleshooting table, p.35",
+          "severity": "service_soon",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_e29",
+          "code_identifier": "29 / E29",
+          "code_type": "alphanumeric",
+          "meaning": "Liquid temperature sensor is out of range",
+          "root_causes": [
+            "Liquid thermistor inoperable or not properly connected"
+          ],
+          "diagnostic_path": [
+            "Check connection to liquid thermistor",
+            "Repair/replace if needed"
+          ],
+          "escalation": "Outdoor fault indication",
+          "reset_behavior": "Clears after sensor input returns to normal.",
+          "related_codes": [
+            "code_e25",
+            "code_e56"
+          ],
+          "source": "Daikin Fit Outdoor Unit Installation Manual 3P515859-5S, troubleshooting table, p.35",
+          "severity": "service_soon",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_e30",
+          "code_identifier": "30 / E30",
+          "code_type": "alphanumeric",
+          "meaning": "Indicates the control board may need to be replaced",
+          "root_causes": [
+            "Wiring to control board disconnected",
+            "Faulty control board",
+            "Electrical noise"
+          ],
+          "diagnostic_path": [
+            "Check wiring to control board",
+            "Repair as needed",
+            "Replace control board if necessary"
+          ],
+          "escalation": "Outdoor fault indication",
+          "reset_behavior": "Clears after wiring/board issue is corrected.",
+          "related_codes": [
+            "code_e37",
+            "code_e39",
+            "code_e50"
+          ],
+          "source": "Daikin Fit Outdoor Unit Installation Manual 3P515859-5S, troubleshooting table, p.35",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_e32",
+          "code_identifier": "32 / E32",
+          "code_type": "alphanumeric",
+          "meaning": "Equipment is experiencing high-temperature faults on the outdoor unit control board",
+          "root_causes": [
+            "Ambient air conditions too high",
+            "Stop valve not completely open",
+            "Cooling bracket screw(s) missing/not properly fastened in very low ambient condition",
+            "No/poor thermal grease coating between cooling plumbing and cooling bracket on control board",
+            "No/low/limited flow through control-board cooling circuit from line restriction or low refrigerant"
+          ],
+          "diagnostic_path": [
+            "Cycle power and retry in usable ambient range",
+            "Check grease application in very low ambient condition",
+            "Check for line restriction",
+            "Check refrigerant charge level",
+            "Verify stop valve fully open and repair if needed"
+          ],
+          "escalation": "Fault indication; public table does not give an explicit retry/lockout timer in accessible snippet",
+          "reset_behavior": "Retry after correction; automatic clearing behavior not explicitly timed in accessible snippet.",
+          "related_codes": [
+            "code_e34",
+            "code_e35",
+            "code_e37"
+          ],
+          "source": "Daikin Fit Outdoor Unit Installation Manual 3P515859-5S, troubleshooting table, p.35",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_e34",
+          "code_identifier": "34 / E34",
+          "code_type": "alphanumeric",
+          "meaning": "Control board detected a high current condition; indicates potential short circuit",
+          "root_causes": [
+            "Current spike in supply",
+            "Stop valve not completely open",
+            "Compressor wire is lost phase",
+            "Faulty control board",
+            "Faulty compressor"
+          ],
+          "diagnostic_path": [
+            "Check power supply for in-rush current during startup/steady state",
+            "Check stop-valve opening",
+            "Check wire between control board and compressor",
+            "Replace control board if necessary",
+            "Check compressor and repair/replace if needed"
+          ],
+          "escalation": "Outdoor protection fault",
+          "reset_behavior": "Clears after root cause is corrected.",
+          "related_codes": [
+            "code_e35",
+            "code_e38"
+          ],
+          "source": "Daikin Fit Outdoor Unit Installation Manual 3P515859-5S, troubleshooting table, p.35",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_e35",
+          "code_identifier": "35 / E35",
+          "code_type": "alphanumeric",
+          "meaning": "Control board detected a high current condition",
+          "root_causes": [
+            "Short circuit condition",
+            "Stop valve not completely open",
+            "Overcharge",
+            "Faulty control board",
+            "Faulty compressor"
+          ],
+          "diagnostic_path": [
+            "Check installation clearances",
+            "Verify stop valve fully open",
+            "Check refrigerant charge level",
+            "Replace control board if necessary",
+            "Check compressor and repair/replace if needed"
+          ],
+          "escalation": "Outdoor protection fault",
+          "reset_behavior": "Clears after root cause is corrected.",
+          "related_codes": [
+            "code_e34",
+            "code_e41"
+          ],
+          "source": "Daikin Fit Outdoor Unit Installation Manual 3P515859-5S, troubleshooting table, p.35",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_e36",
+          "code_identifier": "36 / E36",
+          "code_type": "alphanumeric",
+          "meaning": "Control encountered an abnormal condition during startup procedure",
+          "root_causes": [
+            "Blocked/restricted outdoor unit coil and/or lines",
+            "Compressor wire lost phase",
+            "Inconsistent compressor load",
+            "Faulty control board"
+          ],
+          "diagnostic_path": [
+            "Check/clean outdoor unit coil and/or lines",
+            "Check wire between control board and compressor",
+            "Replace control board if necessary"
+          ],
+          "escalation": "Startup fault / system start inhibited",
+          "reset_behavior": "Clears after startup condition normalizes and cause is corrected.",
+          "related_codes": [
+            "code_e34",
+            "code_e38"
+          ],
+          "source": "Daikin Fit Outdoor Unit Installation Manual 3P515859-5S, troubleshooting table, p.35",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_e37",
+          "code_identifier": "37 / E37",
+          "code_type": "alphanumeric",
+          "meaning": "Indicates the control board may need to be replaced",
+          "root_causes": [
+            "Outdoor fan motor not connected properly",
+            "Faulty control board"
+          ],
+          "diagnostic_path": [
+            "Check wiring from outdoor fan motor to control board",
+            "Repair if needed",
+            "Replace control board if necessary"
+          ],
+          "escalation": "Outdoor fault indication",
+          "reset_behavior": "Clears after wiring/board issue is corrected.",
+          "related_codes": [
+            "code_e30",
+            "code_e39"
+          ],
+          "source": "Daikin Fit Outdoor Unit Installation Manual 3P515859-5S, troubleshooting table, p.35",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_e38",
+          "code_identifier": "38 / E38",
+          "code_type": "alphanumeric",
+          "meaning": "Control has detected a voltage-related issue with the compressor",
+          "root_causes": [
+            "High or low voltage from supply",
+            "Compressor wire lost phase",
+            "Faulty control board"
+          ],
+          "diagnostic_path": [
+            "Correct low/high line-voltage condition",
+            "Check wire between control board and compressor",
+            "Replace control board if necessary"
+          ],
+          "escalation": "Compressor protection fault",
+          "reset_behavior": "Clears after voltage/compressor wiring issue is corrected.",
+          "related_codes": [
+            "code_e42",
+            "code_e43",
+            "code_e34"
+          ],
+          "source": "Daikin Fit Outdoor Unit Installation Manual 3P515859-5S, troubleshooting table, p.35",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_e39",
+          "code_identifier": "39 / E39",
+          "code_type": "alphanumeric",
+          "meaning": "Indicates the control board may need to be replaced",
+          "root_causes": [
+            "Thermistors inoperable or improperly connected",
+            "Faulty control board"
+          ],
+          "diagnostic_path": [
+            "Check connection to thermistors",
+            "Repair/replace if needed",
+            "Replace control board if necessary"
+          ],
+          "escalation": "Outdoor fault indication",
+          "reset_behavior": "Clears after thermistor/board fault is corrected.",
+          "related_codes": [
+            "code_e30",
+            "code_e37"
+          ],
+          "source": "Daikin Fit Outdoor Unit Installation Manual 3P515859-5S, troubleshooting table, p.35",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_e40",
+          "code_identifier": "40 / E40",
+          "code_type": "alphanumeric",
+          "meaning": "Control determines its compressor requirement is different than the compressor capability",
+          "root_causes": [
+            "Memory card not correct",
+            "Control board mismatch"
+          ],
+          "diagnostic_path": [
+            "Check memory-card data versus outdoor unit model",
+            "Verify control-board size versus outdoor unit model",
+            "Replace control board if necessary"
+          ],
+          "escalation": "Unit capability mismatch / operation inhibited",
+          "reset_behavior": "Clears after correct data/control is installed.",
+          "related_codes": [
+            "code_ed3",
+            "code_ed4"
+          ],
+          "source": "Daikin Fit Outdoor Unit Installation Manual 3P515859-5S, troubleshooting table, p.35",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_e41",
+          "code_identifier": "41 / E41",
+          "code_type": "alphanumeric",
+          "meaning": "Control board has detected a low refrigerant condition",
+          "root_causes": [
+            "Refrigerant leak",
+            "Low refrigerant charge",
+            "Thermistors inoperable or not properly connected"
+          ],
+          "diagnostic_path": [
+            "Test for system leaks using leak-test procedure",
+            "Check refrigerant charge level and adjust if needed",
+            "Check connection to thermistor and repair/replace if needed"
+          ],
+          "escalation": "Refrigerant-protection fault",
+          "reset_behavior": "Clears after refrigerant condition/sensor issue is corrected.",
+          "related_codes": [
+            "code_e26",
+            "code_e56"
+          ],
+          "source": "Daikin Fit Outdoor Unit Installation Manual 3P515859-5S, troubleshooting table, p.35",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_e42",
+          "code_identifier": "42 / E42",
+          "code_type": "alphanumeric",
+          "meaning": "Control detects a low power-supply voltage condition",
+          "root_causes": [
+            "Low line-voltage supply"
+          ],
+          "diagnostic_path": [
+            "Check circuit breakers and fuses",
+            "Verify unit is connected to power supply as specified on rating plate",
+            "Correct low line-voltage condition"
+          ],
+          "escalation": "Outdoor voltage-protection fault",
+          "reset_behavior": "Clears after supply voltage returns to range.",
+          "related_codes": [
+            "code_e43",
+            "code_e38"
+          ],
+          "source": "Daikin Fit Outdoor Unit Installation Manual 3P515859-5S, troubleshooting table, p.35",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_e43",
+          "code_identifier": "43 / E43",
+          "code_type": "alphanumeric",
+          "meaning": "Control detects a high power-supply voltage condition",
+          "root_causes": [
+            "High line-voltage supply"
+          ],
+          "diagnostic_path": [
+            "Verify unit is connected to power supply as specified on rating plate",
+            "Correct high line-voltage condition"
+          ],
+          "escalation": "Outdoor voltage-protection fault",
+          "reset_behavior": "Clears after supply voltage returns to range.",
+          "related_codes": [
+            "code_e42",
+            "code_e38"
+          ],
+          "source": "Daikin Fit Outdoor Unit Installation Manual 3P515859-5S, troubleshooting table, p.36",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_e44",
+          "code_identifier": "44 / E44",
+          "code_type": "alphanumeric",
+          "meaning": "Control detects outdoor temperature outside recommended operating range; unit may continue to operate normally",
+          "root_causes": [
+            "Ambient air conditions too high or too low"
+          ],
+          "diagnostic_path": [
+            "Cycle power",
+            "Retry during usable ambient temperature range"
+          ],
+          "escalation": "Advisory/protection message; public text says unit may continue to operate normally",
+          "reset_behavior": "Clears when ambient condition returns to acceptable range.",
+          "related_codes": [
+            "code_e32"
+          ],
+          "source": "Daikin Fit Outdoor Unit Installation Manual 3P515859-5S, troubleshooting table, p.36",
+          "severity": "informational",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_e45",
+          "code_identifier": "45 / E45",
+          "code_type": "alphanumeric",
+          "meaning": "Control is unable to start Cooling mode test because indoor heat has been turned on by thermostat; set thermostat to off position",
+          "root_causes": [
+            "Heat provided by secondary heating source"
+          ],
+          "diagnostic_path": [
+            "Turn off furnace/heater using thermostat before operation"
+          ],
+          "escalation": "Test mode blocked",
+          "reset_behavior": "Clears after thermostat is set correctly and indoor heat is off.",
+          "related_codes": [
+            "code_e47",
+            "code_e49"
+          ],
+          "source": "Daikin Fit Outdoor Unit Installation Manual 3P515859-5S, troubleshooting table, p.36",
+          "severity": "informational",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_e47",
+          "code_identifier": "47 / E47",
+          "code_type": "alphanumeric",
+          "meaning": "Control is unable to start System Verification test because indoor heat has been turned on by thermostat; set thermostat to off position",
+          "root_causes": [
+            "Heat provided by secondary heating source"
+          ],
+          "diagnostic_path": [
+            "Turn off furnace/heater using thermostat before operation"
+          ],
+          "escalation": "System Verification test blocked",
+          "reset_behavior": "Clears after thermostat is set correctly and indoor heat is off.",
+          "related_codes": [
+            "code_e45",
+            "code_e49",
+            "code_e11"
+          ],
+          "source": "Daikin Fit Outdoor Unit Installation Manual 3P515859-5S, troubleshooting table, p.36",
+          "severity": "informational",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_e49",
+          "code_identifier": "49 / E49",
+          "code_type": "alphanumeric",
+          "meaning": "Control is unable to enter Charging Mode because indoor heat has been turned on by thermostat; set thermostat to off position",
+          "root_causes": [
+            "Heat provided by secondary heating source"
+          ],
+          "diagnostic_path": [
+            "Turn off heater using thermostat before operation"
+          ],
+          "escalation": "Charge mode blocked",
+          "reset_behavior": "Clears after thermostat is set correctly and indoor heat is off.",
+          "related_codes": [
+            "code_e45",
+            "code_e47"
+          ],
+          "source": "Daikin Fit Outdoor Unit Installation Manual 3P515859-5S, troubleshooting table, p.36",
+          "severity": "informational",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_e50",
+          "code_identifier": "50 / E50",
+          "code_type": "alphanumeric",
+          "meaning": "Voltage issue on control board; see service manual for troubleshooting information",
+          "root_causes": [
+            "High or low voltage from supply voltage or frequency",
+            "Faulty control board",
+            "Noise"
+          ],
+          "diagnostic_path": [
+            "Correct low/high line-voltage condition",
+            "Contact local utility if needed",
+            "Replace control board if necessary"
+          ],
+          "escalation": "Outdoor control-board protection fault",
+          "reset_behavior": "Clears after supply/board issue is corrected.",
+          "related_codes": [
+            "code_e42",
+            "code_e43",
+            "code_e30"
+          ],
+          "source": "Daikin Fit Outdoor Unit Installation Manual 3P515859-5S, troubleshooting table, p.36",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_e51",
+          "code_identifier": "51 / E51",
+          "code_type": "alphanumeric",
+          "meaning": "Potential communication issues detected by outdoor unit control board",
+          "root_causes": [
+            "Communication wiring disconnected"
+          ],
+          "diagnostic_path": [
+            "Check communication wiring",
+            "Repair as needed",
+            "Refer to network troubleshooting"
+          ],
+          "escalation": "Network communication error",
+          "reset_behavior": "Clears after communication is restored.",
+          "related_codes": [
+            "led_red_1_flash",
+            "led_green_1_steady",
+            "code_ed0"
+          ],
+          "source": "Daikin Fit Outdoor Unit Installation Manual 3P515859-5S, troubleshooting table, p.36",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_e56",
+          "code_identifier": "56 / E56",
+          "code_type": "alphanumeric",
+          "meaning": "Outdoor suction temperature sensor is out of range",
+          "root_causes": [
+            "Suction thermistor inoperable or not properly connected",
+            "Faulty reversing valve"
+          ],
+          "diagnostic_path": [
+            "Check connection to suction thermistor",
+            "Repair/replace if needed",
+            "Check reversing valve and replace if needed"
+          ],
+          "escalation": "Outdoor fault indication",
+          "reset_behavior": "Clears after sensor/valve issue is corrected.",
+          "related_codes": [
+            "code_e29",
+            "code_e41",
+            "code_e59"
+          ],
+          "source": "Daikin Fit Outdoor Unit Installation Manual 3P515859-5S, troubleshooting table, p.36",
+          "severity": "service_soon",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_e58",
+          "code_identifier": "58 / E58",
+          "code_type": "alphanumeric",
+          "meaning": "Overload protection sensor for compressor is opened",
+          "root_causes": [
+            "Overload protection sensor inoperable",
+            "Jumper wire (X33A) in incorrect position or off"
+          ],
+          "diagnostic_path": [
+            "Check resistance on OL sensor",
+            "Replace if needed",
+            "Check OL sensor position on compressor body",
+            "Check jumper-wire position (X33A)"
+          ],
+          "escalation": "Compressor protection fault",
+          "reset_behavior": "Clears after overload sensor/jumper condition is corrected.",
+          "related_codes": [
+            "code_e34",
+            "code_e35"
+          ],
+          "source": "Daikin Fit Outdoor Unit Installation Manual 3P515859-5S, troubleshooting table, p.37",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_e59",
+          "code_identifier": "59 / E59",
+          "code_type": "alphanumeric",
+          "meaning": "Equipment is experiencing reversing-valve faults",
+          "root_causes": [
+            "Faulty reversing-valve body or coil",
+            "Low refrigerant charge",
+            "Faulty pressure sensor",
+            "Faulty control board"
+          ],
+          "diagnostic_path": [
+            "Check reversing-valve body/coil",
+            "Check refrigerant charge",
+            "Check pressure sensor",
+            "Replace control board if necessary"
+          ],
+          "escalation": "Reversing-valve fault",
+          "reset_behavior": "Clears after valve/refrigerant/sensor condition is corrected.",
+          "related_codes": [
+            "code_e56"
+          ],
+          "source": "Daikin Fit Outdoor Unit Installation Manual 3P515859-5S, troubleshooting table, p.37",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_eb0",
+          "code_identifier": "B0 / Eb0",
+          "code_type": "alphanumeric",
+          "meaning": "Estimated airflow from indoor subsystem is near 0 CFM",
+          "root_causes": [
+            "Failed indoor blower motor",
+            "Indoor fan motor not properly connected",
+            "Too much static pressure"
+          ],
+          "diagnostic_path": [
+            "Check indoor-fan motor wiring/connectors",
+            "Replace indoor-fan motor if needed",
+            "Check obstruction inside ductwork"
+          ],
+          "escalation": "Indoor airflow failure affecting outdoor operation",
+          "reset_behavior": "Clears after indoor airflow path is restored.",
+          "related_codes": [
+            "code_eb9",
+            "code_ed2"
+          ],
+          "source": "Daikin Fit Outdoor Unit Installation Manual 3P515859-5S, troubleshooting table, p.37",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_eb9",
+          "code_identifier": "B9 / Eb9",
+          "code_type": "alphanumeric",
+          "meaning": "Estimated airflow from motor is lower than airflow requirement",
+          "root_causes": [
+            "Failed indoor blower motor",
+            "Indoor fan motor not properly connected",
+            "Too much static pressure"
+          ],
+          "diagnostic_path": [
+            "Check indoor-fan motor wiring/connectors",
+            "Replace indoor-fan motor if needed"
+          ],
+          "escalation": "Airflow deficiency affecting system performance",
+          "reset_behavior": "Clears after airflow returns to requirement.",
+          "related_codes": [
+            "code_eb0"
+          ],
+          "source": "Daikin Fit Outdoor Unit Installation Manual 3P515859-5S, troubleshooting table, p.37",
+          "severity": "service_soon",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_ed0",
+          "code_identifier": "D0 / Ed0",
+          "code_type": "alphanumeric",
+          "meaning": "Control board does not have the necessary data for it to properly perform its functions",
+          "root_causes": [
+            "Outdoor unit is wired as part of a communicating system and integrated control module does not contain shared data"
+          ],
+          "diagnostic_path": [
+            "Replace control board if necessary"
+          ],
+          "escalation": "Communicating setup/data fault",
+          "reset_behavior": "Clears after proper data/control condition is restored.",
+          "related_codes": [
+            "code_ed1",
+            "code_ed3",
+            "code_d0"
+          ],
+          "source": "Daikin Fit Outdoor Unit Installation Manual 3P515859-5S, troubleshooting table, p.37",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_ed1",
+          "code_identifier": "D1 / Ed1",
+          "code_type": "alphanumeric",
+          "meaning": "Control board does not have the appropriate data needed to properly perform its functions",
+          "root_causes": [
+            "Outdoor unit is wired as part of a communicating system",
+            "Invalid shared data or network data is invalid for the integrated control module"
+          ],
+          "diagnostic_path": [
+            "Replace control board if necessary"
+          ],
+          "escalation": "Communicating setup/data fault",
+          "reset_behavior": "Clears after proper data/control condition is restored.",
+          "related_codes": [
+            "code_ed0",
+            "code_ed4"
+          ],
+          "source": "Daikin Fit Outdoor Unit Installation Manual 3P515859-5S, troubleshooting table, p.37",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_ed2",
+          "code_identifier": "D2 / Ed2",
+          "code_type": "alphanumeric",
+          "meaning": "Airflow requirement is greater than the airflow capability of the indoor subsystem",
+          "root_causes": [
+            "Outdoor unit requires greater airflow than indoor capability or type of indoor unit with EEV is connected",
+            "Shared data incompatible with system or missing parameters",
+            "Communication wiring with indoor unit has loose connection"
+          ],
+          "diagnostic_path": [
+            "Check combination against rating list and correct if needed",
+            "Verify shared data for specific model and repopulate if required",
+            "Check communication and power-supply wiring of indoor unit and repair as needed"
+          ],
+          "escalation": "System match/airflow capability fault",
+          "reset_behavior": "Clears after proper indoor/outdoor match/data/wiring is restored.",
+          "related_codes": [
+            "code_eb0",
+            "code_eb9",
+            "code_ed3"
+          ],
+          "source": "Daikin Fit Outdoor Unit Installation Manual 3P515859-5S, troubleshooting table, p.37",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_ed3",
+          "code_identifier": "D3 / Ed3",
+          "code_type": "alphanumeric",
+          "meaning": "Mismatch between shared data and the control physical hardware",
+          "root_causes": [
+            "Shared data sent to integrated control module does not match hardware configuration"
+          ],
+          "diagnostic_path": [
+            "Verify shared data is correct for the specific model",
+            "Repopulate data if required"
+          ],
+          "escalation": "Hardware/data mismatch fault",
+          "reset_behavior": "Clears after correct shared data is loaded.",
+          "related_codes": [
+            "code_ed0",
+            "code_ed2",
+            "code_e40"
+          ],
+          "source": "Daikin Fit Outdoor Unit Installation Manual 3P515859-5S, troubleshooting table, p.37",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_ed4",
+          "code_identifier": "D4 / Ed4",
+          "code_type": "alphanumeric",
+          "meaning": "Memory-card data has been rejected",
+          "root_causes": [
+            "Shared data on memory card has been rejected"
+          ],
+          "diagnostic_path": [
+            "Verify shared data is correct for the specific model",
+            "Repopulate data if required"
+          ],
+          "escalation": "Communicating setup/data fault",
+          "reset_behavior": "Clears after valid memory-card data is accepted.",
+          "related_codes": [
+            "code_ed0",
+            "code_ed1",
+            "code_d4"
+          ],
+          "source": "Daikin Fit Outdoor Unit Installation Manual 3P515859-5S, troubleshooting table, p.37",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_e11",
+          "code_identifier": "11 / E11",
+          "code_type": "thermostat_display",
+          "meaning": "System start-up test is required or in progress; installer should navigate to thermostat menu to run system start-up test; code clears once testing is complete",
+          "root_causes": [
+            "Incomplete system start-up test",
+            "System start-up test is running"
+          ],
+          "diagnostic_path": [
+            "Run the SYSTEM START-UP TEST from thermostat/install setup following outdoor unit installation manual"
+          ],
+          "escalation": "Thermostat-only commissioning/test-state message",
+          "reset_behavior": "Clears automatically once testing is complete.",
+          "related_codes": [
+            "code_e47"
+          ],
+          "source": "Daikin Fit Outdoor Unit Installation Manual 3P515859-5S, thermostat-only message row, p.37",
+          "severity": "informational",
+          "surface": "indoor_display"
+        },
+        {
+          "code_id": "led_red_off",
+          "code_identifier": "Red communications LED off",
+          "code_type": "led_pattern",
+          "meaning": "Normal condition",
+          "root_causes": [
+            "None"
+          ],
+          "diagnostic_path": [
+            "No corrective action needed"
+          ],
+          "escalation": "None",
+          "reset_behavior": "Not applicable.",
+          "related_codes": [
+            "led_red_1_flash",
+            "led_red_2_flashes"
+          ],
+          "source": "Daikin Fit Outdoor Unit Installation Manual 3P515859-5S, network troubleshooting LED table, p.38",
+          "severity": "informational",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "led_red_1_flash",
+          "code_identifier": "Red communications LED 1 flash",
+          "code_type": "led_pattern",
+          "meaning": "Communications failure",
+          "root_causes": [
+            "Unknown packet received",
+            "Communications failure"
+          ],
+          "diagnostic_path": [
+            "Depress LEARN button",
+            "Verify wiring connection"
+          ],
+          "escalation": "Active network problem",
+          "reset_behavior": "Reset network using LEARN button, approximately 5 seconds.",
+          "related_codes": [
+            "code_e51",
+            "led_green_off",
+            "led_green_1_steady"
+          ],
+          "source": "Daikin Fit Outdoor Unit Installation Manual 3P515859-5S, network troubleshooting LED table and LEARN-button note, p.38",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "led_red_2_flashes",
+          "code_identifier": "Red communications LED 2 flashes",
+          "code_type": "led_pattern",
+          "meaning": "Out-of-box reset",
+          "root_causes": [
+            "Control power up",
+            "LEARN button depressed"
+          ],
+          "diagnostic_path": [
+            "None listed as required in table",
+            "Confirm whether this is expected during setup/reset activity"
+          ],
+          "escalation": "Reset-state indicator, not a fault by itself",
+          "reset_behavior": "State occurs on control power-up or learn-button action.",
+          "related_codes": [
+            "led_red_off",
+            "led_red_1_flash"
+          ],
+          "source": "Daikin Fit Outdoor Unit Installation Manual 3P515859-5S, network troubleshooting LED table, p.38",
+          "severity": "informational",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "led_green_off",
+          "code_identifier": "Green receive LED off",
+          "code_type": "led_pattern",
+          "meaning": "No power or communications error",
+          "root_causes": [
+            "No power to unit",
+            "Open fuse",
+            "Communication error"
+          ],
+          "diagnostic_path": [
+            "Check circuit breakers and fuses",
+            "Reset/replace as needed",
+            "Reset network with LEARN button",
+            "Check communication wires terminal 1/terminal 2",
+            "Check for shorts in low-voltage wiring"
+          ],
+          "escalation": "Network/power problem",
+          "reset_behavior": "Clears after power/communication problem is corrected.",
+          "related_codes": [
+            "code_e51",
+            "led_red_1_flash"
+          ],
+          "source": "Daikin Fit Outdoor Unit Installation Manual 3P515859-5S, network troubleshooting LED table, p.38",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "led_green_1_steady",
+          "code_identifier": "Green receive LED 1 steady flash",
+          "code_type": "led_pattern",
+          "meaning": "No network found",
+          "root_causes": [
+            "Broken/disconnected communication wire(s)",
+            "Unit installed as legacy/traditional system"
+          ],
+          "diagnostic_path": [
+            "Check communication wires terminal 1/terminal 2 and replace if needed",
+            "Check installation type is correct"
+          ],
+          "escalation": "Network not established",
+          "reset_behavior": "Clears when network is established.",
+          "related_codes": [
+            "led_red_1_flash",
+            "led_green_off"
+          ],
+          "source": "Daikin Fit Outdoor Unit Installation Manual 3P515859-5S, network troubleshooting LED table, pp.37-38",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "led_green_rapid",
+          "code_identifier": "Green receive LED rapid flashing",
+          "code_type": "led_pattern",
+          "meaning": "Normal network traffic",
+          "root_causes": [
+            "Control is 'talking' on network as expected"
+          ],
+          "diagnostic_path": [
+            "None required"
+          ],
+          "escalation": "None",
+          "reset_behavior": "Not applicable.",
+          "related_codes": [
+            "led_green_1_steady",
+            "led_green_solid"
+          ],
+          "source": "Daikin Fit Outdoor Unit Installation Manual 3P515859-5S, network troubleshooting LED table, p.37",
+          "severity": "informational",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "led_green_solid",
+          "code_identifier": "Green receive LED on solid",
+          "code_type": "led_pattern",
+          "meaning": "Terminal 1 / Terminal 2 mis-wire",
+          "root_causes": [
+            "Terminal 1 and Terminal 2 reversed at indoor unit/thermostat/outdoor unit",
+            "Short between terminal 1 and terminal 2",
+            "Short between terminal 1 or 2 and terminal C or R"
+          ],
+          "diagnostic_path": [
+            "Check communication wires terminal 1/terminal 2 and replace if needed"
+          ],
+          "escalation": "Network wiring fault",
+          "reset_behavior": "Clears after miswire/short is corrected.",
+          "related_codes": [
+            "code_e51",
+            "led_green_off",
+            "led_green_1_steady"
+          ],
+          "source": "Daikin Fit Outdoor Unit Installation Manual 3P515859-5S, network troubleshooting LED table, pp.37-38",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_e33",
+          "code_identifier": "33 / E33",
+          "code_type": "alphanumeric",
+          "meaning": "Repeated high-temperature faults on outdoor control board; continued operation acceptable",
+          "root_causes": [
+            "Repeated brief high-temp events on control board during operation",
+            "Marginal cooling of control board under load",
+            "Ambient conditions stressing thermal envelope"
+          ],
+          "diagnostic_path": [
+            "Confirm ambient operating conditions are within range",
+            "Check control-board cooling path (grease, screws, airflow)",
+            "Check for refrigerant-side restrictions affecting board cooling"
+          ],
+          "escalation": "Advisory — manual explicitly states continued operation is acceptable",
+          "reset_behavior": "Clears after thermal stress event frequency drops back to normal.",
+          "related_codes": [
+            "code_e32"
+          ],
+          "source": "Daikin Fit Outdoor Unit Installation Manual 3P515859-5S, advisory code section",
+          "severity": "service_soon",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_e52",
+          "code_identifier": "52 / E52",
+          "code_type": "alphanumeric",
+          "meaning": "Frequent compressor faults; continued operation acceptable",
+          "root_causes": [
+            "Recurring compressor-protection events",
+            "Compressor showing signs of stress but not failing to start"
+          ],
+          "diagnostic_path": [
+            "Check compressor amp draw and starting behavior",
+            "Verify refrigerant charge",
+            "Verify supply voltage stability",
+            "Schedule compressor replacement if trend continues"
+          ],
+          "escalation": "Advisory — continued operation acceptable but system is flagging a real equipment problem",
+          "reset_behavior": "Clears after compressor fault frequency returns to normal.",
+          "related_codes": [
+            "code_e34",
+            "code_e35",
+            "code_e38"
+          ],
+          "source": "Daikin Fit Outdoor Unit Installation Manual 3P515859-5S, advisory code section",
+          "severity": "service_soon",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_e53",
+          "code_identifier": "53 / E53",
+          "code_type": "alphanumeric",
+          "meaning": "Frequent outdoor control-board and/or motor faults; continued operation acceptable",
+          "root_causes": [
+            "Repeated outdoor control-board protective events",
+            "Outdoor fan motor showing stress"
+          ],
+          "diagnostic_path": [
+            "Check outdoor control-board condition",
+            "Inspect outdoor fan motor for bearing/load issues",
+            "Verify power supply stability"
+          ],
+          "escalation": "Advisory — continued operation acceptable but indicates a real developing problem",
+          "reset_behavior": "Clears after fault frequency returns to normal.",
+          "related_codes": [
+            "code_e30",
+            "code_e37",
+            "code_e39"
+          ],
+          "source": "Daikin Fit Outdoor Unit Installation Manual 3P515859-5S, advisory code section",
+          "severity": "service_soon",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_e54",
+          "code_identifier": "54 / E54",
+          "code_type": "alphanumeric",
+          "meaning": "Frequent low-discharge-superheat faults; continued operation acceptable",
+          "root_causes": [
+            "Recurring low superheat at compressor discharge",
+            "EEV control issue causing periodic flooding",
+            "Refrigerant overcharge"
+          ],
+          "diagnostic_path": [
+            "Verify refrigerant charge level against manufacturer specification",
+            "Check EEV operation and positioning",
+            "Verify suction and discharge temperatures against expected envelope"
+          ],
+          "escalation": "Advisory — continued operation acceptable but compressor is periodically seeing liquid return",
+          "reset_behavior": "Clears after superheat frequency returns to normal.",
+          "related_codes": [
+            "code_e41",
+            "code_e55"
+          ],
+          "source": "Daikin Fit Outdoor Unit Installation Manual 3P515859-5S, advisory code section",
+          "severity": "service_soon",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_e55",
+          "code_identifier": "55 / E55",
+          "code_type": "alphanumeric",
+          "meaning": "Frequent high-discharge-temperature faults; continued operation acceptable",
+          "root_causes": [
+            "Recurring high discharge temperature events",
+            "Low refrigerant charge",
+            "Restricted airflow on outdoor coil",
+            "Condenser fan motor issue"
+          ],
+          "diagnostic_path": [
+            "Check refrigerant charge level",
+            "Inspect outdoor coil for restriction/debris",
+            "Verify condenser fan motor operation and speed"
+          ],
+          "escalation": "Advisory — continued operation acceptable but compressor is periodically running hot",
+          "reset_behavior": "Clears after high-temperature frequency returns to normal.",
+          "related_codes": [
+            "code_e32",
+            "code_e41",
+            "code_e54"
+          ],
+          "source": "Daikin Fit Outdoor Unit Installation Manual 3P515859-5S, advisory code section",
+          "severity": "service_soon",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_e57",
+          "code_identifier": "57 / E57",
+          "code_type": "alphanumeric",
+          "meaning": "Sweating in cooling loop at low ambient conditions",
+          "root_causes": [
+            "Refrigerant leak",
+            "Low charge",
+            "EEV issue affecting superheat control at low ambient",
+            "Thermistor issue causing incorrect EEV response"
+          ],
+          "diagnostic_path": [
+            "Test for refrigerant leaks",
+            "Verify refrigerant charge",
+            "Check EEV operation and thermistor readings",
+            "Verify suction and discharge temperatures at low ambient"
+          ],
+          "escalation": "Advisory — flags condensation risk in cooling loop at low ambient",
+          "reset_behavior": "Clears after underlying leak/charge/EEV/thermistor issue is corrected.",
+          "related_codes": [
+            "code_e41",
+            "code_e56"
+          ],
+          "source": "Daikin Fit Outdoor Unit Installation Manual 3P515859-5S, advisory code section",
+          "severity": "service_soon",
+          "surface": "outdoor_cda"
+        }
+      ]
+    },
+    {
+      "platform_id": "daikin_goodman_comfortnet_outdoor_unitary",
+      "platform_name": "ComfortNet Outdoor Unitary (DX16TC/DZ16TC Non-Inverter Communicating)",
+      "platform_description": "Goodman/Daikin ComfortNet-capable outdoor condenser and heat pump platform PREDATING Daikin Fit inverter. Covers DX16TC, DZ16TC, DX18TC, DZ18TC — single-stage and two-stage communicating outdoor units that use shared-data memory card architecture but are NOT inverter-driven. Public service literature exposes distinct code namespace: d0/d4 for communicating shared-data (same concept as furnace d0/d4 but at outdoor-unit level), 01/L1 for low-side/low-pressure lockout, 02 for high-side fault, 06 for open start circuit, 07 for open run circuit. CRITICAL: Do NOT confuse with Daikin Fit (Platform 4) — Fit uses E25-E59 numeric namespace and IS inverter; DX16TC/DZ16TC use this 01/L1/02/06/07 namespace and are NOT inverter.",
+      "applies_to_models": [
+        "DX16TC",
+        "DZ16TC",
+        "DX18TC",
+        "DZ18TC"
+      ],
+      "applies_to_years": "2014-2020 (pre-Fit ComfortNet outdoor platform)",
+      "model_number_prefixes": [
+        "DX16TC",
+        "DZ16TC",
+        "DX18TC",
+        "DZ18TC"
+      ],
+      "visual_identification": "Outdoor unit PCB displays communicating d0/d4/01/L1/02/06/07 codes. Unit is communicating-capable (shared-data memory card) but NOT inverter-driven — visually has conventional two-stage compressor hardware rather than Fit's inverter module.",
+      "display_type": "alphanumeric",
+      "platform_notes": "Public service literature source. Reset behavior: low-side (01/L1) lockout can auto-clear after 30 consecutive normal cycles OR be cleared by cycling 24 VAC to the outdoor control. This distinct clearing mechanism (30-cycle auto-recovery) is unique to this platform — not seen on Platform 4 Fit.",
+      "codes": [
+        {
+          "code_id": "cno_d0",
+          "code_identifier": "d0",
+          "code_type": "alphanumeric",
+          "meaning": "Data not yet on network (outdoor unit has no shared data)",
+          "root_causes": [
+            "Outdoor unit is wired as part of a communicating system but integrated control module does not contain shared data"
+          ],
+          "diagnostic_path": [
+            "Populate shared data set using memory card",
+            "Use memory card for the specific model",
+            "Insert memory card before turning power on",
+            "Remove only after data is loaded and power is turned off"
+          ],
+          "escalation": "Outdoor unit fails to operate in communicating context until shared data is present",
+          "reset_behavior": "Error clears once data is loaded.",
+          "related_codes": [
+            "cno_d4",
+            "code_d0",
+            "code_ed0"
+          ],
+          "source": "Goodman/Daikin DX16TC/DZ16TC ComfortNet outdoor unit public service literature",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "cno_d4",
+          "code_identifier": "d4",
+          "code_type": "alphanumeric",
+          "meaning": "Invalid memory-card data (outdoor unit)",
+          "root_causes": [
+            "Shared data set on memory card rejected by outdoor integrated control module"
+          ],
+          "diagnostic_path": [
+            "Verify shared data set is correct for specific outdoor unit model",
+            "Repopulate using correct memory card if required"
+          ],
+          "escalation": "Outdoor unit operation different than expected or inhibited until valid shared data is accepted",
+          "reset_behavior": "Error clears once valid data is loaded and power is cycled per procedure.",
+          "related_codes": [
+            "cno_d0",
+            "code_d4",
+            "code_ed4"
+          ],
+          "source": "Goodman/Daikin DX16TC/DZ16TC ComfortNet outdoor unit public service literature",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "cno_01",
+          "code_identifier": "01 / L1",
+          "code_type": "alphanumeric",
+          "meaning": "Low-side fault / low-pressure lockout",
+          "root_causes": [
+            "Low refrigerant charge",
+            "Restricted airflow on indoor coil",
+            "Stuck TXV or metering device",
+            "Compressor operating below low-pressure cutoff"
+          ],
+          "diagnostic_path": [
+            "Check refrigerant charge level",
+            "Inspect indoor coil and filter for restriction",
+            "Verify TXV/metering device operation",
+            "Check low-pressure switch"
+          ],
+          "escalation": "Outdoor unit locks out compressor",
+          "reset_behavior": "Auto-clears after 30 consecutive normal cycles OR manually cleared by cycling 24 VAC to the outdoor control.",
+          "related_codes": [
+            "cno_02"
+          ],
+          "source": "Goodman/Daikin ComfortNet outdoor unit public service literature",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "cno_02",
+          "code_identifier": "02",
+          "code_type": "alphanumeric",
+          "meaning": "High-side fault / high-pressure fault",
+          "root_causes": [
+            "Restricted outdoor airflow",
+            "Condenser coil dirty or blocked",
+            "Condenser fan motor fault",
+            "Refrigerant overcharge",
+            "Non-condensable gases in system"
+          ],
+          "diagnostic_path": [
+            "Inspect and clean outdoor coil",
+            "Verify condenser fan motor operation and speed",
+            "Check refrigerant charge level",
+            "Evacuate and recharge if non-condensables suspected"
+          ],
+          "escalation": "Outdoor unit locks out compressor on high-pressure event",
+          "reset_behavior": "Auto-clears after fault condition clears and anti-short-cycle timer completes OR manually cleared by cycling 24 VAC.",
+          "related_codes": [
+            "cno_01"
+          ],
+          "source": "Goodman/Daikin ComfortNet outdoor unit public service literature",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "cno_06",
+          "code_identifier": "06",
+          "code_type": "alphanumeric",
+          "meaning": "Open start circuit",
+          "root_causes": [
+            "Start winding or start capacitor circuit open",
+            "Wiring fault in start circuit",
+            "Start relay contact fault"
+          ],
+          "diagnostic_path": [
+            "Check start capacitor",
+            "Check start winding resistance",
+            "Inspect start circuit wiring",
+            "Check start relay operation"
+          ],
+          "escalation": "Compressor cannot start",
+          "reset_behavior": "Clears after start circuit fault is corrected.",
+          "related_codes": [
+            "cno_07"
+          ],
+          "source": "Goodman/Daikin ComfortNet outdoor unit public service literature",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "cno_07",
+          "code_identifier": "07",
+          "code_type": "alphanumeric",
+          "meaning": "Open run circuit",
+          "root_causes": [
+            "Run winding or run capacitor circuit open",
+            "Wiring fault in run circuit",
+            "Contactor contact fault"
+          ],
+          "diagnostic_path": [
+            "Check run capacitor",
+            "Check run winding resistance",
+            "Inspect run circuit wiring",
+            "Check contactor operation"
+          ],
+          "escalation": "Compressor cannot run",
+          "reset_behavior": "Clears after run circuit fault is corrected.",
+          "related_codes": [
+            "cno_06"
+          ],
+          "source": "Goodman/Daikin ComfortNet outdoor unit public service literature",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        }
+      ]
+    }
+  ],
+  "cross_generation_conflicts": [
+    {
+      "conflict_id": "daikin_legacy_3flash_vs_modern_e3",
+      "description": "Same number, different meanings across platform generations",
+      "conflict_severity": "high",
+      "involved_platforms": [
+        "daikin_goodman_legacy_led",
+        "daikin_goodman_7segment_modern"
+      ],
+      "code_identifier": "Legacy 3 flashes vs modern E3",
+      "meanings": [
+        {
+          "platform_id": "daikin_goodman_legacy_led",
+          "meaning": "Legacy '3 flashes' = pressure switch stuck open"
+        },
+        {
+          "platform_id": "daikin_goodman_7segment_modern",
+          "meaning": "Modern 'E3' = primary/aux/rollout limit circuit open (completely different diagnostic family)"
+        }
+      ],
+      "ui_banner_text": "Pressure switch stuck open on legacy boards flashes 3 times — but 'E3' on modern 7-segment boards is an OPEN LIMIT fault, not a pressure switch fault. Identify the control surface first: single red LED = legacy flash codes (2 flashes=pressure stuck closed, 3=pressure stuck open, 4=limit); dual 7-segment display = E-codes (E2=low-stage pressure not closed, E3=limit open, E4=flame sensed no call)."
+    },
+    {
+      "conflict_id": "daikin_furnace_e4_vs_fit_e41",
+      "description": "Same E-prefix namespace but completely different meanings across Goodman furnace vs Daikin Fit inverter",
+      "conflict_severity": "high",
+      "involved_platforms": [
+        "daikin_goodman_7segment_modern",
+        "daikin_fit_inverter_outdoor"
+      ],
+      "code_identifier": "Modern furnace E4 vs Daikin Fit E41",
+      "meanings": [
+        {
+          "platform_id": "daikin_goodman_7segment_modern",
+          "meaning": "Furnace E4 = flame sensed with no call for heat (safety-critical gas valve/flame-sense issue)"
+        },
+        {
+          "platform_id": "daikin_fit_inverter_outdoor",
+          "meaning": "Fit E41 = low refrigerant condition detected by control board (refrigerant leak, low charge, or faulty thermistor)"
+        }
+      ],
+      "ui_banner_text": "The 'E' prefix on Daikin-owned equipment does NOT mean the same thing across platforms. Furnace E4 is a gas-valve/flame-sense safety issue. Daikin Fit E41 is low refrigerant. Different engineering lineages, different meanings. ALWAYS confirm the surface (indoor furnace board vs outdoor Fit PCB) before interpreting any E-code."
+    },
+    {
+      "conflict_id": "daikin_comfortnet_multisurface_conflict",
+      "description": "Same event shows different identifiers on equipment board vs ComfortNet thermostat surface",
+      "conflict_severity": "medium",
+      "involved_platforms": [
+        "daikin_goodman_7segment_modern",
+        "daikin_goodman_comfortnet_communicating"
+      ],
+      "code_identifier": "Equipment board code vs thermostat service message",
+      "meanings": [
+        {
+          "platform_id": "daikin_goodman_7segment_modern",
+          "meaning": "Equipment 7-segment board shows specific code like E0, E1, E2, d0, d4, b1 with detailed fault meaning"
+        },
+        {
+          "platform_id": "daikin_goodman_comfortnet_communicating",
+          "meaning": "Same event surfaces at CTK04 thermostat only as 'Call for Service' icon or 'Check Furnace' scroll text — the equipment-level fault detail is NOT published at the thermostat"
+        }
+      ],
+      "ui_banner_text": "ComfortNet thermostat showing 'Call for Service' or 'Check Furnace' is a POINTER — it tells you there's an active equipment fault but not WHAT. Always go to the equipment's 7-segment display (E0-E9, EA, d0, d4, b0-b9) to read the actual code. Use Daikin One+ Error History under System Optimization to review recent logged alerts with color coding (white = not critical, yellow = critical)."
+    },
+    {
+      "conflict_id": "daikin_comfortnet_outdoor_unitary_vs_fit",
+      "description": "Two completely different outdoor-unit code namespaces within same corporate family",
+      "conflict_severity": "high",
+      "involved_platforms": [
+        "daikin_goodman_comfortnet_outdoor_unitary",
+        "daikin_fit_inverter_outdoor"
+      ],
+      "code_identifier": "Outdoor unit diagnostic namespace",
+      "meanings": [
+        {
+          "platform_id": "daikin_goodman_comfortnet_outdoor_unitary",
+          "meaning": "DX16TC/DZ16TC/DX18TC/DZ18TC (non-inverter communicating): codes are 01/L1 (low-side lockout), 02 (high-side fault), 06 (open start), 07 (open run), d0/d4 (shared data). Auto-clear after 30 consecutive normal cycles on low-side."
+        },
+        {
+          "platform_id": "daikin_fit_inverter_outdoor",
+          "meaning": "DZ17VSA/DZ18VSA/DX17/DX18/DZ20/DX20 (inverter): codes are E25-E59 numeric, B0/B9, D0-D4 (Ed0-Ed4), thermostat-only E11. No 30-cycle auto-clear mechanism; reset via power-cycle or LEARN button."
+        }
+      ],
+      "ui_banner_text": "Daikin/Goodman has TWO distinct outdoor communicating platforms with completely different code namespaces. DX16TC/DZ16TC/DX18TC (non-inverter, pre-2020) uses 01/L1/02/06/07. Daikin Fit (DZ17VSA/DZ18VSA/DZ20 inverter, 2019+) uses E25-E59. Check the outdoor model number first — matching codes to the wrong platform will send you down the wrong diagnostic path entirely."
+    }
+  ],
+  "electric_heat_notes": {
+    "conventional_electric_furnace_codes": "Daikin/Goodman/Amana electric-heat codes surface primarily through communicating air handler controls (AVPTC, ASPT, MBVC modular blower). On ComfortNet communicating systems, electric-heat faults appear as b-code family (b0-b5, b7, b9) on the modular blower control, surfacing through thermostat 'Call for Service' icon and 'Check Furnace' scroll text. Non-communicating Goodman/Amana electric furnaces use conventional sequencer/element logic without formal fault code dictionaries — service is component-level.",
+    "common_non_code_electric_service_calls": [
+      "Open element on multi-stage EH packages (3-stage, 5-stage, 10-stage)",
+      "Failed sequencer on non-communicating air handlers",
+      "Airflow-related limit trip — on 7-segment modern IFC this throws E3",
+      "24V transformer or fuse failure (modern IFC throws E5 open fuse)",
+      "Low-voltage wiring short causing repeated fuse failure"
+    ],
+    "manufactured_home_specifics": "Goodman has a manufactured-home furnace line (GMPX family) but public fault code documentation for MH-specific models is thinner than standard residential. Fault codes on MH Goodman platforms typically follow the legacy single-LED flash pattern unless the unit has been upgraded to a 7-segment board."
+  },
+  "metadata": {
+    "total_records": 100,
+    "total_platforms": 5,
+    "total_cross_generation_conflicts": 4,
+    "normalized_date": "2026-04-19",
+    "schema_version": "1.1.0",
+    "research_passes": 3,
+    "source_note": "Compiled from public Daikin/Goodman/Amana documentation across three research passes: DC96VC/DM96VC Service Instructions pp.41-48 (modern 7-segment IFC code table and diagnostic menus) plus status-code page (EF, b6, On, C1, C2, P1, P2, L0, HI, F operating status codes); Amana AMH95 product specification p.5 (legacy single-LED flash legend); Goodman GMH95/GCH95 public flash legend; Goodman GMH8/GMS8/GDH8/GDS8 installation instructions (legacy 1-hour auto-reset anchor); Daikin Fit Outdoor Unit Installation Manual 3P515859-5S pp.35-40 (full E-code table, network LED table, Mode Display workflow, DS1 dip-switch reset workflow, advisory codes 33/52/53/54/55/57); Daikin One+ S21 Installation Guide p.28 (System Optimization / Error History menu; 0.6 VDC data validation; PWR LED green flash on reversed power); Goodman ComfortNet modular blower installation manual p.12 (network troubleshooting LEDs and LEARN button timing); Goodman/Daikin DX16TC/DZ16TC ComfortNet outdoor unit service literature (Platform 5 codes: d0/d4/01/L1/02/06/07 with 30-cycle auto-clear). Pass 1 produced methodology summary. Pass 2 produced 78 structured records. Pass 3 extreme deep-dive added 10 Platform 2 records (EF, b6 + 8 operating status codes), 6 Platform 4 advisory records (33, 52, 53, 54, 55, 57), 6 Platform 5 records (new ComfortNet outdoor unitary family), 3 field quirks, and 1 cross-gen conflict. Honest gaps unchanged from Pass 2: L-codes and U-codes NOT in US residential Daikin Fit; b4/b5/b7 public snippets incomplete; CTK04/Daikin One+ thermostat-native dictionary remains thin."
+  }
+}

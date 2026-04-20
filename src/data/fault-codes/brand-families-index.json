@@ -1,8 +1,8 @@
 {
   "schema_version": "1.1.0",
   "generated_date": "2026-04-19",
-  "total_normalized_brand_families": 5,
-  "total_normalized_records": 527,
+  "total_normalized_brand_families": 6,
+  "total_normalized_records": 627,
   "brand_families": [
     {
       "brand_family_id": "nortek_nordyne",
@@ -85,11 +85,11 @@
     },
     {
       "brand_family_id": "daikin_goodman",
-      "brand_family_name": "Daikin/Goodman/Amana",
-      "status": "research_pending",
-      "record_count": 0,
+      "brand_family_name": "Daikin / Goodman / Amana",
+      "status": "normalized",
+      "record_count": 100,
       "file_path": "./daikin-goodman.json",
-      "corporate_owner": "Daikin Industries",
+      "corporate_owner": "Daikin Industries, Ltd.",
       "brands": [
         "Daikin",
         "Goodman",
