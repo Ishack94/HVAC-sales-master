@@ -5,24 +5,6 @@
   "total_normalized_records": 735,
   "brand_families": [
     {
-      "brand_family_id": "nortek_nordyne",
-      "brand_family_name": "Nortek/Nordyne",
-      "status": "normalized",
-      "record_count": 40,
-      "file_path": "./nortek-nordyne.json",
-      "corporate_owner": "Nortek Global HVAC",
-      "brands": [
-        "Nordyne",
-        "Frigidaire",
-        "Gibson",
-        "Kelvinator",
-        "Maytag",
-        "Philco",
-        "Tappan",
-        "Westinghouse"
-      ]
-    },
-    {
       "brand_family_id": "bosch_york",
       "brand_family_name": "Bosch/York (Johnson Controls)",
       "status": "normalized",
@@ -57,15 +39,16 @@
       ]
     },
     {
-      "brand_family_id": "trane_technologies",
-      "brand_family_name": "Trane Technologies",
+      "brand_family_id": "daikin_goodman",
+      "brand_family_name": "Daikin / Goodman / Amana",
       "status": "normalized",
-      "record_count": 162,
-      "file_path": "./trane-technologies.json",
-      "corporate_owner": "Trane Technologies",
+      "record_count": 100,
+      "file_path": "./daikin-goodman.json",
+      "corporate_owner": "Daikin Industries, Ltd.",
       "brands": [
-        "Trane",
-        "American Standard"
+        "Daikin",
+        "Goodman",
+        "Amana"
       ]
     },
     {
@@ -84,16 +67,21 @@
       ]
     },
     {
-      "brand_family_id": "daikin_goodman",
-      "brand_family_name": "Daikin / Goodman / Amana",
+      "brand_family_id": "nortek_nordyne",
+      "brand_family_name": "Nortek/Nordyne",
       "status": "normalized",
-      "record_count": 100,
-      "file_path": "./daikin-goodman.json",
-      "corporate_owner": "Daikin Industries, Ltd.",
+      "record_count": 40,
+      "file_path": "./nortek-nordyne.json",
+      "corporate_owner": "Nortek Global HVAC",
       "brands": [
-        "Daikin",
-        "Goodman",
-        "Amana"
+        "Nordyne",
+        "Frigidaire",
+        "Gibson",
+        "Kelvinator",
+        "Maytag",
+        "Philco",
+        "Tappan",
+        "Westinghouse"
       ]
     },
     {
@@ -107,6 +95,18 @@
         "Rheem",
         "Ruud",
         "WeatherKing"
+      ]
+    },
+    {
+      "brand_family_id": "trane_technologies",
+      "brand_family_name": "Trane Technologies",
+      "status": "normalized",
+      "record_count": 162,
+      "file_path": "./trane-technologies.json",
+      "corporate_owner": "Trane Technologies",
+      "brands": [
+        "Trane",
+        "American Standard"
       ]
     }
   ],
