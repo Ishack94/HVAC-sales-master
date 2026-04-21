@@ -9,6 +9,7 @@ import carrierGlobal from './carrier-global.json';
 import traneTechnologies from './trane-technologies.json';
 import lennoxAllied from './lennox-allied.json';
 import daikinGoodman from './daikin-goodman.json';
+import rheemRuud from './rheem-ruud.json';
 
 const brandFamilyRegistry = {
   nortek_nordyne: nortekNordyne,
@@ -17,6 +18,7 @@ const brandFamilyRegistry = {
   trane_technologies: traneTechnologies,
   lennox_allied: lennoxAllied,
   daikin_goodman: daikinGoodman,
+  rheem_ruud: rheemRuud,
 };
 
 export function getBrandFamily(brandFamilyId) {

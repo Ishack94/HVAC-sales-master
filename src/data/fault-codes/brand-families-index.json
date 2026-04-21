@@ -1,8 +1,8 @@
 {
   "schema_version": "1.1.0",
-  "generated_date": "2026-04-19",
-  "total_normalized_brand_families": 6,
-  "total_normalized_records": 627,
+  "generated_date": "2026-04-20",
+  "total_normalized_brand_families": 7,
+  "total_normalized_records": 734,
   "brand_families": [
     {
       "brand_family_id": "nortek_nordyne",
@@ -98,9 +98,9 @@
     },
     {
       "brand_family_id": "rheem_ruud",
-      "brand_family_name": "Rheem/Ruud/WeatherKing",
-      "status": "research_pending",
-      "record_count": 0,
+      "brand_family_name": "Rheem / Ruud / WeatherKing",
+      "status": "normalized",
+      "record_count": 107,
       "file_path": "./rheem-ruud.json",
       "corporate_owner": "Rheem Manufacturing Company",
       "brands": [

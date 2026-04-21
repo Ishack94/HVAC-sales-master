@@ -1,0 +1,2791 @@
+{
+  "brand_family_id": "rheem_ruud",
+  "brand_family_name": "Rheem / Ruud / WeatherKing",
+  "corporate_owner": "Rheem Manufacturing Company",
+  "brands": [
+    {
+      "name": "Rheem",
+      "slug": "rheem",
+      "notes": "Primary residential HVAC brand — Classic, Classic Plus, Prestige product lines"
+    },
+    {
+      "name": "Ruud",
+      "slug": "ruud",
+      "notes": "Near-total Rheem platform alias — typically different distribution channel. Ruud models are essentially Rheem with different badge/first letter."
+    },
+    {
+      "name": "WeatherKing",
+      "slug": "weatherking",
+      "notes": "Rheem value/distributor-exclusive sub-brand. Aliases Rheem platforms with reduced-feature variants on shared IFC boards."
+    }
+  ],
+  "structural_overview": "Rheem Manufacturing Company's US residential HVAC diagnostics span four distinct platforms with fragmented public documentation: (1) LEGACY SINGLE-LED/DUAL-LED value-line furnaces (90RS/90RT/90TS and close aliases) — uses amber flame LED for flame quality states (off/rapid/slow/steady) plus green status LED blink codes (1-5 blinks). (2) MODERN 7-SEGMENT furnace with THREE DISTINCT NAMESPACES within this platform: (2A) Endeavor-style numeric (W801T/R801T UT 1194-250 boards) — status letters O/C/H/F plus numeric codes 10-93; (2B) Axxx_F/Txxx_F premium/Bluetooth namespace (RDFXYC and communicating-capable premium family) — detailed troubleshooting deferred to contractor app via QR code; (2C) Older RGFD modulating numeric-function-code generation — codes 11-67 with function-code diagnostic guide structure. Model prefix alone is NOT sufficient to disambiguate which namespace applies; control generation / literature revision required. (3) ECONET COMMUNICATING ECOSYSTEM — EcoNet Control Center thermostat + communicating indoor/outdoor equipment. Strongest public dictionary is on the RH2T/RHMV air handler side (A101-A110 + 111). Control Center thermostat-only alarm dictionary is NOT publicly exposed as a complete code list. (4) PRESTIGE INVERTER OUTDOOR (RP18AZ-class Universal Outdoor Control / UODC) — hard numeric lockouts (21L low-pressure, 29L high-pressure) plus A-code namespace for persistent alarms and T-code namespace for transient/strike-count-escalating alarms. Rheem publishes actual sensor-validation math for suction and liquid transducers. 21L low-pressure lockout in heating has a unique auto-reset only when outdoor ambient rises to -10°F. Active System Protection monitors power/torque/current/voltage/discharge-pressure/temp and reduces inverter speed BEFORE hard shutdown.",
+  "field_quirks": [
+    {
+      "quirk": "Legacy 4 ignition trials or 4 flame failures in one heat call trigger 1-hour soft lockout; reset by 115V interrupt OR thermostat off 5-10 seconds",
+      "applies_to": "90RS/90RT/90TS value-line and close legacy aliases",
+      "reason": "Rheem's public Gas Furnace FAQ and 90RS/90RT/90TS Installation Instructions 92-24161-66 Rev. 3 both confirm this: 4 failed ignition trials OR 4 flame failures during one heat call trigger the 1-blink soft lockout state. Reset options are (a) cycle 115V power to furnace OR (b) turn thermostat off 5-10 seconds and back on. Between the 2nd and 3rd ignition trials, the main blower and inducer run for 180 seconds as a purge period. Using the wrong reset window (outside 5-10 seconds) fails to clear the lockout and the tech wastes time chasing phantom faults."
+    },
+    {
+      "quirk": "Modern numeric '10' is a lockout WRAPPER, not a root fault — display alternates 10 with underlying cause code",
+      "applies_to": "Endeavor-style 7-segment boards (W801T, R801T, UT Electronic Controls 1194-250 family)",
+      "reason": "Per W801T Installation Instructions lockout section: when the control is in 1-hour soft lockout, the 7-segment display alternates between '10' and the actual underlying fault code (11 failed ignition, 13 flame lost, 14 undesired flame, 61 dead blower, etc.). A technician who reads only '10' is seeing the wrapper, not the cause. Always wait for the display to cycle and capture both numbers. Reset by cycling heat call off >2 sec but <20 sec, or power off minimum 5 seconds, or auto-reset after 1 hour."
+    },
+    {
+      "quirk": "Blocked drain switch on upflow 90+ condensing furnaces is in series with gas valve — drain issues mimic flame failure lockouts",
+      "applies_to": "Upflow Rheem/Ruud 90+ condensing furnaces (legacy platform and older modern platform)",
+      "reason": "Rheem's public Gas Furnace FAQ states the blocked drain switch on upflow 90+ models is wired in series with the gas valve. A condensate drain issue (clogged trap, blocked drain line, frozen condensate) de-energizes the gas valve, which the control sees as repeated flame failures. After 4 flame failures in one call, the furnace enters 1-hour soft lockout. The fault code indicates flame-sense issue but the ACTUAL cause is condensate management. Always inspect the drain path BEFORE chasing flame sensor or gas valve on any repeating flame failure in an upflow 90+ unit."
+    },
+    {
+      "quirk": "EcoNet bus must be wired daisy-chain, NOT star topology",
+      "applies_to": "All EcoNet communicating systems (Control Center + communicating furnaces/air handlers/outdoor units)",
+      "reason": "Rheem and Ruud Control Center support pages explicitly require daisy-chain wiring of the EcoNet communication bus between devices. Star topology (thermostat to each device independently) will cause intermittent communication failures, dropped alerts, and false equipment alarms. Terminals R, C, E1, E2 carry power and data. Max 125 ft between communicating controls, 500 ft end-to-end. A tech troubleshooting 'no comm' on EcoNet should always verify the physical wiring topology first before assuming component failure."
+    },
+    {
+      "quirk": "EcoNet enforces 4-minute anti-short-cycle delay after power-up or compressor shutdown",
+      "applies_to": "All EcoNet Control Center installations with communicating cooling or heat-pump heating",
+      "reason": "Ruud Control Center Support page: cooling and heat-pump heating will NOT operate for 4 minutes after power is applied to the system OR after the outdoor unit compressor shuts off. A 'no start' customer complaint within this window is normal protective behavior, not a fault. Confirm elapsed time before diagnosing."
+    },
+    {
+      "quirk": "EcoNet mode IGNORES DIP-switch airflow settings on RH2T/RHMV air handlers — airflow adjusted via thermostat/Control Center",
+      "applies_to": "RH2T, RHMV, and other EcoNet-capable communicating air handlers operating in communicating mode",
+      "reason": "Rheem RH2T/RHMV Installation Instructions 92-20521-102 explicitly states that when the air handler is operating in EcoNet communicating mode (wired with E1/E2 data wires), the board's DIP-switch airflow adjustments are completely ignored. All airflow trim must be performed through the EcoNet Control Center service interface. A technician who changes DIP switches to 'fix' airflow on a communicating install will see zero change until they either revert to non-communicating mode OR use the thermostat menus."
+    },
+    {
+      "quirk": "Prestige inverter 21L low-pressure lockout in heating auto-resets ONLY when outdoor ambient rises to -10°F",
+      "applies_to": "RP18AZ-class Prestige/Ultra inverter outdoor units",
+      "reason": "Rheem RP18AZ Installation Instructions low-suction-pressure section: 21L low-refrigerant-pressure lockout normally requires manual reset (power off both indoor and outdoor units for 1 minute). BUT if the lockout occurred in heating mode AND the outdoor ambient was below -10°F at the time, the system will auto-reset when ambient rises back up to -10°F or above. This is the ONLY auto-reset exception documented. In cooling mode OR at any ambient above -10°F, 21L stays locked until manual reset."
+    },
+    {
+      "quirk": "Prestige inverter Active System Protection reduces compressor speed BEFORE hard shutdown — the system manages its own envelope proactively",
+      "applies_to": "RP18AZ-class Prestige/Ultra inverter outdoor units with UODC (Universal Outdoor Control)",
+      "reason": "Rheem publishes that the inverter continuously monitors compressor power, torque, current, voltage, discharge pressure, and discharge temperature. When conditions approach envelope limits, the UODC reduces compressor RPM to keep operation safe BEFORE triggering a fault. Example: discharge line temp rises to 235°F triggers RPM reduction; only if temp stays high does the system hard-fault with T916_O. This means intermittent fault codes often indicate the system is ALREADY self-correcting; the fix is usually the underlying condition (charge, airflow, coil cleanliness) not the inverter itself."
+    },
+    {
+      "quirk": "Three distinct 7-segment furnace namespaces within Platform 2 — model prefix does NOT disambiguate, control generation required",
+      "applies_to": "All Rheem/Ruud modern furnaces with 7-segment displays — cannot identify which namespace applies from model number alone",
+      "reason": "Platform 2A Endeavor numeric (W801T/R801T with UT 1194-250 boards): status O/C/H/F + codes 10, 11, 12, 13, 14, 20, 22, 26, 33, 55, 57-59, 61, 93. Platform 2B Axxx_F/Txxx_F premium Bluetooth (RDFXYC): A011_F, T013_F, A014_F, A031_F, etc. with QR-code contractor app. Platform 2C Older RGFD modulating: codes 11, 12, 13, 14, 22/23/33, 44/45/46/57, 67 with function-code troubleshooting guide. A technician seeing 'code 11' on a Rheem furnace needs to confirm WHICH generation board is installed before picking the right diagnostic path. Literature revision date + board part number are the disambiguators, not model prefix."
+    },
+    {
+      "quirk": "Rheem contractor app (Bluetooth + QR code) holds the detailed troubleshooting trees for Axxx_F/Txxx_F premium furnaces — the printed booklet intentionally references it",
+      "applies_to": "RDFXYC Bluetooth-capable premium furnaces and newer communicating/R-454B-capable generations",
+      "reason": "RDFXYC Installation Instructions 92-110869-01-01 publicly state that detailed fault troubleshooting information is in the QR-linked contractor app. The booklet includes the fault-code identifiers and names but deliberately pushes the step-by-step diagnostic trees into the app. This matters because a tech without the app has significantly less information on newer equipment than on older 7-segment Endeavor boards where the booklet has the full tree. Expect this pattern to accelerate on R-454B and later generations."
+    },
+    {
+      "quirk": "Some modern furnaces keep a 3-fault buffer (faults <1 week old) that flashes after power reset; DIP-switch toggle within 30 seconds clears memory",
+      "applies_to": "Select modern Rheem/Ruud furnace boards with fault-buffer behavior",
+      "reason": "Public Rheem furnace literature documents: the 3 most recent faults less than one week old are flashed on the red LED after power reset. The fault memory can be cleared by toggling the relevant DIP switch sequence within 30 seconds. This matters because a tech cycling power to 'reset' a furnace sees the most recent faults flash by — if they miss the sequence, they lose diagnostic information. The 30-second clear window is also easy to trigger accidentally by installers doing DIP switch setup."
+    },
+    {
+      "quirk": "EcoNet Control Center autodiscovers indoor and outdoor equipment within approximately 45 seconds of all devices being powered and connected correctly",
+      "applies_to": "All EcoNet Control Center installations during commissioning",
+      "reason": "Ruud Control Center Support: the Control Center should detect all communicating indoor and outdoor equipment within ~45 seconds once all devices are powered and connected with correct daisy-chain topology. If after 45 seconds the Control Center has NOT discovered all equipment, the installer should check (a) daisy-chain vs star topology, (b) shield grounding at one point only (NOT at Control Center end), (c) wire damage, (d) 125 ft max between devices, (e) 500 ft end-to-end. Knowing the 45-second window keeps techs from prematurely declaring 'comm fault' during normal autodiscovery."
+    },
+    {
+      "quirk": "EcoNet communication wiring shield must be grounded at ONE point only — NOT at Control Center end; multi-point grounding creates current loops and degrades communication",
+      "applies_to": "All EcoNet communicating system installations using shielded thermostat wire",
+      "reason": "Rheem/Ruud EcoNet install literature specifies: control wiring shielding must be grounded in ONE location only, with the shield NOT connected at the Control Center end. Multi-point grounding creates current loops that degrade communication quality and cause intermittent A100_O (comm lost) and related comm faults. This is a wiring-quality issue that looks exactly like component failure unless the tech knows to check the shield grounding topology."
+    },
+    {
+      "quirk": "Rheem warns NOT to use phone cord for EcoNet control wiring",
+      "applies_to": "All EcoNet installations",
+      "reason": "Rheem/Ruud public EcoNet docs explicitly warn against using phone cord for EcoNet communicating wiring. Phone cord lacks shielding and has insufficient conductor sizing for reliable EcoNet communication. Using phone cord produces symptoms identical to bad equipment — intermittent comm loss, dropped alerts, autodiscovery failures — but the fix is rewire with proper shielded thermostat cable."
+    },
+    {
+      "quirk": "RH2T/RHMV communicating air handlers have RJ-14 diagnostic tool port for service",
+      "applies_to": "RH2T, RHMV, and related EcoNet communicating air handlers",
+      "reason": "Public RH2T/RHMV Installation Instructions confirm an RJ-14 diagnostic tool port on the air-handler control board. Techs with the Rheem service tool can plug in for direct equipment diagnostics without needing the Control Center or the Rheem Contractor App. This is a backup diagnostic path for situations where the EcoNet bus is compromised or the thermostat is disconnected."
+    },
+    {
+      "quirk": "RH2T/RHMV CFM LED flashes 1 flash per 100 CFM — field verification aid for airflow troubleshooting",
+      "applies_to": "RH2T, RHMV constant-CFM communicating air handlers with CFM LED",
+      "reason": "Public RH2T/RHMV docs: on communicating constant-CFM motors, the onboard CFM LED flashes at a rate of 1 flash per 100 CFM of actual airflow. 800 CFM = 8 flashes. 1200 CFM = 12 flashes. This gives the tech a real-time airflow verification tool directly on the equipment without needing a manometer or external CFM meter. Especially useful for verifying EcoNet airflow changes actually took effect (since DIP switches are ignored in communicating mode)."
+    },
+    {
+      "quirk": "R-454B leak detection system (LDS) must remain electrically powered at ALL times after installation",
+      "applies_to": "Rheem R-454B residential equipment with integrated refrigerant leak detection",
+      "reason": "Public Rheem R-454B documentation: the leak detection system must be electrically powered at all times after installation for the system to be effective. Powering down the LDS defeats its purpose — it can no longer detect refrigerant leaks. Some Rheem R-454B indoor equipment requires service to restore operability after an A2L leak-detection event triggers. Older R-410A and R-22 indoor coils typically LACK the required refrigerant detection system and may not be compatible with R-454B outdoor units without coil replacement."
+    }
+  ],
+  "platforms": [
+    {
+      "platform_id": "rheem_ruud_legacy_led",
+      "platform_name": "Rheem / Ruud Legacy Single-LED / Dual-LED Flash",
+      "platform_description": "Rheem and Ruud legacy value-line residential gas furnace platform with dual-LED integrated furnace control: amber flame LED for flame-quality status (off / rapid blink / slow blink / steady on) plus green status LED for fault indication (1-5 blinks). Covers 90RS/90RT/90TS value-line and close aliases. Published flash legend in public 90RS/90RT/90TS Installation Instructions 92-24161-66 Rev. 3 plus Rheem Gas Furnace FAQ. Ignition lockout: 4 trials, 1-hour auto-reset, manual reset by 115V interrupt or thermostat off 5-10 seconds. Blocked drain switch in series with gas valve on upflow 90+ models — a known misdiagnosis trap where drain issues surface as flame failure lockouts.",
+      "applies_to_models": [
+        "90RS",
+        "90RT",
+        "90TS",
+        "RGLF",
+        "RGLG",
+        "RGRM",
+        "UGLF",
+        "UGLG",
+        "UGRM"
+      ],
+      "applies_to_years": "Pre-2015 (legacy value-line)",
+      "model_number_prefixes": [
+        "90RS",
+        "90RT",
+        "90TS",
+        "RGLF",
+        "RGLG",
+        "RGRM",
+        "UGLF",
+        "UGLG",
+        "UGRM"
+      ],
+      "visual_identification": "Dual-LED integrated furnace control: amber flame LED (signals flame quality through off/rapid/slow/steady states) and green status LED (signals faults through 1-5 blink patterns). No digital display on this platform. Brochure-style printed code legend typically on inside of furnace access panel or control board sticker.",
+      "display_type": "led_pattern",
+      "platform_notes": "Public source: Rheem 90RS/90RT/90TS Installation Instructions 92-24161-66 Rev. 3 plus Rheem Gas Furnace FAQ. Public coverage is concise legend + FAQ root causes — accessible public snippet does not expose per-code detailed diagnostic flowcharts the way Platform 2A Endeavor does. Records below honestly flag this where applicable.",
+      "codes": [
+        {
+          "code_id": "amber_off",
+          "code_identifier": "Amber flame LED OFF",
+          "code_type": "led_pattern",
+          "meaning": "No flame present",
+          "root_causes": [
+            "No active burner flame",
+            "Ignition sequence not established",
+            "Burner off at idle"
+          ],
+          "diagnostic_path": [
+            "Verify whether there is an active call for heat",
+            "If burners should be lit but amber LED is OFF, continue through ignition troubleshooting and flame-sense checks in the furnace troubleshooting chart"
+          ],
+          "escalation": "Status-only indication; escalation depends on accompanying green status blink code",
+          "reset_behavior": "No reset needed; indication changes automatically with flame status.",
+          "related_codes": [
+            "amber_rapid_blink",
+            "amber_slow_blink",
+            "amber_steady_on",
+            "green_1_blink"
+          ],
+          "source": "Rheem 90RS/90RT/90TS Installation Instructions 92-24161-66 Rev. 3, troubleshooting legend: 'FLAME (AMBER) LED CODES: OFF = No Flame Present'",
+          "severity": "informational"
+        },
+        {
+          "code_id": "amber_rapid_blink",
+          "code_identifier": "Amber flame LED RAPID BLINK",
+          "code_type": "led_pattern",
+          "meaning": "Unexpected flame",
+          "root_causes": [
+            "Flame detected when not expected",
+            "Possible gas-valve leakage",
+            "False flame signal condition"
+          ],
+          "diagnostic_path": [
+            "Verify whether flame is physically present when no call should exist",
+            "If no real flame is present, continue with flame-sense and gas-valve circuit checks in OEM troubleshooting"
+          ],
+          "escalation": "Can participate in soft-lockout behavior when undesired flame is detected; accessible legacy snippet does not publish separate timing rule on this LED entry itself",
+          "reset_behavior": "Clears when unexpected-flame condition is removed; if lockout has occurred, use published lockout reset procedure.",
+          "related_codes": [
+            "amber_off",
+            "amber_steady_on",
+            "green_1_blink"
+          ],
+          "source": "Rheem 90RS/90RT/90TS Installation Instructions 92-24161-66 Rev. 3, flame LED legend",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "amber_slow_blink",
+          "code_identifier": "Amber flame LED SLOW BLINK",
+          "code_type": "led_pattern",
+          "meaning": "Marginal flame sense",
+          "root_causes": [
+            "Dirty flame sensor",
+            "Improper polarity/phasing",
+            "Poor equipment grounding",
+            "Weak flame carryover",
+            "Incorrect manifold pressure"
+          ],
+          "diagnostic_path": [
+            "Check polarity/phasing and equipment grounding",
+            "Inspect and clean flame rod",
+            "Verify manifold pressure and flame carryover",
+            "Verify wiring continuity between flame rod and IFC"
+          ],
+          "escalation": "Advisory/status until flame signal falls below minimum threshold or contributes to flame-loss/ignition-failure lockout",
+          "reset_behavior": "Clears automatically when flame signal rises above threshold; lockout reset only if a lockout condition also occurred.",
+          "related_codes": [
+            "amber_off",
+            "amber_steady_on",
+            "green_1_blink"
+          ],
+          "source": "Rheem 90RS/90RT/90TS Installation Instructions 92-24161-66 Rev. 3, flame LED legend and flame-sense troubleshooting notes; Rheem Gas Furnace FAQ flame-sense causes",
+          "severity": "service_soon"
+        },
+        {
+          "code_id": "amber_steady_on",
+          "code_identifier": "Amber flame LED STEADY ON",
+          "code_type": "led_pattern",
+          "meaning": "Normal flame sense",
+          "root_causes": [
+            "Normal burner flame established and flame rectification present"
+          ],
+          "diagnostic_path": [
+            "If burners are lit and flame LED is steady, flame sensing is normal; continue troubleshooting elsewhere if there is still a system fault"
+          ],
+          "escalation": "Normal status; no escalation by itself",
+          "reset_behavior": "No reset needed.",
+          "related_codes": [
+            "amber_off",
+            "amber_slow_blink"
+          ],
+          "source": "Rheem 90RS/90RT/90TS Installation Instructions 92-24161-66 Rev. 3, flame LED legend",
+          "severity": "informational"
+        },
+        {
+          "code_id": "green_1_blink",
+          "code_identifier": "1 blink",
+          "code_type": "flash_count",
+          "meaning": "Soft lockout",
+          "root_causes": [
+            "No flame sensed after four ignition trials",
+            "Four flame failures during one call for heat"
+          ],
+          "diagnostic_path": [
+            "Verify gas supply and manifold pressure",
+            "Verify polarity and grounding",
+            "Inspect spark/ignitor alignment",
+            "Inspect flame sensor and flame carryover",
+            "Verify gas valve wiring and 24V at valve during trials"
+          ],
+          "escalation": "System attempts ignition 4 times, then enters 1-hour soft lockout; main blower and inducer run 180 seconds between 2nd and 3rd trials; neither ignition control nor gas valve re-energizes until lockout expires or is reset",
+          "reset_behavior": "Turn off 115V power to furnace OR turn thermostat OFF for 5-10 seconds.",
+          "related_codes": [
+            "amber_slow_blink",
+            "amber_rapid_blink",
+            "green_2_blink",
+            "green_3_blink"
+          ],
+          "source": "Rheem Gas Furnace FAQ soft-lockout entry; Rheem 90RS/90RT/90TS Installation Instructions 92-24161-66 Rev. 3, troubleshooting chart and lockout note",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "green_2_blink",
+          "code_identifier": "2 blinks",
+          "code_type": "flash_count",
+          "meaning": "Pressure switch circuit open",
+          "root_causes": [
+            "Inducer draft insufficient",
+            "Blocked pressure-switch tubing or inducer port",
+            "Blocked or restricted vent",
+            "Blocked heat exchanger",
+            "Intermittent pressure-switch operation",
+            "Water/moisture in hoses"
+          ],
+          "diagnostic_path": [
+            "Check negative pressure with Magnehelic",
+            "Inspect pressure-switch tube/port",
+            "Inspect venting",
+            "Inspect hoses and switch contacts",
+            "Inspect heat exchanger restriction if indicated"
+          ],
+          "escalation": "Fault indication; on related later boards, prolonged proving failure becomes timed soft lockout",
+          "reset_behavior": "Clears when pressure-switch circuit proves normally.",
+          "related_codes": [
+            "green_4_blink",
+            "green_1_blink",
+            "green_3_blink"
+          ],
+          "source": "Rheem Gas Furnace FAQ flash-code meanings and causes; value-line installation troubleshooting chart",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "green_3_blink",
+          "code_identifier": "3 blinks",
+          "code_type": "flash_count",
+          "meaning": "Limit circuit open",
+          "root_causes": [
+            "Open main high limit due to low airflow or overfired heat exchanger",
+            "Tripped manual-reset rollout",
+            "Blocked flue or heat exchanger",
+            "Poor limit-circuit connection",
+            "Blocked-drain-switch interaction on upflow 90+ can also indirectly produce flame-failure/lockout behavior"
+          ],
+          "diagnostic_path": [
+            "Check filter/airflow restrictions",
+            "Inspect registers/dampers",
+            "Verify temperature rise and firing rate",
+            "Inspect rollout/manual-reset limits",
+            "Inspect flue/heat exchanger",
+            "Inspect limit wiring and continuity"
+          ],
+          "escalation": "Heating sequence interrupted while limit circuit remains open; may participate in later one-hour lockout behavior on newer generations",
+          "reset_behavior": "Clears when limit circuit is restored; manual-reset rollout must be physically reset; blocked-drain issue requires trap/drain correction rather than blind board reset.",
+          "related_codes": [
+            "green_1_blink",
+            "green_2_blink",
+            "green_4_blink"
+          ],
+          "source": "Rheem Gas Furnace FAQ; Rheem 90RS/90RT/90TS Installation Instructions troubleshooting text",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "green_4_blink",
+          "code_identifier": "4 blinks",
+          "code_type": "flash_count",
+          "meaning": "Pressure switch circuit closed / pressure switch stuck closed",
+          "root_causes": [
+            "Pressure-switch contacts remain closed during off cycle",
+            "Welded or stuck contacts",
+            "Improper reopening from previous heat call"
+          ],
+          "diagnostic_path": [
+            "Verify switch opens in off cycle",
+            "Inspect contacts/wiring",
+            "Inspect hoses for moisture",
+            "Confirm switch operation across a full call cycle"
+          ],
+          "escalation": "Furnace will not begin ignition sequence if pressure switch fails to reopen from previous call",
+          "reset_behavior": "Clears once pressure switch reopens correctly and fault is removed.",
+          "related_codes": [
+            "green_2_blink",
+            "green_1_blink"
+          ],
+          "source": "Rheem Gas Furnace FAQ flash-code meanings; value-line installation instructions blink legend",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "green_5_blink",
+          "code_identifier": "5 blinks",
+          "code_type": "flash_count",
+          "meaning": "Twinning fault",
+          "root_causes": [
+            "Thermostat wire on twin terminal",
+            "Incorrect board switch setting",
+            "Mismatched boards in twinned furnaces",
+            "Transformers out of phase",
+            "Thermostat/wiring issue"
+          ],
+          "diagnostic_path": [
+            "Verify twin wiring only between TWIN terminals",
+            "Confirm both IFCs are same part number",
+            "Verify transformers are in phase",
+            "Remove thermostat wires and jumper R to W to isolate thermostat/wiring fault if needed"
+          ],
+          "escalation": "Fault blocks correct twinned operation until configuration/wiring issue is corrected",
+          "reset_behavior": "Clears when twinning wiring/configuration is corrected; normal operation resumes after fault removal.",
+          "related_codes": [
+            "green_1_blink"
+          ],
+          "source": "Rheem Gas Furnace FAQ twinning-fault entry; Rheem 90RS/90RT/90TS Installation Instructions troubleshooting text",
+          "severity": "urgent"
+        }
+      ]
+    },
+    {
+      "platform_id": "rheem_ruud_endeavor_numeric",
+      "platform_name": "Rheem/Ruud Endeavor-Style 7-Segment Numeric",
+      "platform_description": "Rheem/Ruud modern 7-segment furnace control using status letters (O/C/H/F) for normal operation plus numeric codes (10-93) for faults. Covers W801T, R801T and related UT Electronic Controls 1194-250 board family. CRITICAL: code '10' is a SOFT LOCKOUT WRAPPER that alternates on the display with the underlying fault code (11, 13, 14, 61, etc.) — never read '10' as a standalone root cause. Escalation rules publicly documented: 5-minute soft lockout for low-pressure switch failing to close after 60 seconds, 1-hour soft lockout for 4 ignition failures OR 5 flame losses in one call OR undesired flame OR dead blower, hard lockout for internal control fault or welded gas-valve relay.",
+      "applies_to_models": [
+        "W801T",
+        "R801T",
+        "U801T"
+      ],
+      "applies_to_years": "2015-2022 (Endeavor-style UT 1194-250 board generation)",
+      "model_number_prefixes": [
+        "W801T",
+        "R801T",
+        "U801T"
+      ],
+      "visual_identification": "Single 7-segment alphanumeric display on integrated furnace control. Status letters shown during normal operation: O (standby), C (cooling call), H (heat call), F (continuous fan). Numeric fault codes displayed during faults — during soft lockout the display alternates between '10' (the wrapper) and the underlying fault code (11, 13, 14, 61, etc.). During lockout, normal status letters C or F are replaced by the error code.",
+      "display_type": "alphanumeric",
+      "platform_notes": "Public source: Rheem Select / W801T Installation Instructions, UT Electronic Controls 1194-250 board family. Accessible public snippet exposes the core code list plus complete lockout section. Codes 12, 26, 59 have limited per-code text in the accessible snippet — records below honestly flag this rather than padding.",
+      "codes": [
+        {
+          "code_id": "status_o",
+          "code_identifier": "O",
+          "code_type": "status_display",
+          "meaning": "Standby / no active heating-cooling-fan call",
+          "root_causes": [
+            "Normal idle state"
+          ],
+          "diagnostic_path": [
+            "If no demand exists, no action",
+            "If flame or inducer activity exists while O is shown, investigate abnormal output condition"
+          ],
+          "escalation": "None",
+          "reset_behavior": "Not applicable.",
+          "related_codes": [
+            "status_c",
+            "status_h",
+            "status_f"
+          ],
+          "source": "Rheem Select / W801T Installation Instructions, UT Electronic Controls 1194-250 7-segment display family, status/fault section",
+          "severity": "informational"
+        },
+        {
+          "code_id": "status_c",
+          "code_identifier": "C",
+          "code_type": "status_display",
+          "meaning": "Compressor / cooling call active",
+          "root_causes": [
+            "Normal cooling or heat-pump cooling demand"
+          ],
+          "diagnostic_path": [
+            "Verify thermostat demand and outdoor-unit operation if cooling expected"
+          ],
+          "escalation": "During lockout, control may display the lockout error instead of C",
+          "reset_behavior": "Automatic with call state.",
+          "related_codes": [
+            "status_o",
+            "status_h",
+            "status_f",
+            "code_10"
+          ],
+          "source": "Rheem Select / W801T Installation Instructions, lockout section stating control will display lockout error instead of 'C' or 'F'",
+          "severity": "informational"
+        },
+        {
+          "code_id": "status_h",
+          "code_identifier": "H",
+          "code_type": "status_display",
+          "meaning": "Heat call active",
+          "root_causes": [
+            "Normal heating demand"
+          ],
+          "diagnostic_path": [
+            "Verify demand and normal ignition sequence if heat expected"
+          ],
+          "escalation": "If a fault develops, display changes to numeric fault/lockout indication",
+          "reset_behavior": "Automatic with call state.",
+          "related_codes": [
+            "status_o",
+            "status_f",
+            "code_11",
+            "code_13",
+            "code_14"
+          ],
+          "source": "Rheem Select / W801T Installation Instructions, status display family for 7-segment control",
+          "severity": "informational"
+        },
+        {
+          "code_id": "status_f",
+          "code_identifier": "F",
+          "code_type": "status_display",
+          "meaning": "Continuous fan",
+          "root_causes": [
+            "Thermostat fan call or fan-on selection"
+          ],
+          "diagnostic_path": [
+            "Verify thermostat fan command and blower operation"
+          ],
+          "escalation": "During lockout, control displays the error code instead of 'F'",
+          "reset_behavior": "Automatic with call state.",
+          "related_codes": [
+            "status_o",
+            "status_c",
+            "status_h",
+            "code_61"
+          ],
+          "source": "Rheem Select / W801T Installation Instructions, lockout section",
+          "severity": "informational"
+        },
+        {
+          "code_id": "code_10",
+          "code_identifier": "10",
+          "code_type": "alphanumeric",
+          "meaning": "One-hour soft-lockout wrapper; display alternates 10 with underlying cause code",
+          "root_causes": [
+            "Four ignition failures",
+            "Five flame losses in one heat call",
+            "Undesired flame",
+            "Dead blower",
+            "Unexpected gas-valve-circuit voltage"
+          ],
+          "diagnostic_path": [
+            "Identify and correct alternating underlying code (11, 13, 14, 61 etc.)",
+            "Do not treat 10 as root cause by itself"
+          ],
+          "escalation": "One-hour soft lockout; auto-reset after one hour",
+          "reset_behavior": "Clears automatically after one hour, OR immediately if original fault is cleared and power is cycled, OR on soft lockout by cycling heat call off >2 sec but <20 sec.",
+          "related_codes": [
+            "code_11",
+            "code_13",
+            "code_14",
+            "code_61",
+            "code_93"
+          ],
+          "source": "Rheem Select / W801T Installation Instructions, lockout section lines showing '10' alternates with fault causing lockout and reset behavior",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_11",
+          "code_identifier": "11",
+          "code_type": "alphanumeric",
+          "meaning": "Failed ignition",
+          "root_causes": [
+            "Flame not detected after ignition trials",
+            "Gas supply/manifold issue",
+            "Ignitor or valve-circuit issue"
+          ],
+          "diagnostic_path": [
+            "Accessible public snippet does not expose a dedicated per-code flowchart here",
+            "Use ignition-failure checks published for corresponding furnace generation and underlying fault correlation with code 10 soft lockout"
+          ],
+          "escalation": "Four ignition failures contribute to code 10 one-hour lockout",
+          "reset_behavior": "Clears with successful ignition or via soft-lockout reset procedure if wrapped by 10.",
+          "related_codes": [
+            "code_10",
+            "code_12",
+            "code_13",
+            "code_14"
+          ],
+          "source": "Rheem Select / W801T Installation Instructions numeric code family and one-hour lockout rule",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_12",
+          "code_identifier": "12",
+          "code_type": "alphanumeric",
+          "meaning": "Ignition-related lockout / retry condition on this generation",
+          "root_causes": [
+            "Public accessible snippet does not expose the per-code meaning text separately",
+            "Treated as part of ignition/lockout family in this generation"
+          ],
+          "diagnostic_path": [
+            "Use underlying ignition diagnostics",
+            "Confirm whether manual revision for exact furnace exposes 12 as retry/lockout state before publishing to production tool as customer-facing text"
+          ],
+          "escalation": "One-hour soft-lockout family",
+          "reset_behavior": "Soft-lockout reset behavior per control.",
+          "related_codes": [
+            "code_10",
+            "code_11",
+            "code_13"
+          ],
+          "source": "Rheem Select / W801T Installation Instructions. User-requested code list aligns with this public control generation, but exact per-code text was not exposed in the accessible snippet; lockout family and reset rules are public.",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_13",
+          "code_identifier": "13",
+          "code_type": "alphanumeric",
+          "meaning": "Flame lost / flame failure after establishment",
+          "root_causes": [
+            "Flame loss after establishment",
+            "Weak flame sense",
+            "Gas-delivery instability"
+          ],
+          "diagnostic_path": [
+            "Accessible snippet does not expose a separate 13 chart on this exact manual page",
+            "Use flame-sense, gas pressure, grounding, and carryover checks if 13 is the underlying fault alternating with 10"
+          ],
+          "escalation": "Five flame losses in one heat call contribute to one-hour soft lockout",
+          "reset_behavior": "Clears with normal flame stability or via soft-lockout reset if wrapped by 10.",
+          "related_codes": [
+            "code_10",
+            "code_11",
+            "code_14"
+          ],
+          "source": "Rheem Select / W801T Installation Instructions, one-hour lockout triggers include five flame losses in one heat call",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_14",
+          "code_identifier": "14",
+          "code_type": "alphanumeric",
+          "meaning": "Undesired flame / flame present when not expected",
+          "root_causes": [
+            "False flame signal",
+            "Valve leakage",
+            "Flame present with no commanded heat"
+          ],
+          "diagnostic_path": [
+            "Verify whether actual flame is present",
+            "If not, inspect flame-sense circuit and gas-valve behavior"
+          ],
+          "escalation": "One-hour soft lockout trigger; one-hour period begins after flame is no longer detected",
+          "reset_behavior": "Auto-reset after one hour or standard soft-lockout reset.",
+          "related_codes": [
+            "code_10",
+            "code_93"
+          ],
+          "source": "Rheem Select / W801T Installation Instructions, one-hour lockout trigger list includes undesired flame",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "code_20",
+          "code_identifier": "20",
+          "code_type": "alphanumeric",
+          "meaning": "Twinning problem / twinning fault",
+          "root_causes": [
+            "Twinning detected then lost in same power cycle",
+            "Bad twin wiring",
+            "Mismatched boards",
+            "Phasing issue"
+          ],
+          "diagnostic_path": [
+            "Confirm identical boards",
+            "Verify twin wiring between boards",
+            "Confirm phasing and twinning configuration"
+          ],
+          "escalation": "Fault display until twinning issue is corrected",
+          "reset_behavior": "Clears when twin configuration is corrected; may require power cycle.",
+          "related_codes": [
+            "status_o",
+            "status_c",
+            "status_f",
+            "code_93"
+          ],
+          "source": "Rheem Select / W801T Installation Instructions, twinning section and figure notes",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_22",
+          "code_identifier": "22",
+          "code_type": "alphanumeric",
+          "meaning": "Main limit / dead-blower main-limit-open family on this generation",
+          "root_causes": [
+            "Main limit open",
+            "Low airflow",
+            "Overheating",
+            "Blower not moving air"
+          ],
+          "diagnostic_path": [
+            "Check airflow, filter, blower operation, and limit circuit continuity"
+          ],
+          "escalation": "If main limit circuit remains open >150 seconds, dead-blower logic can contribute to one-hour or hard-lockout behavior depending count",
+          "reset_behavior": "Clears when limit and airflow issue are corrected; lockout resets per control rules.",
+          "related_codes": [
+            "code_33",
+            "code_61",
+            "code_10"
+          ],
+          "source": "Rheem Select / W801T Installation Instructions, code list and lockout section",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "code_26",
+          "code_identifier": "26",
+          "code_type": "alphanumeric",
+          "meaning": "Accessible public snippet does not expose exact text for this code",
+          "root_causes": [
+            "Not explicitly detailed in accessible public snippet"
+          ],
+          "diagnostic_path": [
+            "Not explicitly detailed in accessible public snippet"
+          ],
+          "escalation": "Not explicitly detailed in accessible public snippet",
+          "reset_behavior": "Standard fault clear / lockout rules for this control generation.",
+          "related_codes": [],
+          "source": "Rheem Select / W801T Installation Instructions. Control generation confirmed public, but exact per-code text for 26 was not exposed in the accessible snippet.",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_33",
+          "code_identifier": "33",
+          "code_type": "alphanumeric",
+          "meaning": "MRLC manual-reset limit control / rollout open",
+          "root_causes": [
+            "Manual-reset rollout or overtemperature control open"
+          ],
+          "diagnostic_path": [
+            "Inspect rollout/manual-reset limits and wiring",
+            "Determine cause of burner-compartment overtemperature or rollout before reset"
+          ],
+          "escalation": "Fault remains until limit is corrected/reset",
+          "reset_behavior": "Requires correction of cause and manual reset of affected safety if applicable.",
+          "related_codes": [
+            "code_22",
+            "code_61"
+          ],
+          "source": "Rheem Select / W801T Installation Instructions code legend",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "code_55",
+          "code_identifier": "55",
+          "code_type": "alphanumeric",
+          "meaning": "Pressure switch stuck closed when should be open",
+          "root_causes": [
+            "Pressure switch contacts failed closed or did not reopen between cycles"
+          ],
+          "diagnostic_path": [
+            "Check switch state in off cycle",
+            "Inspect tubing, switch, and wiring"
+          ],
+          "escalation": "Blocks normal proving sequence",
+          "reset_behavior": "Clears when switch state is normal and cycle restarts.",
+          "related_codes": [
+            "code_57",
+            "code_58",
+            "code_59"
+          ],
+          "source": "Rheem Select / W801T Installation Instructions code legend",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_57",
+          "code_identifier": "57",
+          "code_type": "alphanumeric",
+          "meaning": "Pressure switch stuck open when should be closed",
+          "root_causes": [
+            "Pressure switch not proving",
+            "Inducer/draft issue",
+            "Tubing restriction",
+            "Vent restriction"
+          ],
+          "diagnostic_path": [
+            "Check inducer proving, switch closure, venting, hoses, and wiring"
+          ],
+          "escalation": "If low-pressure switch fails to close after 60 seconds of inducer operation, five-minute soft lockout applies on this control generation",
+          "reset_behavior": "Automatic reset after five minutes if five-minute soft lockout occurred.",
+          "related_codes": [
+            "code_55",
+            "code_58",
+            "code_59",
+            "code_10"
+          ],
+          "source": "Rheem Select / W801T Installation Instructions, code legend and five-minute lockout description",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_58",
+          "code_identifier": "58",
+          "code_type": "alphanumeric",
+          "meaning": "Pressure switch stuck open / low-pressure proving family on this generation",
+          "root_causes": [
+            "Pressure switch fails to close after proving period"
+          ],
+          "diagnostic_path": [
+            "Accessible public snippet ties five-minute soft lockout to low-pressure-switch failure-to-close after 60 seconds",
+            "Check switch, tubing, inducer, and venting"
+          ],
+          "escalation": "Five-minute soft lockout",
+          "reset_behavior": "Automatic after five minutes.",
+          "related_codes": [
+            "code_57",
+            "code_59",
+            "code_10"
+          ],
+          "source": "Rheem Select / W801T Installation Instructions, five-minute lockout section",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_59",
+          "code_identifier": "59",
+          "code_type": "alphanumeric",
+          "meaning": "Water sensed / condensate or moisture-related circuit issue on this generation",
+          "root_causes": [
+            "Water sensed condition or water-sensed circuit open, depending exact display state"
+          ],
+          "diagnostic_path": [
+            "Public accessible snippet does not expose per-code paragraph",
+            "Inspect moisture/condensate/water-sensing circuit if present on exact furnace variant"
+          ],
+          "escalation": "Fault indication; may inhibit normal operation until cleared",
+          "reset_behavior": "Clears when water/moisture condition is corrected.",
+          "related_codes": [
+            "code_57",
+            "code_58"
+          ],
+          "source": "Rheem Select / W801T Installation Instructions. User-requested code list matches this public control generation; exact detailed text not exposed in accessible snippet.",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_61",
+          "code_identifier": "61",
+          "code_type": "alphanumeric",
+          "meaning": "Blower fault – blower unable to run",
+          "root_causes": [
+            "Dead/inoperable blower",
+            "Main limit held open >150 seconds",
+            "Blower motor fails repeatedly in same heat call"
+          ],
+          "diagnostic_path": [
+            "Check blower motor operation, power, wiring, and airflow/limit condition"
+          ],
+          "escalation": "If dead blower is declared four times in one heat call, control enters hard lockout and displays 61",
+          "reset_behavior": "Hard-lockout condition can be reset by cycling the heat call.",
+          "related_codes": [
+            "code_22",
+            "code_33",
+            "code_10"
+          ],
+          "source": "Rheem Select / W801T Installation Instructions, code legend and hard-lockout section",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_93",
+          "code_identifier": "93",
+          "code_type": "alphanumeric",
+          "meaning": "Internal control fault",
+          "root_causes": [
+            "Unspecified internal fault",
+            "Welded gas-valve relay / unexpected voltage at gas-valve contacts that does not clear by cycling inducer"
+          ],
+          "diagnostic_path": [
+            "Verify fault is not external wiring/output issue",
+            "If control senses internal fault or welded-relay condition, replace control after confirming root cause"
+          ],
+          "escalation": "Hard lockout; cannot be reset by cycling heat call",
+          "reset_behavior": "Requires power cycle after original fault is corrected; heat-call cycling alone will not reset.",
+          "related_codes": [
+            "code_10",
+            "code_14"
+          ],
+          "source": "Rheem Select / W801T Installation Instructions, hard-lockout section",
+          "severity": "safety_critical"
+        }
+      ]
+    },
+    {
+      "platform_id": "rheem_ruud_premium_bluetooth",
+      "platform_name": "Rheem/Ruud Premium Axxx_F / Txxx_F Bluetooth Namespace",
+      "platform_description": "Rheem/Ruud premium communicating/Bluetooth-capable furnace platform using Axxx_F (persistent/active faults) and Txxx_F (transient/protection events) namespace. Covers RDFXYC Bluetooth family and related premium EcoNet-capable boards. CRITICAL: Deep troubleshooting is INTENTIONALLY deferred to the Rheem Contractor App via QR code on the control panel — the installation booklet deliberately lists fault identifiers and names but does NOT print full decision trees. A technician without the Contractor App has significantly less information on this generation than on older Endeavor boards. Ignition lockout: 4 trials → 1-hour soft lockout, reset by removing power ≥5 seconds OR removing heat call.",
+      "applies_to_models": [
+        "RDFXYC",
+        "RDF",
+        "RGRK",
+        "RGPT"
+      ],
+      "applies_to_years": "2020-2026 (premium Bluetooth/communicating generation)",
+      "model_number_prefixes": [
+        "RDFXYC",
+        "RDF",
+        "UDFXYC",
+        "UDF",
+        "WDFXYC"
+      ],
+      "visual_identification": "Premium furnace IFC with 7-segment display PLUS Bluetooth radio. Control panel has QR code linking to Rheem Contractor App. Red LED blink-decodes the most recent fault in the fault buffer as a backup when the app is unavailable. Axxx_F codes are persistent (latched alarms); Txxx_F codes are transient (protection events that may auto-clear). Where both T and A variants exist for the same underlying condition, the T variant is transient/early-warning and the A variant is the latched alarm state after escalation.",
+      "display_type": "alphanumeric",
+      "platform_notes": "Primary public source: Rheem RDFXYC Installation Instructions 92-110869-01-01, fault table and one-hour soft-lockout section. Accessible booklet exposes the identifier list and escalation rules but explicitly defers detailed per-code troubleshooting trees to the Contractor App. Where per-code root causes and diagnostic paths are not publicly printed, records below honestly flag this rather than padding from generic HVAC knowledge. T-variants (transient) and A-variants (latched) split into separate records to preserve behavioral distinction.",
+      "codes": [
+        {
+          "code_id": "code_a011_f",
+          "code_identifier": "A011_F",
+          "code_type": "alphanumeric",
+          "meaning": "Failed ignition (latched alarm)",
+          "root_causes": [
+            "Not explicitly detailed per-code in accessible booklet snippet"
+          ],
+          "diagnostic_path": [
+            "Use Rheem Contractor App / QR-code workflow for detailed tree",
+            "Public booklet only confirms identifier and that deeper fault troubleshooting is in contractor app"
+          ],
+          "escalation": "Repeated ignition failure escalates to A115_F one-hour soft-lockout family",
+          "reset_behavior": "One-hour lockout expires automatically, OR can be interrupted by removing power for minimum 5 seconds OR removing heat call.",
+          "related_codes": [
+            "code_a113_f",
+            "code_t013_f",
+            "code_a013_f",
+            "code_a115_f"
+          ],
+          "source": "Rheem RDFXYC Installation Instructions 92-110869-01-01, fault table and one-hour soft-lockout section",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_t013_f",
+          "code_identifier": "T013_F",
+          "code_type": "alphanumeric",
+          "meaning": "Flame lost after established (transient protection event)",
+          "root_causes": [
+            "Not explicitly detailed per-code in accessible booklet snippet"
+          ],
+          "diagnostic_path": [
+            "Public booklet does not expose full per-code tree",
+            "Use Rheem Contractor App / QR workflow and standard flame-sense checks (sensor cleaning, grounding, gas pressure, flame carryover)"
+          ],
+          "escalation": "Transient event; repeated occurrences escalate to A114_F latched one-hour lockout",
+          "reset_behavior": "Clears automatically with successful operation and flame stability; does not require manual reset unless escalated.",
+          "related_codes": [
+            "code_a013_f",
+            "code_a114_f",
+            "code_a011_f"
+          ],
+          "source": "Rheem RDFXYC Installation Instructions fault table",
+          "severity": "service_soon"
+        },
+        {
+          "code_id": "code_a013_f",
+          "code_identifier": "A013_F",
+          "code_type": "alphanumeric",
+          "meaning": "Flame lost after established (latched alarm)",
+          "root_causes": [
+            "Not explicitly detailed per-code in accessible booklet snippet"
+          ],
+          "diagnostic_path": [
+            "Use contractor app / QR workflow and standard flame-sense checks"
+          ],
+          "escalation": "Latched alarm state of flame-loss condition",
+          "reset_behavior": "Clears with one-hour-lockout reset path if escalated, or by power cycling after fault removed.",
+          "related_codes": [
+            "code_t013_f",
+            "code_a114_f",
+            "code_a011_f"
+          ],
+          "source": "Rheem RDFXYC Installation Instructions fault table",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_a014_f",
+          "code_identifier": "A014_F",
+          "code_type": "alphanumeric",
+          "meaning": "Flame present with gas valve off",
+          "root_causes": [
+            "Unexpected flame or false flame-present condition"
+          ],
+          "diagnostic_path": [
+            "Public booklet does not expose full tree",
+            "Verify actual flame/no-flame condition and gas-valve behavior"
+          ],
+          "escalation": "Flame-presence alarm family escalates to A116_F one-hour lockout",
+          "reset_behavior": "Standard one-hour lockout or fault-clear behavior depending on escalation.",
+          "related_codes": [
+            "code_a116_f",
+            "code_a127_f"
+          ],
+          "source": "Rheem RDFXYC Installation Instructions fault table",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "code_t022_f",
+          "code_identifier": "T022_F",
+          "code_type": "alphanumeric",
+          "meaning": "Main limit switch open (transient protection event)",
+          "root_causes": [
+            "Public booklet does not expose per-code list",
+            "Overheating / airflow issues are implied by safety naming but not fully printed in accessible code table"
+          ],
+          "diagnostic_path": [
+            "Check airflow, limits, and blower operation",
+            "Detailed OEM tree not exposed in accessible booklet snippet — use contractor app"
+          ],
+          "escalation": "Transient event; escalates to A111_F one-hour lockout if repeated",
+          "reset_behavior": "Clears automatically when limit resets and safety is restored.",
+          "related_codes": [
+            "code_a022_f",
+            "code_a111_f",
+            "code_a061_f",
+            "code_a033_f"
+          ],
+          "source": "Rheem RDFXYC Installation Instructions fault table; red LED blink decode example references A022_F and A111_F",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "code_a022_f",
+          "code_identifier": "A022_F",
+          "code_type": "alphanumeric",
+          "meaning": "Main limit switch open (latched alarm)",
+          "root_causes": [
+            "Public booklet does not expose per-code list",
+            "Overheating / airflow issues implied by safety naming"
+          ],
+          "diagnostic_path": [
+            "Check airflow, limits, and blower operation",
+            "Contractor app holds detailed tree"
+          ],
+          "escalation": "Latched alarm state; one-hour lockout family via A111_F",
+          "reset_behavior": "Clears when safety is restored; one-hour lockout follows A111_F if escalated.",
+          "related_codes": [
+            "code_t022_f",
+            "code_a111_f",
+            "code_a061_f",
+            "code_a033_f"
+          ],
+          "source": "Rheem RDFXYC Installation Instructions fault table",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "code_a031_f",
+          "code_identifier": "A031_F",
+          "code_type": "alphanumeric",
+          "meaning": "Open fuse",
+          "root_causes": [
+            "Low-voltage fuse opened",
+            "Short in 24VAC control circuit"
+          ],
+          "diagnostic_path": [
+            "Inspect 24VAC circuit for short and replace fuse after correcting cause",
+            "Public booklet elsewhere notes fault code 31 via Bluetooth app when fuse opens"
+          ],
+          "escalation": "Fault until fuse/cause corrected",
+          "reset_behavior": "Clears after fuse replacement and restoration of normal control power.",
+          "related_codes": [
+            "code_a093_f"
+          ],
+          "source": "Rheem RDFXYC Installation Instructions fault table and earlier booklet note on code 31 via Bluetooth app",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_a033_f",
+          "code_identifier": "A033_F",
+          "code_type": "alphanumeric",
+          "meaning": "Roll-out switch alarm",
+          "root_causes": [
+            "Rollout/open manual-reset safety"
+          ],
+          "diagnostic_path": [
+            "Inspect rollout safety and root cause before reset",
+            "Detailed per-code tree not exposed in accessible snippet"
+          ],
+          "escalation": "Fault persists until safety issue corrected",
+          "reset_behavior": "Correct cause and reset applicable safety.",
+          "related_codes": [
+            "code_t022_f",
+            "code_a022_f",
+            "code_a111_f"
+          ],
+          "source": "Rheem RDFXYC Installation Instructions fault table",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "code_a044_f",
+          "code_identifier": "A044_F",
+          "code_type": "alphanumeric",
+          "meaning": "Inducer low-pressure switch won't open",
+          "root_causes": [
+            "Pressure switch remains closed when it should reopen"
+          ],
+          "diagnostic_path": [
+            "Check low-pressure switch state, tubing, and inducer proving sequence",
+            "Detailed tree delegated to contractor app"
+          ],
+          "escalation": "Pressure-switch/inducer family",
+          "reset_behavior": "Clears when switch state normalizes and cycle restarts.",
+          "related_codes": [
+            "code_t045_f",
+            "code_t047_f",
+            "code_a047_f"
+          ],
+          "source": "Rheem RDFXYC Installation Instructions fault table",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_t045_f",
+          "code_identifier": "T045_F",
+          "code_type": "alphanumeric",
+          "meaning": "Inducer low-pressure switch won't close (transient protection event)",
+          "root_causes": [
+            "Low-pressure proving failure"
+          ],
+          "diagnostic_path": [
+            "Check inducer, pressure switch, tubing, and venting",
+            "Detailed tree not exposed in booklet"
+          ],
+          "escalation": "Can escalate to T047_F/A047_F inducer fan 5-minute lockout family",
+          "reset_behavior": "Clears when proving succeeds; escalates to 5-minute lockout if repeated.",
+          "related_codes": [
+            "code_a044_f",
+            "code_t047_f",
+            "code_a047_f"
+          ],
+          "source": "Rheem RDFXYC Installation Instructions fault table",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_t047_f",
+          "code_identifier": "T047_F",
+          "code_type": "alphanumeric",
+          "meaning": "Inducer fan 5-minute lockout (transient protection event)",
+          "root_causes": [
+            "Upstream inducer/pressure-switch proving fault family"
+          ],
+          "diagnostic_path": [
+            "Resolve associated inducer low-/high-pressure switch fault before reset"
+          ],
+          "escalation": "5-minute lockout",
+          "reset_behavior": "Automatic after 5 minutes once underlying issue is removed.",
+          "related_codes": [
+            "code_a044_f",
+            "code_t045_f",
+            "code_a047_f",
+            "code_t055_f",
+            "code_a055_f"
+          ],
+          "source": "Rheem RDFXYC Installation Instructions fault table",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_a047_f",
+          "code_identifier": "A047_F",
+          "code_type": "alphanumeric",
+          "meaning": "Inducer fan 5-minute lockout (latched alarm)",
+          "root_causes": [
+            "Upstream inducer/pressure-switch proving fault family latched to alarm state"
+          ],
+          "diagnostic_path": [
+            "Resolve associated inducer low-/high-pressure switch fault before reset"
+          ],
+          "escalation": "5-minute lockout, latched",
+          "reset_behavior": "Automatic after 5 minutes once underlying issue is removed.",
+          "related_codes": [
+            "code_t047_f",
+            "code_a044_f",
+            "code_t055_f",
+            "code_a055_f"
+          ],
+          "source": "Rheem RDFXYC Installation Instructions fault table",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_t055_f",
+          "code_identifier": "T055_F",
+          "code_type": "alphanumeric",
+          "meaning": "Inducer high-pressure switch won't open (transient protection event, two-stage variants)",
+          "root_causes": [
+            "High-pressure proving circuit abnormal",
+            "Exact per-code root-cause list not exposed in accessible booklet"
+          ],
+          "diagnostic_path": [
+            "Inspect inducer high-pressure proving devices and associated tubing/wiring",
+            "Contractor app for detailed tree"
+          ],
+          "escalation": "Pressure/inducer family; may feed 5-minute lockout logic",
+          "reset_behavior": "Transient — clears when proving normalizes.",
+          "related_codes": [
+            "code_a055_f",
+            "code_t057_f",
+            "code_t047_f"
+          ],
+          "source": "Rheem RDFXYC Installation Instructions fault table; two-stage-only variants marked with asterisk",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_a055_f",
+          "code_identifier": "A055_F",
+          "code_type": "alphanumeric",
+          "meaning": "Inducer high-pressure switch won't open (latched alarm, two-stage variants)",
+          "root_causes": [
+            "High-pressure proving circuit latched to alarm state"
+          ],
+          "diagnostic_path": [
+            "Inspect inducer high-pressure proving devices and associated tubing/wiring"
+          ],
+          "escalation": "Latched state",
+          "reset_behavior": "Clears after fault correction; may require power cycle.",
+          "related_codes": [
+            "code_t055_f",
+            "code_t057_f"
+          ],
+          "source": "Rheem RDFXYC Installation Instructions fault table",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_t057_f",
+          "code_identifier": "T057_F",
+          "code_type": "alphanumeric",
+          "meaning": "Inducer high-pressure switch won't close (transient protection event, two-stage variants)",
+          "root_causes": [
+            "High-pressure proving failure on transition to high fire"
+          ],
+          "diagnostic_path": [
+            "Inspect inducer high-pressure proving devices and associated tubing/wiring"
+          ],
+          "escalation": "Transient event",
+          "reset_behavior": "Clears when high-pressure proving succeeds.",
+          "related_codes": [
+            "code_t055_f",
+            "code_a055_f"
+          ],
+          "source": "Rheem RDFXYC Installation Instructions fault table",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_a061_f",
+          "code_identifier": "A061_F",
+          "code_type": "alphanumeric",
+          "meaning": "Blower fault – motor cannot run",
+          "root_causes": [
+            "Blower/motor unable to run"
+          ],
+          "diagnostic_path": [
+            "Check blower motor power/wiring and blower health",
+            "Detailed app tree not exposed publicly in booklet"
+          ],
+          "escalation": "Can associate with overtemperature/limit events depending on exact sequence",
+          "reset_behavior": "Clears when motor fault corrected.",
+          "related_codes": [
+            "code_t117_f",
+            "code_a117_f",
+            "code_t022_f",
+            "code_a022_f",
+            "code_a111_f"
+          ],
+          "source": "Rheem RDFXYC Installation Instructions fault table",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_sensor_family_08x",
+          "code_identifier": "T081_F / T082_F / T084_F / T085_F / T086_F / T087_F / T088_F",
+          "code_type": "alphanumeric",
+          "meaning": "Sensor fault family — Return-air sensor / supply-air sensor / outdoor-air sensor / suction-line temp thermistor / suction-pressure sensor / power-board temp sensor / EXV sensor measurement error",
+          "root_causes": [
+            "Respective sensor/thermistor/transducer/measurement failure"
+          ],
+          "diagnostic_path": [
+            "Verify sensor connection, resistance/reading, and board interface",
+            "Exact per-code trees are app-based in this family"
+          ],
+          "escalation": "Sensor-fault family; exact response varies by code and system configuration",
+          "reset_behavior": "Clears when sensor circuit fault is corrected.",
+          "related_codes": [
+            "code_a093_f"
+          ],
+          "source": "Rheem RDFXYC Installation Instructions fault table. Grouped into single record because accessible booklet treats these as a sensor-family cluster without exposing per-sensor detailed trees.",
+          "severity": "service_soon"
+        },
+        {
+          "code_id": "code_a093_f",
+          "code_identifier": "A093_F",
+          "code_type": "alphanumeric",
+          "meaning": "Internal control fault detected",
+          "root_causes": [
+            "Internal board/control fault"
+          ],
+          "diagnostic_path": [
+            "Confirm not caused by miswiring or external harness issue",
+            "Use contractor app for deeper fault tree"
+          ],
+          "escalation": "Active fault until board/control issue resolved",
+          "reset_behavior": "Depends on control condition; accessible booklet does not print separate reset paragraph.",
+          "related_codes": [
+            "code_a221_228_family"
+          ],
+          "source": "Rheem RDFXYC Installation Instructions fault table",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "code_a111_f",
+          "code_identifier": "A111_F",
+          "code_type": "alphanumeric",
+          "meaning": "One-hour lockout: main limit switch",
+          "root_causes": [
+            "Corresponding underlying active fault family: main limit open"
+          ],
+          "diagnostic_path": [
+            "Find and correct underlying active fault before resetting",
+            "Red LED only blinks latest fault in buffer"
+          ],
+          "escalation": "One-hour soft lockout",
+          "reset_behavior": "Auto-clear after one hour OR interrupt electrical power for at least 5 seconds OR remove heat call.",
+          "related_codes": [
+            "code_t022_f",
+            "code_a022_f",
+            "code_a033_f"
+          ],
+          "source": "Rheem RDFXYC Installation Instructions one-hour soft-lockout section and fault table",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_a113_f",
+          "code_identifier": "A113_F",
+          "code_type": "alphanumeric",
+          "meaning": "One-hour lockout: ignition failure",
+          "root_causes": [
+            "Four ignition trials without flame"
+          ],
+          "diagnostic_path": [
+            "Find and correct underlying ignition issue",
+            "Contractor app holds detailed tree"
+          ],
+          "escalation": "One-hour soft lockout after four ignition trials without flame; if heat call remains after one hour, sequence restarts; repeats until successful ignition, power interruption, or heat call removal",
+          "reset_behavior": "Auto-clear after one hour OR interrupt electrical power for at least 5 seconds OR remove heat call.",
+          "related_codes": [
+            "code_a011_f"
+          ],
+          "source": "Rheem RDFXYC Installation Instructions one-hour soft-lockout section",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_a114_f",
+          "code_identifier": "A114_F",
+          "code_type": "alphanumeric",
+          "meaning": "One-hour lockout: flame lost failure",
+          "root_causes": [
+            "Repeated flame-loss events during heat calls"
+          ],
+          "diagnostic_path": [
+            "Find and correct underlying flame-sense issue"
+          ],
+          "escalation": "One-hour soft lockout",
+          "reset_behavior": "Auto-clear after one hour OR power interrupt ≥5 seconds OR remove heat call.",
+          "related_codes": [
+            "code_t013_f",
+            "code_a013_f"
+          ],
+          "source": "Rheem RDFXYC Installation Instructions one-hour soft-lockout section",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_a115_f",
+          "code_identifier": "A115_F",
+          "code_type": "alphanumeric",
+          "meaning": "One-hour lockout: gas valve stuck closed",
+          "root_causes": [
+            "Gas valve circuit / valve stuck closed condition"
+          ],
+          "diagnostic_path": [
+            "Find and correct underlying valve issue",
+            "Contractor app holds detailed tree"
+          ],
+          "escalation": "One-hour soft lockout",
+          "reset_behavior": "Auto-clear after one hour OR power interrupt ≥5 seconds OR remove heat call.",
+          "related_codes": [
+            "code_a011_f",
+            "code_a221_228_family"
+          ],
+          "source": "Rheem RDFXYC Installation Instructions one-hour soft-lockout section",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "code_a116_f",
+          "code_identifier": "A116_F",
+          "code_type": "alphanumeric",
+          "meaning": "One-hour lockout: flame presence alarm",
+          "root_causes": [
+            "Flame detected when not expected — escalated state of A014_F"
+          ],
+          "diagnostic_path": [
+            "Find and correct underlying flame-presence fault (gas valve leakage, false flame signal)"
+          ],
+          "escalation": "One-hour soft lockout",
+          "reset_behavior": "Auto-clear after one hour OR power interrupt ≥5 seconds OR remove heat call.",
+          "related_codes": [
+            "code_a014_f",
+            "code_a127_f"
+          ],
+          "source": "Rheem RDFXYC Installation Instructions one-hour soft-lockout section",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "code_t117_f",
+          "code_identifier": "T117_F",
+          "code_type": "alphanumeric",
+          "meaning": "Detect RPM motor failure (transient protection event)",
+          "root_causes": [
+            "RPM-sensed blower motor failure"
+          ],
+          "diagnostic_path": [
+            "Check motor operation, speed feedback, and wiring",
+            "Full detailed tree not exposed in booklet"
+          ],
+          "escalation": "Transient event; may escalate to A117_F if persistent",
+          "reset_behavior": "Clears when motor fault is corrected.",
+          "related_codes": [
+            "code_a117_f",
+            "code_a061_f"
+          ],
+          "source": "Rheem RDFXYC Installation Instructions fault table",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_a117_f",
+          "code_identifier": "A117_F",
+          "code_type": "alphanumeric",
+          "meaning": "Detect RPM motor failure (latched alarm)",
+          "root_causes": [
+            "RPM-sensed blower motor failure latched to alarm state"
+          ],
+          "diagnostic_path": [
+            "Check motor operation, speed feedback, and wiring"
+          ],
+          "escalation": "Latched state",
+          "reset_behavior": "Clears when motor fault is corrected.",
+          "related_codes": [
+            "code_t117_f",
+            "code_a061_f"
+          ],
+          "source": "Rheem RDFXYC Installation Instructions fault table",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "code_a126_f",
+          "code_identifier": "A126_F",
+          "code_type": "alphanumeric",
+          "meaning": "Flame not sensed with gas valve on - UL (safety supervision)",
+          "root_causes": [
+            "UL-supervised flame-absence abnormality during valve-on condition"
+          ],
+          "diagnostic_path": [
+            "Verify valve command and flame-sense state",
+            "Detailed tree not printed in accessible snippet"
+          ],
+          "escalation": "Safety-related abnormal flame supervision",
+          "reset_behavior": "Clears when supervised condition is corrected; may require power/heat-call reset depending sequence.",
+          "related_codes": [
+            "code_a011_f",
+            "code_a127_f"
+          ],
+          "source": "Rheem RDFXYC Installation Instructions fault table",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "code_a127_f",
+          "code_identifier": "A127_F",
+          "code_type": "alphanumeric",
+          "meaning": "Flame present with gas valve off - UL (safety supervision)",
+          "root_causes": [
+            "UL-supervised flame-presence abnormality during valve-off condition"
+          ],
+          "diagnostic_path": [
+            "Verify valve command and flame-sense state"
+          ],
+          "escalation": "Safety-related abnormal flame supervision",
+          "reset_behavior": "Clears when supervised condition is corrected; may require power/heat-call reset.",
+          "related_codes": [
+            "code_a014_f",
+            "code_a116_f"
+          ],
+          "source": "Rheem RDFXYC Installation Instructions fault table",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "code_a221_228_family",
+          "code_identifier": "A221_F / A222_F / A223_F / A224_F / A225_F / A226_F / A227_F / A228_F",
+          "code_type": "alphanumeric",
+          "meaning": "Internal fault family — Configuration data restore failure / Model data restore failure / Internal fault monitor-chip communication failure / Flame-status circuit failure / Gas valve 1 relay welded shut / Gas valve 1 relay stuck open / Gas valve 2 relay welded shut / Gas valve 2 relay stuck open",
+          "root_causes": [
+            "Internal configuration-memory, communication, flame-circuit, or valve-relay faults"
+          ],
+          "diagnostic_path": [
+            "Public booklet identifies names only",
+            "Detailed troubleshooting explicitly deferred to contractor app"
+          ],
+          "escalation": "Active internal/safety fault family",
+          "reset_behavior": "Depends on exact internal fault; booklet does not expose per-code reset procedure.",
+          "related_codes": [
+            "code_a093_f",
+            "code_a126_f",
+            "code_a127_f"
+          ],
+          "source": "Rheem RDFXYC Installation Instructions fault table. Grouped into single record because accessible booklet treats these as an internal-fault cluster without exposing per-variant detailed trees.",
+          "severity": "safety_critical"
+        }
+      ]
+    },
+    {
+      "platform_id": "rheem_ruud_older_modulating",
+      "platform_name": "Rheem/Ruud Older Modulating Numeric-Function-Code",
+      "platform_description": "Rheem/Ruud older modulating residential gas furnace platform with 7-segment numeric-function-code display. Covers RGFD modulating family and related older modulating furnaces. Uses distinct code namespace (11, 12, 13, 14, 22/23/33 limit family, 44/45/46/57 pressure/inducer family, 67 blower motor, 82 default parameters) — NOT the same as Platform 2A Endeavor or Platform 2B Axxx_F/Txxx_F. Public diagnostic paths in the OEM manual frequently group multiple codes under the same check (e.g., 'code 22, 23, or 33: check limits'), so records below split into individual codes but honestly note where the OEM shares a diagnostic path across multiple codes.",
+      "applies_to_models": [
+        "RGFD",
+        "UGFD"
+      ],
+      "applies_to_years": "2010-2018 (older modulating generation)",
+      "model_number_prefixes": [
+        "RGFD",
+        "UGFD"
+      ],
+      "visual_identification": "Older 7-segment furnace display showing numeric function codes. Does not have Bluetooth, does not have EcoNet connection, does not alternate '10' wrapper like Endeavor. Code list and function-code troubleshooting guide printed in furnace installation manual.",
+      "display_type": "alphanumeric",
+      "platform_notes": "Public source: Rheem RGFD Installation Instructions. Accessible public snippet exposes key codes and specific shared diagnostic paths: 'code 22, 23, or 33: check manual-reset overtemperature / limit circuit', 'code 44 or 55: check pressure switches', 'code 45 or 57: check IDM (inducer draft motor) — verify 120V at motor, run capacitor, wiring, and IFC output voltage'. Code 82 is a transient default-parameters indicator: displays for 90 seconds then stored in memory for recall. This platform demonstrates why model prefix alone is NOT sufficient to select the correct Rheem fault code dictionary.",
+      "codes": [
+        {
+          "code_id": "rgfd_code_11",
+          "code_identifier": "11",
+          "code_type": "alphanumeric",
+          "meaning": "Ignition failure / burners do not light expected code",
+          "root_causes": [
+            "No gas valve output",
+            "Gas pressure issue",
+            "Spark electrode position issue",
+            "IFC valve output issue"
+          ],
+          "diagnostic_path": [
+            "Check 24V between M/P and C terminals",
+            "Check inlet and manifold gas pressure",
+            "Check wiring to gas valve",
+            "Check 24V on IFC valve pins",
+            "Inspect spark electrode position"
+          ],
+          "escalation": "After unsuccessful first trial, three additional trials occur; repeated ignition failure leads to retry/lockout family",
+          "reset_behavior": "Standard retry/lockout behavior for this generation.",
+          "related_codes": [
+            "rgfd_code_12",
+            "rgfd_code_13",
+            "rgfd_code_14"
+          ],
+          "source": "Rheem RGFD Installation Instructions public search snippet with ignition troubleshooting and code 11 expectation",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "rgfd_code_12",
+          "code_identifier": "12",
+          "code_type": "alphanumeric",
+          "meaning": "One-hour retry / lockout family on this generation",
+          "root_causes": [
+            "Ignition retry exhaustion"
+          ],
+          "diagnostic_path": [
+            "Public accessible search snippet does not expose separate per-code paragraph beyond retry/lockout family"
+          ],
+          "escalation": "Retry/lockout condition",
+          "reset_behavior": "Standard one-hour lockout family behavior for this generation.",
+          "related_codes": [
+            "rgfd_code_11",
+            "rgfd_code_13"
+          ],
+          "source": "Rheem older modulating public manual family; exact code family confirmed by separate public manual search result",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "rgfd_code_13",
+          "code_identifier": "13",
+          "code_type": "alphanumeric",
+          "meaning": "Lost flame sense / flame-failure family",
+          "root_causes": [
+            "Failure to sense flame after burners light"
+          ],
+          "diagnostic_path": [
+            "Public snippet says: failure to sense flame — check status display, function code 11 expected in that branch, then follow function-code guide",
+            "Full dedicated code-13 tree not exposed"
+          ],
+          "escalation": "Ignition/flame retry family",
+          "reset_behavior": "Clears on successful flame sense or lockout reset.",
+          "related_codes": [
+            "rgfd_code_11",
+            "rgfd_code_12",
+            "rgfd_code_14"
+          ],
+          "source": "Rheem RGFD Installation Instructions public search snippet",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "rgfd_code_14",
+          "code_identifier": "14",
+          "code_type": "alphanumeric",
+          "meaning": "Improper flame sense / abnormal flame family",
+          "root_causes": [
+            "Public accessible snippet does not expose detailed per-code text"
+          ],
+          "diagnostic_path": [
+            "Not explicitly detailed in accessible public snippet"
+          ],
+          "escalation": "Flame abnormality family",
+          "reset_behavior": "Standard fault/lockout reset for this generation.",
+          "related_codes": [
+            "rgfd_code_11",
+            "rgfd_code_13"
+          ],
+          "source": "Distinct older numeric namespace confirmed in public OEM manual family; exact per-code detail not exposed in accessible snippet",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "rgfd_code_22",
+          "code_identifier": "22",
+          "code_type": "alphanumeric",
+          "meaning": "Main limit / manual-reset overtemperature / rollout family on this generation (shared diagnostic path with 23 and 33)",
+          "root_causes": [
+            "Manual reset overtemperature control tripped",
+            "Wire loose in limit circuit",
+            "Open main limit safety"
+          ],
+          "diagnostic_path": [
+            "Check overtemperature switches and wiring",
+            "Public snippet specifically says: if inducer does not stop, expect 22 or 33; if blower does not stop, expect 22, 23, or 33"
+          ],
+          "escalation": "Safety interruption during heating",
+          "reset_behavior": "Correct cause; reset manual-reset controls where applicable.",
+          "related_codes": [
+            "rgfd_code_23",
+            "rgfd_code_33",
+            "rgfd_code_67"
+          ],
+          "source": "Rheem RGFD Installation Instructions public search snippet",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "rgfd_code_23",
+          "code_identifier": "23",
+          "code_type": "alphanumeric",
+          "meaning": "Auxiliary limit family on this generation (shared diagnostic path with 22 and 33)",
+          "root_causes": [
+            "Auxiliary limit tripped",
+            "Airflow issue",
+            "Heat exchanger issue"
+          ],
+          "diagnostic_path": [
+            "Check auxiliary limit switches and wiring",
+            "Public snippet says: if blower does not stop, expect 22, 23, or 33"
+          ],
+          "escalation": "Safety interruption during heating",
+          "reset_behavior": "Correct cause; reset applicable safeties.",
+          "related_codes": [
+            "rgfd_code_22",
+            "rgfd_code_33"
+          ],
+          "source": "Rheem RGFD Installation Instructions public search snippet",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "rgfd_code_33",
+          "code_identifier": "33",
+          "code_type": "alphanumeric",
+          "meaning": "Rollout / overtemperature family on this generation (shared diagnostic path with 22 and 23)",
+          "root_causes": [
+            "Rollout safety tripped",
+            "Overtemperature condition",
+            "Blocked flue or heat exchanger"
+          ],
+          "diagnostic_path": [
+            "Inspect rollout and manual-reset safeties",
+            "Check flue and heat exchanger",
+            "Public snippet says: if inducer does not stop, expect 22 or 33"
+          ],
+          "escalation": "Safety interruption during heating",
+          "reset_behavior": "Correct cause and reset applicable safeties.",
+          "related_codes": [
+            "rgfd_code_22",
+            "rgfd_code_23",
+            "rgfd_code_67"
+          ],
+          "source": "Rheem RGFD Installation Instructions public search snippet",
+          "severity": "safety_critical"
+        },
+        {
+          "code_id": "rgfd_code_44",
+          "code_identifier": "44",
+          "code_type": "alphanumeric",
+          "meaning": "Pressure switch family on this generation (shared diagnostic path with 55)",
+          "root_causes": [
+            "Pressure switch circuit abnormal",
+            "Pressure proving failure"
+          ],
+          "diagnostic_path": [
+            "Public snippet explicitly says: code 44 or 55 — check pressure switches"
+          ],
+          "escalation": "Heating sequence terminates if proving fails",
+          "reset_behavior": "Clears when proving path is restored.",
+          "related_codes": [
+            "rgfd_code_45",
+            "rgfd_code_46",
+            "rgfd_code_57"
+          ],
+          "source": "Rheem RGFD Installation Instructions public search snippet",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "rgfd_code_45",
+          "code_identifier": "45",
+          "code_type": "alphanumeric",
+          "meaning": "Inducer draft motor (IDM) family on this generation (shared diagnostic path with 57)",
+          "root_causes": [
+            "Inducer high-/low-speed issues",
+            "Wiring to IDM",
+            "Run capacitor issue",
+            "IFC output issue"
+          ],
+          "diagnostic_path": [
+            "Public snippet explicitly says: code 45 or 57 — check IDM",
+            "Verify voltage to IDM high-speed tap",
+            "Check run capacitor",
+            "Inspect wiring",
+            "Verify voltage on IDM pin at IFC"
+          ],
+          "escalation": "Heating sequence terminates if IDM proving fails",
+          "reset_behavior": "Clears when IDM operation is restored.",
+          "related_codes": [
+            "rgfd_code_44",
+            "rgfd_code_46",
+            "rgfd_code_57"
+          ],
+          "source": "Rheem RGFD Installation Instructions public search snippet",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "rgfd_code_46",
+          "code_identifier": "46",
+          "code_type": "alphanumeric",
+          "meaning": "Auxiliary-limit/low-pressure-switch open with inducer low",
+          "root_causes": [
+            "Pressure proving abnormality with inducer at low speed",
+            "Public snippet does not expose full detail"
+          ],
+          "diagnostic_path": [
+            "Check pressure switches and inducer low-speed operation",
+            "Detailed tree not exposed in accessible snippet"
+          ],
+          "escalation": "Heating sequence terminates",
+          "reset_behavior": "Clears when condition is corrected.",
+          "related_codes": [
+            "rgfd_code_44",
+            "rgfd_code_45",
+            "rgfd_code_57"
+          ],
+          "source": "Rheem RGFD Installation Instructions public search snippet. Specific meaning 'auxiliary-limit/LPS open with inducer low' confirmed in older modulating manual family.",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "rgfd_code_57",
+          "code_identifier": "57",
+          "code_type": "alphanumeric",
+          "meaning": "High-pressure switch open with inducer high (shared diagnostic path with 45)",
+          "root_causes": [
+            "High-pressure switch not proving at high inducer speed",
+            "IDM issue",
+            "Wiring issue"
+          ],
+          "diagnostic_path": [
+            "Public snippet explicitly says: code 45 or 57 — check IDM",
+            "Verify voltage to IDM high-speed tap",
+            "Check run capacitor and wiring"
+          ],
+          "escalation": "Heating sequence terminates",
+          "reset_behavior": "Clears when proving is restored.",
+          "related_codes": [
+            "rgfd_code_45",
+            "rgfd_code_44",
+            "rgfd_code_46"
+          ],
+          "source": "Rheem RGFD Installation Instructions public search snippet",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "rgfd_code_67",
+          "code_identifier": "67",
+          "code_type": "alphanumeric",
+          "meaning": "Indoor blower motor fault family (shared diagnostic path with 68)",
+          "root_causes": [
+            "Motor does not start",
+            "No 120V to motor",
+            "Wiring issue",
+            "ECM motor problem",
+            "IFC output issue"
+          ],
+          "diagnostic_path": [
+            "Check status display for 67 or 68",
+            "Verify 120V to motor at 5-pin plug",
+            "Inspect wiring",
+            "Test motor with ECM2+ motor tester",
+            "If checks pass, replace IFC"
+          ],
+          "escalation": "Blower fault affects heating sequence",
+          "reset_behavior": "Clears when motor/control issue corrected.",
+          "related_codes": [
+            "rgfd_code_22",
+            "rgfd_code_23",
+            "rgfd_code_33"
+          ],
+          "source": "Rheem RGFD Installation Instructions public search snippet",
+          "severity": "urgent"
+        },
+        {
+          "code_id": "rgfd_code_82",
+          "code_identifier": "82",
+          "code_type": "alphanumeric",
+          "meaning": "Supply-air sensor not used / default parameters active (transient 90-second display, then stored in memory)",
+          "root_causes": [
+            "Supply-air sensor not installed or not wired",
+            "Furnace running under default airflow/temperature parameters"
+          ],
+          "diagnostic_path": [
+            "Verify whether supply-air sensor is intended to be installed",
+            "If sensor should be present, check wiring and sensor connection",
+            "If sensor is intentionally not installed, code 82 is expected"
+          ],
+          "escalation": "Advisory only — code displays for 90 seconds, then is stored in memory for later recall",
+          "reset_behavior": "Clears from active display automatically after 90 seconds; remains in memory for service recall.",
+          "related_codes": [],
+          "source": "Rheem older modulating public manual family. Code 82 transient-display behavior confirmed in Pass 3 deep-dive research as distinct from active fault codes.",
+          "severity": "informational"
+        }
+      ]
+    },
+    {
+      "platform_id": "rheem_ruud_econet_communicating",
+      "platform_name": "Rheem/Ruud EcoNet Communicating Ecosystem",
+      "platform_description": "Rheem and Ruud EcoNet communicating platform: EcoNet Control Center smart thermostat + communicating indoor equipment (RH2T/RHMV air handlers) + communicating outdoor equipment (Prestige inverter see Platform 4). Public diagnostic coverage strongest on the air-handler side (A101-A110 + 111 codes) — thermostat-only alarm dictionary is NOT publicly exposed as a complete code list; thermostat surfaces equipment alerts via 'Service icon' flashing and 'Current Alarm' view. EcoNet bus uses R/C/E1/E2 terminals, MUST be wired daisy-chain (not star), max 125 ft between devices, 500 ft end-to-end. Control Center autodiscovers equipment within ~45 seconds of power-up. 4-minute anti-short-cycle delay after power-up or compressor shutdown.",
+      "applies_to_models": [
+        "EcoNet Control Center",
+        "EcoNet Smart Thermostat",
+        "RH2T",
+        "RHMV"
+      ],
+      "applies_to_years": "2016-2026",
+      "model_number_prefixes": [
+        "RH2T",
+        "RHMV",
+        "UH2T",
+        "UHMV"
+      ],
+      "visual_identification": "EcoNet Control Center: color touchscreen smart thermostat with Wi-Fi. Shows 'Service' icon (flashes when alarm or reminder active), 'Current Alarm' view, 'Alarm History', 'Reminders' menu. Communicating air handler (RH2T/RHMV) has LED10 on control board that flashes diagnostic codes, RJ-14 diagnostic tool port, and CFM LED that flashes 1 flash per 100 CFM for airflow verification.",
+      "display_type": "alphanumeric",
+      "platform_notes": "Public source: Rheem RH2T/RHMV Installation Instructions 92-20521-102 Rev. 02 (air-handler diagnostic table); Ruud Control Center Support page (thermostat surface behavior, bus topology, anti-short-cycle). LED10 flash-to-code mapping: 2 flashes=A103/A106, 3=A102, 4=A105/A104/A101, 5=A107, 6=A108, 7=A110, 8=111 no-valid-suction-temp, 10=A109, 11=111 control-fault. DIP switches ignored in communicating mode — airflow trim via thermostat or service tool.",
+      "codes": [
+        {
+          "code_id": "code_a101",
+          "code_identifier": "A101",
+          "code_type": "thermostat_display",
+          "meaning": "Blower motor is not communicating",
+          "root_causes": [
+            "ECM motor not communicating to air-handler control board"
+          ],
+          "diagnostic_path": [
+            "Make sure ECM motor wiring harness is plugged into ECM motor and control board",
+            "Test ECM motor proper operation using a service tool"
+          ],
+          "escalation": "Critical severity 1",
+          "reset_behavior": "Clears when communication fault is corrected.",
+          "related_codes": [
+            "code_a104",
+            "code_a105"
+          ],
+          "source": "Rheem RH2T/RHMV Installation Instructions 92-20521-102 Rev. 02, air-handler diagnostic table. LED10 4 flashes.",
+          "severity": "urgent",
+          "surface": "equipment_board"
+        },
+        {
+          "code_id": "code_a102",
+          "code_identifier": "A102",
+          "code_type": "thermostat_display",
+          "meaning": "Motor size is not correct for model of air handler",
+          "root_causes": [
+            "Incorrect horsepower motor installed",
+            "Wrong model data on memory card"
+          ],
+          "diagnostic_path": [
+            "Replace motor with correct horsepower motor",
+            "Replace memory card with correct system information"
+          ],
+          "escalation": "Critical severity 1",
+          "reset_behavior": "Clears when proper motor/model data is installed.",
+          "related_codes": [
+            "code_a103_a106",
+            "code_a101"
+          ],
+          "source": "Rheem RH2T/RHMV Installation Instructions air-handler diagnostic table. LED10 3 flashes.",
+          "severity": "urgent",
+          "surface": "equipment_board"
+        },
+        {
+          "code_id": "code_a103_a106",
+          "code_identifier": "A103 / A106",
+          "code_type": "thermostat_display",
+          "meaning": "No model data present",
+          "root_causes": [
+            "Missing or incorrect memory-card system information"
+          ],
+          "diagnostic_path": [
+            "Replace memory card with correct system information"
+          ],
+          "escalation": "Critical severity 1",
+          "reset_behavior": "Clears after correct memory card/model data is restored.",
+          "related_codes": [
+            "code_a102"
+          ],
+          "source": "Rheem RH2T/RHMV Installation Instructions air-handler diagnostic table. LED10 2 flashes.",
+          "severity": "urgent",
+          "surface": "equipment_board"
+        },
+        {
+          "code_id": "code_a104",
+          "code_identifier": "A104",
+          "code_type": "thermostat_display",
+          "meaning": "Motor no run fault – No Run",
+          "root_causes": [
+            "ECM motor not operating"
+          ],
+          "diagnostic_path": [
+            "Make sure ECM motor wiring harness is plugged into ECM motor and control board",
+            "Test ECM motor for proper operation"
+          ],
+          "escalation": "Critical severity 1",
+          "reset_behavior": "Clears when motor operation is restored.",
+          "related_codes": [
+            "code_a101",
+            "code_a105"
+          ],
+          "source": "Rheem RH2T/RHMV Installation Instructions air-handler diagnostic table. LED10 4 flashes.",
+          "severity": "urgent",
+          "surface": "equipment_board"
+        },
+        {
+          "code_id": "code_a105",
+          "code_identifier": "A105",
+          "code_type": "thermostat_display",
+          "meaning": "Blower fault – Run",
+          "root_causes": [
+            "ECM motor is running but has a fault"
+          ],
+          "diagnostic_path": [
+            "Test ECM for proper operation"
+          ],
+          "escalation": "Critical severity 1",
+          "reset_behavior": "Clears when ECM fault is corrected.",
+          "related_codes": [
+            "code_a104",
+            "code_a101"
+          ],
+          "source": "Rheem RH2T/RHMV Installation Instructions air-handler diagnostic table. LED10 4 flashes.",
+          "severity": "urgent",
+          "surface": "equipment_board"
+        },
+        {
+          "code_id": "code_a107",
+          "code_identifier": "A107",
+          "code_type": "thermostat_display",
+          "meaning": "Return sensor out of range",
+          "root_causes": [
+            "Sensor resistance out of normal range"
+          ],
+          "diagnostic_path": [
+            "Make sure sensor is plugged into air-handler control board",
+            "Check sensor resistance",
+            "Replace if out of tolerance"
+          ],
+          "escalation": "Minor severity 0",
+          "reset_behavior": "Clears when sensor circuit is restored.",
+          "related_codes": [
+            "code_a108"
+          ],
+          "source": "Rheem RH2T/RHMV Installation Instructions air-handler diagnostic table. LED10 5 flashes.",
+          "severity": "service_soon",
+          "surface": "equipment_board"
+        },
+        {
+          "code_id": "code_a108",
+          "code_identifier": "A108",
+          "code_type": "thermostat_display",
+          "meaning": "Leaving air sensor out of range",
+          "root_causes": [
+            "Sensor resistance out of normal range"
+          ],
+          "diagnostic_path": [
+            "Make sure sensor is plugged into air-handler control board"
+          ],
+          "escalation": "Minor severity 0",
+          "reset_behavior": "Clears when sensor circuit is restored.",
+          "related_codes": [
+            "code_a107"
+          ],
+          "source": "Rheem RH2T/RHMV Installation Instructions air-handler diagnostic table. LED10 6 flashes.",
+          "severity": "service_soon",
+          "surface": "equipment_board"
+        },
+        {
+          "code_id": "code_a109",
+          "code_identifier": "A109",
+          "code_type": "thermostat_display",
+          "meaning": "Suction pressure out of range",
+          "root_causes": [
+            "Suction-pressure transducer issue or abnormal reading"
+          ],
+          "diagnostic_path": [
+            "Check suction-pressure transducer connection to control",
+            "Note that if operating in heating mode, this flash code is normal"
+          ],
+          "escalation": "Minor severity 0",
+          "reset_behavior": "Clears when transducer reading/condition normalizes.",
+          "related_codes": [
+            "code_111_suction",
+            "code_111_control"
+          ],
+          "source": "Rheem RH2T/RHMV Installation Instructions air-handler diagnostic table. LED10 10 flashes.",
+          "severity": "service_soon",
+          "surface": "equipment_board"
+        },
+        {
+          "code_id": "code_a110",
+          "code_identifier": "A110",
+          "code_type": "thermostat_display",
+          "meaning": "Evaporator thermistor failure",
+          "root_causes": [
+            "Evaporator thermistor connection/failure",
+            "Occurs only on air handlers not equipped with low-pressure transducer"
+          ],
+          "diagnostic_path": [
+            "Check evaporator thermistor to ensure proper connection to control is present"
+          ],
+          "escalation": "Severity not fully exposed in accessible table snippet",
+          "reset_behavior": "Clears when thermistor issue is corrected.",
+          "related_codes": [
+            "code_111_suction"
+          ],
+          "source": "Rheem RH2T/RHMV Installation Instructions air-handler diagnostic table. LED10 7 flashes.",
+          "severity": "service_soon",
+          "surface": "equipment_board"
+        },
+        {
+          "code_id": "code_111",
+          "code_identifier": "111",
+          "code_type": "thermostat_display",
+          "meaning": "No Valid Suction Temp / Control fault (dual meaning depending on LED10 flash count)",
+          "root_causes": [
+            "LED10 8 flashes = no valid suction temp: sensor not plugged in or out-of-tolerance resistance",
+            "LED10 11 flashes = control fault: board failure / control not functioning"
+          ],
+          "diagnostic_path": [
+            "For no-valid-suction-temp (LED10 8 flashes): verify sensor is plugged in and resistance is in tolerance",
+            "For control fault (LED10 11 flashes): control is not functioning — replace control"
+          ],
+          "escalation": "No Valid Suction Temp is critical severity 1; Control fault is board-level failure",
+          "reset_behavior": "Clears when sensor/control issue is corrected.",
+          "related_codes": [
+            "code_a109",
+            "code_a110"
+          ],
+          "source": "Rheem RH2T/RHMV Installation Instructions air-handler diagnostic table. LED10 8 flashes (suction temp) or 11 flashes (control fault).",
+          "severity": "urgent",
+          "surface": "equipment_board"
+        },
+        {
+          "code_id": "thermostat_service_icon",
+          "code_identifier": "Service icon blinking",
+          "code_type": "thermostat_display",
+          "meaning": "Maintenance reminder active or equipment alarm present",
+          "root_causes": [
+            "Active service reminder",
+            "Active equipment alarm"
+          ],
+          "diagnostic_path": [
+            "Press Service icon on Control Center",
+            "Select Reminders or Current Alarm to view notification"
+          ],
+          "escalation": "Beeper sounds while service/alarm is active",
+          "reset_behavior": "Service-alert items can be reset from Service screen; equipment alarms clear when underlying equipment fault is corrected.",
+          "related_codes": [
+            "thermostat_current_alarm",
+            "thermostat_anti_short_cycle"
+          ],
+          "source": "Ruud Control Center Support page, Service Icon and Service sections",
+          "severity": "informational",
+          "surface": "wall_control"
+        },
+        {
+          "code_id": "thermostat_anti_short_cycle",
+          "code_identifier": "4-minute anti-short-cycle delay",
+          "code_type": "status_display",
+          "meaning": "Cooling or heat-pump heating will not occur for four minutes after power is applied OR after outdoor unit compressor shuts off",
+          "root_causes": [
+            "Normal protective timer"
+          ],
+          "diagnostic_path": [
+            "Confirm delay timer before misdiagnosing no-start complaint",
+            "A 'no start' complaint within this window is normal, not a fault"
+          ],
+          "escalation": "None; protective delay",
+          "reset_behavior": "Automatic when timer expires (4 minutes).",
+          "related_codes": [
+            "thermostat_current_alarm",
+            "thermostat_service_icon"
+          ],
+          "source": "Ruud Control Center Support page, System Operations section",
+          "severity": "informational",
+          "surface": "wall_control"
+        },
+        {
+          "code_id": "thermostat_current_alarm",
+          "code_identifier": "Current Alarm / Alarm History",
+          "code_type": "menu_display",
+          "meaning": "Thermostat UI can display current alarms, alarm history, service alerts, and contact info",
+          "root_causes": [
+            "User/tech navigates Service screen after alarm or reminder"
+          ],
+          "diagnostic_path": [
+            "Press Service icon",
+            "Review current alarms and alarm history"
+          ],
+          "escalation": "None; UI service function",
+          "reset_behavior": "History remains until cleared by system/service actions; service-alert reset available in Service screen.",
+          "related_codes": [
+            "thermostat_service_icon"
+          ],
+          "source": "Ruud Control Center Support page, Service section",
+          "severity": "informational",
+          "surface": "wall_control"
+        }
+      ]
+    },
+    {
+      "platform_id": "rheem_ruud_prestige_inverter",
+      "platform_name": "Rheem/Ruud Prestige Inverter Outdoor (UODC)",
+      "platform_description": "Rheem Prestige and Ruud Ultra inverter-driven outdoor unit platform with Universal Outdoor Control (UODC). Covers RP18AZ-class heat pumps and RA18AZ-class ACs. THREE-TIER code hierarchy: (1) Hard numeric lockouts 21L and 29L — manual reset required (power off 1 min both units), with 21L heating-mode auto-reset exception ONLY when outdoor ambient rises to -10°F; (2) A-codes — persistent/latched alarms requiring reset; (3) T-codes — transient protection events with strike-count escalation (3-strikes, 6-strikes variants). ACTIVE SYSTEM PROTECTION: inverter continuously monitors compressor power/torque/current/voltage/discharge-pressure/discharge-temperature and REDUCES SPEED before triggering hard shutdown. Rheem publishes actual SENSOR-VALIDATION MATH FORMULAS for suction and liquid transducers — contractor-level field diagnostic tool.",
+      "applies_to_models": [
+        "RP18AZ",
+        "RA18AZ",
+        "UP18AZ",
+        "UA18AZ"
+      ],
+      "applies_to_years": "2021-2026 (Prestige Series inverter with UODC)",
+      "model_number_prefixes": [
+        "RP18AZ",
+        "RA18AZ",
+        "UP18AZ",
+        "UA18AZ"
+      ],
+      "visual_identification": "Prestige/Ultra inverter outdoor unit with UODC (Universal Outdoor Control) PCB. Unit displays hard numeric lockouts 21L (low-pressure) and 29L (high-pressure) at Control Center. A-code and T-code namespace surfaces at Control Center with _O suffix indicating outdoor unit source.",
+      "display_type": "alphanumeric",
+      "platform_notes": "Primary public source: Rheem RP18AZ Installation Instructions. This is the strongest public Rheem residential inverter documentation — it exposes the full A/T code table, response actions (lockout while active / 3-strikes to permanent lockout / 3-strikes to 4-hour lockout / 3-strikes to 30-minute lockout / 6-strikes to permanent lockout), active protection exit procedure, AND sensor-validation formulas. 21L auto-reset exception is documented: only in heating mode AND only when ambient rises back to -10°F after low-ambient lockout.",
+      "codes": [
+        {
+          "code_id": "code_29l",
+          "code_identifier": "29L",
+          "code_type": "alphanumeric",
+          "meaning": "High Refrigerant Pressure Lockout",
+          "root_causes": [
+            "High-pressure control opened three times in same call",
+            "Excessive refrigerant charge",
+            "Failed indoor blower motor",
+            "Dirty return filter",
+            "Dirty indoor coil in heating",
+            "Failed outdoor motor",
+            "Dirty outdoor coil in cooling"
+          ],
+          "diagnostic_path": [
+            "Evaluate cause of high-pressure condition",
+            "Inspect charge, indoor airflow, outdoor fan, and coil cleanliness per operating mode"
+          ],
+          "escalation": "After HPC opens 3 times during same call, UODC locks compressor out and Control Center displays high-pressure lockout",
+          "reset_behavior": "Manual reset only — disconnect electrical power to both indoor and outdoor units for 1 minute, then restore power.",
+          "related_codes": [
+            "code_a958_o",
+            "code_t923_o",
+            "code_a928_o"
+          ],
+          "source": "Rheem RP18AZ Installation Instructions high-pressure section and fault table",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_21l",
+          "code_identifier": "21L",
+          "code_type": "alphanumeric",
+          "meaning": "Low Refrigerant Pressure Lockout",
+          "root_causes": [
+            "Low refrigerant charge",
+            "Failed indoor blower motor",
+            "Dirty return filter",
+            "Failed EXV",
+            "Refrigerant-circuit restriction",
+            "Inadequate indoor airflow"
+          ],
+          "diagnostic_path": [
+            "Evaluate low-pressure condition",
+            "Inspect airflow, charge, EXV, and refrigerant restrictions"
+          ],
+          "escalation": "3 low-pressure faults in same cooling call OR during 120 minutes of continuous heating locks compressor out; Control Center displays low-pressure lockout",
+          "reset_behavior": "If heating-mode lockout occurs below -10°F outdoor ambient, auto-reset when ambient rises to -10°F; otherwise manual reset by removing power to both indoor and outdoor units for 1 minute.",
+          "related_codes": [
+            "code_a957_o",
+            "code_t957_o",
+            "code_a928_o"
+          ],
+          "source": "Rheem RP18AZ Installation Instructions low-suction-pressure section",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_a001_o",
+          "code_identifier": "A001_O",
+          "code_type": "alphanumeric",
+          "meaning": "Model Data Configuration Error",
+          "root_causes": [
+            "Model/configuration data unavailable or incorrect"
+          ],
+          "diagnostic_path": [
+            "Not explicitly detailed in accessible snippet beyond fault title",
+            "Inspect configuration/model-data integrity"
+          ],
+          "escalation": "Lockout while active, short cycle to restart",
+          "reset_behavior": "Clears after active fault removed; short-cycle restart behavior applies.",
+          "related_codes": [
+            "code_a100_o",
+            "code_a928_o",
+            "code_a970_o"
+          ],
+          "source": "Rheem RP18AZ Installation Instructions Table 15",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_a100_o",
+          "code_identifier": "A100_O",
+          "code_type": "alphanumeric",
+          "meaning": "Communications Lost with Indoor Unit",
+          "root_causes": [
+            "Control/communication malfunction between indoor and outdoor units"
+          ],
+          "diagnostic_path": [
+            "Verify communicating bus and indoor-outdoor comm path",
+            "Check daisy-chain topology and shield grounding",
+            "Accessible snippet does not print full tree"
+          ],
+          "escalation": "Lockout while active, short cycle to restart",
+          "reset_behavior": "Clears when communication is restored.",
+          "related_codes": [
+            "code_a915_o",
+            "code_a928_o"
+          ],
+          "source": "Rheem RP18AZ Installation Instructions Table 15",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_a906_o",
+          "code_identifier": "A906_O",
+          "code_type": "alphanumeric",
+          "meaning": "Inverter Fault - AC Input Overvoltage",
+          "root_causes": [
+            "Supply/internal voltage outside acceptable range"
+          ],
+          "diagnostic_path": [
+            "Verify line voltage and inverter input conditions"
+          ],
+          "escalation": "Lockout while active, short cycle to restart",
+          "reset_behavior": "Clears when voltage returns to acceptable range.",
+          "related_codes": [
+            "code_a907_o",
+            "code_t904_o"
+          ],
+          "source": "Rheem RP18AZ Installation Instructions Table 15 and over/under-voltage description",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_a907_o",
+          "code_identifier": "A907_O",
+          "code_type": "alphanumeric",
+          "meaning": "Inverter Fault - AC Input Undervoltage",
+          "root_causes": [
+            "Supply/internal voltage below acceptable range"
+          ],
+          "diagnostic_path": [
+            "Verify line voltage and inverter input conditions"
+          ],
+          "escalation": "Lockout while active, short cycle to restart",
+          "reset_behavior": "Clears when voltage returns to acceptable range.",
+          "related_codes": [
+            "code_a906_o",
+            "code_t905_o"
+          ],
+          "source": "Rheem RP18AZ Installation Instructions Table 15 and over/under-voltage section",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_a910_o",
+          "code_identifier": "A910_O",
+          "code_type": "alphanumeric",
+          "meaning": "Inverter Fault - Lost Rotor Position",
+          "root_causes": [
+            "Compressor/inverter rotor-position failure"
+          ],
+          "diagnostic_path": [
+            "Not explicitly detailed in accessible snippet beyond fault title"
+          ],
+          "escalation": "3-strikes to permanent lockout",
+          "reset_behavior": "Lockout handling per platform; active protection lockout can be exited by powering both units off for 1 minute after cause is corrected.",
+          "related_codes": [
+            "code_a960_o",
+            "code_a970_o",
+            "code_a928_o"
+          ],
+          "source": "Rheem RP18AZ Installation Instructions Table 15 and Active Protection exit procedure",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_a915_o",
+          "code_identifier": "A915_O",
+          "code_type": "alphanumeric",
+          "meaning": "Inverter Fault - Comm Fault",
+          "root_causes": [
+            "Inverter communication fault"
+          ],
+          "diagnostic_path": [
+            "Inspect inverter/control communication path"
+          ],
+          "escalation": "Lockout while active, short cycle to restart",
+          "reset_behavior": "Clears when communication fault removed.",
+          "related_codes": [
+            "code_a100_o",
+            "code_a929_o"
+          ],
+          "source": "Rheem RP18AZ Installation Instructions Table 15",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_a924_o",
+          "code_identifier": "A924_O",
+          "code_type": "alphanumeric",
+          "meaning": "Inverter Fault - Board Temp",
+          "root_causes": [
+            "Excessive inverter-board temperature"
+          ],
+          "diagnostic_path": [
+            "Verify thermal loading and ambient/airflow conditions around inverter"
+          ],
+          "escalation": "3-strikes to permanent lockout",
+          "reset_behavior": "Lockout exit per Active Protection after root cause correction.",
+          "related_codes": [
+            "code_t908_o",
+            "code_t909_o"
+          ],
+          "source": "Rheem RP18AZ Installation Instructions Table 15 and inverter over-temperature section",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_a928_o",
+          "code_identifier": "A928_O",
+          "code_type": "alphanumeric",
+          "meaning": "Locked Out - See History Faults",
+          "root_causes": [
+            "Permanent lockout wrapper for prior history faults"
+          ],
+          "diagnostic_path": [
+            "Read history faults at UODC / Control Center and correct root cause"
+          ],
+          "escalation": "Permanent lockout",
+          "reset_behavior": "Exit active-protection lockout by removing power to both indoor and outdoor units for 1 minute after correcting fault cause.",
+          "related_codes": [
+            "code_21l",
+            "code_29l"
+          ],
+          "source": "Rheem RP18AZ Installation Instructions Table 15 and Active Protection exit procedure",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_a957_o",
+          "code_identifier": "A957_O",
+          "code_type": "alphanumeric",
+          "meaning": "Low Refrigerant Pressure (latched alarm)",
+          "root_causes": [
+            "Low-charge / airflow / EXV / restriction family"
+          ],
+          "diagnostic_path": [
+            "Evaluate low-pressure cause",
+            "Same low-suction-pressure section applies as 21L"
+          ],
+          "escalation": "4-hour lockout",
+          "reset_behavior": "Automatic after lockout interval if fault clears; hard numeric 21L logic may still apply in repeated cases.",
+          "related_codes": [
+            "code_t957_o",
+            "code_21l"
+          ],
+          "source": "Rheem RP18AZ Installation Instructions Table 15 and low-suction-pressure section",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_a958_o",
+          "code_identifier": "A958_O",
+          "code_type": "alphanumeric",
+          "meaning": "High Refrigerant Pressure (latched alarm)",
+          "root_causes": [
+            "High-pressure condition family"
+          ],
+          "diagnostic_path": [
+            "Evaluate charge, airflow, fan, and coil conditions"
+          ],
+          "escalation": "4-hour lockout",
+          "reset_behavior": "Automatic if fault clears; repeated hard high-pressure lockout is 29L.",
+          "related_codes": [
+            "code_t923_o",
+            "code_29l"
+          ],
+          "source": "Rheem RP18AZ Installation Instructions Table 15 and high-pressure section",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_a960_o",
+          "code_identifier": "A960_O",
+          "code_type": "alphanumeric",
+          "meaning": "Compressor Locked Rotor - Lockout",
+          "root_causes": [
+            "Locked rotor / compressor start failure"
+          ],
+          "diagnostic_path": [
+            "Not explicitly detailed in accessible snippet beyond title"
+          ],
+          "escalation": "Permanent lockout",
+          "reset_behavior": "Active Protection lockout exit requires 1-minute power removal to indoor and outdoor units after correction.",
+          "related_codes": [
+            "code_t960_o",
+            "code_a910_o"
+          ],
+          "source": "Rheem RP18AZ Installation Instructions Table 15",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_a970_o",
+          "code_identifier": "A970_O",
+          "code_type": "alphanumeric",
+          "meaning": "Inverter/Compressor Mismatch",
+          "root_causes": [
+            "Incorrect/mismatched inverter-compressor pairing or model data"
+          ],
+          "diagnostic_path": [
+            "Verify correct matched model data and hardware"
+          ],
+          "escalation": "Permanent lockout",
+          "reset_behavior": "Requires fault correction and lockout exit procedure.",
+          "related_codes": [
+            "code_a001_o",
+            "code_a928_o"
+          ],
+          "source": "Rheem RP18AZ Installation Instructions Table 15",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_t901_o",
+          "code_identifier": "T901_O",
+          "code_type": "alphanumeric",
+          "meaning": "Inverter Fault - Compressor Overcurrent",
+          "root_causes": [
+            "Compressor current exceeds acceptable level"
+          ],
+          "diagnostic_path": [
+            "Verify compressor/inverter current and operating load"
+          ],
+          "escalation": "3-strikes to permanent lockout",
+          "reset_behavior": "Lockout exit per platform after root cause correction.",
+          "related_codes": [
+            "code_t974_o"
+          ],
+          "source": "Rheem RP18AZ Installation Instructions Table 15 and overcurrent section",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_t902_o",
+          "code_identifier": "T902_O",
+          "code_type": "alphanumeric",
+          "meaning": "Inverter - Envelope Protection",
+          "root_causes": [
+            "Compressor operating outside acceptable torque/envelope protection range"
+          ],
+          "diagnostic_path": [
+            "Evaluate load/envelope conditions",
+            "Inverter reduces speed to keep torque acceptable"
+          ],
+          "escalation": "Follow requirement M1HPC-SR-79",
+          "reset_behavior": "Per protection requirement and fault recurrence.",
+          "related_codes": [
+            "code_t971_o",
+            "code_t972_o"
+          ],
+          "source": "Rheem RP18AZ Installation Instructions Table 15 and compressor-operation-outside-envelope section",
+          "severity": "service_soon",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_t904_o",
+          "code_identifier": "T904_O",
+          "code_type": "alphanumeric",
+          "meaning": "Inverter Fault - DC Bus Overvoltage",
+          "root_causes": [
+            "Internal DC voltage too high"
+          ],
+          "diagnostic_path": [
+            "Verify supply/internal voltage condition"
+          ],
+          "escalation": "3-strikes to 30-minute lockout",
+          "reset_behavior": "Auto after 30 minutes if fault clears.",
+          "related_codes": [
+            "code_a906_o",
+            "code_a907_o"
+          ],
+          "source": "Rheem RP18AZ Installation Instructions Table 15",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_t916_o",
+          "code_identifier": "T916_O",
+          "code_type": "alphanumeric",
+          "meaning": "Inverter Fault - Discharge Line Temp",
+          "root_causes": [
+            "Excessive discharge-line temperature"
+          ],
+          "diagnostic_path": [
+            "Inspect operating conditions driving high discharge temp",
+            "Inverter monitors discharge-line thermistor and reduces RPM at 235°F until temp drops to 200°F"
+          ],
+          "escalation": "3-strikes to permanent lockout",
+          "reset_behavior": "Lockout exit after root cause correction.",
+          "related_codes": [
+            "code_t972_o"
+          ],
+          "source": "Rheem RP18AZ Installation Instructions Table 15 and high-discharge-temperature section",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_t923_o",
+          "code_identifier": "T923_O",
+          "code_type": "alphanumeric",
+          "meaning": "Inverter Fault - High Refrigerant Pressure (transient)",
+          "root_causes": [
+            "High-pressure condition family"
+          ],
+          "diagnostic_path": [
+            "Inspect charge, fan, and coil conditions"
+          ],
+          "escalation": "3-strikes to 4-hour lockout",
+          "reset_behavior": "Auto after 4 hours if cleared.",
+          "related_codes": [
+            "code_a958_o",
+            "code_29l"
+          ],
+          "source": "Rheem RP18AZ Installation Instructions Table 15",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_t957_o",
+          "code_identifier": "T957_O",
+          "code_type": "alphanumeric",
+          "meaning": "Low Refrigerant Pressure (transient)",
+          "root_causes": [
+            "Low-charge / airflow / EXV / restriction family"
+          ],
+          "diagnostic_path": [
+            "Same low-suction-pressure evaluation path as 21L/A957_O"
+          ],
+          "escalation": "3-strikes to 4-hour lockout",
+          "reset_behavior": "Auto after 4 hours if cleared.",
+          "related_codes": [
+            "code_a957_o",
+            "code_21l"
+          ],
+          "source": "Rheem RP18AZ Installation Instructions Table 15",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_t960_o",
+          "code_identifier": "T960_O",
+          "code_type": "alphanumeric",
+          "meaning": "Compressor Locked Rotor (transient)",
+          "root_causes": [
+            "Locked rotor / start failure"
+          ],
+          "diagnostic_path": [
+            "Inspect compressor/inverter condition"
+          ],
+          "escalation": "6-strikes to permanent lockout",
+          "reset_behavior": "Lockout exit after cause correction and reset procedure.",
+          "related_codes": [
+            "code_a960_o",
+            "code_a910_o"
+          ],
+          "source": "Rheem RP18AZ Installation Instructions Table 15",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_t971_o",
+          "code_identifier": "T971_O",
+          "code_type": "alphanumeric",
+          "meaning": "Compressor Lube Protection",
+          "root_causes": [
+            "Compressor lubrication-protection event"
+          ],
+          "diagnostic_path": [
+            "Not explicitly detailed in accessible snippet beyond title"
+          ],
+          "escalation": "Follow requirement M1HPC-SR-80",
+          "reset_behavior": "Per protection requirement and recurrence behavior.",
+          "related_codes": [
+            "code_t902_o"
+          ],
+          "source": "Rheem RP18AZ Installation Instructions Table 15",
+          "severity": "service_soon",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "code_t972_o",
+          "code_identifier": "T972_O",
+          "code_type": "alphanumeric",
+          "meaning": "Compressor Discharge Temp High",
+          "root_causes": [
+            "High compressor discharge temperature"
+          ],
+          "diagnostic_path": [
+            "Same discharge-temperature protection family — inverter reduces RPM at 235°F and repeats if needed"
+          ],
+          "escalation": "Follow requirement M1HPC-SR-81",
+          "reset_behavior": "Per protection requirement and fault recurrence.",
+          "related_codes": [
+            "code_t916_o"
+          ],
+          "source": "Rheem RP18AZ Installation Instructions Table 15 and discharge-temperature protection section",
+          "severity": "urgent",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "formula_suction_transducer",
+          "code_identifier": "Suction line transducer validation formula",
+          "code_type": "menu_display",
+          "meaning": "Field validation formula for suction-pressure transducer: PSIG = 375 × (VDC out / VDC in) - 8.1",
+          "root_causes": [
+            "Used when validating suspected suction transducer error"
+          ],
+          "diagnostic_path": [
+            "Measure VDC in at red/black wires at back of transducer harness",
+            "Measure VDC out at green/black wires at back of transducer harness",
+            "Calculate: PSIG = 375 × (VDC out / VDC in) - 8.1",
+            "Compare calculated PSIG to actual refrigerant gauge reading"
+          ],
+          "escalation": "None; field diagnostic aid",
+          "reset_behavior": "Not applicable.",
+          "related_codes": [
+            "code_a956_o",
+            "code_a957_o",
+            "code_t957_o"
+          ],
+          "source": "Rheem RP18AZ Installation Instructions sensor-checking section",
+          "severity": "informational",
+          "surface": "outdoor_cda"
+        },
+        {
+          "code_id": "formula_liquid_transducer",
+          "code_identifier": "Liquid line transducer validation formula",
+          "code_type": "menu_display",
+          "meaning": "Field validation formula for liquid-pressure transducer: PSIG = 812.5 × (VDC out / VDC in) - 51.85",
+          "root_causes": [
+            "Used when validating suspected liquid/high-side transducer error"
+          ],
+          "diagnostic_path": [
+            "Measure VDC in at red/black wires at back of transducer harness",
+            "Measure VDC out at green/black wires at back of transducer harness",
+            "Calculate: PSIG = 812.5 × (VDC out / VDC in) - 51.85",
+            "Compare calculated PSIG to actual refrigerant gauge reading"
+          ],
+          "escalation": "None; field diagnostic aid",
+          "reset_behavior": "Not applicable.",
+          "related_codes": [
+            "code_a958_o",
+            "code_t923_o"
+          ],
+          "source": "Rheem RP18AZ Installation Instructions sensor-checking section",
+          "severity": "informational",
+          "surface": "outdoor_cda"
+        }
+      ]
+    }
+  ],
+  "cross_generation_conflicts": [
+    {
+      "conflict_id": "rheem_legacy_1blink_vs_modern_10",
+      "description": "Legacy soft lockout vs modern soft lockout wrapper behave identically but display differently",
+      "conflict_severity": "medium",
+      "involved_platforms": [
+        "rheem_ruud_legacy_led",
+        "rheem_ruud_endeavor_numeric"
+      ],
+      "code_identifier": "Legacy 1 blink vs modern 10",
+      "meanings": [
+        {
+          "platform_id": "rheem_ruud_legacy_led",
+          "meaning": "Legacy '1 blink' = soft lockout after 4 ignition trials or 4 flame failures in one call. Standalone display — this is the complete code."
+        },
+        {
+          "platform_id": "rheem_ruud_endeavor_numeric",
+          "meaning": "Modern 'code 10' = soft lockout WRAPPER that alternates on the display with the underlying cause code (11 failed ignition, 13 flame lost, 14 undesired flame, 61 dead blower, etc.). NEVER read '10' as the root cause."
+        }
+      ],
+      "ui_banner_text": "Same conceptual fault, different displays: legacy 1-blink is a standalone soft lockout; modern '10' is a LOCKOUT WRAPPER that alternates with the underlying fault code. On a legacy dual-LED board, 1 blink IS the answer. On a modern 7-segment Endeavor board, if you see '10', wait for the display to cycle and read the second number that alternates with it — THAT's the actual fault (11, 13, 14, 61, etc.)."
+    },
+    {
+      "conflict_id": "rheem_pressure_family_divergence",
+      "description": "Pressure-related faults diverge massively across Rheem platforms — same concept appears as completely different codes",
+      "conflict_severity": "high",
+      "involved_platforms": [
+        "rheem_ruud_legacy_led",
+        "rheem_ruud_endeavor_numeric",
+        "rheem_ruud_premium_bluetooth",
+        "rheem_ruud_prestige_inverter"
+      ],
+      "code_identifier": "Pressure faults across platforms",
+      "meanings": [
+        {
+          "platform_id": "rheem_ruud_legacy_led",
+          "meaning": "Legacy: 2 blinks = pressure switch circuit open; 4 blinks = pressure switch stuck closed. Broad pressure-proving diagnostics."
+        },
+        {
+          "platform_id": "rheem_ruud_endeavor_numeric",
+          "meaning": "Endeavor: 55 stuck closed, 57 stuck open (5-min soft lockout), 58 low-pressure proving family, 59 water sensed. Granular pressure/water split."
+        },
+        {
+          "platform_id": "rheem_ruud_premium_bluetooth",
+          "meaning": "Premium Bluetooth: A044_F low-pressure won't open (latched), T045_F low-pressure won't close (transient), T047_F/A047_F inducer 5-min lockout (transient/latched split), T055_F/A055_F/T057_F high-pressure family (two-stage only). T/A behavioral split."
+        },
+        {
+          "platform_id": "rheem_ruud_prestige_inverter",
+          "meaning": "Prestige inverter: 21L low-refrigerant lockout (refrigerant, NOT combustion pressure), 29L high-refrigerant lockout, A957_O/T957_O low-refrigerant 4-hour lockout, A958_O/T923_O high-refrigerant 4-hour lockout. Completely different pressure concept (refrigerant vs combustion)."
+        }
+      ],
+      "ui_banner_text": "'Pressure fault' means something completely different across Rheem platforms. Legacy/Endeavor/Premium = COMBUSTION pressure (inducer/vent proving). Prestige inverter = REFRIGERANT pressure (charge, airflow, EXV). A tech who sees '21L' on a Prestige inverter and thinks 'pressure switch' will chase the wrong fault entirely — that's a refrigerant low-charge lockout, not a furnace combustion issue."
+    },
+    {
+      "conflict_id": "rheem_three_7segment_namespaces",
+      "description": "Three distinct 7-segment furnace namespaces exist within Platform 2 — model prefix alone does NOT disambiguate",
+      "conflict_severity": "high",
+      "involved_platforms": [
+        "rheem_ruud_endeavor_numeric",
+        "rheem_ruud_premium_bluetooth",
+        "rheem_ruud_older_modulating"
+      ],
+      "code_identifier": "Rheem modern 7-segment namespace identification",
+      "meanings": [
+        {
+          "platform_id": "rheem_ruud_endeavor_numeric",
+          "meaning": "Endeavor (W801T/R801T UT 1194-250 boards): status O/C/H/F + numeric codes 10 wrapper, 11, 13, 14, 22, 33, 55, 57, 61, 93. 2015-2022 generation."
+        },
+        {
+          "platform_id": "rheem_ruud_premium_bluetooth",
+          "meaning": "Premium Bluetooth (RDFXYC): Axxx_F (latched) / Txxx_F (transient) namespace — A011_F, T013_F, A014_F, A031_F, etc. Deep troubleshooting in Rheem Contractor App via QR code. 2020-2026 generation."
+        },
+        {
+          "platform_id": "rheem_ruud_older_modulating",
+          "meaning": "Older Modulating (RGFD): numeric function codes 11, 12, 13, 14, 22/23/33 limit family (shared path), 44/45/46/57 pressure-inducer family (shared path), 67 blower, 82 default-parameters. 2010-2018 generation."
+        }
+      ],
+      "ui_banner_text": "Rheem has THREE completely different 7-segment furnace code dictionaries — and the model prefix alone will NOT tell you which one you're looking at. Identify by BOARD PART NUMBER or MANUAL REVISION DATE, not model number. Endeavor uses code 10 as a wrapper alternating with the underlying fault. Premium Bluetooth uses A/T prefix codes and pushes troubleshooting into the Rheem Contractor App. Older Modulating uses standalone numeric codes with shared diagnostic paths across groups (22/23/33, 44/45/46/57)."
+    },
+    {
+      "conflict_id": "rheem_econet_multisurface",
+      "description": "EcoNet event surfaces on THREE layers simultaneously — same fault has three different identifiers",
+      "conflict_severity": "medium",
+      "involved_platforms": [
+        "rheem_ruud_econet_communicating",
+        "rheem_ruud_prestige_inverter"
+      ],
+      "code_identifier": "EcoNet event multi-surface",
+      "meanings": [
+        {
+          "platform_id": "rheem_ruud_econet_communicating",
+          "meaning": "Same communicating fault appears as: (1) board-level LED10 flash pattern count (2 flashes = A103/A106, 3 = A102, 4 = A104/A105/A101, etc.), (2) Control Center 'Service icon' blinking with 'Current Alarm' entry, (3) alarm-history log entry with timestamp. All three surfaces for one underlying event."
+        },
+        {
+          "platform_id": "rheem_ruud_prestige_inverter",
+          "meaning": "Outdoor inverter event: (1) UODC board code (Axxx_O or Txxx_O), (2) Control Center alert display (same code prefix), (3) 21L or 29L hard-lockout wrapper if escalated. Strike-count tracking determines whether T-code transient promotes to A-code latched."
+        }
+      ],
+      "ui_banner_text": "One EcoNet fault, three surfaces. The LED10 flash count on the equipment board tells you the raw code. The Control Center 'Service' icon tells you an alarm is active. The Alarm History log gives you timestamped sequence. Cross-reference all three — especially for intermittent issues where the Current Alarm has already cleared but the history shows the pattern."
+    }
+  ],
+  "electric_heat_notes": {
+    "conventional_electric_furnace_codes": "Rheem/Ruud has a residential electric furnace lineup (RHGH, RHKH families) but public fault code documentation for these units is essentially non-existent — like most OEMs, electric furnaces use sequencer logic without formal fault code dictionaries. Service is component-level (open element, failed sequencer, limit trip, transformer failure). On EcoNet communicating platforms, electric-heat faults surface through the communicating air handler (RH2T/RHMV) code family (A101-A110, 111) — the air handler is the primary diagnostic surface for electric heat in EcoNet systems.",
+    "common_non_code_electric_service_calls": [
+      "Open element on multi-stage EH packages (RHGH, RHKH families)",
+      "Failed sequencer on non-communicating air handlers",
+      "Airflow-related limit trip — surfaces as A105 (ECM fault-run) or A104 (motor no-run) on EcoNet air handlers",
+      "24V transformer or fuse failure (EcoNet would show comm loss)",
+      "Low-voltage wiring short causing repeated fuse failure",
+      "Condensate pump failure backing up into EH section (rare but documented)"
+    ],
+    "manufactured_home_specifics": "Rheem/Ruud does not have a significant manufactured-home-specific electric furnace product line. MH electric heat is typically handled through the residential air handler product lineup with downflow configurations rather than a dedicated MH line."
+  },
+  "metadata": {
+    "total_records": 107,
+    "total_platforms": 6,
+    "total_cross_generation_conflicts": 4,
+    "normalized_date": "2026-04-20",
+    "schema_version": "1.1.0",
+    "research_passes": 3,
+    "source_note": "Compiled from public Rheem/Ruud documentation across three research passes: Rheem 90RS/90RT/90TS Installation Instructions 92-24161-66 Rev. 3 (legacy dual-LED flash legend); Rheem Gas Furnace FAQ (legacy soft-lockout causes and reset behavior); Rheem Select / W801T Installation Instructions with UT Electronic Controls 1194-250 board family (Endeavor numeric namespace with 5-min/1-hour/hard lockout rules); Rheem RDFXYC Installation Instructions 92-110869-01-01 (premium Bluetooth Axxx_F/Txxx_F namespace with QR-code contractor app integration); Rheem RGFD Installation Instructions (older modulating numeric-function-code namespace with shared diagnostic paths); Rheem RH2T/RHMV Installation Instructions 92-20521-102 Rev. 02 (EcoNet communicating air handler diagnostic table with LED10 flash-to-code mapping); Ruud Control Center Support page (thermostat-surface behavior, EcoNet bus topology rules, 4-minute anti-short-cycle, 45-second autodiscovery); Rheem RP18AZ Installation Instructions (Prestige inverter outdoor UODC with hard numeric lockouts 21L/29L, A-code latched alarms, T-code transient protection events with strike-count escalation, Active System Protection, and sensor-validation math formulas for suction/liquid transducers). Pass 1 produced methodology summary with corrected platform split (three 7-segment namespaces, not two). Pass 2 produced structured 12-field records with honest 'not explicitly detailed in accessible public snippet' flags where OEM per-code trees are deferred to the Rheem Contractor App. Pass 3 extreme deep-dive added 7 field quirks (fault-buffer behavior, 45-second autodiscovery, single-point shield grounding, no-phone-cord rule, RJ-14 diagnostic port, CFM LED flash interpretation, R-454B LDS always-powered rule), code 82 transient default-parameters indicator on older modulating, R-454B coil compatibility notes. Honest gaps: no complete public EcoNet thermostat-only alarm dictionary exists, no complete public R-454B residential fault codebook yet (packaged-unit A2L mitigation details exist but are scoped to packaged equipment), no newest-generation RP20AZ/RA20AZ detailed troubleshooting at RP18AZ depth, WeatherKing alias verification is platform-likely but not per-code verified code-by-code in public OEM sources."
+  }
+}
