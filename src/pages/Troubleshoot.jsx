@@ -75,11 +75,11 @@ export default function Troubleshoot() {
               <p className={styles.cardDesc}>Route from a customer complaint to the right diagnostic flow in two taps.</p>
               <span className={styles.cardCta}>Open tool &rarr;</span>
             </Link>
-            <div className={styles.cardDisabled}>
+            <Link to="/troubleshoot/codes" className={styles.card}>
               <p className={styles.cardTitle}>Fault Code Lookup</p>
-              <p className={styles.cardDesc}>Decode manufacturer flash codes and LED patterns across major brands.</p>
-              <span className={styles.cardCtaDisabled}>Coming soon</span>
-            </div>
+              <p className={styles.cardDesc}>Decode flash codes and LED patterns — 735 codes across 7 brand families.</p>
+              <span className={styles.cardCta}>Open tool &rarr;</span>
+            </Link>
           </div>
 
           <h2 className={styles.sectionH2}>Diagnostic Guides</h2>
