@@ -640,7 +640,9 @@
           "severity": "urgent",
           "field_consensus_notes": "CROSS-GENERATION CONFLICT: 58SC0B successor splits into 45.1/45.2/45.3 granular subcodes."
         }
-      ]
+      ],
+      "subcode_required": false,
+      "deeper_detail_in": "public_manual"
     },
     {
       "platform_id": "carrier_58sc0b_3digit",
@@ -918,7 +920,9 @@
           "severity": "urgent",
           "field_consensus_notes": "CROSS-GENERATION CONFLICT: Legacy 58MVP Code 45 is broad control lockout. 58SC0B splits into 45.1/45.2/45.3 (this is 45.1). Additional subcodes 45.2 (gas valve relay won't close) and 45.3 (EEPROM) may exist but weren't cleanly verifiable from public sources in this pass."
         }
-      ]
+      ],
+      "subcode_required": false,
+      "deeper_detail_in": "public_manual"
     },
     {
       "platform_id": "carrier_38tdb_outdoor",
@@ -1153,7 +1157,9 @@
           "source": "38TDB Table 5",
           "severity": "urgent"
         }
-      ]
+      ],
+      "subcode_required": false,
+      "deeper_detail_in": "public_manual"
     },
     {
       "platform_id": "icp_single_stage_igc",
@@ -1509,7 +1515,9 @@
           "severity": "urgent",
           "field_consensus_notes": "CROSS-GENERATION CONFLICT: ICP SmartValve legacy single-stage 6+1 has 5-minute soft lockout (not 3-hour)."
         }
-      ]
+      ],
+      "subcode_required": false,
+      "deeper_detail_in": "public_manual"
     },
     {
       "platform_id": "icp_smartvalve_single_stage",
@@ -1817,7 +1825,9 @@
           "severity": "safety_critical",
           "field_consensus_notes": "CROSS-GENERATION CONFLICT: Recent IGC Code 7 triggers at 3 minutes with 3-hour auto-reset (different threshold, longer reset)."
         }
-      ]
+      ],
+      "subcode_required": false,
+      "deeper_detail_in": "public_manual"
     },
     {
       "platform_id": "icp_gen1_ntv6",
@@ -2038,7 +2048,9 @@
           "source": "OEM table",
           "severity": "urgent"
         }
-      ]
+      ],
+      "subcode_required": false,
+      "deeper_detail_in": "public_manual"
     },
     {
       "platform_id": "icp_gen2_smartvalve_staged",
@@ -2375,7 +2387,9 @@
           "source": "OEM FCB code list",
           "severity": "urgent"
         }
-      ]
+      ],
+      "subcode_required": false,
+      "deeper_detail_in": "public_manual"
     },
     {
       "platform_id": "icp_gen3_9mve",
@@ -2804,7 +2818,9 @@
           "source": "ICP (F/G)9MVE A3/A4 Service Manual Figure 15 Service Label component-test box and Component Self-Test section",
           "severity": "urgent"
         }
-      ]
+      ],
+      "subcode_required": false,
+      "deeper_detail_in": "public_manual"
     },
     {
       "platform_id": "infinity_evolution_communicating",
@@ -4002,7 +4018,30 @@
           "surface": "wall_control",
           "field_consensus_notes": "COMMISSIONING-ONLY. Keep separate from runtime fault dictionary. Model-plug issues are a common cause on board replacements during commissioning."
         }
-      ]
+      ],
+      "subcode_required": true,
+      "deeper_detail_in": "wall_control_partial",
+      "subcode_retrieval_procedure": {
+        "surface": "wall_control",
+        "tool_required": null,
+        "navigation_steps": [
+          "From the main screen, touch Menu",
+          "Touch and hold the Service icon for at least 10 seconds until it turns green",
+          "Open Service Information",
+          "Use View Diagnostics for the most recent fault's top three likely root causes",
+          "Use Last 10 System Events for timestamped recent events",
+          "Use Run/Fault History for resettable fault counters, cycle counters, and run times"
+        ],
+        "subcode_count": null,
+        "requires_subcode_to_disambiguate": true
+      },
+      "fault_history_buffer": {
+        "stored_fault_count": 10,
+        "recall_procedure": "Service > Service Information > Last 10 System Events and Run/Fault History",
+        "clear_procedure": "Last 10 System Events reset under Thermostat Setup via Reset Factory Default selection",
+        "timestamped": true,
+        "exportable": false
+      }
     }
   ],
   "cross_generation_conflicts": [

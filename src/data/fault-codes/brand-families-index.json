@@ -1,8 +1,8 @@
 {
-  "schema_version": "1.1.0",
+  "schema_version": "1.2.0",
   "generated_date": "2026-04-20",
   "total_normalized_brand_families": 7,
-  "total_normalized_records": 734,
+  "total_normalized_records": 735,
   "brand_families": [
     {
       "brand_family_id": "nortek_nordyne",
@@ -26,7 +26,7 @@
       "brand_family_id": "bosch_york",
       "brand_family_name": "Bosch/York (Johnson Controls)",
       "status": "normalized",
-      "record_count": 71,
+      "record_count": 72,
       "file_path": "./bosch-york.json",
       "corporate_owner": "Johnson Controls (York) / Bosch Thermotechnology",
       "brands": [
@@ -109,5 +109,6 @@
         "WeatherKing"
       ]
     }
-  ]
+  ],
+  "subcode_schema_migration_date": "2026-04-21"
 }

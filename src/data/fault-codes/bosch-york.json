@@ -1729,8 +1729,48 @@
           ],
           "source": "Bosch R-454B FAQ",
           "severity": "safety_critical"
+        },
+        {
+          "code_id": "bosch_ids_atl",
+          "code_identifier": "ATL",
+          "code_type": "alphanumeric",
+          "meaning": "Ambient Temperature Limited",
+          "root_causes": [
+            "Outdoor ambient outside allowable range for the current operating mode",
+            "Thermostat/reversing-valve programming issue",
+            "Power present on B wire outside during a cooling call"
+          ],
+          "diagnostic_path": [
+            "Confirm ambient reading on board display against actual outdoor ambient after 5 minutes idle",
+            "If code is latched, remove Y wire and cycle disconnect to view outdoor temperature on display",
+            "Replace T4 sensor if displayed ambient is not within 10 degrees F of actual",
+            "Confirm ambient is within Bosch published operating thresholds",
+            "Verify thermostat/reversing-valve logic for the current mode"
+          ],
+          "escalation": "Operating limitation — no normal operation until ambient or control condition is corrected",
+          "reset_behavior": "Clears when ambient/control condition is corrected and system is power-cycled or resumes normal operating conditions.",
+          "related_codes": [],
+          "source": "Bosch Air to Air Heat Pump Systems Troubleshooting page, official Bosch public web documentation",
+          "severity": "service_soon",
+          "surface": "outdoor_cda"
         }
-      ]
+      ],
+      "subcode_required": true,
+      "deeper_detail_in": "contractor_app",
+      "subcode_retrieval_procedure": {
+        "surface": "contractor_app",
+        "tool_required": "Bosch EasyAir App",
+        "navigation_steps": [
+          "Connect the IDS system in EasyAir App",
+          "Use the contractor view to monitor heat pump health",
+          "Review real-time alerts, fault codes, and checkpoint values",
+          "For on-site work, use Bluetooth-enabled access to system data and historical fault codes",
+          "Calculate superheat/subcool within the app for diagnostic verification",
+          "Bluetooth access is retained on-site even without continued remote subscription"
+        ],
+        "subcode_count": null,
+        "requires_subcode_to_disambiguate": true
+      }
     }
   ],
   "communicating_ecosystem": {

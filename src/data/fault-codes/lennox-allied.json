@@ -379,7 +379,9 @@
           "source": "Lennox ML180UH heating sequence, p.40; G61MPV code table p.63",
           "severity": "urgent"
         }
-      ]
+      ],
+      "subcode_required": false,
+      "deeper_detail_in": "public_manual"
     },
     {
       "platform_id": "lennox_7segment_highefficiency",
@@ -1593,7 +1595,9 @@
           "source": "Lennox unit information doc 100027, p.15",
           "severity": "urgent"
         }
-      ]
+      ],
+      "subcode_required": false,
+      "deeper_detail_in": "public_manual"
     },
     {
       "platform_id": "lennox_lowgwp_rds_era",
@@ -1836,7 +1840,9 @@
           "source": "Lennox EL195UHNEK Installation Instructions 508575-01, p.47",
           "severity": "safety_critical"
         }
-      ]
+      ],
+      "subcode_required": true,
+      "deeper_detail_in": "public_manual"
     },
     {
       "platform_id": "lennox_icomfort_communicating",
@@ -2431,7 +2437,29 @@
           "severity": "urgent",
           "surface": "outdoor_cda"
         }
-      ]
+      ],
+      "subcode_required": true,
+      "deeper_detail_in": "wall_control_partial",
+      "subcode_retrieval_procedure": {
+        "surface": "wall_control",
+        "tool_required": "iComfort Mobile Setup application for service workflow",
+        "navigation_steps": [
+          "On thermostat: Menu > Settings > Advanced Settings > Dealer Control Center > Notifications",
+          "Review active alarms on homeowner notification screen or in Dealer Control Center > Notifications",
+          "For service-app access, press the smart hub commissioning button once",
+          "Connect the mobile device to the smart hub when the LED begins blinking green",
+          "Use the app as a service tool after system commissioning is already complete (S30 service session auto-logs out after 30 minutes)"
+        ],
+        "subcode_count": null,
+        "requires_subcode_to_disambiguate": true
+      },
+      "fault_history_buffer": {
+        "stored_fault_count": null,
+        "recall_procedure": "Dealer Control Center > Notifications",
+        "clear_procedure": "Alert codes requiring manual clearing must be cleared under Dealer Control Center > Notifications",
+        "timestamped": false,
+        "exportable": false
+      }
     }
   ],
   "cross_generation_conflicts": [
@@ -2584,8 +2612,9 @@
     "total_platforms": 4,
     "total_cross_generation_conflicts": 7,
     "normalized_date": "2026-04-19",
-    "schema_version": "1.1.0",
+    "schema_version": "1.2.0",
     "research_passes": 3,
-    "source_note": "Compiled from public Lennox documentation: G61MPV Installation Instructions p.63 (SureLight diagnostic table); Lennox ML180UH heating sequence pp.40-41 (watchguard timing); Lennox unit information doc 100027 pp.10-15 (7-segment diagnostic code table); Lennox EL195UHNEK Installation Instructions 508575-01 pp.46-47 (Low-GWP RDS code table); iComfort S30 Installation Manual pp.53-55; Lennox Residential Communicating Systems Alert Code Guide 100017c pp.7-49. Three research passes with final accuracy correction. Allied Air brands likely alias Platforms 1-2 on shared hardware but per-brand dictionaries are thinner in public sources."
+    "source_note": "Compiled from public Lennox documentation: G61MPV Installation Instructions p.63 (SureLight diagnostic table); Lennox ML180UH heating sequence pp.40-41 (watchguard timing); Lennox unit information doc 100027 pp.10-15 (7-segment diagnostic code table); Lennox EL195UHNEK Installation Instructions 508575-01 pp.46-47 (Low-GWP RDS code table); iComfort S30 Installation Manual pp.53-55; Lennox Residential Communicating Systems Alert Code Guide 100017c pp.7-49. Three research passes with final accuracy correction. Allied Air brands likely alias Platforms 1-2 on shared hardware but per-brand dictionaries are thinner in public sources.",
+    "subcode_schema_migration_date": "2026-04-21"
   }
 }

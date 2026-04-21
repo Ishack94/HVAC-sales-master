@@ -374,7 +374,9 @@
           "source": "Rheem Gas Furnace FAQ twinning-fault entry; Rheem 90RS/90RT/90TS Installation Instructions troubleshooting text",
           "severity": "urgent"
         }
-      ]
+      ],
+      "subcode_required": false,
+      "deeper_detail_in": "public_manual"
     },
     {
       "platform_id": "rheem_ruud_endeavor_numeric",
@@ -831,7 +833,9 @@
           "source": "Rheem Select / W801T Installation Instructions, hard-lockout section",
           "severity": "safety_critical"
         }
-      ]
+      ],
+      "subcode_required": false,
+      "deeper_detail_in": "public_manual"
     },
     {
       "platform_id": "rheem_ruud_premium_bluetooth",
@@ -1456,7 +1460,10 @@
           "source": "Rheem RDFXYC Installation Instructions fault table. Grouped into single record because accessible booklet treats these as an internal-fault cluster without exposing per-variant detailed trees.",
           "severity": "safety_critical"
         }
-      ]
+      ],
+      "subcode_required": true,
+      "deeper_detail_in": "contractor_app",
+      "research_note": "Rheem RDFXYC Installation Instructions 92-110869-01-01 explicitly defers detailed fault troubleshooting to the Rheem Contractor App via QR code on the equipment. The booklet lists fault identifiers and escalation rules but intentionally does not print per-code decision trees. Authoritative subcode source is the Rheem Contractor App."
     },
     {
       "platform_id": "rheem_ruud_older_modulating",
@@ -1784,7 +1791,9 @@
           "source": "Rheem older modulating public manual family. Code 82 transient-display behavior confirmed in Pass 3 deep-dive research as distinct from active fault codes.",
           "severity": "informational"
         }
-      ]
+      ],
+      "subcode_required": false,
+      "deeper_detail_in": "public_manual"
     },
     {
       "platform_id": "rheem_ruud_econet_communicating",
@@ -2089,7 +2098,31 @@
           "severity": "informational",
           "surface": "wall_control"
         }
-      ]
+      ],
+      "subcode_required": true,
+      "deeper_detail_in": "wall_control_partial",
+      "subcode_retrieval_procedure": {
+        "surface": "wall_control",
+        "tool_required": null,
+        "navigation_steps": [
+          "On EcoNet Control Center: Press the Service icon when flashing",
+          "Select Current Alarm to view active equipment alarms",
+          "Select Alarm History to review past alarms with timestamps",
+          "Select Reminders for maintenance notifications",
+          "Service-alert items can be reset from the Service screen",
+          "Equipment-level alarms clear automatically when the underlying equipment fault is corrected"
+        ],
+        "subcode_count": null,
+        "requires_subcode_to_disambiguate": true
+      },
+      "fault_history_buffer": {
+        "stored_fault_count": null,
+        "recall_procedure": "Control Center Service icon > Alarm History view",
+        "clear_procedure": "Service-alert items reset from Service screen; equipment alarms clear when equipment fault corrected",
+        "timestamped": true,
+        "exportable": false
+      },
+      "research_note": "Rheem EcoNet publicly confirms the alarm-history surface and Service-icon navigation workflow, but a complete public alarm-code dictionary was not found in Pass 1 research. The Control Center displays alarm detail on-screen but the comprehensive code list is not published in public OEM documentation."
     },
     {
       "platform_id": "rheem_ruud_prestige_inverter",
@@ -2663,7 +2696,9 @@
           "severity": "informational",
           "surface": "outdoor_cda"
         }
-      ]
+      ],
+      "subcode_required": false,
+      "deeper_detail_in": "public_manual"
     }
   ],
   "cross_generation_conflicts": [
@@ -2784,8 +2819,9 @@
     "total_platforms": 6,
     "total_cross_generation_conflicts": 4,
     "normalized_date": "2026-04-20",
-    "schema_version": "1.1.0",
+    "schema_version": "1.2.0",
     "research_passes": 3,
-    "source_note": "Compiled from public Rheem/Ruud documentation across three research passes: Rheem 90RS/90RT/90TS Installation Instructions 92-24161-66 Rev. 3 (legacy dual-LED flash legend); Rheem Gas Furnace FAQ (legacy soft-lockout causes and reset behavior); Rheem Select / W801T Installation Instructions with UT Electronic Controls 1194-250 board family (Endeavor numeric namespace with 5-min/1-hour/hard lockout rules); Rheem RDFXYC Installation Instructions 92-110869-01-01 (premium Bluetooth Axxx_F/Txxx_F namespace with QR-code contractor app integration); Rheem RGFD Installation Instructions (older modulating numeric-function-code namespace with shared diagnostic paths); Rheem RH2T/RHMV Installation Instructions 92-20521-102 Rev. 02 (EcoNet communicating air handler diagnostic table with LED10 flash-to-code mapping); Ruud Control Center Support page (thermostat-surface behavior, EcoNet bus topology rules, 4-minute anti-short-cycle, 45-second autodiscovery); Rheem RP18AZ Installation Instructions (Prestige inverter outdoor UODC with hard numeric lockouts 21L/29L, A-code latched alarms, T-code transient protection events with strike-count escalation, Active System Protection, and sensor-validation math formulas for suction/liquid transducers). Pass 1 produced methodology summary with corrected platform split (three 7-segment namespaces, not two). Pass 2 produced structured 12-field records with honest 'not explicitly detailed in accessible public snippet' flags where OEM per-code trees are deferred to the Rheem Contractor App. Pass 3 extreme deep-dive added 7 field quirks (fault-buffer behavior, 45-second autodiscovery, single-point shield grounding, no-phone-cord rule, RJ-14 diagnostic port, CFM LED flash interpretation, R-454B LDS always-powered rule), code 82 transient default-parameters indicator on older modulating, R-454B coil compatibility notes. Honest gaps: no complete public EcoNet thermostat-only alarm dictionary exists, no complete public R-454B residential fault codebook yet (packaged-unit A2L mitigation details exist but are scoped to packaged equipment), no newest-generation RP20AZ/RA20AZ detailed troubleshooting at RP18AZ depth, WeatherKing alias verification is platform-likely but not per-code verified code-by-code in public OEM sources."
+    "source_note": "Compiled from public Rheem/Ruud documentation across three research passes: Rheem 90RS/90RT/90TS Installation Instructions 92-24161-66 Rev. 3 (legacy dual-LED flash legend); Rheem Gas Furnace FAQ (legacy soft-lockout causes and reset behavior); Rheem Select / W801T Installation Instructions with UT Electronic Controls 1194-250 board family (Endeavor numeric namespace with 5-min/1-hour/hard lockout rules); Rheem RDFXYC Installation Instructions 92-110869-01-01 (premium Bluetooth Axxx_F/Txxx_F namespace with QR-code contractor app integration); Rheem RGFD Installation Instructions (older modulating numeric-function-code namespace with shared diagnostic paths); Rheem RH2T/RHMV Installation Instructions 92-20521-102 Rev. 02 (EcoNet communicating air handler diagnostic table with LED10 flash-to-code mapping); Ruud Control Center Support page (thermostat-surface behavior, EcoNet bus topology rules, 4-minute anti-short-cycle, 45-second autodiscovery); Rheem RP18AZ Installation Instructions (Prestige inverter outdoor UODC with hard numeric lockouts 21L/29L, A-code latched alarms, T-code transient protection events with strike-count escalation, Active System Protection, and sensor-validation math formulas for suction/liquid transducers). Pass 1 produced methodology summary with corrected platform split (three 7-segment namespaces, not two). Pass 2 produced structured 12-field records with honest 'not explicitly detailed in accessible public snippet' flags where OEM per-code trees are deferred to the Rheem Contractor App. Pass 3 extreme deep-dive added 7 field quirks (fault-buffer behavior, 45-second autodiscovery, single-point shield grounding, no-phone-cord rule, RJ-14 diagnostic port, CFM LED flash interpretation, R-454B LDS always-powered rule), code 82 transient default-parameters indicator on older modulating, R-454B coil compatibility notes. Honest gaps: no complete public EcoNet thermostat-only alarm dictionary exists, no complete public R-454B residential fault codebook yet (packaged-unit A2L mitigation details exist but are scoped to packaged equipment), no newest-generation RP20AZ/RA20AZ detailed troubleshooting at RP18AZ depth, WeatherKing alias verification is platform-likely but not per-code verified code-by-code in public OEM sources.",
+    "subcode_schema_migration_date": "2026-04-21"
   }
 }

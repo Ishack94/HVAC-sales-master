@@ -354,7 +354,9 @@
           "source": "Amana AMH95 product specification flash legend p.5; Goodman GMH95/GCH95 public flash legend",
           "severity": "urgent"
         }
-      ]
+      ],
+      "subcode_required": false,
+      "deeper_detail_in": "public_manual"
     },
     {
       "platform_id": "daikin_goodman_7segment_modern",
@@ -1123,7 +1125,9 @@
           "source": "DC96VC/DM96VC Service Instructions status code page",
           "severity": "informational"
         }
-      ]
+      ],
+      "subcode_required": false,
+      "deeper_detail_in": "public_manual"
     },
     {
       "platform_id": "daikin_goodman_comfortnet_communicating",
@@ -1250,7 +1254,32 @@
           "source": "Goodman ComfortNet modular blower public installation manual, network troubleshooting and communications status LEDs, p.12",
           "severity": "informational"
         }
-      ]
+      ],
+      "subcode_required": true,
+      "deeper_detail_in": "wall_control_partial",
+      "subcode_retrieval_procedure": {
+        "surface": "wall_control",
+        "tool_required": null,
+        "navigation_steps": [
+          "For Daikin One+ thermostat: Enter commissioning/advanced menus",
+          "Daikin One+: Go to Step 4: System Optimization > Error History",
+          "Daikin One+: Review each logged error by date/time, code-equipment pairing, and description",
+          "Daikin One+: Where supported, review the minor error code field",
+          "Daikin One+: Use Clear Error History when needed",
+          "For Goodman ComfortNet board (no Daikin thermostat): From the status menu, depress the right push button once",
+          "Goodman ComfortNet: Use left or right button to review fault history",
+          "Goodman ComfortNet board: recall last 6 faults from fault-history menu"
+        ],
+        "subcode_count": null,
+        "requires_subcode_to_disambiguate": true
+      },
+      "fault_history_buffer": {
+        "stored_fault_count": 6,
+        "recall_procedure": "Daikin One+: System Optimization > Error History (timestamped). Goodman ComfortNet: board-level status/fault history recall with push-button navigation (last 6 faults).",
+        "clear_procedure": "Daikin One+: Clear Error History prompt in thermostat menu. Goodman ComfortNet board: no explicit clear procedure documented.",
+        "timestamped": true,
+        "exportable": false
+      }
     },
     {
       "platform_id": "daikin_fit_inverter_outdoor",
@@ -2416,7 +2445,10 @@
           "severity": "service_soon",
           "surface": "outdoor_cda"
         }
-      ]
+      ],
+      "subcode_required": "unknown",
+      "deeper_detail_in": "public_manual",
+      "research_note": "Daikin Fit inverter platform likely has expanded subcode architecture but public verification was not completed in Pass 1 research."
     },
     {
       "platform_id": "daikin_goodman_comfortnet_outdoor_unitary",
@@ -2590,7 +2622,9 @@
           "severity": "urgent",
           "surface": "outdoor_cda"
         }
-      ]
+      ],
+      "subcode_required": false,
+      "deeper_detail_in": "public_manual"
     }
   ],
   "cross_generation_conflicts": [
@@ -2695,8 +2729,9 @@
     "total_platforms": 5,
     "total_cross_generation_conflicts": 4,
     "normalized_date": "2026-04-19",
-    "schema_version": "1.1.0",
+    "schema_version": "1.2.0",
     "research_passes": 3,
-    "source_note": "Compiled from public Daikin/Goodman/Amana documentation across three research passes: DC96VC/DM96VC Service Instructions pp.41-48 (modern 7-segment IFC code table and diagnostic menus) plus status-code page (EF, b6, On, C1, C2, P1, P2, L0, HI, F operating status codes); Amana AMH95 product specification p.5 (legacy single-LED flash legend); Goodman GMH95/GCH95 public flash legend; Goodman GMH8/GMS8/GDH8/GDS8 installation instructions (legacy 1-hour auto-reset anchor); Daikin Fit Outdoor Unit Installation Manual 3P515859-5S pp.35-40 (full E-code table, network LED table, Mode Display workflow, DS1 dip-switch reset workflow, advisory codes 33/52/53/54/55/57); Daikin One+ S21 Installation Guide p.28 (System Optimization / Error History menu; 0.6 VDC data validation; PWR LED green flash on reversed power); Goodman ComfortNet modular blower installation manual p.12 (network troubleshooting LEDs and LEARN button timing); Goodman/Daikin DX16TC/DZ16TC ComfortNet outdoor unit service literature (Platform 5 codes: d0/d4/01/L1/02/06/07 with 30-cycle auto-clear). Pass 1 produced methodology summary. Pass 2 produced 78 structured records. Pass 3 extreme deep-dive added 10 Platform 2 records (EF, b6 + 8 operating status codes), 6 Platform 4 advisory records (33, 52, 53, 54, 55, 57), 6 Platform 5 records (new ComfortNet outdoor unitary family), 3 field quirks, and 1 cross-gen conflict. Honest gaps unchanged from Pass 2: L-codes and U-codes NOT in US residential Daikin Fit; b4/b5/b7 public snippets incomplete; CTK04/Daikin One+ thermostat-native dictionary remains thin."
+    "source_note": "Compiled from public Daikin/Goodman/Amana documentation across three research passes: DC96VC/DM96VC Service Instructions pp.41-48 (modern 7-segment IFC code table and diagnostic menus) plus status-code page (EF, b6, On, C1, C2, P1, P2, L0, HI, F operating status codes); Amana AMH95 product specification p.5 (legacy single-LED flash legend); Goodman GMH95/GCH95 public flash legend; Goodman GMH8/GMS8/GDH8/GDS8 installation instructions (legacy 1-hour auto-reset anchor); Daikin Fit Outdoor Unit Installation Manual 3P515859-5S pp.35-40 (full E-code table, network LED table, Mode Display workflow, DS1 dip-switch reset workflow, advisory codes 33/52/53/54/55/57); Daikin One+ S21 Installation Guide p.28 (System Optimization / Error History menu; 0.6 VDC data validation; PWR LED green flash on reversed power); Goodman ComfortNet modular blower installation manual p.12 (network troubleshooting LEDs and LEARN button timing); Goodman/Daikin DX16TC/DZ16TC ComfortNet outdoor unit service literature (Platform 5 codes: d0/d4/01/L1/02/06/07 with 30-cycle auto-clear). Pass 1 produced methodology summary. Pass 2 produced 78 structured records. Pass 3 extreme deep-dive added 10 Platform 2 records (EF, b6 + 8 operating status codes), 6 Platform 4 advisory records (33, 52, 53, 54, 55, 57), 6 Platform 5 records (new ComfortNet outdoor unitary family), 3 field quirks, and 1 cross-gen conflict. Honest gaps unchanged from Pass 2: L-codes and U-codes NOT in US residential Daikin Fit; b4/b5/b7 public snippets incomplete; CTK04/Daikin One+ thermostat-native dictionary remains thin.",
+    "subcode_schema_migration_date": "2026-04-21"
   }
 }
