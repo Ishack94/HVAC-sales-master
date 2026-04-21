@@ -512,6 +512,12 @@ export default function FaultCodeLookup() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    const prev = document.title;
+    document.title = 'Fault Code Lookup — HVAC Sales Master';
+    return () => { document.title = prev; };
+  }, []);
+
+  useEffect(() => {
     try {
       const idx = getBrandFamiliesIndex();
       setBrandFamilies(idx);

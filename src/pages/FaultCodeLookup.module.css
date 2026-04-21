@@ -24,14 +24,14 @@
 }
 
 .container {
+  padding-top: 120px;
   max-width: 960px;
   margin: 0 auto;
   padding: 60px 24px;
 }
 
-@media (max-width: 640px) {
-  .container { padding: 32px 20px; }
-}
+@media (max-width: 640px) { .container { padding: 32px 20px;
+    padding-top: 90px; } }
 
 .header { text-align: center; margin-bottom: 64px; }
 
