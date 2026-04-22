@@ -166,8 +166,8 @@ function BrandGrid({ brandFamilies, onSelect, onOpenCamera }) {
       </div>
       <div className={styles.crossLinks}>
         <button type="button" className={styles.crossLinkBtn} onClick={() => onOpenCamera('nameplate')}>
-          <div className={styles.crossLinkTitle}>Scan equipment nameplate</div>
-          <div className={styles.crossLinkDesc}>Use your camera to identify brand, model, and platform automatically</div>
+          <div className={styles.crossLinkTitle}>Scan to fill: nameplate</div>
+          <div className={styles.crossLinkDesc}>Use your camera to identify brand, model, and platform</div>
         </button>
         <Link to="/troubleshoot/symptom" className={styles.crossLinkBtn}>
           <div className={styles.crossLinkTitle}>No code? Start from a symptom</div>
@@ -241,7 +241,7 @@ function ModelInput({ family, onPlatformSelected, onVisualFallback, onNavigate, 
           Can't read the model number? Identify by what you see &rarr;
         </button>
         <button type="button" onClick={() => onOpenCamera('nameplate')} className={styles.altLink}>
-          Scan nameplate &rarr;
+          Scan to fill &rarr;
         </button>
       </div>
     </>
@@ -275,7 +275,7 @@ function VisualPicker({ family, onPlatformSelected, onNavigate }) {
   );
 }
 
-function CodeInput({ family, platform, onCodeSelected, onNavigate, onOpenCamera }) {
+function CodeInput({ family, platform, onCodeSelected, onNavigate, onOpenCamera, prefill, onPrefillConsumed }) {
   const [value, setValue] = useState('');
   const [helper, setHelper] = useState(`${platform.codes.length} codes on this platform`);
   const [helperIsSuggestions, setHelperIsSuggestions] = useState(false);
@@ -283,6 +283,14 @@ function CodeInput({ family, platform, onCodeSelected, onNavigate, onOpenCamera 
   const inputRef = useRef(null);
 
   useEffect(() => { inputRef.current?.focus(); }, []);
+
+  useEffect(() => {
+    if (prefill) {
+      setValue(prefill);
+      if (onPrefillConsumed) onPrefillConsumed();
+      if (inputRef.current) inputRef.current.focus();
+    }
+  }, [prefill, onPrefillConsumed]);
 
   const handleChange = (e) => {
     const val = e.target.value;
@@ -353,7 +361,7 @@ function CodeInput({ family, platform, onCodeSelected, onNavigate, onOpenCamera 
       </div>
       <div className={styles.inputActions}>
         <button type="button" onClick={() => onOpenCamera('display')} className={styles.altLink}>
-          Scan the display &rarr;
+          Scan to fill: display code &rarr;
         </button>
       </div>
     </>
@@ -469,7 +477,7 @@ function CameraScanner({ mode, onResult, onClose }) {
       <div className={styles.cameraCard} onClick={(e) => e.stopPropagation()}>
         <div className={styles.cameraHeader}>
           <div className={styles.cameraTitle}>
-            {mode === 'nameplate' ? 'Scan equipment nameplate' : 'Scan the display'}
+            {mode === 'nameplate' ? 'Scan to fill: nameplate' : 'Scan to fill: display code'}
           </div>
           <button type="button" className={styles.cameraClose} onClick={onClose}>&times;</button>
         </div>
@@ -483,6 +491,11 @@ function CameraScanner({ mode, onResult, onClose }) {
 
         {status === 'idle' && (
           <>
+            {mode === 'display' && (
+              <div className={styles.cameraHint}>
+                Photos can't count LED blinks. For single-LED flash-count codes (e.g. "3 blinks"), use manual entry instead.
+              </div>
+            )}
             <button type="button" className={styles.cameraBtn} onClick={() => fileRef.current?.click()}>
               Open camera
             </button>
@@ -490,6 +503,9 @@ function CameraScanner({ mode, onResult, onClose }) {
               onClick={() => { fileRef.current?.removeAttribute('capture'); fileRef.current?.click(); }}>
               Upload from gallery
             </button>
+            <div className={styles.cameraHint}>
+              Scanned values may need verification. Double-check before parts ordering or warranty submission.
+            </div>
           </>
         )}
 
@@ -818,46 +834,30 @@ export default function FaultCodeLookup() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [nav]);
 
+  const [ocrCodePrefill, setOcrCodePrefill] = useState(null);
+
   const handleCameraResult = useCallback((result) => {
     setCameraMode(null);
     if (!result) return;
 
-    // Nameplate mode
-    if (result.brand_family_id || result.model) {
-      if (result.brand_family_id) {
-        const fam = getBrandFamily(result.brand_family_id);
-        if (fam) {
-          setCurrentFamily(fam);
-          if (result.model) {
-            const platResult = identifyPlatformByModelNumber(result.model);
-            if (platResult) {
-              setCurrentPlatform(platResult);
-              setCurrentCode(null);
-              setScreen('code');
-              nav(`${BASE}/${fam.brand_family_id}/${platResult.platform_id}`, { replace: false });
-              return;
-            }
-          }
-          setScreen('model');
-          nav(`${BASE}/${fam.brand_family_id}`, { replace: false });
-          return;
-        }
-      }
-    }
-
-    // Display mode
-    if (result.code && currentPlatform) {
-      const normalized = result.code.trim();
-      const exact = currentPlatform.codes.find(c =>
-        c.code_identifier.toLowerCase() === normalized.toLowerCase() ||
-        c.code_id.toLowerCase() === normalized.toLowerCase()
-      );
-      if (exact) {
-        selectCode(exact);
+    // Nameplate mode — set brand/platform but require user to confirm via normal flow
+    if (result.brand_family_id) {
+      const fam = getBrandFamily(result.brand_family_id);
+      if (fam) {
+        setCurrentFamily(fam);
+        setCurrentPlatform(null);
+        setCurrentCode(null);
+        setScreen('model');
+        nav(`${BASE}/${fam.brand_family_id}`, { replace: false });
         return;
       }
     }
-  }, [nav, currentPlatform, selectCode]);
+
+    // Display mode — prefill the code input, never auto-select
+    if (result.code) {
+      setOcrCodePrefill(result.code.trim());
+    }
+  }, [nav]);
 
   // Keyboard shortcuts
   useEffect(() => {
@@ -925,7 +925,8 @@ export default function FaultCodeLookup() {
         )}
         {screen === 'code' && currentFamily && currentPlatform && (
           <CodeInput family={currentFamily} platform={currentPlatform}
-            onCodeSelected={selectCode} onNavigate={handleNavigate} onOpenCamera={setCameraMode} />
+            onCodeSelected={selectCode} onNavigate={handleNavigate} onOpenCamera={setCameraMode}
+            prefill={ocrCodePrefill} onPrefillConsumed={() => setOcrCodePrefill(null)} />
         )}
         {screen === 'result' && currentFamily && currentPlatform && currentCode && (
           <ResultCard family={currentFamily} platform={currentPlatform} code={currentCode}
