@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import {
   getBrandFamiliesIndex,
   getBrandFamily,
@@ -700,12 +701,6 @@ export default function FaultCodeLookup() {
   const initialSyncDone = useRef(false);
 
   useEffect(() => {
-    const prev = document.title;
-    document.title = 'Fault Code Lookup \u2014 HVAC Sales Master';
-    return () => { document.title = prev; };
-  }, []);
-
-  useEffect(() => {
     try {
       const idx = getBrandFamiliesIndex();
       setBrandFamilies(idx);
@@ -902,9 +897,63 @@ export default function FaultCodeLookup() {
     );
   }
 
+  // SEO meta — varies by screen
+  const SITE = 'https://www.hvacsalesmaster.com';
+  let seoTitle = 'Fault Code Lookup \u2014 735 HVAC Codes from 7 Brand Families | HVAC Sales Master';
+  let seoDesc = 'Look up HVAC fault codes from Carrier, Trane, Lennox, Goodman, Rheem, York/Bosch, and Nordyne. 735 OEM-cited codes with root causes, diagnostic steps, and reset procedures for residential techs.';
+  let seoCanonical = `${SITE}/troubleshoot/codes`;
+  let seoOgType = 'website';
+  let seoJsonLd = null;
+
+  if (screen === 'model' && currentFamily) {
+    const brandNames = (currentFamily.brands || []).map(b => typeof b === 'string' ? b : b.name).slice(0, 5).join(', ');
+    seoTitle = `${currentFamily.brand_family_name} Fault Codes \u2014 ${currentFamily.platforms?.reduce((s, p) => s + p.codes.length, 0) || ''} Codes | HVAC Sales Master`;
+    seoDesc = `Full list of ${currentFamily.brand_family_name} fault codes with meanings, root causes, and diagnostic steps. Covers ${brandNames}. Free contractor tool.`;
+    seoCanonical = `${SITE}/troubleshoot/codes/${currentFamily.brand_family_id}`;
+  } else if ((screen === 'code' || screen === 'visual') && currentFamily && currentPlatform) {
+    seoTitle = `${currentPlatform.platform_name} Fault Codes \u2014 ${currentPlatform.codes.length} Codes | HVAC Sales Master`;
+    seoDesc = `Fault code lookup for ${currentPlatform.platform_name}. Meanings, diagnostic paths, and reset procedures.`;
+    seoCanonical = `${SITE}/troubleshoot/codes/${currentFamily.brand_family_id}/${currentPlatform.platform_id}`;
+  } else if (screen === 'result' && currentFamily && currentPlatform && currentCode) {
+    const shortBrand = currentFamily.brand_family_name.split(' /')[0];
+    seoTitle = `${shortBrand} ${currentCode.code_identifier} Fault Code \u2014 ${currentCode.meaning} | HVAC Sales Master`;
+    seoDesc = `${currentCode.code_identifier} on ${currentPlatform.platform_name}: ${currentCode.meaning}. Root causes, diagnostic steps, and reset procedure. Severity: ${currentCode.severity.replace(/_/g, ' ')}.`;
+    seoCanonical = `${SITE}${shareUrl}`;
+    seoOgType = 'article';
+    seoJsonLd = {
+      '@context': 'https://schema.org',
+      '@type': 'TechArticle',
+      headline: `${shortBrand} ${currentCode.code_identifier} \u2014 ${currentCode.meaning}`,
+      description: currentCode.meaning,
+      articleSection: 'HVAC Fault Codes',
+      about: { '@type': 'Thing', name: `${currentPlatform.platform_name} fault code ${currentCode.code_identifier}` },
+      mainEntity: {
+        '@type': 'HowTo',
+        name: `How to diagnose ${shortBrand} ${currentCode.code_identifier}`,
+        step: currentCode.diagnostic_path.map((s, i) => ({ '@type': 'HowToStep', position: i + 1, text: s })),
+      },
+      publisher: { '@type': 'Organization', name: 'HVAC Sales Master', url: SITE },
+      url: seoCanonical,
+    };
+  }
+
   return (
     <div className={styles.page}>
       <div className={styles.container}>
+        <Helmet>
+          <title>{seoTitle}</title>
+          <meta name="description" content={seoDesc} />
+          <link rel="canonical" href={seoCanonical} />
+          <meta property="og:title" content={seoTitle} />
+          <meta property="og:description" content={seoDesc} />
+          <meta property="og:url" content={seoCanonical} />
+          <meta property="og:type" content={seoOgType} />
+          <meta name="twitter:title" content={seoTitle} />
+          <meta name="twitter:description" content={seoDesc} />
+          {seoJsonLd && (
+            <script type="application/ld+json">{JSON.stringify(seoJsonLd)}</script>
+          )}
+        </Helmet>
         <header className={styles.header}>
           <h1 className={styles.title}>Fault Code Lookup</h1>
           <div className={styles.subhead}>HVAC Sales Master</div>
