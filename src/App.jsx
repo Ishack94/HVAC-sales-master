@@ -53,7 +53,7 @@ export default function App() {
             <Route path="resources/energy-savings-calculator" element={<EnergySavingsPage />} />
             <Route path="troubleshoot" element={<Troubleshoot />} />
             <Route path="troubleshoot/symptom" element={<SymptomRouter />} />
-            <Route path="troubleshoot/codes" element={<FaultCodeLookup />} />
+            <Route path="troubleshoot/codes/*" element={<FaultCodeLookup />} />
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
