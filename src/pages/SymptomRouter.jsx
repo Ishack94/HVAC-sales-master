@@ -67,7 +67,7 @@ export default function SymptomRouter() {
       />
       <div className={styles.layout}>
         <main className={styles.main}>
-          <p className={styles.subhead}>Two taps to the diagnostic flow. Built for techs in the field.</p>
+          <p className={styles.subhead}>Start from the symptom. Read the full diagnostic walkthrough.</p>
           <div className={styles.grid}>
             {SYMPTOMS.map((s) => (
               <Link
