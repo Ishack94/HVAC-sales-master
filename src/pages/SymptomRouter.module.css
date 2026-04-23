@@ -85,3 +85,37 @@
     min-height: 72px;
   }
 }
+
+/* Cross-link to Fault Code Lookup */
+.crossLink {
+  display: block;
+  margin-top: 32px;
+  padding: 24px;
+  background: #f5f6f8;
+  border: 1px solid #e2e4e8;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.crossLink:hover {
+  border-color: #4a9fe5;
+  background: #fafaf9;
+}
+
+.crossLinkTitle {
+  display: block;
+  font-family: 'Figtree', sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  color: #0e2340;
+  margin-bottom: 6px;
+}
+
+.crossLinkDesc {
+  display: block;
+  font-family: 'Figtree', sans-serif;
+  font-size: 14px;
+  color: #5a6068;
+  line-height: 1.4;
+}

@@ -82,6 +82,10 @@ export default function SymptomRouter() {
               </Link>
             ))}
           </div>
+          <Link to="/troubleshoot/codes" className={styles.crossLink}>
+            <span className={styles.crossLinkTitle}>Got a fault code? Look it up &rarr;</span>
+            <span className={styles.crossLinkDesc}>Code on the thermostat or display? Jump to the fault code lookup for 735 codes across 7 brand families.</span>
+          </Link>
         </main>
       </div>
     </>

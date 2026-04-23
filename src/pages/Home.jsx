@@ -184,7 +184,7 @@ export default function Home() {
               </Link>
               <Link to="/troubleshoot" className={styles.toolCard}>
                 <p className={styles.toolCardTitle}>Troubleshoot</p>
-                <p className={styles.toolCardDesc}>Field tools and diagnostic guides for working techs.</p>
+                <p className={styles.toolCardDesc}>Fault code lookup for 735 codes across 7 brand families, symptom router, and diagnostic guides.</p>
               </Link>
               <Link to="/resources/reverse-duct-calculator" className={styles.toolCard}>
                 <p className={styles.toolCardTitle}>Reverse Duct Calculator</p>
@@ -197,8 +197,8 @@ export default function Home() {
           <div className={styles.authorRow}>
             <img src={headshotSrc} alt="HVAC Sales Master founder" className={styles.headshot} width="100" height="100" loading="eager" fetchPriority="high" />
             <div className={styles.authorText}>
-              <p className={styles.authorName}>Isaac Eells</p>
-              <p className={styles.authorTagline}>Real tools and field-tested HVAC strategies.</p>
+              <p className={styles.authorName}>Isaac E.</p>
+              <p className={styles.authorTagline}>Free HVAC tools and sales training. No courses. No paywalls. No recycled scripts.</p>
             </div>
           </div>
 
