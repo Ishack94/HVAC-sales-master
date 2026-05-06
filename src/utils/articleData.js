@@ -292,32 +292,11 @@ export const proArticles = [
     image: '/images/homeowner/10-best-brands.jpg',
   },
   {
-    slug: 'how-long-does-furnace-last',
-    title: 'How Long Does a Gas Furnace Last?',
-    description: 'Average lifespan, what affects it, and signs yours is nearing the end.',
-    readTime: '5 min',
-    image: '/images/homeowner/11-furnace-lifespan.jpg',
-  },
-  {
     slug: 'what-is-afue-rating',
     title: 'What Is AFUE Rating?',
     description: 'Handling the AFUE conversation on a sales call — tech-accurate answer, plain-language translation, objections, and when 80% is actually the right recommendation.',
     readTime: '8 min',
     image: '/images/homeowner/12-afue-rating.jpg',
-  },
-  {
-    slug: 'how-often-change-furnace-filter',
-    title: 'How Often to Change Your Furnace Filter',
-    description: 'Filter change frequency by type — from 30-day disposables to 12-month media filters.',
-    readTime: '4 min',
-    image: '/images/homeowner/13-change-filter.jpg',
-  },
-  {
-    slug: 'furnace-parts-homeowners-should-know',
-    title: '11 Furnace Parts Every Homeowner Should Know',
-    description: 'Know what your technician is talking about and make informed repair decisions.',
-    readTime: '7 min',
-    image: '/images/homeowner/14-furnace-parts.jpg',
   },
   {
     slug: 'furnace-tune-up-guide',

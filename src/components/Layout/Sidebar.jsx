@@ -10,7 +10,6 @@ const mostPopular = [
   { title: 'Stop Selling Equipment, Start Selling Outcomes', to: '/sales/stop-selling-equipment-start-selling-outcomes' },
   { title: "How to Handle 'I Need to Think About It'", to: '/sales/handle-i-need-to-think-about-it' },
   { title: 'The First 90 Seconds at the Door', to: '/sales/first-90-seconds-at-the-door' },
-  { title: 'Why Is My Furnace Blowing Cold Air?', to: '/pro-lessons/furnace-blowing-cold-air' },
 ]
 
 const bestClosing = [
