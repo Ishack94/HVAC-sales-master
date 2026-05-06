@@ -1,0 +1,345 @@
+/* SymptomFlow.module.css — matches FaultCodeLookup deep navy aesthetic */
+
+.page {
+  --bg: #0e2340;
+  --card: #1b3a5c;
+  --card-elev: #24466b;
+  --text: #e2e4e8;
+  --text-dim: #8a97a8;
+  --text-muted: #5a6068;
+  --border: rgba(226, 228, 232, 0.15);
+  --border-strong: rgba(226, 228, 232, 0.3);
+  --accent: #4a9fe5;
+  --orange: #f96302;
+
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  font-family: 'Figtree', system-ui, sans-serif;
+  line-height: 1.5;
+}
+
+.container {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 120px 24px 80px 24px;
+}
+
+@media (max-width: 640px) { .container { padding: 90px 20px 48px 20px; } }
+
+/* Breadcrumb */
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 32px;
+  font-size: 12px;
+  color: var(--text-dim);
+  letter-spacing: 0.04em;
+  flex-wrap: wrap;
+}
+
+.crumbLink {
+  color: var(--accent);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+}
+
+.crumbLink:hover { text-decoration: underline; }
+
+.crumbSep { color: var(--border); }
+
+.crumbCurrent { color: var(--text-dim); }
+
+/* Header */
+.header { margin-bottom: 40px; }
+
+.title {
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-weight: 600;
+  font-size: 40px;
+  letter-spacing: -0.02em;
+  margin: 0 0 14px 0;
+  color: var(--text);
+  line-height: 1.1;
+}
+
+@media (max-width: 640px) { .title { font-size: 30px; } }
+
+.summary {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text-dim);
+  margin: 0;
+  max-width: 70ch;
+}
+
+/* Section */
+.section {
+  margin-top: 44px;
+}
+
+.sectionLabel {
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  font-weight: 600;
+  margin-bottom: 18px;
+}
+
+/* Causes list */
+.causesList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.causeItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 22px;
+  border-bottom: 1px solid var(--border);
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--text);
+}
+
+.causeItem:last-child { border-bottom: none; }
+
+.causeText { flex: 1; min-width: 0; }
+
+.causePill {
+  flex-shrink: 0;
+  background: rgba(74, 159, 229, 0.12);
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 3px;
+  white-space: nowrap;
+}
+
+@media (max-width: 540px) {
+  .causeItem { flex-direction: column; align-items: flex-start; gap: 8px; }
+}
+
+/* Diagnostic steps */
+.stepsList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.stepItem {
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  gap: 18px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 18px 22px;
+}
+
+.stepBadge {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--card-elev);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  margin-top: 2px;
+}
+
+.stepBody { min-width: 0; }
+
+.stepAction {
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0 0 6px 0;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+}
+
+.stepRationale {
+  font-size: 14px;
+  color: var(--text-dim);
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* Escalation callout (subtle, no alarm color) */
+.escalateBox {
+  background: rgba(226, 228, 232, 0.04);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--text-dim);
+  padding: 20px 24px;
+  border-radius: 4px;
+}
+
+.escalateText {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text);
+  margin: 0;
+}
+
+/* Field warning callout (orange-amber, matches conflictBanner from FaultCodeLookup) */
+.warningBox {
+  background: rgba(249, 99, 2, 0.08);
+  border: 1px solid rgba(249, 99, 2, 0.3);
+  border-left: 3px solid var(--orange);
+  padding: 20px 24px;
+  border-radius: 4px;
+}
+
+.warningLabel {
+  font-size: 11px;
+  color: var(--orange);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.warningText {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text);
+  margin: 0;
+}
+
+/* CTA */
+.ctaWrap {
+  margin-top: 56px;
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+}
+
+.ctaLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 18px 26px;
+  color: var(--text);
+  text-decoration: none;
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  transition: background 150ms, border-color 150ms;
+}
+
+.ctaLink:hover {
+  background: var(--card-elev);
+  border-color: var(--border-strong);
+}
+
+.ctaArrow { color: var(--accent); font-size: 18px; }
+
+/* Noise triage layout */
+.noiseGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.noiseCard {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--orange);
+  border-radius: 4px;
+  padding: 22px 24px;
+}
+
+.noiseHeading {
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0 0 8px 0;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+
+.noiseMeans {
+  font-size: 14px;
+  color: var(--text-dim);
+  font-style: italic;
+  margin: 0 0 14px 0;
+  line-height: 1.5;
+}
+
+.noiseAction {
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.55;
+  margin: 0;
+}
+
+.noiseActionLabel {
+  font-weight: 700;
+  color: var(--text);
+  margin-right: 4px;
+}
+
+.benignList {
+  list-style: disc;
+  padding-left: 22px;
+  margin: 0;
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.benignList li { margin-bottom: 4px; }
+
+/* 404 */
+.notFound {
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.notFoundTitle {
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-size: 28px;
+  color: var(--text);
+  margin-bottom: 14px;
+}
+
+.notFoundText {
+  color: var(--text-dim);
+  font-size: 15px;
+  margin-bottom: 24px;
+}
+
+.notFoundLink {
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+}
+
+.notFoundLink:hover { text-decoration: underline; }

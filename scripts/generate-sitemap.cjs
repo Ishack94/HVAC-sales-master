@@ -28,6 +28,25 @@ while ((match = locRegex.exec(existingXml)) !== null) {
   }
 }
 
+// Symptom router landing + flow URLs (in-tool diagnostic quick references)
+const SYMPTOM_FLOWS = [
+  'cold-air-from-furnace',
+  'short-cycling',
+  'furnace-wont-start',
+  'leaking-water',
+  'ac-not-cooling',
+  'strange-or-dangerous-noise',
+];
+const symptomUrls = [
+  `${SITE}/troubleshoot/symptom`,
+  ...SYMPTOM_FLOWS.map((id) => `${SITE}/troubleshoot/symptom/${id}`),
+];
+// De-dupe against any pre-existing entries in the static set
+const existingUrlSet = new Set(staticUrls);
+for (const url of symptomUrls) {
+  if (!existingUrlSet.has(url)) staticUrls.push(url);
+}
+
 // Build fault-code URLs from the dataset
 const faultCodeUrls = [];
 const index = JSON.parse(fs.readFileSync(path.join(DATA_DIR, 'brand-families-index.json'), 'utf8'));

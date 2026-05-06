@@ -1,0 +1,174 @@
+[
+  {
+    "symptom_id": "cold-air-from-furnace",
+    "tile_label": "Cold Air from Furnace",
+    "tile_description": "Furnace runs but supply air is cool",
+    "linked_article_path": "/pro-lessons/furnace-blowing-cold-air",
+    "quick_summary": "Furnace lights but the supply air stays cool. Most callbacks on this complaint come from techs swapping whatever the board points at instead of proving what actually failed.",
+    "top_causes": [
+      { "cause": "Weak or lost flame proving (lights, can't prove flame, drops out)", "percent_of_calls": "30-40%" },
+      { "cause": "High-limit tripping from low airflow (overheats across the exchanger)", "percent_of_calls": "25-35%" },
+      { "cause": "Draft, pressure switch, or condensate problems on 90+ units" }
+    ],
+    "diagnostic_steps": [
+      { "step": 1, "action": "Watch one full sequence before touching anything", "rationale": "Where the cycle fails (no ignition vs. light-and-drop vs. heats-then-cools) sends you to a different branch." },
+      { "step": 2, "action": "If it lights and drops, meter flame current in series with the rod", "rationale": "Most boards want 2-6 µA, brand-specific. Weak signal also means check ground, polarity, burner carryover — not just rod cleaning." },
+      { "step": 3, "action": "Verify 24 VAC at the gas valve and manifold pressure (typically 3.5\" WC NG)", "rationale": "Voltage with no flow points downstream; erratic pressure points upstream to regulator or supply." },
+      { "step": 4, "action": "If it heats then blows cold, measure temperature rise across the furnace", "rationale": "Rise at or above plate top means airflow — check filter, coil, wheel, blower speed, zoning, static — not a bad limit." },
+      { "step": 5, "action": "On a 90+ that stalls before ignition, prove draft with a manometer at the pressure-switch tap", "rationale": "Should run at least 0.1\" WC beyond switch close setpoint. Don't replace the switch until you've measured what it sees." },
+      { "step": 6, "action": "Rollout open, or flame moves when blower starts? Stop and treat as combustion/HX", "rationale": "These are safety events, not reset-and-walk events." }
+    ],
+    "when_to_escalate": "Stop and treat as combustion / heat exchanger problem if rollout is open or flame moves when the blower starts. Don't reset and leave.",
+    "field_warning": "Don't swap pressure switches, high limits, or flame sensors without measuring first — that's the callback trap on this call."
+  },
+  {
+    "symptom_id": "short-cycling",
+    "tile_label": "Short Cycling",
+    "tile_description": "Runs briefly, shuts off, repeats",
+    "linked_article_path": "/pro-lessons/furnace-short-cycling",
+    "quick_summary": "Short cycling isn't one failure — it's a pattern. Identify the cycle type (burner-drop-with-blower-on, ignition-abort, control-side, or clean-cycles-no-faults) before touching anything.",
+    "top_causes": [
+      { "cause": "Limit or airflow (burners run, drop with blower still on, restart)" },
+      { "cause": "Flame proving (burners light for seconds, drop, retry)" },
+      { "cause": "Pressure switch or draft on 90+ (inducer starts, aborts, retries)" },
+      { "cause": "Control-side / thermostat (W call disappears and comes back)" },
+      { "cause": "Oversizing (no faults, clean satisfactions, cycles under 5 minutes — not a repair)" }
+    ],
+    "diagnostic_steps": [
+      { "step": 1, "action": "Time one full cycle with a stopwatch and pull active + stored fault codes", "rationale": "Burner run length, off period, and code direction tell you which branch you're on before any parts swap." },
+      { "step": 2, "action": "Meter R-W at the board through the cycle to confirm the W call is steady", "rationale": "If W drops before satisfaction, the furnace is doing its job — problem is the stat, wiring, batteries, or cycle-rate setting. Honeywell recommends 3 CPH for 90%+." },
+      { "step": 3, "action": "If burner drops with blower continuing, measure temperature rise and check static", "rationale": "Classic limit cycle. Rise at/above plate top = airflow problem. Return static ≥0.4\" WC is a red flag." },
+      { "step": 4, "action": "If burner lights and drops in under a minute, meter flame current", "rationale": "Brand-specific normal ranges. Weak signal means check ground, polarity, carryover, and gas pressure before condemning the rod." },
+      { "step": 5, "action": "On 90+ ignition aborts, prove draft with a manometer (≥0.1\" WC past switch close)", "rationale": "Condensate backups masquerade as pressure-switch faults. Measure before swapping." },
+      { "step": 6, "action": "No faults, normal numbers, cycles under 5 minutes? Call it oversizing", "rationale": "Equipment-to-load mismatch. Not a parts call — needs a load calc and an honest conversation." }
+    ],
+    "when_to_escalate": "If the cycle is clean and short with no faults, don't part-swap — this is an oversizing or duct-design problem and needs a load calculation, not a repair.",
+    "field_warning": null
+  },
+  {
+    "symptom_id": "furnace-wont-start",
+    "tile_label": "Furnace Won't Start",
+    "tile_description": "No ignition, no blower, nothing happening",
+    "linked_article_path": "/pro-lessons/furnace-not-turning-on",
+    "quick_summary": "Dead furnace call. Easy to skip steps and swap the wrong part. Walk the power path upstream methodically and most of these fall apart in about 10 minutes.",
+    "top_causes": [
+      { "cause": "Line power or door interlock interrupted", "percent_of_calls": "20-30%" },
+      { "cause": "Lost 24V — blown board fuse, failed transformer, or low-voltage short", "percent_of_calls": "20-30%" },
+      { "cause": "Thermostat not delivering W (often smart stat with C-wire issue)", "percent_of_calls": "15-25%" },
+      { "cause": "Open safety string — tripped float, stuck pressure switch, open limit/rollout", "percent_of_calls": "15-25%" }
+    ],
+    "diagnostic_steps": [
+      { "step": 1, "action": "Prove 120 VAC at the disconnect and at the board L1/neutral with door engaged", "rationale": "Voltage loss between those points is the door interlock or internal wiring. Loose blower doors make a furnace look totally dead." },
+      { "step": 2, "action": "Check transformer — 120 VAC primary, 24 VAC secondary", "rationale": "Primary good with no secondary = transformer dead. Find what killed it (shorted accessory, T-stat wiring, float) before replacing." },
+      { "step": 3, "action": "Inspect the board low-voltage fuse, then meter R-C for 24 VAC", "rationale": "A blown fuse is a symptom of a short — find the short before the new fuse goes in." },
+      { "step": 4, "action": "Meter W-C at the board during a heat call, then jumper R to W to bypass the stat", "rationale": "If R-C is good but W-C is dead during the call, the problem is on the thermostat side. If the furnace runs jumpered, stop chasing furnace parts." },
+      { "step": 5, "action": "Read the board code, then voltage-drop across each safety in the string", "rationale": "0 VAC across a closed switch, 24 VAC across the open one — fastest way to find the culprit without breaking connections." },
+      { "step": 6, "action": "Check the condensate float and drain", "rationale": "Float switches that break R kill the whole T-stat circuit and look like a dead stat. On some 90+ units the blocked-drain switch is in series with the gas valve." },
+      { "step": 7, "action": "Only after all of the above, suspect the board", "rationale": "Power, 24V, fuse, R-C, W call, and safeties all proven good — now a board call is justified, not a guess." }
+    ],
+    "when_to_escalate": "The board is the last suspect, not the first. Don't condemn it until line power, transformer, fuse, R-C, W-C, and the safety string are all proven good.",
+    "field_warning": "A blown low-voltage fuse always means there's a short somewhere — drop a new fuse in without finding it and you'll blow the new one too."
+  },
+  {
+    "symptom_id": "leaking-water",
+    "tile_label": "Leaking Water",
+    "tile_description": "Water on the floor near the furnace",
+    "linked_article_path": "/pro-lessons/furnace-leaking-water",
+    "quick_summary": "First question decides the call: 90%+ condensing furnace (which is supposed to make water and the leak is a drainage problem), or 80% standard furnace (which shouldn't be making water at all — water is usually tracking from above, or it's a venting problem).",
+    "top_causes": [
+      { "cause": "90%+ condensate path failure — clogged trap, blocked drain, wrong pitch, failed pump" },
+      { "cause": "On 80% units: water tracking down from AC coil above, humidifier, or plumbing — not the furnace at all" },
+      { "cause": "On 80% units: actual furnace water = venting or combustion problem (serious)" },
+      { "cause": "Heat exchanger or collector failure — only after drain path is fully ruled out" }
+    ],
+    "diagnostic_steps": [
+      { "step": 1, "action": "Identify the furnace type — PVC + visible trap = 90%+, metal B-vent + no condensate = 80%", "rationale": "This one-second ID changes everything that follows." },
+      { "step": 2, "action": "Dry the area, run a heat call, and find the highest wet point with a flashlight and mirror", "rationale": "If the top of the cabinet is wet before anything inside is, the source is above — coil, humidifier, plumbing, roof. Don't diagnose a furnace that isn't actually leaking." },
+      { "step": 3, "action": "Check pitch — drain lines at 1/4\" per foot toward drain, 90+ horizontal vent at 1/4\" per foot back toward the furnace", "rationale": "Sags, double traps, and bellies cause a lot of intermittent leaks." },
+      { "step": 4, "action": "On 90%+, pull and flush the trap, inspect every port, verify orientation/height, prime before restart", "rationale": "Partially clogged trap is the single most common 90+ leak — and it causes callbacks because it runs fine after reset until condensate backs up again." },
+      { "step": 5, "action": "Clear the drain line downstream — flush, wet-vac, check for slime, sags, double traps, freeze risk on outdoor terminations", "rationale": "Trap can be clean and the leak still comes back if the line downstream is blocked or routed wrong." },
+      { "step": 6, "action": "Inspect the collector box, inducer housing, and internal drain paths for standing water or rust trails", "rationale": "Standing water inside means condensate is backing up internally — points back to trap/drain/pitch, not 'replace the inducer.'" },
+      { "step": 7, "action": "If there's a condensate pump, fill the reservoir manually and watch float, discharge, and check valve under load", "rationale": "Stuck float or bad check valve looks exactly like a furnace leak. Pump must be rated for acidic condensate." },
+      { "step": 8, "action": "On 80% with confirmed furnace-source water, check venting and flue temp (~300-400°F healthy)", "rationale": "Below 300°F suggests underfiring, oversized venting, or excessive heat extraction — condensation inside the vent corrodes the exchanger. Safety problem, not a drain problem." }
+    ],
+    "when_to_escalate": "If the trap is clean, drain is clear, pitch is right, vent is good, and water is still coming from inside the cabinet at a header or collector — you're past maintenance and into repair-or-replace with a safety conversation. On 80% units with confirmed furnace-source water, treat as a venting/combustion safety issue, not a drain problem.",
+    "field_warning": "Water from an 80% furnace itself isn't a nuisance leak — it points to flue gas condensation, which corrodes the heat exchanger and is a combustion/CO concern."
+  },
+  {
+    "symptom_id": "ac-not-cooling",
+    "tile_label": "AC Not Cooling",
+    "tile_description": "Blower runs, condenser hums, air is warm",
+    "linked_article_path": "/pro-lessons/ac-not-blowing-cold-air",
+    "quick_summary": "AC is running but supply air is lukewarm. Most common mistake on this call is connecting gauges before checking anything else — airflow problems look like charge problems on a gauge set, and on A2L refrigerants every connection is handling risk. Non-invasive checks first.",
+    "top_causes": [
+      { "cause": "Indoor airflow restriction — dirty filter, coil, blower wheel, or duct issue", "percent_of_calls": "30-40%" },
+      { "cause": "Outdoor airflow or condenser problem — dirty coil, weak fan", "percent_of_calls": "15-25%" },
+      { "cause": "Low refrigerant charge from an actual leak", "percent_of_calls": "15-25%" },
+      { "cause": "Electrical (weak cap, pitted contactor, struggling compressor) and metering-device issues" }
+    ],
+    "diagnostic_steps": [
+      { "step": 1, "action": "Measure return-to-supply temperature split (expect 16-22°F, broader 14-23°F by humidity)", "rationale": "Free information. Low split = capacity loss; high split = low airflow. Frames everything that follows." },
+      { "step": 2, "action": "Visual airflow triage — filter, evap face, blower wheel, flex, dampers, outdoor coil, condenser fan", "rationale": "If the evap is iced, stop and thaw before any refrigerant diagnosis — frozen coils invalidate every reading." },
+      { "step": 3, "action": "Pull total external static with a manometer before pulling gauges", "rationale": "Field targets ~0.4-0.6\" normal, 0.8\"+ trouble, return ≥0.4\" alone flags restriction. High TESP keeps you on airflow." },
+      { "step": 4, "action": "Verify blower CFM and speed setup against the table (target 350-400 CFM/ton, ACCA QI within 15%)", "rationale": "Low airflow explains most 'low on charge' misreads — low suction, freeze risk, high split." },
+      { "step": 5, "action": "Inspect and clean indoor and outdoor coils, then recheck", "rationale": "Dirty condenser drives high head and high-subcool patterns that look like overcharge. Dirty evap distorts SH and SC." },
+      { "step": 6, "action": "Only now decide if gauges are warranted", "rationale": "If airflow, static, coil cleanliness, and blower setup are all proven and split is still abnormal, connect. A2L systems especially reward this discipline." },
+      { "step": 7, "action": "Charge by metering device — fixed orifice = target SH from chart; TXV = target SC from nameplate (~10°F ±3°F typical)", "rationale": "Read the charging chart on the condenser. Pattern-read SH/SC together to separate undercharge, overcharge, low airflow, TXV restriction, non-condensables, and poor compression." },
+      { "step": 8, "action": "Electrical checks — cap within ±6% of rated µF, contactor for pitting and voltage drop, compressor windings (C-R lowest, R-S = sum)", "rationale": "Hard starting and bad compressor are different problems. Don't condemn a compressor before ruling out airflow, restrictions, and electrical support." }
+    ],
+    "when_to_escalate": "Compressor failure call is justified only after airflow, charge pattern, and electrical support parts are all proven. Before that, it's a guess. End-of-life conversation if compressor or coil failure on an older system — repair cost vs. age, reliability, and refrigerant type.",
+    "field_warning": "On A2L systems (R-454B, R-32) every unnecessary connection is handling risk. Use A2L-rated recovery, vacuum, leak detector, and manifold — older A1 tools aren't acceptable. Lennox R-454B coils ship with factory leak-detection that can't mix with non-OEM sensors. Left-hand threaded hoses and a fire extinguisher on the truck."
+  },
+  {
+    "symptom_id": "strange-or-dangerous-noise",
+    "tile_label": "Strange or Dangerous Noise",
+    "tile_description": "Boom, scrape, scream, or rumble from the unit",
+    "linked_article_path": "/pro-lessons/furnace-making-strange-noises",
+    "format": "noise_triage",
+    "quick_summary": "Most furnace sounds are benign — duct expansion, motor startup, normal ignition whoosh. A few are safety events. The whole job on this call is knowing the difference and being willing to shut equipment down when the noise is one of the dangerous ones.",
+    "shutdown_noises": [
+      {
+        "noise": "Booming or whumping at ignition",
+        "what_it_means": "Delayed ignition — gas accumulates then ignites all at once",
+        "action": "Lock it out. Pull burners, inspect carryover slots, verify igniter position, manometer gas pressure, verify smooth light-off over multiple starts before returning to service."
+      },
+      {
+        "noise": "Burner roar or visible flame out the front",
+        "what_it_means": "Flame rollout — combustion gases backing up out of the chamber",
+        "action": "Shut down. Never jumper the rollout switch. Correct combustion air or venting before reset."
+      },
+      {
+        "noise": "Metal-on-metal scraping from the blower compartment",
+        "what_it_means": "Wheel shifted on the shaft, broken mount, failed bearing, or foreign object",
+        "action": "Shut down. Disconnect power before inspecting. Continued operation destroys the wheel, motor, and housing."
+      },
+      {
+        "noise": "Grinding or escalating bearing scream from the inducer",
+        "what_it_means": "Inducer bearing failure — and the inducer is a combustion safety component, not just a fan",
+        "action": "Shut down if escalating, severe, or paired with any pressure-switch trouble or rollout evidence."
+      },
+      {
+        "noise": "Combustion rumble or unstable roar from the burner section",
+        "what_it_means": "Burner contamination, unstable flame, wrong gas pressure, venting issue, or combustion imbalance",
+        "action": "Run combustion analysis. BPI: abort if ambient CO > 35 ppm; undiluted flue CO should stay under 100 ppm."
+      },
+      {
+        "noise": "Hissing or whistling that changes when the blower starts",
+        "what_it_means": "Possible heat exchanger breach — flame disturbance on blower start is the AGA indicator",
+        "action": "Shut down pending inspection. Watch flame before and during blower startup; displacement, floating, or rollout confirms the breach."
+      },
+      {
+        "noise": "Any of the above paired with a repeated safety trip",
+        "what_it_means": "The safety is doing real work — the condition is unsafe",
+        "action": "Lock out and find the cause. Never jumper a rollout. Don't reset and walk."
+      }
+    ],
+    "benign_noises": [
+      "Smooth quick whoosh at ignition (normal light-off)",
+      "Duct expansion ticking and popping (sheet metal movement, not burner area)",
+      "Normal inducer startup ramp (light motor sound)",
+      "Mild cabinet resonance on blower startup (older transition pieces)"
+    ],
+    "field_warning": "Never jumper a rollout switch — not for a test, not for a customer, not ever. Don't reset repeated rollouts or ignition lockouts without finding the cause. Don't dismiss a noise because 'it's done that for months' — delayed ignition and rollout often persist right up until they cause real damage."
+  }
+]

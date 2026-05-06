@@ -10,6 +10,7 @@ const About = lazy(() => import('./pages/About'))
 const Resources = lazy(() => import('./pages/Resources'))
 const Troubleshoot = lazy(() => import('./pages/Troubleshoot'))
 const SymptomRouter = lazy(() => import('./pages/SymptomRouter'))
+const SymptomFlow = lazy(() => import('./pages/SymptomFlow'))
 const FaultCodeLookup = lazy(() => import('./pages/FaultCodeLookup'))
 const LoadCalcPage = lazy(() => import('./pages/LoadCalcPage'))
 const DuctDesignPage = lazy(() => import('./pages/DuctDesignPage'))
@@ -53,6 +54,7 @@ export default function App() {
             <Route path="resources/energy-savings-calculator" element={<EnergySavingsPage />} />
             <Route path="troubleshoot" element={<Troubleshoot />} />
             <Route path="troubleshoot/symptom" element={<SymptomRouter />} />
+            <Route path="troubleshoot/symptom/:symptomId" element={<SymptomFlow />} />
             <Route path="troubleshoot/codes/*" element={<FaultCodeLookup />} />
             <Route path="*" element={<NotFound />} />
           </Route>

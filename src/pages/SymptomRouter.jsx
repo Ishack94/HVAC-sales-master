@@ -7,32 +7,32 @@ import styles from './SymptomRouter.module.css'
 
 const SYMPTOMS = [
   {
-    slug: 'furnace-blowing-cold-air',
+    slug: 'cold-air-from-furnace',
     label: 'Cold Air from Furnace',
     context: 'Furnace runs but supply air is cool',
   },
   {
-    slug: 'furnace-short-cycling',
+    slug: 'short-cycling',
     label: 'Short Cycling',
     context: 'Runs briefly, shuts off, repeats',
   },
   {
-    slug: 'furnace-not-turning-on',
+    slug: 'furnace-wont-start',
     label: "Furnace Won't Start",
     context: 'No ignition, no blower, nothing happening',
   },
   {
-    slug: 'furnace-leaking-water',
+    slug: 'leaking-water',
     label: 'Leaking Water',
     context: 'Water on the floor near the furnace',
   },
   {
-    slug: 'ac-not-blowing-cold-air',
+    slug: 'ac-not-cooling',
     label: 'AC Not Cooling',
     context: 'Blower runs, condenser hums, air is warm',
   },
   {
-    slug: 'furnace-making-strange-noises',
+    slug: 'strange-or-dangerous-noise',
     label: 'Strange or Dangerous Noise',
     context: 'Boom, scrape, scream, or rumble from the unit',
   },
@@ -72,7 +72,7 @@ export default function SymptomRouter() {
             {SYMPTOMS.map((s) => (
               <Link
                 key={s.slug}
-                to={`/pro-lessons/${s.slug}`}
+                to={`/troubleshoot/symptom/${s.slug}`}
                 className={styles.tile}
                 onClick={() => handleClick(s.slug)}
               >
