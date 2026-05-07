@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { Helmet } from 'react-helmet-async'
 import Banner from '../components/Layout/Banner'
 import { trackEvent } from '../utils/analytics'
 import styles from './Troubleshoot.module.css'
@@ -48,15 +47,6 @@ export default function Troubleshoot() {
 
   return (
     <>
-      <Helmet>
-        <title>Troubleshoot — HVAC Diagnostic Tools & Guides | HVAC Sales Master</title>
-        <meta name="description" content="Field diagnostic tools and guides for HVAC techs. Symptom router, fault code lookup, and detailed diagnostic articles." />
-        <link rel="canonical" href={canonicalUrl} />
-        <meta property="og:title" content="Troubleshoot — HVAC Diagnostic Tools & Guides | HVAC Sales Master" />
-        <meta property="og:description" content="Field diagnostic tools and guides for HVAC techs. Symptom router, fault code lookup, and detailed diagnostic articles." />
-        <meta property="og:url" content={canonicalUrl} />
-        <meta property="og:type" content="website" />
-      </Helmet>
       <Banner
         title="Troubleshoot"
         breadcrumbs={[

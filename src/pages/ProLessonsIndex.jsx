@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { Helmet } from 'react-helmet-async'
 import Banner from '../components/Layout/Banner'
 import Sidebar from '../components/Layout/Sidebar'
 import Newsletter from '../components/Home/Newsletter'
@@ -22,15 +21,6 @@ export default function ProLessonsIndex() {
   const canonicalUrl = `https://www.hvacsalesmaster.com${location.pathname}`
   return (
     <>
-      <Helmet>
-        <title>Pro Lessons | HVAC Sales Master</title>
-        <meta name="description" content="Technical training for HVAC techs and installers. Refrigerant charging, duct design, static pressure, diagnostics, and more." />
-        <link rel="canonical" href={canonicalUrl} />
-        <meta property="og:title" content="Pro Lessons | HVAC Sales Master" />
-        <meta property="og:description" content="Technical training for HVAC techs and installers. Refrigerant charging, duct design, static pressure, diagnostics, and more." />
-        <meta property="og:url" content={canonicalUrl} />
-        <meta property="og:type" content="website" />
-      </Helmet>
       <Banner
         title="Pro Lessons"
         breadcrumbs={[

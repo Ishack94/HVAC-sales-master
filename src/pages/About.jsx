@@ -1,6 +1,5 @@
 import React from 'react'
 import { useLocation } from 'react-router-dom'
-import { Helmet } from 'react-helmet-async'
 import Banner from '../components/Layout/Banner'
 import Sidebar from '../components/Layout/Sidebar'
 import Newsletter from '../components/Home/Newsletter'
@@ -12,15 +11,6 @@ export default function About() {
   const canonicalUrl = `https://www.hvacsalesmaster.com${location.pathname}`
   return (
     <>
-      <Helmet>
-        <title>About | HVAC Sales Master</title>
-        <meta name="description" content="Built from real in-home HVAC sales experience — not a marketing agency. Every article comes from running service calls and closing jobs." />
-        <link rel="canonical" href={canonicalUrl} />
-        <meta property="og:title" content="About | HVAC Sales Master" />
-        <meta property="og:description" content="Built from real in-home HVAC sales experience — not a marketing agency. Every article comes from running service calls and closing jobs." />
-        <meta property="og:url" content={canonicalUrl} />
-        <meta property="og:type" content="website" />
-      </Helmet>
       <Banner
         title="About HVAC Sales Master"
         breadcrumbs={[

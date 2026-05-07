@@ -1,6 +1,9 @@
 {
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist/client",
   "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
+    { "source": "/troubleshoot/codes/:brand", "destination": "/troubleshoot/codes" },
+    { "source": "/troubleshoot/codes/:brand/:platform", "destination": "/troubleshoot/codes" }
   ],
   "headers": [
     {

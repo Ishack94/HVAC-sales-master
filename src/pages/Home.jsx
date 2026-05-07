@@ -1,6 +1,5 @@
 import React, { useState, useMemo, useRef, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { Helmet } from 'react-helmet-async'
 import Banner from '../components/Layout/Banner'
 import Sidebar from '../components/Layout/Sidebar'
 import { salesArticles, proArticles } from '../utils/articleData'
@@ -147,19 +146,6 @@ export default function Home() {
 
   return (
     <>
-      <Helmet>
-        <title>HVAC Sales Training & Free Tools | HVAC Sales Master</title>
-        <meta name="description" content="Free HVAC sales training, calculators, and troubleshooting tools built from real field experience. No fluff — just what actually works." />
-        <link rel="canonical" href={canonicalUrl} />
-        <meta property="og:title" content="HVAC Sales Training & Free Tools | HVAC Sales Master" />
-        <meta property="og:description" content="Free HVAC sales training, calculators, and troubleshooting tools built from real field experience. No fluff — just what actually works." />
-        <meta property="og:url" content={canonicalUrl} />
-        <meta property="og:type" content="website" />
-        <script type="application/ld+json">
-          {JSON.stringify(websiteSchema)}
-        </script>
-      </Helmet>
-
       <Banner
         title="Free HVAC Tools & Sales Training"
         subtitle="Built for the Field"

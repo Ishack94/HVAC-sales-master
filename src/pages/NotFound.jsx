@@ -1,15 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Helmet } from 'react-helmet-async'
 import Banner from '../components/Layout/Banner'
 
 export default function NotFound() {
   return (
     <>
-      <Helmet>
-        <title>Page Not Found | HVAC Sales Master</title>
-        <meta name="robots" content="noindex" />
-      </Helmet>
       <Banner
         title="Page Not Found"
         breadcrumbs={[

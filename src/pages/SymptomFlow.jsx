@@ -1,6 +1,5 @@
 import React from 'react'
 import { useParams, useLocation, Link } from 'react-router-dom'
-import { Helmet } from 'react-helmet-async'
 import symptomFlows from '../data/symptom-flows.json'
 import styles from './SymptomFlow.module.css'
 
@@ -59,21 +58,6 @@ function StandardLayout({ data, canonicalUrl, ogTitle, ogDesc }) {
 
   return (
     <div className={styles.page}>
-      <Helmet>
-        <title>{ogTitle}</title>
-        <meta name="description" content={ogDesc} />
-        <meta name="robots" content="index, follow" />
-        <link rel="canonical" href={canonicalUrl} />
-        <meta property="og:title" content={ogTitle} />
-        <meta property="og:description" content={ogDesc} />
-        <meta property="og:url" content={canonicalUrl} />
-        <meta property="og:type" content="article" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={ogTitle} />
-        <meta name="twitter:description" content={ogDesc} />
-        <script type="application/ld+json">{JSON.stringify(howToSchema)}</script>
-      </Helmet>
-
       <div className={styles.container}>
         <Breadcrumb label={data.tile_label} />
 
@@ -131,20 +115,6 @@ function StandardLayout({ data, canonicalUrl, ogTitle, ogDesc }) {
 function NoiseTriageLayout({ data, canonicalUrl, ogTitle, ogDesc }) {
   return (
     <div className={styles.page}>
-      <Helmet>
-        <title>{ogTitle}</title>
-        <meta name="description" content={ogDesc} />
-        <meta name="robots" content="index, follow" />
-        <link rel="canonical" href={canonicalUrl} />
-        <meta property="og:title" content={ogTitle} />
-        <meta property="og:description" content={ogDesc} />
-        <meta property="og:url" content={canonicalUrl} />
-        <meta property="og:type" content="article" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={ogTitle} />
-        <meta name="twitter:description" content={ogDesc} />
-      </Helmet>
-
       <div className={styles.container}>
         <Breadcrumb label={data.tile_label} />
 
@@ -187,8 +157,9 @@ function NoiseTriageLayout({ data, canonicalUrl, ogTitle, ogDesc }) {
   )
 }
 
-export default function SymptomFlow() {
-  const { symptomId } = useParams()
+export default function SymptomFlow({ symptomId: symptomIdProp } = {}) {
+  const params = useParams()
+  const symptomId = symptomIdProp ?? params.symptomId
   const location = useLocation()
 
   const data = symptomFlows.find((s) => s.symptom_id === symptomId)
@@ -196,10 +167,6 @@ export default function SymptomFlow() {
   if (!data) {
     return (
       <div className={styles.page}>
-        <Helmet>
-          <title>Symptom not found | HVAC Sales Master</title>
-          <meta name="robots" content="noindex" />
-        </Helmet>
         <div className={styles.container}>
           <div className={styles.notFound}>
             <h1 className={styles.notFoundTitle}>Symptom not found</h1>

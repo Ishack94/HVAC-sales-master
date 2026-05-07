@@ -4,7 +4,7 @@ import Header from './Header'
 import Footer from './Footer'
 import styles from './Layout.module.css'
 
-export default function Layout() {
+export default function Layout({ children }) {
   const { pathname } = useLocation()
 
   // Scroll to top on route change
@@ -16,7 +16,7 @@ export default function Layout() {
     <>
       <Header />
       <main>
-        <Outlet />
+        {children ?? <Outlet />}
       </main>
       <Footer />
     </>
