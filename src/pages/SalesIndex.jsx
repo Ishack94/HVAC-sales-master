@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { Helmet } from 'react-helmet-async'
 import Banner from '../components/Layout/Banner'
 import Sidebar from '../components/Layout/Sidebar'
 import Newsletter from '../components/Home/Newsletter'
@@ -19,15 +18,6 @@ export default function SalesIndex() {
   const canonicalUrl = `https://www.hvacsalesmaster.com${location.pathname}`
   return (
     <>
-      <Helmet>
-        <title>Sales Training | HVAC Sales Master</title>
-        <meta name="description" content="In-home HVAC sales strategies that actually close. Objection handling, pricing, scripts, and closing techniques from real field experience." />
-        <link rel="canonical" href={canonicalUrl} />
-        <meta property="og:title" content="Sales Training | HVAC Sales Master" />
-        <meta property="og:description" content="In-home HVAC sales strategies that actually close. Objection handling, pricing, scripts, and closing techniques from real field experience." />
-        <meta property="og:url" content={canonicalUrl} />
-        <meta property="og:type" content="website" />
-      </Helmet>
       <Banner
         title="Sales Training"
         breadcrumbs={[

@@ -1,6 +1,5 @@
 import React, { useState, useMemo } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { Helmet } from 'react-helmet-async'
 import Banner from '../components/Layout/Banner'
 import Sidebar from '../components/Layout/Sidebar'
 import ResultsPanel from '../components/Tools/ResultsPanel'
@@ -78,15 +77,6 @@ export default function LoadCalcPage() {
 
   return (
     <>
-      <Helmet>
-        <title>HVAC Load Calculator — Free Cooling Load Estimator | HVAC Sales Master</title>
-        <meta name="description" content="Free HVAC load calculator. Estimate cooling load, BTU, tonnage, and airflow for any home. Built for techs and sales pros in the field." />
-        <link rel="canonical" href={canonicalUrl} />
-        <meta property="og:title" content="HVAC Load Calculator — Free Cooling Load Estimator | HVAC Sales Master" />
-        <meta property="og:description" content="Free HVAC load calculator. Estimate cooling load, BTU, tonnage, and airflow for any home." />
-        <meta property="og:url" content={canonicalUrl} />
-        <meta property="og:type" content="website" />
-      </Helmet>
       <Banner title="HVAC Load Calculator" breadcrumbs={[{ label: 'Home', to: '/' }, { label: 'Resources', to: '/resources' }, { label: 'Load Calculator' }]} />
       <div className={styles.layout}>
         <main className={styles.main}>

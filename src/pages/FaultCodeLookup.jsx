@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
 import {
   getBrandFamiliesIndex,
   getBrandFamily,
@@ -940,20 +939,6 @@ export default function FaultCodeLookup() {
   return (
     <div className={styles.page}>
       <div className={styles.container}>
-        <Helmet>
-          <title>{seoTitle}</title>
-          <meta name="description" content={seoDesc} />
-          <link rel="canonical" href={seoCanonical} />
-          <meta property="og:title" content={seoTitle} />
-          <meta property="og:description" content={seoDesc} />
-          <meta property="og:url" content={seoCanonical} />
-          <meta property="og:type" content={seoOgType} />
-          <meta name="twitter:title" content={seoTitle} />
-          <meta name="twitter:description" content={seoDesc} />
-          {seoJsonLd && (
-            <script type="application/ld+json">{JSON.stringify(seoJsonLd)}</script>
-          )}
-        </Helmet>
         <header className={styles.header}>
           <h1 className={styles.title}>Fault Code Lookup</h1>
           <div className={styles.subhead}>HVAC Sales Master</div>

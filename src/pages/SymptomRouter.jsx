@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { Helmet } from 'react-helmet-async'
 import Banner from '../components/Layout/Banner'
 import { trackEvent } from '../utils/analytics'
 import styles from './SymptomRouter.module.css'
@@ -48,15 +47,6 @@ export default function SymptomRouter() {
 
   return (
     <>
-      <Helmet>
-        <title>Symptom Router — HVAC Diagnostic Tool | HVAC Sales Master</title>
-        <meta name="description" content="Two taps from symptom to diagnostic flow. Pick a complaint, get the field-tested troubleshooting sequence." />
-        <link rel="canonical" href={canonicalUrl} />
-        <meta property="og:title" content="Symptom Router — HVAC Diagnostic Tool | HVAC Sales Master" />
-        <meta property="og:description" content="Two taps from symptom to diagnostic flow. Pick a complaint, get the field-tested troubleshooting sequence." />
-        <meta property="og:url" content={canonicalUrl} />
-        <meta property="og:type" content="website" />
-      </Helmet>
       <Banner
         title="Pick a Symptom"
         breadcrumbs={[
