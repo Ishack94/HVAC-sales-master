@@ -71,7 +71,7 @@
 
 .link:hover,
 .link.active {
-  color: #1f6cb8;
+  color: #4a9fe5;
 }
 
 .link:hover::after,
@@ -92,7 +92,7 @@
 }
 
 .contactBtn:hover {
-  color: #1f6cb8;
+  color: #4a9fe5;
   border-color: #4a9fe5;
 }
 
@@ -174,7 +174,7 @@
 
 .mobileLink:hover,
 .mobileLinkActive {
-  color: #1f6cb8;
+  color: #4a9fe5;
 }
 
 .mobileContact {
@@ -190,7 +190,7 @@
 }
 
 .mobileContact:hover {
-  color: #1f6cb8;
+  color: #4a9fe5;
   border-color: #4a9fe5;
 }
 
