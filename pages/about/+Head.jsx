@@ -9,8 +9,6 @@ export default function Head() {
   return (
     <>
       <link rel="canonical" href={canonicalUrl} />
-      <meta property="og:title" content={TITLE} />
-      <meta property="og:description" content={DESC} />
       <meta property="og:url" content={canonicalUrl} />
       <meta property="og:type" content="website" />
     </>
