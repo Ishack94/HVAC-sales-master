@@ -381,7 +381,7 @@
 }
 
 .articleLink {
-  color: #4a9fe5;
+  color: #1f6cb8;
   text-decoration: none;
   border-bottom: 1px solid transparent;
   font-weight: 500;
@@ -389,7 +389,7 @@
 }
 
 .articleLink:hover {
-  color: #3a8cd0;
+  color: #155694;
   border-bottom: 1px solid #4a9fe5;
 }
 
@@ -397,7 +397,7 @@
   display: block;
   font-family: 'Figtree', sans-serif;
   font-size: 12px;
-  color: #8a8f96;
+  color: #5c6168;
   font-weight: 400;
   margin-top: 2px;
 }
