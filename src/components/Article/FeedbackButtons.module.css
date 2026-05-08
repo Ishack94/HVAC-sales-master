@@ -38,11 +38,11 @@
 
 .btn:hover {
   border-color: #4a9fe5;
-  color: #4a9fe5;
+  color: #1f6cb8;
 }
 
 .btn.active {
-  color: #4a9fe5;
+  color: #1f6cb8;
   border-color: #4a9fe5;
 }
 
@@ -92,11 +92,11 @@
 
 .btnTop:hover {
   border-color: #4a9fe5;
-  color: #4a9fe5;
+  color: #1f6cb8;
 }
 
 .btnTop.active {
-  color: #4a9fe5;
+  color: #1f6cb8;
   border-color: #4a9fe5;
 }
 

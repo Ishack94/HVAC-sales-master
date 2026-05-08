@@ -17,7 +17,7 @@ export default function DuctDesignPage() {
           <p style={{ fontFamily: "'Figtree', sans-serif", fontSize: '15px', color: '#5a6068', lineHeight: 1.6, marginBottom: '24px', fontStyle: 'italic' }}>Size your supply and return ductwork based on room-by-room CFM requirements. Use this after running a load calculation to make sure the duct system can actually deliver the airflow the equipment needs.</p>
           <DuctDesigner />
           <p style={{ fontSize: '13px', color: '#8a8f96', marginTop: '16px' }}>Sizing follows Manual D friction rate methodology. Actual installations should account for fitting equivalent lengths and total external static pressure.</p>
-          <Link to="/resources/superheat-subcooling-calculator" style={{ fontFamily: "'Figtree', sans-serif", fontSize: '15px', fontWeight: 600, color: '#4a9fe5', textDecoration: 'none', marginTop: '12px', display: 'inline-block' }}>Next: Check your refrigerant charge →</Link>
+          <Link to="/resources/superheat-subcooling-calculator" style={{ fontFamily: "'Figtree', sans-serif", fontSize: '15px', fontWeight: 600, color: '#1f6cb8', textDecoration: 'none', marginTop: '12px', display: 'inline-block' }}>Next: Check your refrigerant charge →</Link>
         </main>
         <Sidebar />
       </div>

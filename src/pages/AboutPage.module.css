@@ -44,7 +44,7 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1px;
-  color: #4a9fe5;
+  color: #1f6cb8;
 }
 
 .authorName {
@@ -108,7 +108,7 @@
 }
 
 .mailto {
-  color: #4a9fe5;
+  color: #1f6cb8;
   font-weight: 600;
   text-decoration: underline;
   text-underline-offset: 3px;

@@ -140,7 +140,7 @@ export default function LoadCalcPage() {
             })()}
           </div>
           <p style={{ fontSize: '13px', color: '#8a8f96', marginTop: '16px' }}>Estimate based on Manual J residential load calculation principles. For exact sizing, a full Manual J with measured inputs is recommended.</p>
-          <Link to="/resources/duct-design-calculator" style={{ fontFamily: "'Figtree', sans-serif", fontSize: '15px', fontWeight: 600, color: '#4a9fe5', textDecoration: 'none', marginTop: '12px', display: 'inline-block' }}>Next: Size your ductwork →</Link>
+          <Link to="/resources/duct-design-calculator" style={{ fontFamily: "'Figtree', sans-serif", fontSize: '15px', fontWeight: 600, color: '#1f6cb8', textDecoration: 'none', marginTop: '12px', display: 'inline-block' }}>Next: Size your ductwork →</Link>
         </main>
         <Sidebar />
       </div>

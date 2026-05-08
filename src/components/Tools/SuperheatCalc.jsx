@@ -227,7 +227,7 @@ export default function SuperheatCalc() {
         />
         <div style={{ marginTop: '16px' }}>
           {result.dx === 'ok' && (
-            <span style={{ display: 'inline-block', background: 'rgba(74,159,229,0.15)', color: '#4a9fe5', padding: '4px 12px', borderRadius: '4px', fontSize: '13px', fontWeight: 600, fontFamily: "'Figtree', sans-serif" }}>Within Spec</span>
+            <span style={{ display: 'inline-block', background: 'rgba(74,159,229,0.15)', color: '#1f6cb8', padding: '4px 12px', borderRadius: '4px', fontSize: '13px', fontWeight: 600, fontFamily: "'Figtree', sans-serif" }}>Within Spec</span>
           )}
           {result.dx === 'undercharge' && (
             <span style={{ display: 'inline-block', background: 'rgba(231,76,60,0.15)', color: '#e74c3c', padding: '4px 12px', borderRadius: '4px', fontSize: '13px', fontWeight: 600, fontFamily: "'Figtree', sans-serif" }}>High — Possible Undercharge</span>
@@ -239,7 +239,7 @@ export default function SuperheatCalc() {
             <span style={{ display: 'inline-block', background: 'rgba(231,76,60,0.15)', color: '#e74c3c', padding: '4px 12px', borderRadius: '4px', fontSize: '13px', fontWeight: 600, fontFamily: "'Figtree', sans-serif" }}>Airflow Problem Suspected</span>
           )}
           {result.dx === 'check' && (
-            <span style={{ display: 'inline-block', background: 'rgba(74,159,229,0.15)', color: '#4a9fe5', padding: '4px 12px', borderRadius: '4px', fontSize: '13px', fontWeight: 600, fontFamily: "'Figtree', sans-serif" }}>Check Readings</span>
+            <span style={{ display: 'inline-block', background: 'rgba(74,159,229,0.15)', color: '#1f6cb8', padding: '4px 12px', borderRadius: '4px', fontSize: '13px', fontWeight: 600, fontFamily: "'Figtree', sans-serif" }}>Check Readings</span>
           )}
         </div>
         {(() => {

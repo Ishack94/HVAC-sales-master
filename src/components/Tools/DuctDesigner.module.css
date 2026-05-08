@@ -75,7 +75,7 @@
 
 .stepActive .stepNum {
   background: white;
-  color: #4a9fe5;
+  color: #1f6cb8;
 }
 
 .stepComplete {
@@ -150,7 +150,7 @@
 .presetBtn:hover {
   border-color: #4a9fe5;
   background: #f0f4f8;
-  color: #4a9fe5;
+  color: #1f6cb8;
   transform: translateY(-2px);
   box-shadow: 0 4px 14px rgba(74, 159, 229, 0.18);
 }
@@ -244,7 +244,7 @@ select.input {
 
 .deleteBtn:hover {
   border-color: #4a9fe5;
-  color: #4a9fe5;
+  color: #1f6cb8;
   background: #f0f4f8;
 }
 
@@ -257,7 +257,7 @@ select.input {
   font-family: 'Figtree', sans-serif;
   font-size: 14px;
   font-weight: 700;
-  color: #4a9fe5;
+  color: #1f6cb8;
   cursor: pointer;
   transition: background 0.2s ease, border-color 0.2s ease;
   margin-bottom: 24px;
@@ -339,7 +339,7 @@ select.input {
 
 .secondaryBtn:hover {
   border-color: #4a9fe5;
-  color: #4a9fe5;
+  color: #1f6cb8;
 }
 
 .stepBackLink {
@@ -352,7 +352,7 @@ select.input {
   font-weight: 800;
   letter-spacing: 1px;
   text-transform: uppercase;
-  color: #4a9fe5;
+  color: #1f6cb8;
   margin-bottom: 24px;
   display: inline-block;
   transition: opacity 0.2s ease;
@@ -559,7 +559,7 @@ select.input {
 }
 
 .duct {
-  color: #4a9fe5 !important;
+  color: #1f6cb8 !important;
   font-weight: 800 !important;
   letter-spacing: 0.3px;
 }
@@ -625,7 +625,7 @@ select.input {
 .returnValueSmall {
   font-size: 17px;
   font-weight: 800;
-  color: #4a9fe5;
+  color: #1f6cb8;
   line-height: 1.2;
 }
 

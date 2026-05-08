@@ -146,7 +146,7 @@
 }
 
 .popularLink:hover {
-  color: #4a9fe5;
+  color: #1f6cb8;
   padding-left: 6px;
 }
 
@@ -186,7 +186,7 @@
   font-weight: 700;
   letter-spacing: 1.5px;
   text-transform: uppercase;
-  color: #4a9fe5;
+  color: #1f6cb8;
 }
 
 .linkTitle {
@@ -199,7 +199,7 @@
 }
 
 .linkTitle:hover {
-  color: #4a9fe5;
+  color: #1f6cb8;
 }
 
 @media (max-width: 860px) {

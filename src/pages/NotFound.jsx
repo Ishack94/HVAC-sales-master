@@ -18,17 +18,17 @@ export default function NotFound() {
         </p>
         <ul style={{ listStyle: 'disc', paddingLeft: '24px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
           <li style={{ fontSize: '17px', lineHeight: 1.6 }}>
-            <Link to="/sales" style={{ color: '#4a9fe5', fontWeight: 600, textDecoration: 'underline', textUnderlineOffset: '3px' }}>Sales Training</Link> — real-world HVAC sales strategy
+            <Link to="/sales" style={{ color: '#1f6cb8', fontWeight: 600, textDecoration: 'underline', textUnderlineOffset: '3px' }}>Sales Training</Link> — real-world HVAC sales strategy
           </li>
           <li style={{ fontSize: '17px', lineHeight: 1.6 }}>
-            <Link to="/pro-lessons" style={{ color: '#4a9fe5', fontWeight: 600, textDecoration: 'underline', textUnderlineOffset: '3px' }}>Pro Lessons</Link> — technical training for techs and installers
+            <Link to="/pro-lessons" style={{ color: '#1f6cb8', fontWeight: 600, textDecoration: 'underline', textUnderlineOffset: '3px' }}>Pro Lessons</Link> — technical training for techs and installers
           </li>
           <li style={{ fontSize: '17px', lineHeight: 1.6 }}>
-            <Link to="/resources" style={{ color: '#4a9fe5', fontWeight: 600, textDecoration: 'underline', textUnderlineOffset: '3px' }}>Resources</Link> — free HVAC calculators and tools
+            <Link to="/resources" style={{ color: '#1f6cb8', fontWeight: 600, textDecoration: 'underline', textUnderlineOffset: '3px' }}>Resources</Link> — free HVAC calculators and tools
           </li>
         </ul>
         <p style={{ fontSize: '16px', color: 'rgba(0,0,0,0.5)', marginTop: '32px' }}>
-          Or head back to the <Link to="/" style={{ color: '#4a9fe5', fontWeight: 600 }}>homepage</Link>.
+          Or head back to the <Link to="/" style={{ color: '#1f6cb8', fontWeight: 600 }}>homepage</Link>.
         </p>
       </div>
     </>

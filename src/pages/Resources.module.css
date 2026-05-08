@@ -106,7 +106,7 @@
   font-family: 'Figtree', sans-serif;
   font-size: 12px;
   font-weight: 600;
-  color: #4a9fe5;
+  color: #1f6cb8;
   text-decoration: none;
   margin-top: 8px;
   display: inline-block;
@@ -149,7 +149,7 @@
   font-weight: 700;
   letter-spacing: 1px;
   text-transform: uppercase;
-  color: #4a9fe5;
+  color: #1f6cb8;
   margin-bottom: 8px;
   display: inline-block;
   transition: opacity 0.2s ease;
@@ -198,7 +198,7 @@
 }
 
 .extLink {
-  color: #4a9fe5;
+  color: #1f6cb8;
   text-decoration: underline;
   text-underline-offset: 3px;
   transition: color 0.2s ease;
@@ -373,7 +373,7 @@
   border: none;
   font-family: 'Figtree', sans-serif;
   font-size: 13px;
-  color: #4a9fe5;
+  color: #1f6cb8;
   cursor: pointer;
   text-decoration: underline;
   padding: 0;
@@ -432,7 +432,7 @@
 }
 
 .dinoLink {
-  color: #4a9fe5;
+  color: #1f6cb8;
   font-weight: 600;
   text-decoration: underline;
   text-underline-offset: 3px;
@@ -455,7 +455,7 @@
 }
 
 .mailto {
-  color: #4a9fe5;
+  color: #1f6cb8;
   font-weight: 600;
   font-style: normal;
   text-decoration: underline;
